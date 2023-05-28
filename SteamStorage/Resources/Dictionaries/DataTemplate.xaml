@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:SteamStorage.ViewModels"
+                    xmlns:view="clr-namespace:SteamStorage.Views"
+                    xmlns:steamstorage="clr-namespace:SteamStorage">
+
+    <DataTemplate DataType="{x:Type vm:MainWindowVM}">
+        <steamstorage:MainWindow/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:ArchiveVM}">
+        <view:ArchiveView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:HomeVM}">
+        <view:HomeView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:MainVM}">
+        <view:MainView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:NavigationVM}">
+        <view:NavigationView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:RemainsVM}">
+        <view:RemainsView/>
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type vm:SettingsVM}">
+        <view:SettingsView/>
+    </DataTemplate>
+
+</ResourceDictionary>
