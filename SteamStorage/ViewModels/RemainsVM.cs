@@ -57,15 +57,18 @@ namespace SteamStorage.ViewModels
         {
             var context = Context.GetContext();
 
-            Remains = context.Remains.Select(x => new RemainModel(x)).ToList();
-
             Groups = context.RemainGroups.Select(x => new RemainGroupModel(x)).ToList();
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
+
+            Filter = string.Empty;
+
+            Remains = context.Remains.Select(x => new RemainModel(x)).ToList();
         }
         private void DoFiltering()
         {
+            if (Remains is null) return;
             DisplayedRemains = Remains.Where(
                 x => (SelectedGroup.RemainGroup is null || x.RemainGroup == SelectedGroup.RemainGroup) && x.Title.ToLower().Contains(Filter)
                 ).ToList();

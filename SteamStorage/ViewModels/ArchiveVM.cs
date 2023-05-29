@@ -57,15 +57,18 @@ namespace SteamStorage.ViewModels
         {
             var context = Context.GetContext();
 
-            Archives = context.Archives.Select(x => new ArchiveModel(x)).ToList();
-
             Groups = context.ArchiveGroups.Select(x => new ArchiveGroupModel(x)).ToList();
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
+
+            Filter = string.Empty;
+
+            Archives = context.Archives.Select(x => new ArchiveModel(x)).ToList();
         }
         private void DoFiltering()
         {
+            if (Archives is null) return;
             DisplayedArchives = Archives.Where(
                 x => (SelectedGroup.ArchiveGroup is null || x.ArchiveGroup == SelectedGroup.ArchiveGroup) && x.Title.ToLower().Contains(Filter)
                 ).ToList();

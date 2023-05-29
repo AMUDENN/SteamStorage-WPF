@@ -1,8 +1,10 @@
-﻿using SteamStorage.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SteamStorage.Entities;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace SteamStorage.Models
 {
@@ -28,16 +30,17 @@ namespace SteamStorage.Models
         public RemainModel(Remain remain)
         {
             this.remain = remain;
-            datePurchase = DateTime.ParseExact(this.remain.DatePurchase, Constants.DateFormat, null);
+            datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateFormat, null);
             amountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
+            Context.GetContext().Skins.LoadAsync();
         }
         public void UpdatePriceDynamics()
         {
             priceDynamics = remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateFormat, null), x => x.CostUpdate);
             priceDynamics.Add(DatePurchase, CostPurchase);
             if (priceDynamics.Count == 1) priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
-            priceDynamics = (Dictionary<DateTime, double>)priceDynamics.OrderBy(x => x.Key.Ticks);
+            priceDynamics = priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
 
             lastUpdate = priceDynamics.Last().Key;
             lastCost = priceDynamics.Last().Value;

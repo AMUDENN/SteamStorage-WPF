@@ -1,4 +1,5 @@
-﻿using SteamStorage.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SteamStorage.Entities;
 using SteamStorage.Utilities;
 using System;
 
@@ -30,6 +31,7 @@ namespace SteamStorage.Models
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
             percent = Math.Round((CostSold - CostPurchase) / CostPurchase * 100, 2);
+            Context.GetContext().Skins.LoadAsync();
         }
     }
 }
