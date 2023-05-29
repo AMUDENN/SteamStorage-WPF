@@ -6,12 +6,13 @@ namespace SteamStorage.Models
 {
     public class ArchiveModel
     {
-        private readonly DateTime datePurchase;
-        private readonly DateTime dateSold;
-        private readonly double amountPurchase;
-        private readonly double amountSold;
-        private readonly double percent;
-        private readonly Archive archive;
+        private DateTime datePurchase;
+        private DateTime dateSold;
+        private double amountPurchase;
+        private double amountSold;
+        private double percent;
+        private Archive archive;
+        public ArchiveGroup ArchiveGroup => archive.IdGroupNavigation;
         public string Title => archive.IdSkinNavigation.Title;
         public DateTime DatePurchase => datePurchase;
         public DateTime DateSold => dateSold;

@@ -8,13 +8,14 @@ namespace SteamStorage.Models
 {
     public class RemainModel
     {
-        private readonly DateTime datePurchase;
-        private readonly double amountPurchase;
+        private DateTime datePurchase;
+        private double amountPurchase;
         private Dictionary<DateTime, double> priceDynamics;
         private DateTime lastUpdate;
         private double lastCost;
         private double percent;
-        private readonly Remain remain;
+        private Remain remain;
+        public RemainGroup RemainGroup => remain.IdGroupNavigation;
         public string Title => remain.IdSkinNavigation.Title;
         public DateTime DatePurchase => datePurchase;
         public long Count => remain.Count;
