@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamStorage"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="1024" MinWidth="1440">
+        Title="Steam Storage" 
+        Style="{DynamicResource WindowStyle}">
     <Grid>
         <ContentControl Content="{Binding CurrentVM}"/>
     </Grid>

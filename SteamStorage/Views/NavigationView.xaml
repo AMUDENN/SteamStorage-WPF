@@ -6,9 +6,10 @@
              xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:SteamStorage.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="430" d:DesignWidth="300">
+             d:DesignHeight="370" d:DesignWidth="300">
     <Grid>
         <ListView ItemsSource="{Binding NavigationOptions}" Style="{DynamicResource ListViewStyle}" SelectionMode="Single">
+            
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="SelectionChanged">
                     <Behaviors:InvokeCommandAction Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True"/>
@@ -67,7 +68,7 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
+            
         </ListView>
     </Grid>
 </UserControl>

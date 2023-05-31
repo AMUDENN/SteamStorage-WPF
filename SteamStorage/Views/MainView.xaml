@@ -24,6 +24,8 @@
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
+                    <Image Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" Margin="0, 40" Grid.Row="0"/>
+
                     <TextBlock Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="2"/>
 
                     <ContentControl Content="{Binding NavigationVM}" Grid.Row="4"/>

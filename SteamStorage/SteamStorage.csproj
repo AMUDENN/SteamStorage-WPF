@@ -5,12 +5,16 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\Bitmaps\Storage.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Images\Bitmaps\Storage.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DataBase\" />
     <Folder Include="Resources\Converters\" />
-    <Folder Include="Resources\Images\Bitmaps\" />
   </ItemGroup>
 
   <ItemGroup>
