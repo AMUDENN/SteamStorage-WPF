@@ -8,14 +8,15 @@ namespace SteamStorage.ViewModels
 {
     public class RemainsVM : ObservableObject
     {
+        #region Fields
         private string filter;
-
         private List<RemainGroupModel> groups;
         private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
-
         private RemainGroupModel selectedGroup;
+        #endregion Fields
 
+        #region Properties
         public string Filter
         {
             get => filter;
@@ -53,6 +54,7 @@ namespace SteamStorage.ViewModels
                 DoFiltering();
             }
         }
+        #endregion Properties
         public RemainsVM()
         {
             var context = Context.GetContext();

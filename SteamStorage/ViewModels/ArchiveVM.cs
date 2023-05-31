@@ -8,14 +8,15 @@ namespace SteamStorage.ViewModels
 {
     public class ArchiveVM : ObservableObject
     {
+        #region Fields
         private string filter;
-
         private List<ArchiveGroupModel> groups;
         private List<ArchiveModel> archives;
         private List<ArchiveModel> displayedArchives;
-
         private ArchiveGroupModel selectedGroup;
+        #endregion Fields
 
+        #region Properties
         public string Filter
         {
             get => filter;
@@ -53,6 +54,7 @@ namespace SteamStorage.ViewModels
                 DoFiltering();
             }
         }
+        #endregion Properties
         public ArchiveVM()
         {
             var context = Context.GetContext();

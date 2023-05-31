@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using SteamStorage.Utilities;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TestSystem.Models;
@@ -30,25 +32,25 @@ namespace SteamStorage.ViewModels
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Главная",
-                ImageSource = "",
+                ImageStyle = Styles.GetStyle("DiagramImage"),
                 DestinationVM = new HomeVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Остатки",
-                ImageSource = "",
+                ImageStyle = Styles.GetStyle("DollarImage"),
                 DestinationVM = new RemainsVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Архив",
-                ImageSource = "",
+                ImageStyle = Styles.GetStyle("CubeImage"),
                 DestinationVM = new ArchiveVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Настройки",
-                ImageSource = "",
+                ImageStyle = Styles.GetStyle("SettingsImage"),
                 DestinationVM = new SettingsVM()
             });
 

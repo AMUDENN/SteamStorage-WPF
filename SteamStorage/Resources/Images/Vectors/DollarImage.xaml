@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="DollarImage" TargetType="{x:Type Image}">
+        <Setter Property="Source">
+            <Setter.Value>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M8.67188,14.3298C8.67188,15.6198,9.66188,16.6598,10.8919,16.6598L13.4019,16.6598C14.4719,16.6598 15.3419,15.7498 15.3419,14.6298 15.3419,13.4098 14.8119,12.9798 14.0219,12.6998L9.99187,11.2998C9.20187,11.0198 8.67188,10.5898 8.67188,9.36984 8.67188,8.24984 9.54187,7.33984 10.6119,7.33984L13.1219,7.33984C14.3519,7.33984,15.3419,8.37984,15.3419,9.66984">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M12,6L12,18">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M12,22C17.5228,22 22,17.5228 22,12 22,6.47715 17.5228,2 12,2 6.47715,2 2,6.47715 2,12 2,17.5228 6.47715,22 12,22z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Styles\" />
-    <Folder Include="Resources\Themes\" />
     <Folder Include="DataBase\" />
+    <Folder Include="Resources\Converters\" />
+    <Folder Include="Resources\Images\Bitmaps\" />
   </ItemGroup>
 
   <ItemGroup>

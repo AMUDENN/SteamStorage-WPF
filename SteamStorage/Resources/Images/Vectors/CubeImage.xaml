@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="CubeImage" TargetType="{x:Type Image}">
+        <Setter Property="Source">
+            <Setter.Value>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M2,9L2,7C2,4,4,2,7,2L17,2C20,2,22,4,22,7L22,9">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M2,15L2,17C2,20,4,22,7,22L17,22C20,22,22,20,22,17L22,15">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="10" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M6.69995,9.26001L12,12.33 17.2599,9.28003">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M12,17.7701L12,12.3201">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                            <GeometryDrawing Geometry="F1 M24,24z M0,0z M10.76,6.29006L7.55998,8.07009C6.83998,8.47009,6.23999,9.48008,6.23999,10.3101L6.23999,13.7001C6.23999,14.5301,6.82998,15.5401,7.55998,15.9401L10.76,17.7201C11.44,18.1001,12.56,18.1001,13.25,17.7201L16.45,15.9401C17.17,15.5401,17.77,14.5301,17.77,13.7001L17.77,10.3101C17.77,9.48008,17.18,8.47009,16.45,8.07009L13.25,6.29006C12.56,5.90006,11.44,5.90006,10.76,6.29006z">
+                                <GeometryDrawing.Pen>
+                                    <Pen Brush="{DynamicResource Additional}" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" MiterLimit="1" />
+                                </GeometryDrawing.Pen>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
