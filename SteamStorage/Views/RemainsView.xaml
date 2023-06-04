@@ -8,7 +8,7 @@
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="75"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -27,22 +27,29 @@
             <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
                      Style="{DynamicResource SearchTextBoxStyle}"
                      Tag="Поиск"
-                     Margin="10,15,10,15"
+                     Margin="10, 15"
                      Grid.Column="1"/>
 
             <ComboBox Style="{DynamicResource ComboBoxStyle}" 
                       Tag="Выберите тип"
                       ItemsSource="{Binding OrderTitles}" 
                       SelectedItem="{Binding SelectedOrderTitle}"
-                      Margin="10,15,10,15"
+                      Margin="10, 15"
                       Grid.Column="2" Grid.ColumnSpan="2"/>
 
             <ComboBox Style="{DynamicResource ComboBoxStyle}"
                       Tag="Выберите порядок"
                       ItemsSource="{Binding OrderTypes}" 
                       SelectedItem="{Binding SelectedOrderType}"
-                      Margin="10,15,10,15"
+                      Margin="10, 15"
                       Grid.Column="4"/>
+
+            <Button Style="{DynamicResource FilterRemoveButtonStyle}" 
+                    Command="{Binding RemoveFilterCommand}"
+                    Content="Очистить фильтры"
+                    HorizontalAlignment="Right" 
+                    Margin="10, 15"
+                    Grid.Column="5"/>
 
         </Grid>
 

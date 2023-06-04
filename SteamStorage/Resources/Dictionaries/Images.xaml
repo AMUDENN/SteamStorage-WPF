@@ -4,10 +4,9 @@
         <ResourceDictionary Source="\Resources\Images\Vectors\CubeImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\DiagramImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\DollarImage.xaml"/>
-        <ResourceDictionary Source="\Resources\Images\Vectors\DownArrowImage.xaml"/>
+        <ResourceDictionary Source="\Resources\Images\Vectors\FilterRemoveImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\MagnifyingGlassImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\SettingsImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\StorageImage.xaml"/>
-        <ResourceDictionary Source="\Resources\Images\Vectors\UpArrowImage.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

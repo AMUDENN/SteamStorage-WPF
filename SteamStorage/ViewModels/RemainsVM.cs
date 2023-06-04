@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace SteamStorage.ViewModels
 {
@@ -21,18 +23,19 @@ namespace SteamStorage.ViewModels
             { "Текущая цена", x => x.LastCost },
             { "Изменение", x => x.Percent }
         };
-        private string selectedOrderTitle;
+        private string? selectedOrderTitle;
         private readonly Dictionary<string, bool> orderTypes = new Dictionary<string, bool>
         {
             { "По возрастанию", true },
             { "По убыванию", false }
         };
-        private string selectedOrderType;
+        private string? selectedOrderType;
 
         private List<RemainGroupModel> groups;
         private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
         private RemainGroupModel selectedGroup;
+        private ICommand removeFilterCommand;
         #endregion Fields
 
         #region Properties
@@ -46,7 +49,7 @@ namespace SteamStorage.ViewModels
             }
         }
         public IEnumerable<string> OrderTitles => orderTitles.Keys;
-        public string SelectedOrderTitle
+        public string? SelectedOrderTitle
         {
             get => selectedOrderTitle;
             set
@@ -56,7 +59,7 @@ namespace SteamStorage.ViewModels
             }
         }
         public IEnumerable<string> OrderTypes => orderTypes.Keys;
-        public string SelectedOrderType
+        public string? SelectedOrderType
         {
             get => selectedOrderType;
             set
@@ -94,6 +97,19 @@ namespace SteamStorage.ViewModels
             }
         }
         #endregion Properties
+
+        #region Commands
+        public ICommand RemoveFilterCommand
+        {
+            get
+            {
+                return removeFilterCommand ??
+                  (removeFilterCommand = new RelayCommand(DoRemoveFilterCommand));
+            }
+        }
+        #endregion Commands
+
+        #region Constructor
         public RemainsVM()
         {
             var context = Context.GetContext();
@@ -106,6 +122,16 @@ namespace SteamStorage.ViewModels
             Filter = string.Empty;
 
             Remains = context.Remains.Select(x => new RemainModel(x)).ToList();
+        }
+        #endregion Constructor
+
+        #region Methods
+        private void DoRemoveFilterCommand()
+        {
+            Filter = string.Empty;
+            SelectedGroup = Groups.First();
+            SelectedOrderTitle = null;
+            SelectedOrderType = null;
         }
         private void DoFiltering()
         {
@@ -121,5 +147,6 @@ namespace SteamStorage.ViewModels
             var remains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
             DisplayedRemains = remains.ToList();
         }
+        #endregion Methods
     }
 }

@@ -11,7 +11,8 @@
                   x:Name="Border" 
                   Grid.ColumnSpan="2"
                   Background="Transparent"
-                  BorderThickness="0"/>
+                  BorderBrush="{DynamicResource Additional}"
+                  BorderThickness="0, 0, 0, 1"/>
             <Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
@@ -68,9 +69,8 @@
                               MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border 
                                 x:Name="DropDownBorder"
-                                Style="{DynamicResource BaseBorderStyleWithStroke}"
-                                Background="{DynamicResource AccentAdditional}"
-                                BorderBrush="{DynamicResource Additional}"/>
+                                CornerRadius="0, 0, 7, 7"
+                                Background="{DynamicResource AccentAdditional}"/>
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>

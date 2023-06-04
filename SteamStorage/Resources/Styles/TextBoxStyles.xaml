@@ -3,30 +3,28 @@
 
     <Style x:Key="SearchTextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Background" Value="{DynamicResource AccentAdditional}"/>
+        <Setter Property="Background" Value="{DynamicResource Accent}"/>
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
-                        <Border Style="{DynamicResource BaseBorderStyleWithStroke}"
+                    <Border BorderThickness="0, 0, 0, 1"
                                 BorderBrush="{TemplateBinding Foreground}"
                                 Background="{TemplateBinding Background}" 
                                 Padding="5, 0, 0, 0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="5*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{DynamicResource MagnifyingGlassImage}" Margin="5" Grid.Column="0"/>
-                                <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"/>
-                                <Label x:Name="PlaceholderLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Style="{DynamicResource MagnifyingGlassImage}" Margin="5" Grid.Column="0"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"/>
+                            <Label x:Name="PlaceholderLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left"
                                        Visibility="Collapsed" Foreground="{DynamicResource Additional}" Opacity="0.5" FontSize="16" Grid.Column="1"/>
-                            </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Text" Value="">
                             <Setter Property="Visibility" TargetName="PlaceholderLabel" Value="Visible"/>
