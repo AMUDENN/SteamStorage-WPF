@@ -7,30 +7,106 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        
-        <ListView ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" Grid.Column="0">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding Title}"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <ListView ItemsSource="{Binding DisplayedRemains}" Grid.Column="1">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{DynamicResource SearchTextBoxStyle}"
+                     Tag="Поиск"
+                     Margin="10,15,10,15"
+                     Grid.Column="1"/>
+
+            <ComboBox Style="{DynamicResource ComboBoxStyle}" 
+                      Tag="Выберите тип"
+                      ItemsSource="{Binding OrderTitles}" 
+                      SelectedItem="{Binding SelectedOrderTitle}"
+                      Margin="10,15,10,15"
+                      Grid.Column="2" Grid.ColumnSpan="2"/>
+
+            <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                      Tag="Выберите порядок"
+                      ItemsSource="{Binding OrderTypes}" 
+                      SelectedItem="{Binding SelectedOrderType}"
+                      Margin="10,15,10,15"
+                      Grid.Column="4"/>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ListView ItemsSource="{Binding Groups}" 
+                  SelectedItem="{Binding SelectedGroup}" 
+                  Style="{DynamicResource ListViewStyle}"
+                  Grid.Column="0">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
+                                        <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border Style="{DynamicResource MainAdditionalBorderStyle}">
+                                                <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="50">
+                            <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTitleTextBlockStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+
+            <ListView ItemsSource="{Binding DisplayedRemains}" Grid.Column="1">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
                         <TextBlock Text="{Binding Title}"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListView>
-        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

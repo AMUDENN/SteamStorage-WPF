@@ -12,7 +12,7 @@ namespace SteamStorage.Models
         private DateTime datePurchase;
         private double amountPurchase;
         private Dictionary<DateTime, double> priceDynamics;
-        private DateTime lastUpdate;
+        private DateTime dateLastUpdate;
         private double lastCost;
         private double percent;
         private Remain remain;
@@ -23,7 +23,7 @@ namespace SteamStorage.Models
         public double CostPurchase => remain.CostPurchase;
         public double AmountPurchase => amountPurchase;
         public Dictionary<DateTime, double> PriceDynamics => priceDynamics;
-        public DateTime LastUpdate => lastUpdate;
+        public DateTime DateLastUpdate => dateLastUpdate;
         public double LastCost => lastCost;
         public double Percent => percent;
         public RemainModel(Remain remain)
@@ -41,7 +41,7 @@ namespace SteamStorage.Models
             if (priceDynamics.Count == 1) priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
             priceDynamics = priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
 
-            lastUpdate = priceDynamics.Last().Key;
+            dateLastUpdate = priceDynamics.Last().Key;
             lastCost = priceDynamics.Last().Value;
             percent = Math.Round((lastCost - CostPurchase) / CostPurchase * 100, 2);
         }

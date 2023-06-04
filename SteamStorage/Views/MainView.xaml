@@ -33,7 +33,7 @@
             </Border>
         </Grid>
         
-        <ContentControl Content="{Binding CurrentVM}" Grid.Column="1"/>
+        <ContentControl Content="{Binding CurrentVM}" Margin="10" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

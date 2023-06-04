@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,24 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private string filter;
+        private readonly Dictionary<string, Func<RemainModel, object>> orderTitles = new()
+        {
+            { "Название", x => x.Title },
+            { "Количество", x => x.Count },
+            { "Цена", x => x.CostPurchase },
+            { "Сумма", x => x.AmountPurchase },
+            { "Дата покупки", x => x.DatePurchase },
+            { "Текущая цена", x => x.LastCost },
+            { "Изменение", x => x.Percent }
+        };
+        private string selectedOrderTitle;
+        private readonly Dictionary<string, bool> orderTypes = new Dictionary<string, bool>
+        {
+            { "По возрастанию", true },
+            { "По убыванию", false }
+        };
+        private string selectedOrderType;
+
         private List<RemainGroupModel> groups;
         private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
@@ -24,6 +43,26 @@ namespace SteamStorage.ViewModels
             {
                 SetProperty(ref filter, value.ToLower());
                 DoFiltering();
+            }
+        }
+        public IEnumerable<string> OrderTitles => orderTitles.Keys;
+        public string SelectedOrderTitle
+        {
+            get => selectedOrderTitle;
+            set
+            {
+                SetProperty(ref selectedOrderTitle, value);
+                DoSorting();
+            }
+        }
+        public IEnumerable<string> OrderTypes => orderTypes.Keys;
+        public string SelectedOrderType
+        {
+            get => selectedOrderType;
+            set
+            {
+                SetProperty(ref selectedOrderType, value);
+                DoSorting();
             }
         }
         public List<RemainGroupModel> Groups
@@ -78,7 +117,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoSorting()
         {
-
+            if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
+            var remains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
+            DisplayedRemains = remains.ToList();
         }
     }
 }

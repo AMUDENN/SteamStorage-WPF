@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="UpArrowImage" TargetType="{x:Type Image}">
+        <Setter Property="Source">
+            <Setter.Value>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V284.815 H284.815 V0 H0 Z">
+                            <DrawingGroup.Transform>
+                                <TranslateTransform X="0.00074988603591918945" Y="0" />
+                            </DrawingGroup.Transform>
+                            <DrawingGroup Opacity="1">
+                                <DrawingGroup Opacity="1">
+                                    <GeometryDrawing Brush="{DynamicResource Additional}" Geometry="F1 M284.815,284.815z M0,0z M255.9,228.08C248.175,228.08,240.913,225.066,235.45,219.609L142.402,126.555 49.361,219.603C43.905,225.066 36.642,228.074 28.911,228.074 21.18,228.074 13.917,225.066 8.45400000000002,219.603 -2.81899999999998,208.33 -2.81899999999998,189.982 8.45400000000002,178.709L121.952,65.205C127.408,59.742 134.671,56.734 142.396,56.734 150.115,56.734 157.383,59.742 162.846,65.205L276.344,178.709C281.813,184.172 284.815,191.428 284.815,199.159 284.815,206.878 281.807,214.146 276.344,219.609 270.888,225.066 263.626,228.08 255.9,228.08z M142.403,108.381L244.538,210.523C250.611,216.596 261.183,216.596 267.257,210.523 270.297,207.483 271.961,203.447 271.961,199.16 271.961,194.873 270.29,190.837 267.257,187.797L153.47,74.016C147.397,68.219,137.017,68.315,131.047,74.292L17.542,187.797C11.276,194.063 11.276,204.256 17.542,210.516 23.615,216.589 34.2,216.589 40.267,210.516L142.403,108.381z" />
+                                </DrawingGroup>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

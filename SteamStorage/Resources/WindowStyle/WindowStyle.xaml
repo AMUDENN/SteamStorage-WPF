@@ -6,8 +6,8 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="MinWidth" Value="1440"/>
-        <Setter Property="MinHeight" Value="1024"/>
+        <Setter Property="Width" Value="1440"/>
+        <Setter Property="Height" Value="1024"/>
         <Setter Property="MaxWidth" Value="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}"/>
         <Setter Property="MaxHeight" Value="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"/>
         <Setter Property="Top" Value="30"/>
