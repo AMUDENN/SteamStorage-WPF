@@ -32,25 +32,25 @@ namespace SteamStorage.ViewModels
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Главная",
-                ImageStyle = Styles.GetStyle("DiagramImage"),
+                ImageStyle = Dictionaries.GetStyle("DiagramImage"),
                 DestinationVM = new HomeVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Остатки",
-                ImageStyle = Styles.GetStyle("DollarImage"),
+                ImageStyle = Dictionaries.GetStyle("DollarImage"),
                 DestinationVM = new RemainsVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Архив",
-                ImageStyle = Styles.GetStyle("CubeImage"),
+                ImageStyle = Dictionaries.GetStyle("CubeImage"),
                 DestinationVM = new ArchiveVM()
             });
             NavigationOptions.Add(new NavigationModel()
             {
                 Name = "Настройки",
-                ImageStyle = Styles.GetStyle("SettingsImage"),
+                ImageStyle = Dictionaries.GetStyle("SettingsImage"),
                 DestinationVM = new SettingsVM()
             });
 

@@ -4,16 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
+             xmlns:converters="clr-namespace:TestSystem.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    <UserControl.Resources>
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
+        <converters:PercentConverter x:Key="PercentConverter"/>
+        <converters:PercentForegroundConverter x:Key="PercentForegroundConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
+        <Grid Margin="0, 40, 0, 0" Grid.Row="0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -50,19 +55,18 @@
                     HorizontalAlignment="Right" 
                     Margin="10, 15"
                     Grid.Column="5"/>
-
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <ListView ItemsSource="{Binding Groups}" 
-                  SelectedItem="{Binding SelectedGroup}" 
-                  Style="{DynamicResource ListViewStyle}"
-                  Grid.Column="0">
+                      SelectedItem="{Binding SelectedGroup}" 
+                      Style="{DynamicResource ListViewStyle}"
+                      Grid.Column="0">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -107,10 +111,53 @@
                 </ItemsControl.ItemTemplate>
             </ListView>
 
-            <ListView ItemsSource="{Binding DisplayedRemains}" Grid.Column="1">
+            <ListView ItemsSource="{Binding DisplayedRemains}"
+                      Style="{DynamicResource ListViewStyle}"
+                      Grid.Column="1">
+                
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
+                                        <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Title}"/>
+                        <Grid Height="100" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
+                            <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
+                            <TextBlock Text="{Binding CostPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
+                            <TextBlock Text="{Binding Amount}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
+                            <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
+                            <TextBlock Text="{Binding LastCost}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
+                            <TextBlock Text="{Binding Percent, Converter={StaticResource PercentConverter}}" Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
+                            <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>

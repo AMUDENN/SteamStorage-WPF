@@ -3,6 +3,7 @@
 
     <Style x:Key="BaseTransparentButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
@@ -36,6 +37,17 @@
                             <Image Style="{DynamicResource FilterRemoveImage}" Margin="10" Grid.Column="1"/>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderThickness" Value="0.5"/>
+                            <Setter Property="FontSize" Value="15.8"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="FontSize" Value="15.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="DataBase\" />
     <Folder Include="Resources\Controls\" />
-    <Folder Include="Resources\Converters\" />
   </ItemGroup>
 
   <ItemGroup>

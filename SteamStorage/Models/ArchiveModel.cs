@@ -26,8 +26,8 @@ namespace SteamStorage.Models
         public ArchiveModel(Archive archive)
         {
             this.archive = archive;
-            datePurchase = DateTime.ParseExact(this.archive.DatePurchase, Constants.DateFormat, null);
-            dateSold = DateTime.ParseExact(this.archive.DateSold, Constants.DateFormat, null);
+            datePurchase = DateTime.ParseExact(this.archive.DatePurchase, Constants.DateTimeFormat, null);
+            dateSold = DateTime.ParseExact(this.archive.DateSold, Constants.DateTimeFormat, null);
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
             percent = Math.Round((CostSold - CostPurchase) / CostPurchase * 100, 2);
