@@ -5,7 +5,6 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
 
 namespace SteamStorage.ViewModels
 {
@@ -35,7 +34,7 @@ namespace SteamStorage.ViewModels
         private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
         private RemainGroupModel selectedGroup;
-        private ICommand removeFilterCommand;
+        private RelayCommand removeFilterCommand;
         #endregion Fields
 
         #region Properties
@@ -99,12 +98,12 @@ namespace SteamStorage.ViewModels
         #endregion Properties
 
         #region Commands
-        public ICommand RemoveFilterCommand
+        public RelayCommand RemoveFilterCommand
         {
             get
             {
                 return removeFilterCommand ??
-                  (removeFilterCommand = new RelayCommand(DoRemoveFilterCommand));
+                  (removeFilterCommand = new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand));
             }
         }
         #endregion Commands
@@ -133,6 +132,15 @@ namespace SteamStorage.ViewModels
             SelectedOrderTitle = null;
             SelectedOrderType = null;
         }
+        private bool CanExecuteRemoveFilterCommand()
+        {
+            if (Filter == string.Empty
+                && SelectedGroup == Groups.First()
+                && SelectedOrderTitle == null
+                && SelectedOrderType == null)
+                return false;
+            return true;
+        }
         private void DoFiltering()
         {
             if (Remains is null) return;
@@ -143,6 +151,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoSorting()
         {
+            RemoveFilterCommand.NotifyCanExecuteChanged();
             if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             var remains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
             DisplayedRemains = remains.ToList();
