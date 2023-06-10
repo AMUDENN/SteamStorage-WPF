@@ -5,68 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
              xmlns:converters="clr-namespace:TestSystem.Resources.Converters"
+             xmlns:oxy="http://oxyplot.org/wpf/contrib"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    
     <UserControl.Resources>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
         <converters:PercentConverter x:Key="PercentConverter"/>
         <converters:PercentForegroundConverter x:Key="PercentForegroundConverter"/>
+        <converters:PlotValueConverter x:Key="PlotValueConverter"/>
     </UserControl.Resources>
+    
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Grid Margin="0, 40, 0, 0" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{DynamicResource SearchTextBoxStyle}"
-                     Tag="Поиск"
-                     Margin="10, 15"
-                     Grid.Column="1"/>
-
-            <ComboBox Style="{DynamicResource ComboBoxStyle}" 
-                      Tag="Выберите тип"
-                      ItemsSource="{Binding OrderTitles}" 
-                      SelectedItem="{Binding SelectedOrderTitle}"
-                      Margin="10, 15"
-                      Grid.Column="2" Grid.ColumnSpan="2"/>
-
-            <ComboBox Style="{DynamicResource ComboBoxStyle}"
-                      Tag="Выберите порядок"
-                      ItemsSource="{Binding OrderTypes}" 
-                      SelectedItem="{Binding SelectedOrderType}"
-                      Margin="10, 15"
-                      Grid.Column="4"/>
-
-            <Button Style="{DynamicResource FilterRemoveButtonStyle}" 
-                    Command="{Binding RemoveFilterCommand}"
-                    Content="Очистить фильтры"
-                    HorizontalAlignment="Right" 
-                    Margin="10, 15"
-                    Grid.Column="5"/>
-        </Grid>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
+        <Grid Grid.Column="0">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
             <ListView ItemsSource="{Binding Groups}" 
                       SelectedItem="{Binding SelectedGroup}" 
                       Style="{DynamicResource ListViewStyle}"
-                      Grid.Column="0">
+                      Grid.Row="1">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -110,11 +77,84 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>
+            
+        </Grid>
+
+        <Grid Grid.Column="1">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{DynamicResource SearchTextBoxStyle}"
+                     Tag="Поиск"
+                     Margin="10, 15"
+                     Grid.Column="0"/>
+
+                <ComboBox Style="{DynamicResource ComboBoxStyle}" 
+                      Tag="Выберите тип"
+                      ItemsSource="{Binding OrderTitles}" 
+                      SelectedItem="{Binding SelectedOrderTitle}"
+                      Margin="10, 15"
+                      Grid.Column="1"/>
+
+                <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                      Tag="Выберите порядок"
+                      ItemsSource="{Binding OrderTypes}" 
+                      SelectedItem="{Binding SelectedOrderType}"
+                      Margin="10, 15"
+                      Grid.Column="2"/>
+
+                <Button Style="{DynamicResource FilterRemoveButtonStyle}" 
+                    Command="{Binding RemoveFilterCommand}"
+                    Content="Очистить фильтры"
+                    HorizontalAlignment="Right" 
+                    Margin="10, 15"
+                    Grid.Column="3"/>
+                
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="23, 5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="17"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Название" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="0"/>
+                <TextBlock Text="Количество" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="1"/>
+                <TextBlock Text="Цена покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="2"/>
+                <TextBlock Text="Сумма" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="3"/>
+                <TextBlock Text="Дата покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="4"/>
+                <TextBlock Text="Текущая цена" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="5" />
+                <TextBlock Text="Изменение" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="6"/>
+                <TextBlock Text="Последнее обновление" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="7"/>
+
+            </Grid>
 
             <ListView ItemsSource="{Binding DisplayedRemains}"
                       Style="{DynamicResource ListViewStyle}"
-                      Grid.Column="1">
-                
+                      Grid.Row="2">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
@@ -128,7 +168,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListViewItem}">
                                     <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
-                                        <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                        <ContentPresenter x:Name="PART_ContentHost" Margin="15, 5"/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -139,28 +179,77 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Height="100" Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="3*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
-                            <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
-                            <TextBlock Text="{Binding CostPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
-                            <TextBlock Text="{Binding Amount}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
-                            <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
-                            <TextBlock Text="{Binding LastCost}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
-                            <TextBlock Text="{Binding Percent, Converter={StaticResource PercentConverter}}" Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
-                            <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
+                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid Grid.Row="0">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
+                                <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
+                                <TextBlock Text="{Binding CostPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
+                                <TextBlock Text="{Binding AmountPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
+                                <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
+                                <TextBlock Text="{Binding LastCost}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
+                                <TextBlock Text="{Binding Percent, Converter={StaticResource PercentConverter}}" Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
+                                <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
+                            
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+
+                                <oxy:Plot Background="Transparent" 
+                                          BorderThickness="0"
+                                          PlotAreaBorderThickness="0"
+                                          Focusable="False"
+                                          DefaultTrackerTemplate="{x:Null}"
+                                          Margin="5"
+                                          Padding="3"
+                                          Grid.Column="0">
+                                    <oxy:Plot.Series>
+                                        <oxy:LineSeries ItemsSource="{Binding PriceDynamicsPoints}" 
+                                                        Color="{Binding Percent, Converter={StaticResource PercentForegroundConverter}, ConverterParameter=Color}"
+                                                        StrokeThickness="1.5"/>
+                                    </oxy:Plot.Series>
+                                    <oxy:Plot.Axes>
+                                        <oxy:CategoryAxis IsAxisVisible="False" 
+                                                          Minimum="0" 
+                                                          Maximum="{Binding PriceDynamics.Count}" />
+                                        <oxy:LinearAxis IsAxisVisible="False"
+                                                        Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=/}" 
+                                                        Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=*}" />
+                                    </oxy:Plot.Axes>
+                                </oxy:Plot>
+                                
+                            </Grid>
+                            
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                
             </ListView>
+
         </Grid>
+
     </Grid>
 </UserControl>

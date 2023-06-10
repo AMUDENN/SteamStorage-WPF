@@ -5,13 +5,17 @@ using System.Windows.Data;
 
 namespace TestSystem.Resources.Converters
 {
-    public class PercentConverter : IValueConverter
+    public class PlotValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null) return value;
-            double percent = (double)value;
-            return (percent < 0 ? percent : "+" + percent) + "%";
+            if (value is null || parameter is null) return value;
+            double number = (double)value;
+            string command = (string)parameter;
+            double result = 0;
+            if (command == "*") result = number * 1.2;
+            if (command == "/") result = number / 1.2;
+            return result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -131,6 +131,7 @@ namespace SteamStorage.ViewModels
             SelectedGroup = Groups.First();
             SelectedOrderTitle = null;
             SelectedOrderType = null;
+            DisplayedRemains = Remains;
         }
         private bool CanExecuteRemoveFilterCommand()
         {

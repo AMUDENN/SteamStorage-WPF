@@ -12,7 +12,8 @@ namespace TestSystem.Resources.Converters
         {
             if (value is null) return value;
             double percent = (double)value;
-            return Dictionaries.GetSolidColorBrush( percent < 0 ? "PercentMinus" : "PercentPlus");
+            if (parameter is not null && ((string)parameter) == "Color") return Dictionaries.GetColor(percent < 0 ? "PercentMinusColor" : "PercentPlusColor");
+            return Dictionaries.GetSolidColorBrush(percent < 0 ? "PercentMinus" : "PercentPlus");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
