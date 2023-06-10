@@ -26,14 +26,29 @@
         <Grid Grid.Column="0">
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="120"/>
+                <RowDefinition Height="160"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
+            <StackPanel Margin="0, 15" Grid.Row="0">
+                <Button Content="Добавить группу" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50"/>
+                <Button Content="Добавить скин" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50" Margin="0, 5"/>
+            </StackPanel>
+
             <ListView ItemsSource="{Binding Groups}" 
                       SelectedItem="{Binding SelectedGroup}" 
                       Style="{DynamicResource ListViewStyle}"
                       Grid.Row="1">
+
+                <ListView.Resources>
+                    <ContextMenu x:Key="GroupContextMenu" Style="{DynamicResource ContextMenuStyle}">
+                        <MenuItem Header="Изменить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить со скинами" Style="{DynamicResource ContextMenuItemStyle}"/>
+                    </ContextMenu>
+                </ListView.Resources>
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -43,17 +58,30 @@
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu" Value="{StaticResource GroupContextMenu}"/>
                         <Setter Property="Margin" Value="2"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
+                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="7, 0, 0, 7">
                                         <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FontWeight" Value="DemiBold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border Style="{DynamicResource MainAdditionalBorderStyle}">
+                                                <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -77,14 +105,14 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>
-            
+
         </Grid>
 
         <Grid Grid.Column="1">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
@@ -153,7 +181,20 @@
 
             <ListView ItemsSource="{Binding DisplayedRemains}"
                       Style="{DynamicResource ListViewStyle}"
+                      Margin="5, 0"
                       Grid.Row="2">
+
+                <ListView.Resources>
+                    <ContextMenu x:Key="RemainContextMenu" Style="{DynamicResource ContextMenuStyle}">
+                        <MenuItem Header="Обновить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Изменить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Продать" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                    </ContextMenu>
+                </ListView.Resources>
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -163,6 +204,7 @@
 
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu" Value="{StaticResource RemainContextMenu}"/>
                         <Setter Property="Margin" Value="2"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -222,16 +264,16 @@
                                           Grid.Column="0">
                                         <oxy:Plot.Series>
                                             <oxy:LineSeries ItemsSource="{Binding PriceDynamicsPoints}" 
-                                                        Color="{Binding Percent, Converter={StaticResource PercentForegroundConverter}, ConverterParameter=Color}"
-                                                        StrokeThickness="1.5"/>
+                                                            Color="{Binding Percent, Converter={StaticResource PercentForegroundConverter}, ConverterParameter=Color}"
+                                                            StrokeThickness="1.5"/>
                                         </oxy:Plot.Series>
                                         <oxy:Plot.Axes>
                                             <oxy:CategoryAxis IsAxisVisible="False" 
-                                                          Minimum="0" 
-                                                          Maximum="{Binding PriceDynamics.Count}" />
+                                                              Minimum="0" 
+                                                              Maximum="{Binding PriceDynamics.Count}" />
                                             <oxy:LinearAxis IsAxisVisible="False"
-                                                        Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=/}" 
-                                                        Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=*}" />
+                                                            Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=/}" 
+                                                            Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=*}" />
                                         </oxy:Plot.Axes>
                                     </oxy:Plot>
 

@@ -4,6 +4,7 @@
         <ResourceDictionary Source="\Resources\Styles\BorderStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ButtonStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ComboBoxStyles.xaml"/>
+        <ResourceDictionary Source="\Resources\Styles\ContextMenuStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\GridStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ListViewStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\PlotStyles.xaml"/>

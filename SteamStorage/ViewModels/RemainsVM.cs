@@ -105,32 +105,28 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return removeFilterCommand ??
-                  (removeFilterCommand = new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand));
+                return removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
             }
         }
         public RelayCommand<object> EditRemainCommand
         {
             get
             {
-                return editRemainCommand ??
-                  (editRemainCommand = new RelayCommand<object>(DoEditRemainCommand));
+                return editRemainCommand ??= new RelayCommand<object>(DoEditRemainCommand);
             }
         }
         public RelayCommand<object> SellRemainCommand
         {
             get
             {
-                return sellRemainCommand ??
-                  (sellRemainCommand = new RelayCommand<object>(DoSellRemainCommand));
+                return sellRemainCommand ??= new RelayCommand<object>(DoSellRemainCommand);
             }
         }
         public RelayCommand<object> DeleteRemainCommand
         {
             get
             {
-                return deleteRemainCommand ??
-                  (deleteRemainCommand = new RelayCommand<object>(DoDeleteRemainCommand));
+                return deleteRemainCommand ??= new RelayCommand<object>(DoDeleteRemainCommand);
             }
         }
         #endregion Commands
