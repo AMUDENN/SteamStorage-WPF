@@ -167,9 +167,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
-                                        <ContentPresenter x:Name="PART_ContentHost" Margin="15, 5"/>
-                                    </Border>
+                                    <ContentPresenter x:Name="PART_ContentHost"/>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -178,72 +176,116 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="100" Margin="5">
+                        <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
                             
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="3*"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Grid Grid.Row="0">
-                                
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
-                                <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
-                                <TextBlock Text="{Binding CostPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
-                                <TextBlock Text="{Binding AmountPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
-                                <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
-                                <TextBlock Text="{Binding LastCost}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
-                                <TextBlock Text="{Binding Percent, Converter={StaticResource PercentConverter}}" Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
-                                <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
-                            
-                            </Grid>
+                            <Grid Height="100" Margin="15, 5">
 
-                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
+                                </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0">
 
-                                <oxy:Plot Background="Transparent" 
-                                          BorderThickness="0"
-                                          PlotAreaBorderThickness="0"
-                                          Focusable="False"
-                                          DefaultTrackerTemplate="{x:Null}"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding CostPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding AmountPurchase}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
+                                    <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
+                                    <TextBlock Text="{Binding LastCost}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
+                                    <TextBlock Text="{Binding Percent, Converter={StaticResource PercentConverter}}" Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
+                                    <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
+
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="200"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <oxy:Plot Style="{DynamicResource PlotStyle}"
                                           Margin="5"
                                           Padding="3"
                                           Grid.Column="0">
-                                    <oxy:Plot.Series>
-                                        <oxy:LineSeries ItemsSource="{Binding PriceDynamicsPoints}" 
+                                        <oxy:Plot.Series>
+                                            <oxy:LineSeries ItemsSource="{Binding PriceDynamicsPoints}" 
                                                         Color="{Binding Percent, Converter={StaticResource PercentForegroundConverter}, ConverterParameter=Color}"
                                                         StrokeThickness="1.5"/>
-                                    </oxy:Plot.Series>
-                                    <oxy:Plot.Axes>
-                                        <oxy:CategoryAxis IsAxisVisible="False" 
+                                        </oxy:Plot.Series>
+                                        <oxy:Plot.Axes>
+                                            <oxy:CategoryAxis IsAxisVisible="False" 
                                                           Minimum="0" 
                                                           Maximum="{Binding PriceDynamics.Count}" />
-                                        <oxy:LinearAxis IsAxisVisible="False"
+                                            <oxy:LinearAxis IsAxisVisible="False"
                                                         Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=/}" 
                                                         Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=*}" />
-                                    </oxy:Plot.Axes>
-                                </oxy:Plot>
-                                
+                                        </oxy:Plot.Axes>
+                                    </oxy:Plot>
+
+                                    <Grid x:Name="Menu" Visibility="Hidden" Grid.Column="1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Style="{DynamicResource ImageButtonStyle}"
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditRemainCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10" Grid.Column="0">
+                                            <Image Style="{DynamicResource EditImage}"/>
+                                        </Button>
+
+                                        <Button Style="{DynamicResource ImageButtonStyle}" 
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.SellRemainCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="15" Grid.Column="1">
+                                            <Image Style="{DynamicResource PricetagImage}"/>
+                                        </Button>
+
+                                        <Button Style="{DynamicResource ImageButtonStyle}" 
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteRemainCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10" Grid.Column="2">
+                                            <Image Style="{DynamicResource RecycleBinImage}"/>
+                                        </Button>
+
+                                    </Grid>
+
+                                </Grid>
+
                             </Grid>
                             
-                        </Grid>
+                        </Border>
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Visibility" TargetName="Menu" Value="Visible"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard AutoReverse="False">
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             Storyboard.TargetName="Menu"
+                                                             From="0" To="1" Duration="0:0:0.40"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 

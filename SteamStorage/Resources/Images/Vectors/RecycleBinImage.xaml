@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="RecycleBinImage" TargetType="{x:Type Image}">
+        <Setter Property="Source">
+            <Setter.Value>
+                <DrawingImage>
+                    <DrawingImage.Drawing>
+                        <DrawingGroup ClipGeometry="M0,0 V91 H91 V0 H0 Z">
+                            <DrawingGroup Opacity="1">
+                                <GeometryDrawing Brush="{DynamicResource Additional}" Geometry="F1 M91,91z M0,0z M67.305,36.442L67.305,28.387C67.305,27.448,66.543,26.686,65.605,26.686L54.342,26.686 54.342,21.162C54.342,20.224,53.581,19.462,52.643,19.462L39.893,19.462C38.954,19.462,38.192,20.224,38.192,21.162L38.192,26.686 26.93,26.686C25.991,26.686,25.23,27.448,25.23,28.387L25.23,36.442C25.23,37.38,25.991,38.141,26.93,38.141L27.418,38.141 27.418,72.162C27.418,73.1,28.179,73.862,29.117,73.862L58.598,73.862C62.193,73.862,65.118,70.938,65.118,67.344L65.118,38.142 65.604,38.142C66.543,38.142,67.305,37.381,67.305,36.442z M41.592,22.862L50.942,22.862 50.942,26.686 41.592,26.686 41.592,22.862z M61.719,67.345C61.719,69.064,60.319,70.462,58.599,70.462L30.819,70.462 30.819,38.142 61.719,38.144 61.719,67.345z M63.904,34.742L28.629,34.742 28.629,30.087 39.893,30.087 52.643,30.087 63.905,30.087 63.905,34.742z" />
+                                <GeometryDrawing Brush="{DynamicResource Additional}">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="36.066,44.962,3.4,19.975" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Brush="{DynamicResource Additional}">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="44.566,44.962,3.4,19.975" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Brush="{DynamicResource Additional}">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="0" RadiusY="0" Rect="53.066,44.962,3.4,19.975" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingGroup>
+                    </DrawingImage.Drawing>
+                </DrawingImage>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

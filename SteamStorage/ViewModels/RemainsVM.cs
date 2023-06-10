@@ -35,6 +35,9 @@ namespace SteamStorage.ViewModels
         private List<RemainModel> displayedRemains;
         private RemainGroupModel selectedGroup;
         private RelayCommand removeFilterCommand;
+        private RelayCommand<object> editRemainCommand;
+        private RelayCommand<object> sellRemainCommand;
+        private RelayCommand<object> deleteRemainCommand;
         #endregion Fields
 
         #region Properties
@@ -106,6 +109,30 @@ namespace SteamStorage.ViewModels
                   (removeFilterCommand = new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand));
             }
         }
+        public RelayCommand<object> EditRemainCommand
+        {
+            get
+            {
+                return editRemainCommand ??
+                  (editRemainCommand = new RelayCommand<object>(DoEditRemainCommand));
+            }
+        }
+        public RelayCommand<object> SellRemainCommand
+        {
+            get
+            {
+                return sellRemainCommand ??
+                  (sellRemainCommand = new RelayCommand<object>(DoSellRemainCommand));
+            }
+        }
+        public RelayCommand<object> DeleteRemainCommand
+        {
+            get
+            {
+                return deleteRemainCommand ??
+                  (deleteRemainCommand = new RelayCommand<object>(DoDeleteRemainCommand));
+            }
+        }
         #endregion Commands
 
         #region Constructor
@@ -141,6 +168,18 @@ namespace SteamStorage.ViewModels
                 && SelectedOrderType == null)
                 return false;
             return true;
+        }
+        private void DoEditRemainCommand(object? data)
+        {
+
+        }
+        private void DoSellRemainCommand(object? data)
+        {
+
+        }
+        private void DoDeleteRemainCommand(object? data)
+        {
+
         }
         private void DoFiltering()
         {

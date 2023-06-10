@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="370" d:DesignWidth="300">
     <Grid>
-        <ListView ItemsSource="{Binding NavigationOptions}" Style="{DynamicResource ListViewStyle}" SelectionMode="Single">
+        <ListView ItemsSource="{Binding NavigationOptions}" 
+                  Style="{DynamicResource ListViewStyle}" 
+                  SelectionMode="Single">
             
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="SelectionChanged">

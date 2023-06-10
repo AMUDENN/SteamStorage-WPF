@@ -7,12 +7,16 @@ namespace SteamStorage.Models
 {
     public class ArchiveModel
     {
+        #region Fields
         private DateTime datePurchase;
         private DateTime dateSold;
         private double amountPurchase;
         private double amountSold;
         private double percent;
         private Archive archive;
+        #endregion Fields
+
+        #region Properties
         public ArchiveGroup ArchiveGroup => archive.IdGroupNavigation;
         public string Title => archive.IdSkinNavigation.Title;
         public DateTime DatePurchase => datePurchase;
@@ -23,6 +27,9 @@ namespace SteamStorage.Models
         public double AmountPurchase => amountPurchase;
         public double AmountSold => amountSold;
         public double Percent => percent;
+        #endregion Properties
+
+        #region Constructor
         public ArchiveModel(Archive archive)
         {
             this.archive = archive;
@@ -33,5 +40,6 @@ namespace SteamStorage.Models
             percent = Math.Round((CostSold - CostPurchase) / CostPurchase * 100, 2);
             Context.GetContext().Skins.LoadAsync();
         }
+        #endregion Constructor
     }
 }
