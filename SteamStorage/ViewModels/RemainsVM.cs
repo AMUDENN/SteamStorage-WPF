@@ -35,6 +35,13 @@ namespace SteamStorage.ViewModels
         private List<RemainModel> displayedRemains;
         private RemainGroupModel selectedGroup;
         private RelayCommand removeFilterCommand;
+        private RelayCommand<object> updateGroupCommand;
+        private RelayCommand addGroupCommand;
+        private RelayCommand<object> editGroupCommand;
+        private RelayCommand<object> deleteGroupCommand;
+        private RelayCommand<object> deleteWithSkinsGroupCommand;
+        private RelayCommand<object> updateRemainCommand;
+        private RelayCommand addRemainCommand;
         private RelayCommand<object> editRemainCommand;
         private RelayCommand<object> sellRemainCommand;
         private RelayCommand<object> deleteRemainCommand;
@@ -108,6 +115,55 @@ namespace SteamStorage.ViewModels
                 return removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
             }
         }
+        public RelayCommand<object> UpdateGroupCommand
+        {
+            get
+            {
+                return updateGroupCommand ??= new RelayCommand<object>(DoUpdateGroupCommand);
+            }
+        }
+        public RelayCommand AddGroupCommand
+        {
+            get
+            {
+                return addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
+            }
+        }
+        public RelayCommand<object> EditGroupCommand
+        {
+            get
+            {
+                return editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
+            }
+        }
+        public RelayCommand<object> DeleteGroupCommand
+        {
+            get
+            {
+                return deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
+            }
+        }
+        public RelayCommand<object> DeleteWithSkinsGroupCommand
+        {
+            get
+            {
+                return deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
+            }
+        }
+        public RelayCommand<object> UpdateRemainCommand
+        {
+            get
+            {
+                return updateRemainCommand ??= new RelayCommand<object>(DoUpdateRemainCommand);
+            }
+        }
+        public RelayCommand AddRemainCommand
+        {
+            get
+            {
+                return addRemainCommand ??= new RelayCommand(DoAddRemainCommand);
+            }
+        }
         public RelayCommand<object> EditRemainCommand
         {
             get
@@ -164,6 +220,34 @@ namespace SteamStorage.ViewModels
                 && SelectedOrderType == null)
                 return false;
             return true;
+        }
+        private void DoUpdateGroupCommand(object? data)
+        {
+
+        }
+        private void DoAddGroupCommand()
+        {
+
+        }
+        private void DoEditGroupCommand(object? data)
+        {
+
+        }
+        private void DoDeleteGroupCommand(object? data)
+        {
+
+        }
+        private void DoDeleteWithSkinsGroupCommand(object? data)
+        {
+
+        }
+        private void DoUpdateRemainCommand(object? data)
+        {
+
+        }
+        private void DoAddRemainCommand()
+        {
+
         }
         private void DoEditRemainCommand(object? data)
         {

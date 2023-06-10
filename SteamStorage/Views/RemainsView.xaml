@@ -31,8 +31,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Margin="0, 15" Grid.Row="0">
-                <Button Content="Добавить группу" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50"/>
-                <Button Content="Добавить скин" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50" Margin="0, 5"/>
+                <Button Content="Добавить группу" Command="{Binding AddGroupCommand}" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50"/>
+                <Button Content="Добавить скин" Command="{Binding AddRemainCommand}" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50" Margin="0, 5"/>
             </StackPanel>
 
             <ListView ItemsSource="{Binding Groups}" 
@@ -42,11 +42,29 @@
 
                 <ListView.Resources>
                     <ContextMenu x:Key="GroupContextMenu" Style="{DynamicResource ContextMenuStyle}">
-                        <MenuItem Header="Изменить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Обновить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.UpdateGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                         <Separator Style="{DynamicResource SeparatorStyle}"/>
-                        <MenuItem Header="Удалить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Добавить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AddGroupCommand}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                         <Separator Style="{DynamicResource SeparatorStyle}"/>
-                        <MenuItem Header="Удалить со скинами" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Изменить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить со скинами" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteWithSkinsGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                     </ContextMenu>
                 </ListView.Resources>
 
@@ -186,13 +204,29 @@
 
                 <ListView.Resources>
                     <ContextMenu x:Key="RemainContextMenu" Style="{DynamicResource ContextMenuStyle}">
-                        <MenuItem Header="Обновить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Обновить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.UpdateRemainCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                         <Separator Style="{DynamicResource SeparatorStyle}"/>
-                        <MenuItem Header="Изменить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Добавить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AddRemainCommand}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                         <Separator Style="{DynamicResource SeparatorStyle}"/>
-                        <MenuItem Header="Продать" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Изменить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditRemainCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                         <Separator Style="{DynamicResource SeparatorStyle}"/>
-                        <MenuItem Header="Удалить" Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <MenuItem Header="Продать" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.SellRemainCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteRemainCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
                     </ContextMenu>
                 </ListView.Resources>
 
