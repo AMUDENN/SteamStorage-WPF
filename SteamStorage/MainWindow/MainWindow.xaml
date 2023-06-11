@@ -12,6 +12,9 @@
         <Behaviors:EventTrigger EventName="Closing">
             <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"/>
         </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="StateChanged">
+            <Behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" PassEventArgsToCommand="True"/>
+        </Behaviors:EventTrigger>
     </Behaviors:Interaction.Triggers>
     <Grid>
         <ContentControl Content="{Binding CurrentVM}"/>

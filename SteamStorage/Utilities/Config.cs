@@ -21,6 +21,21 @@ namespace SteamStorage.Utilities
             get => Convert.ToDouble(config.AppSettings.Settings["Height"].Value);
             set => SaveProperty("Height", value.ToString());
         }
+        public static double Top
+        {
+            get => Convert.ToDouble(config.AppSettings.Settings["Top"].Value);
+            set => SaveProperty("Top", value.ToString());
+        }
+        public static double Left
+        {
+            get => Convert.ToDouble(config.AppSettings.Settings["Left"].Value);
+            set => SaveProperty("Left", value.ToString());
+        }
+        public static bool IsMaximized
+        {
+            get => Convert.ToBoolean(config.AppSettings.Settings["IsMaximized"].Value);
+            set => SaveProperty("IsMaximized", value.ToString());
+        }
         private static void SaveProperty(string name, string value)
         {
             config.AppSettings.Settings[name].Value = value;

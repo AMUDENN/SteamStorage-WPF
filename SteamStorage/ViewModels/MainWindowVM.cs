@@ -10,6 +10,7 @@ namespace SteamStorage.ViewModels
         #region Fields
         private ObservableObject currentVM;
         private RelayCommand closingCommand;
+        private RelayCommand stateChangedCommand;
         #endregion Fields
 
         #region Properties
@@ -28,6 +29,13 @@ namespace SteamStorage.ViewModels
                 return closingCommand ??= new RelayCommand(DoClosingCommand);
             }
         }
+        public RelayCommand StateChangedCommand
+        {
+            get
+            {
+                return stateChangedCommand ??= new RelayCommand(DoStateChangedCommand);
+            }
+        }
         #endregion Commands
 
         #region Constructor
@@ -40,8 +48,25 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoClosingCommand()
         {
-            Config.Width = Application.Current.MainWindow.ActualWidth;
-            Config.Height = Application.Current.MainWindow.ActualHeight;
+            var mw = Application.Current.MainWindow;
+
+            bool isMaximized = mw.WindowState == WindowState.Maximized;
+            Config.IsMaximized = isMaximized;
+            if (isMaximized) return;
+
+            Config.Width = mw.ActualWidth;
+            Config.Height = mw.ActualHeight;
+            Config.Top = mw.Top;
+            Config.Left = mw.Left;
+            
+        }
+        private void DoStateChangedCommand()
+        {
+            var mw = Application.Current.MainWindow;
+            Config.Width = mw.ActualWidth;
+            Config.Height = mw.ActualHeight;
+            Config.Top = mw.Top;
+            Config.Left = mw.Left;
         }
         #endregion Methods
     }

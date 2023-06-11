@@ -22,8 +22,13 @@ namespace SteamStorage
 
             window.Height = Config.Height;
             window.Width = Config.Width;
+            window.Top = Config.Top;
+            window.Left = Config.Left;
 
             window.Show();
+
+            if (Config.IsMaximized) window.WindowState = WindowState.Maximized;
+            
             base.OnStartup(e);
         }
 
