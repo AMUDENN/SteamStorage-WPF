@@ -19,7 +19,7 @@
             Converter1="{StaticResource DoubleRoundConverter}"
             Converter2="{StaticResource PercentConverter}"/>
     </UserControl.Resources>
-    
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"/>
                 <RowDefinition Height="*"/>
@@ -131,14 +131,14 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            
+
             <Grid Grid.Row="0">
 
                 <Grid.ColumnDefinitions>
@@ -174,7 +174,7 @@
                     HorizontalAlignment="Right" 
                     Margin="10, 15"
                     Grid.Column="3"/>
-                
+
             </Grid>
 
             <Grid Grid.Row="1" Margin="23, 5">
@@ -197,8 +197,8 @@
                 <TextBlock Text="Сумма" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="3"/>
                 <TextBlock Text="Дата покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="4"/>
                 <TextBlock Text="Текущая цена" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="5" />
-                <TextBlock Text="Изменение" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="6"/>
-                <TextBlock Text="Последнее обновление" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="7"/>
+                <TextBlock Text="Последнее обновление" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="6"/>
+                <TextBlock Text="Изменение" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="7"/>
 
             </Grid>
 
@@ -259,7 +259,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
-                            
+
                             <Grid Height="100" Margin="15, 5">
 
                                 <Grid.RowDefinitions>
@@ -290,10 +290,10 @@
                                                Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
                                     <TextBlock Text="{Binding LastCost, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                                                Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
+                                    <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
                                     <TextBlock Text="{Binding Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                                Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" 
-                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6"/>
-                                    <TextBlock Text="{Binding DateLastUpdate, Converter={StaticResource DateTimeConverter}}" 
                                                Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
 
                                 </Grid>
@@ -358,7 +358,7 @@
                                 </Grid>
 
                             </Grid>
-                            
+
                         </Border>
 
                         <DataTemplate.Triggers>
@@ -377,7 +377,7 @@
                         </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-                
+
             </ListView>
 
             <Grid Grid.Row="3" Margin="23, 5">
@@ -404,10 +404,10 @@
 
                 <TextBlock Text="{Binding AverageCurrentCost, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="5" />
+                <TextBlock Text="{Binding TotalCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="6"/>
                 <TextBlock Text="{Binding AveragePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                            Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="6"/>
-                <TextBlock Text="{Binding TotalCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="7"/>
 
                 <Border BorderBrush="{DynamicResource Additional}" 

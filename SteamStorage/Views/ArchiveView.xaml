@@ -4,9 +4,385 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
+             xmlns:converters="clr-namespace:SteamStorage.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    
+    <UserControl.Resources>
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
+        <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
+        <converters:PercentConverter x:Key="PercentConverter"/>
+        <converters:PercentForegroundConverter x:Key="PercentForegroundConverter"/>
+        <converters:PlotValueConverter x:Key="PlotValueConverter"/>
+        <converters:CombiningConverter x:Key="DoublePercentConverter"
+            Converter1="{StaticResource DoubleRoundConverter}"
+            Converter2="{StaticResource PercentConverter}"/>
+    </UserControl.Resources>
+
     <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="160"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0, 15" Grid.Row="0">
+                <Button Content="Добавить группу" Command="{Binding AddGroupCommand}" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50"/>
+                <Button Content="Добавить скин" Command="{Binding AddArchiveCommand}" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50" Margin="0, 5"/>
+            </StackPanel>
+
+            <ListView ItemsSource="{Binding Groups}" 
+                      SelectedItem="{Binding SelectedGroup}" 
+                      Style="{DynamicResource ListViewStyle}"
+                      Grid.Row="1">
+
+                <ListView.Resources>
+                    <ContextMenu x:Key="GroupContextMenu" Style="{DynamicResource ContextMenuStyle}">
+                        <MenuItem Header="Добавить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AddGroupCommand}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Изменить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить со скинами" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteWithSkinsGroupCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                    </ContextMenu>
+                </ListView.Resources>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu" Value="{StaticResource GroupContextMenu}"/>
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="7, 0, 0, 7">
+                                        <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FontWeight" Value="DemiBold"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border Style="{DynamicResource MainAdditionalBorderStyle}">
+                                                <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border Style="{DynamicResource MainAdditionalBorderStyle}">
+                                                <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="50">
+                            <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTitleTextBlockStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{DynamicResource SearchTextBoxStyle}"
+                     Tag="Поиск"
+                     Margin="10, 15"
+                     Grid.Column="0"/>
+
+                <ComboBox Style="{DynamicResource ComboBoxStyle}" 
+                      Tag="Выберите тип"
+                      ItemsSource="{Binding OrderTitles}" 
+                      SelectedItem="{Binding SelectedOrderTitle}"
+                      Margin="10, 15"
+                      Grid.Column="1"/>
+
+                <ComboBox Style="{DynamicResource ComboBoxStyle}"
+                      Tag="Выберите порядок"
+                      ItemsSource="{Binding OrderTypes}" 
+                      SelectedItem="{Binding SelectedOrderType}"
+                      Margin="10, 15"
+                      Grid.Column="2"/>
+
+                <Button Style="{DynamicResource FilterRemoveButtonStyle}" 
+                    Command="{Binding RemoveFilterCommand}"
+                    Content="Очистить фильтры"
+                    HorizontalAlignment="Right" 
+                    Margin="10, 15"
+                    Grid.Column="3"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="23, 5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="17"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Название" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="0"/>
+                <TextBlock Text="Количество" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="1"/>
+                <TextBlock Text="Цена покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="2"/>
+                <TextBlock Text="Сумма покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="3"/>
+                <TextBlock Text="Дата покупки" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="4"/>
+                <TextBlock Text="Цена продажи" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="5" />
+                <TextBlock Text="Сумма продажи" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="6"/>
+                <TextBlock Text="Дата продажи" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="7"/>
+                <TextBlock Text="Изменение" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="8"/>
+
+            </Grid>
+
+            <ListView ItemsSource="{Binding DisplayedArchives}"
+                      Style="{DynamicResource ListViewStyle}"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      Margin="5, 0"
+                      Grid.Row="2">
+
+                <ListView.Resources>
+                    <ContextMenu x:Key="ArchiveContextMenu" Style="{DynamicResource ContextMenuStyle}">
+                        <MenuItem Header="Добавить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AddArchiveCommand}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Изменить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditArchiveCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                        <Separator Style="{DynamicResource SeparatorStyle}"/>
+                        <MenuItem Header="Удалить" 
+                                  Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteArchiveCommand}"
+                                  CommandParameter="{Binding}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                    </ContextMenu>
+                </ListView.Resources>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu" Value="{StaticResource ArchiveContextMenu}"/>
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter x:Name="PART_ContentHost"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
+
+                            <Grid Height="100" Margin="15, 5">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTextBlockStyle}" TextAlignment="Left" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding Count}" Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding CostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding AmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="3"/>
+                                    <TextBlock Text="{Binding DatePurchase, Converter={StaticResource DateTimeConverter}}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="4"/>
+                                    <TextBlock Text="{Binding CostSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="5" />
+                                    <TextBlock Text="{Binding AmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="6" />
+                                    <TextBlock Text="{Binding DateSold, Converter={StaticResource DateTimeConverter}}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="7"/>
+                                    <TextBlock Text="{Binding Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                               Foreground="{Binding Percent, Converter={StaticResource PercentForegroundConverter}}" 
+                                               Style="{DynamicResource SmallTextBlockStyle}" Grid.Column="8"/>
+
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="200"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid x:Name="Menu" Visibility="Hidden" Grid.Column="1">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Style="{DynamicResource ImageButtonStyle}"
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditArchiveCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10" Grid.Column="0">
+                                            <Image Style="{DynamicResource EditImage}"/>
+                                        </Button>
+
+                                        <Button Style="{DynamicResource ImageButtonStyle}" 
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteArchiveCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10" Grid.Column="1">
+                                            <Image Style="{DynamicResource RecycleBinImage}"/>
+                                        </Button>
+
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Border>
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Visibility" TargetName="Menu" Value="Visible"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard AutoReverse="False">
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             Storyboard.TargetName="Menu"
+                                                             From="0" To="1" Duration="0:0:0.40"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ListView>
+
+            <Grid Grid.Row="3" Margin="23, 5">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="17"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Итого:" Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalCount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding AverageCostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="3"/>
+
+                <TextBlock Text="{Binding AverageCostSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="5" />
+                <TextBlock Text="{Binding TotalAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="6"/>
+                <TextBlock Text="{Binding AveragePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                           Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="8"/>
                 
+
+                <Border BorderBrush="{DynamicResource Additional}" 
+                        Opacity="0.5"
+                        BorderThickness="0, 1, 0, 0" 
+                        Margin="0, 5, 0, 0" 
+                        Grid.ColumnSpan="9" Grid.Column="0"/>
+
+            </Grid>
+
+        </Grid>
+
     </Grid>
 </UserControl>
