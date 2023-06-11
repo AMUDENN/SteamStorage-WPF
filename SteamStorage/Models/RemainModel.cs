@@ -63,7 +63,7 @@ namespace SteamStorage.Models
             maxPrice = priceDynamics.Values.Max();
             dateLastUpdate = priceDynamics.Last().Key;
             lastCost = priceDynamics.Last().Value;
-            percent = Math.Round((lastCost - CostPurchase) / CostPurchase * 100, 2);
+            percent = (lastCost - CostPurchase) / CostPurchase * 100;
 
             int i = 0;
             foreach (var item in priceDynamics)

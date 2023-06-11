@@ -33,6 +33,14 @@ namespace SteamStorage.ViewModels
         private List<RemainGroupModel> groups;
         private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
+
+        private double totalCount;
+        private double averageCostPurchase;
+        private double totalAmount;
+        private double averageCurrentCost;
+        private double averagePercent;
+        private double totalCurrentAmount;
+
         private RemainGroupModel selectedGroup;
         private RelayCommand removeFilterCommand;
         private RelayCommand<object> updateGroupCommand;
@@ -95,6 +103,36 @@ namespace SteamStorage.ViewModels
         {
             get => displayedRemains;
             set => SetProperty(ref displayedRemains, value);
+        }
+        public double TotalCount
+        {
+            get => totalCount;
+            set => SetProperty(ref totalCount, value);
+        }
+        public double AverageCostPurchase
+        {
+            get => averageCostPurchase;
+            set => SetProperty(ref averageCostPurchase, value);
+        }
+        public double TotalAmount
+        {
+            get => totalAmount;
+            set => SetProperty(ref totalAmount, value);
+        }
+        public double AverageCurrentCost
+        {
+            get => averageCurrentCost;
+            set => SetProperty(ref averageCurrentCost, value);
+        }
+        public double AveragePercent
+        {
+            get => averagePercent;
+            set => SetProperty(ref averagePercent, value);
+        }
+        public double TotalCurrentAmount
+        {
+            get => totalCurrentAmount;
+            set => SetProperty(ref totalCurrentAmount, value);
         }
         public RemainGroupModel SelectedGroup
         {
@@ -267,6 +305,31 @@ namespace SteamStorage.ViewModels
             DisplayedRemains = Remains.Where(
                 x => (SelectedGroup.RemainGroup is null || x.RemainGroup == SelectedGroup.RemainGroup) && x.Title.ToLower().Contains(Filter)
                 ).ToList();
+
+            if (DisplayedRemains.Any())
+            {
+                TotalCount = DisplayedRemains.Sum(x => x.Count);
+
+                TotalAmount = DisplayedRemains.Sum(x => x.AmountPurchase);
+
+                AverageCostPurchase = TotalAmount / TotalCount;
+
+                TotalCurrentAmount = DisplayedRemains.Sum(x => x.LastCost * x.Count);
+
+                AverageCurrentCost = TotalCurrentAmount / TotalCount;
+
+                AveragePercent = (TotalCurrentAmount - TotalAmount) / TotalAmount * 100;
+            }
+            else
+            {
+                TotalCount = 0;
+                AverageCostPurchase = 0;
+                TotalAmount = 0;
+                AverageCurrentCost = 0;
+                AveragePercent = 0;
+                TotalCurrentAmount = 0;
+            }
+
             DoSorting();
         }
         private void DoSorting()

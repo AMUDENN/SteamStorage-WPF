@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace TestSystem.Resources.Converters
+namespace SteamStorage.Resources.Converters
 {
     public class PercentForegroundConverter : IValueConverter
     {
