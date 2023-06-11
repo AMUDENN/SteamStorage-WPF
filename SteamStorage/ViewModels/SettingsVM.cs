@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
-using System.Windows;
-using System.Windows.Media;
 
 namespace SteamStorage.ViewModels
 {
