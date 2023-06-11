@@ -135,11 +135,7 @@
                             <TextDecorationCollection>
                                 <TextDecoration>
                                     <TextDecoration.Pen>
-                                        <Pen>
-                                            <Pen.Brush>
-                                                <SolidColorBrush Color="{DynamicResource AdditionalColor}" Opacity="0.5"/>
-                                            </Pen.Brush>
-                                        </Pen>
+                                        <Pen Brush="{DynamicResource Additional}"/>
                                     </TextDecoration.Pen>
                                 </TextDecoration>
                             </TextDecorationCollection>

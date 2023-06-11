@@ -8,7 +8,7 @@
              d:DesignHeight="900" d:DesignWidth="1600">
     
     <Grid Margin="30, 5">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="70"/>
@@ -18,18 +18,78 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
-        </StackPanel>
-
         <Button Content="Экспортировать в .dt" 
                 Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                HorizontalAlignment="Left" Grid.Row="1"/>
+                HorizontalAlignment="Left" Grid.Row="0"/>
 
         <Button Content="Экспортировать в .xlsx" 
                 Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                HorizontalAlignment="Left" Grid.Row="2"/>
+                HorizontalAlignment="Left" Grid.Row="1"/>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
+            <RadioButton Content="Тёмная" IsChecked="{Binding IsDarkTheme}" GroupName="Themes"/>
+            <RadioButton Content="Светлая" IsChecked="{Binding IsLightTheme}" GroupName="Themes"/>
+            <RadioButton Content="Пользовательская" IsChecked="{Binding IsCustomTheme}" GroupName="Themes"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border IsEnabled="{Binding IsCustomTheme}" Style="{DynamicResource AccentAdditionalBorderStyle}">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Main color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock Text="Main additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock Text="Additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock Text="Accent color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="3" Grid.Column="0"/>
+                    <TextBlock Text="Accent additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
+                    <TextBlock Text="Percent plus color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="1" Grid.Column="2"/>
+                    <TextBlock Text="Percent minus color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="2" Grid.Column="2"/>
+
+                    <TextBox Text="{Binding MainColor}" Grid.Row="0" Grid.Column="1"/>
+                    <TextBox Text="{Binding MainAdditionalColor}" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox Text="{Binding AdditionalColor}" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Text="{Binding AccentColor}" Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Text="{Binding AccentAdditionalColor}" Grid.Row="0" Grid.Column="3"/>
+                    <TextBox Text="{Binding PercentPlusColor}" Grid.Row="1" Grid.Column="3"/>
+                    <TextBox Text="{Binding PercentMinusColor}" Grid.Row="2" Grid.Column="3"/>
+
+                    <Button Content="Сохранить" 
+                            Command="{Binding SaveColorsCommand}"
+                            Style="{DynamicResource UnderlineTransparentButtonStyle}" 
+                            Grid.Row="4" Grid.Column="0"/>
+
+                    <Button Content="Сбросить" 
+                            Command="{Binding ResetColorsCommand}"
+                            Style="{DynamicResource UnderlineTransparentButtonStyle}" 
+                            Grid.Row="4" Grid.Column="1"/>
+
+                </Grid>
+
+            </Border>
+            
+        </Grid>
 
         <Grid Grid.Row="4">
 

@@ -6,7 +6,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
-    
+
     <Style x:Key="SearchTextBoxStyle" BasedOn="{StaticResource BaseTextBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Background" Value="{DynamicResource Accent}"/>
