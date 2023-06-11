@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,10 +13,47 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private string filter;
+        private readonly Dictionary<string, Func<ArchiveModel, object>> orderTitles = new()
+        {
+            { "Название", x => x.Title },
+            { "Количество", x => x.Count },
+            { "Цена покупки", x => x.CostPurchase },
+            { "Сумма покупки", x => x.AmountPurchase },
+            { "Дата покупки", x => x.DatePurchase },
+            { "Цена продажи", x => x.CostSold },
+            { "Сумма продажи", x => x.AmountSold },
+            { "Дата продажи", x => x.DateSold },
+            { "Изменение", x => x.Percent }
+        };
+        private string? selectedOrderTitle;
+        private readonly Dictionary<string, bool> orderTypes = new Dictionary<string, bool>
+        {
+            { "По возрастанию", true },
+            { "По убыванию", false }
+        };
+        private string? selectedOrderType;
+
         private List<ArchiveGroupModel> groups;
         private List<ArchiveModel> archives;
         private List<ArchiveModel> displayedArchives;
+
+        private double totalCount;
+        private double averageCostPurchase;
+        private double totalAmountPurchase;
+        private double averageCostSold;
+        private double totalAmountSold;
+        private double averagePercent;
+
         private ArchiveGroupModel selectedGroup;
+
+        private RelayCommand removeFilterCommand;
+        private RelayCommand addGroupCommand;
+        private RelayCommand<object> editGroupCommand;
+        private RelayCommand<object> deleteGroupCommand;
+        private RelayCommand<object> deleteWithSkinsGroupCommand;
+        private RelayCommand addArchiveCommand;
+        private RelayCommand<object> editArchiveCommand;
+        private RelayCommand<object> deleteArchiveCommand;
         #endregion Fields
 
         #region Properties
@@ -24,6 +64,26 @@ namespace SteamStorage.ViewModels
             {
                 SetProperty(ref filter, value.ToLower());
                 DoFiltering();
+            }
+        }
+        public IEnumerable<string> OrderTitles => orderTitles.Keys;
+        public string? SelectedOrderTitle
+        {
+            get => selectedOrderTitle;
+            set
+            {
+                SetProperty(ref selectedOrderTitle, value);
+                DoSorting();
+            }
+        }
+        public IEnumerable<string> OrderTypes => orderTypes.Keys;
+        public string? SelectedOrderType
+        {
+            get => selectedOrderType;
+            set
+            {
+                SetProperty(ref selectedOrderType, value);
+                DoSorting();
             }
         }
         public List<ArchiveGroupModel> Groups
@@ -45,6 +105,36 @@ namespace SteamStorage.ViewModels
             get => displayedArchives;
             set => SetProperty(ref displayedArchives, value);
         }
+        public double TotalCount
+        {
+            get => totalCount;
+            set => SetProperty(ref totalCount, value);
+        }
+        public double AverageCostPurchase
+        {
+            get => averageCostPurchase;
+            set => SetProperty(ref averageCostPurchase, value);
+        }
+        public double TotalAmountPurchase
+        {
+            get => totalAmountPurchase;
+            set => SetProperty(ref totalAmountPurchase, value);
+        }
+        public double AverageCostSold
+        {
+            get => averageCostSold;
+            set => SetProperty(ref averageCostSold, value);
+        }
+        public double TotalAmountSold
+        {
+            get => totalAmountSold;
+            set => SetProperty(ref totalAmountSold, value);
+        }
+        public double AveragePercent
+        {
+            get => averagePercent;
+            set => SetProperty(ref averagePercent, value);
+        }
         public ArchiveGroupModel SelectedGroup
         {
             get => selectedGroup;
@@ -56,12 +146,72 @@ namespace SteamStorage.ViewModels
         }
         #endregion Properties
 
+        #region Commands
+        public RelayCommand RemoveFilterCommand
+        {
+            get
+            {
+                return removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
+            }
+        }
+        public RelayCommand AddGroupCommand
+        {
+            get
+            {
+                return addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
+            }
+        }
+        public RelayCommand<object> EditGroupCommand
+        {
+            get
+            {
+                return editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
+            }
+        }
+        public RelayCommand<object> DeleteGroupCommand
+        {
+            get
+            {
+                return deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
+            }
+        }
+        public RelayCommand<object> DeleteWithSkinsGroupCommand
+        {
+            get
+            {
+                return deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
+            }
+        }
+        public RelayCommand AddArchiveCommand
+        {
+            get
+            {
+                return addArchiveCommand ??= new RelayCommand(DoAddArchiveCommand);
+            }
+        }
+        public RelayCommand<object> EditArchiveCommand
+        {
+            get
+            {
+                return editArchiveCommand ??= new RelayCommand<object>(DoEditArchiveCommand);
+            }
+        }
+        public RelayCommand<object> DeleteArchiveCommand
+        {
+            get
+            {
+                return deleteArchiveCommand ??= new RelayCommand<object>(DoDeleteArchiveCommand);
+            }
+        }
+        #endregion Commands
+
         #region Constructor
         public ArchiveVM()
         {
             var context = Context.GetContext();
 
             Groups = context.ArchiveGroups.Select(x => new ArchiveGroupModel(x)).ToList();
+            Groups[1].IsEditable = false;
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
@@ -73,17 +223,90 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
+        private void DoRemoveFilterCommand()
+        {
+            Filter = string.Empty;
+            SelectedGroup = Groups.First();
+            SelectedOrderTitle = null;
+            SelectedOrderType = null;
+            DisplayedArchives = Archives;
+        }
+        private bool CanExecuteRemoveFilterCommand()
+        {
+            if (Filter == string.Empty
+                && SelectedGroup == Groups.First()
+                && SelectedOrderTitle == null
+                && SelectedOrderType == null)
+                return false;
+            return true;
+        }
+        private void DoAddGroupCommand()
+        {
+
+        }
+        private void DoEditGroupCommand(object? data)
+        {
+
+        }
+        private void DoDeleteGroupCommand(object? data)
+        {
+
+        }
+        private void DoDeleteWithSkinsGroupCommand(object? data)
+        {
+
+        }
+        private void DoAddArchiveCommand()
+        {
+
+        }
+        private void DoEditArchiveCommand(object? data)
+        {
+
+        }
+        private void DoDeleteArchiveCommand(object? data)
+        {
+
+        }
         private void DoFiltering()
         {
             if (Archives is null) return;
             DisplayedArchives = Archives.Where(
                 x => (SelectedGroup.ArchiveGroup is null || x.ArchiveGroup == SelectedGroup.ArchiveGroup) && x.Title.ToLower().Contains(Filter)
                 ).ToList();
+
+            if (DisplayedArchives.Any())
+            {
+                TotalCount = DisplayedArchives.Sum(x => x.Count);
+
+                TotalAmountPurchase = DisplayedArchives.Sum(x => x.AmountPurchase);
+
+                AverageCostPurchase = TotalAmountPurchase / TotalCount;
+
+                TotalAmountSold = DisplayedArchives.Sum(x => x.AmountSold);
+
+                AverageCostSold = TotalAmountSold / TotalCount;
+
+                AveragePercent = (TotalAmountSold - TotalAmountPurchase) / TotalAmountPurchase * 100;
+            }
+            else
+            {
+                TotalCount = 0;
+                AverageCostPurchase = 0;
+                TotalAmountPurchase = 0;
+                AverageCostSold = 0;
+                TotalAmountSold = 0;
+                AveragePercent = 0;
+            }
+
             DoSorting();
         }
         private void DoSorting()
         {
-
+            RemoveFilterCommand.NotifyCanExecuteChanged();
+            if (DisplayedArchives is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
+            var remains = orderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(orderTitles[SelectedOrderTitle]);
+            DisplayedArchives = remains.ToList();
         }
         #endregion Methods
     }

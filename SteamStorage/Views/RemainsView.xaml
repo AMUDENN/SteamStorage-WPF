@@ -399,7 +399,7 @@
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="1"/>
                 <TextBlock Text="{Binding AverageCostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="2"/>
-                <TextBlock Text="{Binding TotalAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                <TextBlock Text="{Binding TotalAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="3"/>
 
                 <TextBlock Text="{Binding AverageCurrentCost, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 

@@ -13,7 +13,11 @@ namespace SteamStorage.Models
         #region Properties
         public RemainGroup? RemainGroup => remainGroup;
         public string Title => title;
-        public bool IsEditable => isEditable;
+        public bool IsEditable
+        {
+            get => isEditable;
+            set => isEditable = value;
+        }
         #endregion Properties
 
         #region Constructor

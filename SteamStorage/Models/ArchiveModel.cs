@@ -37,7 +37,7 @@ namespace SteamStorage.Models
             dateSold = DateTime.ParseExact(this.archive.DateSold, Constants.DateTimeFormat, null);
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
-            percent = Math.Round((CostSold - CostPurchase) / CostPurchase * 100, 2);
+            percent = (CostSold - CostPurchase) / CostPurchase * 100;
             Context.GetContext().Skins.LoadAsync();
         }
         #endregion Constructor

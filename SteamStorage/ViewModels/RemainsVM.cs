@@ -36,12 +36,13 @@ namespace SteamStorage.ViewModels
 
         private double totalCount;
         private double averageCostPurchase;
-        private double totalAmount;
+        private double totalAmountPurchase;
         private double averageCurrentCost;
         private double averagePercent;
         private double totalCurrentAmount;
 
         private RemainGroupModel selectedGroup;
+
         private RelayCommand removeFilterCommand;
         private RelayCommand<object> updateGroupCommand;
         private RelayCommand addGroupCommand;
@@ -114,10 +115,10 @@ namespace SteamStorage.ViewModels
             get => averageCostPurchase;
             set => SetProperty(ref averageCostPurchase, value);
         }
-        public double TotalAmount
+        public double TotalAmountPurchase
         {
-            get => totalAmount;
-            set => SetProperty(ref totalAmount, value);
+            get => totalAmountPurchase;
+            set => SetProperty(ref totalAmountPurchase, value);
         }
         public double AverageCurrentCost
         {
@@ -231,6 +232,7 @@ namespace SteamStorage.ViewModels
             var context = Context.GetContext();
 
             Groups = context.RemainGroups.Select(x => new RemainGroupModel(x)).ToList();
+            Groups[1].IsEditable = false;
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
@@ -310,21 +312,21 @@ namespace SteamStorage.ViewModels
             {
                 TotalCount = DisplayedRemains.Sum(x => x.Count);
 
-                TotalAmount = DisplayedRemains.Sum(x => x.AmountPurchase);
+                TotalAmountPurchase = DisplayedRemains.Sum(x => x.AmountPurchase);
 
-                AverageCostPurchase = TotalAmount / TotalCount;
+                AverageCostPurchase = TotalAmountPurchase / TotalCount;
 
                 TotalCurrentAmount = DisplayedRemains.Sum(x => x.LastCost * x.Count);
 
                 AverageCurrentCost = TotalCurrentAmount / TotalCount;
 
-                AveragePercent = (TotalCurrentAmount - TotalAmount) / TotalAmount * 100;
+                AveragePercent = (TotalCurrentAmount - TotalAmountPurchase) / TotalAmountPurchase * 100;
             }
             else
             {
                 TotalCount = 0;
                 AverageCostPurchase = 0;
-                TotalAmount = 0;
+                TotalAmountPurchase = 0;
                 AverageCurrentCost = 0;
                 AveragePercent = 0;
                 TotalCurrentAmount = 0;
