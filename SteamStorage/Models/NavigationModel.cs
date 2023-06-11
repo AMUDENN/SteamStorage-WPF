@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
 
-namespace TestSystem.Models
+namespace SteamStorage.Models
 {
     public class NavigationModel
     {

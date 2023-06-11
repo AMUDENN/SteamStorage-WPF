@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
-namespace TestSystem.Models
+namespace SteamStorage.Models
 {
     public class NavigationChangedRequestedMessage : ValueChangedMessage<NavigationModel>
     {

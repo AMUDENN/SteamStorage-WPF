@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using TestSystem.Models;
+using SteamStorage.Models;
 
 namespace SteamStorage.ViewModels
 {
