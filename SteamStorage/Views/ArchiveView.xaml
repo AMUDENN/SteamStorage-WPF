@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:SteamStorage.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
-    
+
     <UserControl.Resources>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
         <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
@@ -372,7 +372,7 @@
                 <TextBlock Text="{Binding AveragePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                            Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="8"/>
-                
+
 
                 <Border BorderBrush="{DynamicResource Additional}" 
                         Opacity="0.5"
@@ -385,4 +385,5 @@
         </Grid>
 
     </Grid>
+
 </UserControl>
