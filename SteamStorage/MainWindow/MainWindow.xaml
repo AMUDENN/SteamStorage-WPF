@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamStorage"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Steam Storage" 
         Style="{DynamicResource WindowStyle}">
+    <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="Closing">
+            <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"/>
+        </Behaviors:EventTrigger>
+    </Behaviors:Interaction.Triggers>
     <Grid>
         <ContentControl Content="{Binding CurrentVM}"/>
     </Grid>

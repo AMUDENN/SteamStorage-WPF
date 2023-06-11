@@ -5,27 +5,30 @@ using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace SteamStorage.ViewModels
 {
     public class NavigationVM : ObservableObject
     {
-        public List<NavigationModel> NavigationOptions { get; set; } = new List<NavigationModel>();
+        #region Fields
+        private RelayCommand<object> selectionChangedCommand;
+        #endregion Fields
 
-        public ICommand SelectionChangedCommand { get; set; } = new RelayCommand<object>((o) =>
+        #region Properties
+        public List<NavigationModel> NavigationOptions { get; set; } = new List<NavigationModel>();
+        #endregion Properties
+
+        #region Commands
+        public RelayCommand<object> SelectionChangedCommand
         {
-            if (o is SelectionChangedEventArgs selectionChanged)
+            get
             {
-                if (selectionChanged.AddedItems.Count == 0)
-                    return;
-                if (selectionChanged.AddedItems[0] is NavigationModel navModel)
-                {
-                    var message = new NavigationChangedRequestedMessage(navModel);
-                    WeakReferenceMessenger.Default.Send(message);
-                }
+                return selectionChangedCommand ??= new RelayCommand<object>(DoSelectionChangedCommand);
             }
-        });
+        }
+        #endregion Commands
+
+        #region Constructor
         public NavigationVM()
         {
             NavigationOptions.Add(new NavigationModel()
@@ -56,6 +59,23 @@ namespace SteamStorage.ViewModels
             var message = new NavigationChangedRequestedMessage(NavigationOptions[0]);
             WeakReferenceMessenger.Default.Send(message);
         }
+        #endregion Constructor
+
+        #region Methods
+        private void DoSelectionChangedCommand(object? data)
+        {
+            if (data is SelectionChangedEventArgs selectionChanged)
+            {
+                if (selectionChanged.AddedItems.Count == 0)
+                    return;
+                if (selectionChanged.AddedItems[0] is NavigationModel navModel)
+                {
+                    var message = new NavigationChangedRequestedMessage(navModel);
+                    WeakReferenceMessenger.Default.Send(message);
+                }
+            }
+        }
+        #endregion Methods
     }
 }
 

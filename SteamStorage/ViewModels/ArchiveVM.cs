@@ -55,6 +55,8 @@ namespace SteamStorage.ViewModels
             }
         }
         #endregion Properties
+
+        #region Constructor
         public ArchiveVM()
         {
             var context = Context.GetContext();
@@ -68,6 +70,9 @@ namespace SteamStorage.ViewModels
 
             Archives = context.Archives.Select(x => new ArchiveModel(x)).ToList();
         }
+        #endregion Constructor
+
+        #region Methods
         private void DoFiltering()
         {
             if (Archives is null) return;
@@ -80,5 +85,6 @@ namespace SteamStorage.ViewModels
         {
 
         }
+        #endregion Methods
     }
 }
