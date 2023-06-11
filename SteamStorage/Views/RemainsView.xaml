@@ -204,6 +204,7 @@
 
             <ListView ItemsSource="{Binding DisplayedRemains}"
                       Style="{DynamicResource ListViewStyle}"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                       Margin="5, 0"
                       Grid.Row="2">
 
@@ -393,21 +394,27 @@
                     <ColumnDefinition Width="17"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Итого:" Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="0"/>
+                <TextBlock Text="Итого:" Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="0"/>
                 <TextBlock Text="{Binding TotalCount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="1"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="1"/>
                 <TextBlock Text="{Binding AverageCostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="2"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="2"/>
                 <TextBlock Text="{Binding TotalAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="3"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="3"/>
 
                 <TextBlock Text="{Binding AverageCurrentCost, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="5" />
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="5" />
                 <TextBlock Text="{Binding AveragePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                            Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="6"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="6"/>
                 <TextBlock Text="{Binding TotalCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTextBlockStyleWithOverflow}" Grid.Column="7"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="7"/>
+
+                <Border BorderBrush="{DynamicResource Additional}" 
+                        Opacity="0.5"
+                        BorderThickness="0, 1, 0, 0" 
+                        Margin="0, 5, 0, 0" 
+                        Grid.ColumnSpan="9" Grid.Column="0"/>
 
             </Grid>
 
