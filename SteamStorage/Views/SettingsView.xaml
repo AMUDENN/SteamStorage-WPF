@@ -28,9 +28,9 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
-            <RadioButton Content="Тёмная" IsChecked="{Binding IsDarkTheme}" GroupName="Themes"/>
-            <RadioButton Content="Светлая" IsChecked="{Binding IsLightTheme}" GroupName="Themes"/>
-            <RadioButton Content="Пользовательская" IsChecked="{Binding IsCustomTheme}" GroupName="Themes"/>
+            <RadioButton Content="Тёмная" IsChecked="{Binding IsDarkTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
+            <RadioButton Content="Светлая" IsChecked="{Binding IsLightTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
+            <RadioButton Content="Пользовательская" IsChecked="{Binding IsCustomTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
         </StackPanel>
 
         <Grid Grid.Row="3">
@@ -42,7 +42,7 @@
 
             <Border IsEnabled="{Binding IsCustomTheme}" Style="{DynamicResource AccentAdditionalBorderStyle}">
 
-                <Grid>
+                <Grid Margin="5">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -53,27 +53,27 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Main color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="0" Grid.Column="0"/>
-                    <TextBlock Text="Main additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="1" Grid.Column="0"/>
-                    <TextBlock Text="Additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="2" Grid.Column="0"/>
-                    <TextBlock Text="Accent color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="3" Grid.Column="0"/>
-                    <TextBlock Text="Accent additional color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
-                    <TextBlock Text="Percent plus color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="1" Grid.Column="2"/>
-                    <TextBlock Text="Percent minus color: " Style="{DynamicResource SmallTitleTextBlockStyle}" TextAlignment="Right" Grid.Row="2" Grid.Column="2"/>
+                    <TextBlock Text="Main color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock Text="Main additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock Text="Additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock Text="Accent color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="3" Grid.Column="0"/>
+                    <TextBlock Text="Accent additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="2"/>
+                    <TextBlock Text="Percent plus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="2"/>
+                    <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
-                    <TextBox Text="{Binding MainColor}" Grid.Row="0" Grid.Column="1"/>
-                    <TextBox Text="{Binding MainAdditionalColor}" Grid.Row="1" Grid.Column="1"/>
-                    <TextBox Text="{Binding AdditionalColor}" Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Text="{Binding AccentColor}" Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Text="{Binding AccentAdditionalColor}" Grid.Row="0" Grid.Column="3"/>
-                    <TextBox Text="{Binding PercentPlusColor}" Grid.Row="1" Grid.Column="3"/>
-                    <TextBox Text="{Binding PercentMinusColor}" Grid.Row="2" Grid.Column="3"/>
+                    <TextBox Text="{Binding MainColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="0" Grid.Column="1"/>
+                    <TextBox Text="{Binding MainAdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="1" Grid.Column="1"/>
+                    <TextBox Text="{Binding AdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Text="{Binding AccentColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Text="{Binding AccentAdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="0" Grid.Column="3"/>
+                    <TextBox Text="{Binding PercentPlusColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="1" Grid.Column="3"/>
+                    <TextBox Text="{Binding PercentMinusColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="2" Grid.Column="3"/>
 
                     <Button Content="Сохранить" 
                             Command="{Binding SaveColorsCommand}"

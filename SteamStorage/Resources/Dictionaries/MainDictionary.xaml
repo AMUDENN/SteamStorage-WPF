@@ -8,6 +8,7 @@
         <ResourceDictionary Source="\Resources\Styles\GridStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ListViewStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\PlotStyles.xaml"/>
+        <ResourceDictionary Source="\Resources\Styles\RadioButtonStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ScrollBarStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\TextBlockStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\TextBoxStyles.xaml"/>

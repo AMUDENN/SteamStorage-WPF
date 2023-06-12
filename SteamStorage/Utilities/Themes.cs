@@ -32,13 +32,13 @@ namespace SteamStorage.Utilities
         {
             var resources = Application.Current.Resources;
             var converter = new BrushConverter();
-            resources["Main"] = (SolidColorBrush)converter.ConvertFrom(Config.MainColor);
-            resources["MainAdditional"] = (SolidColorBrush)converter.ConvertFrom(Config.MainAdditionalColor);
-            resources["Additional"] = (SolidColorBrush)converter.ConvertFrom(Config.AdditionalColor);
-            resources["Accent"] = (SolidColorBrush)converter.ConvertFrom(Config.AccentColor);
-            resources["AccentAdditional"] = (SolidColorBrush)converter.ConvertFrom(Config.AccentAdditionalColor);
-            resources["PercentPlus"] = (SolidColorBrush)converter.ConvertFrom(Config.PercentPlusColor);
-            resources["PercentMinus"] = (SolidColorBrush)converter.ConvertFrom(Config.PercentMinusColor);
+            resources["Main"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.MainColor}");
+            resources["MainAdditional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.MainAdditionalColor}");
+            resources["Additional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AdditionalColor}");
+            resources["Accent"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AccentColor}");
+            resources["AccentAdditional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AccentAdditionalColor}");
+            resources["PercentPlus"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.PercentPlusColor}");
+            resources["PercentMinus"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.PercentMinusColor}");
         }
     }
 }

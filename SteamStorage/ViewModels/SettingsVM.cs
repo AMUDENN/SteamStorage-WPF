@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
+using System.Windows.Media;
 
 namespace SteamStorage.ViewModels
 {
@@ -151,7 +152,13 @@ namespace SteamStorage.ViewModels
         }
         private void DoResetColorsCommand()
         {
-
+            MainColor = "7371FF";
+            MainAdditionalColor = "00AD71";
+            AdditionalColor = "FFFFFF";
+            AccentColor = "0D1117";
+            AccentAdditionalColor = "21262D";
+            PercentPlusColor = "02B478";
+            PercentMinusColor = "FD4534";
         }
         private void DoOpenLogCommand()
         {
