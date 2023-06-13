@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System;
@@ -26,7 +25,7 @@ namespace SteamStorage.ViewModels
             { "Изменение", x => x.Percent }
         };
         private string? selectedOrderTitle;
-        private readonly Dictionary<string, bool> orderTypes = new Dictionary<string, bool>
+        private readonly Dictionary<string, bool> orderTypes = new()
         {
             { "По возрастанию", true },
             { "По убыванию", false }
