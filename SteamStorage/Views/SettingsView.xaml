@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
+             xmlns:controls="clr-namespace:SteamStorage.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     
@@ -67,13 +68,34 @@
                     <TextBlock Text="Percent plus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="2"/>
                     <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
-                    <TextBox Text="{Binding MainColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="0" Grid.Column="1"/>
-                    <TextBox Text="{Binding MainAdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="1" Grid.Column="1"/>
-                    <TextBox Text="{Binding AdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Text="{Binding AccentColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Text="{Binding AccentAdditionalColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="0" Grid.Column="3"/>
-                    <TextBox Text="{Binding PercentPlusColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="1" Grid.Column="3"/>
-                    <TextBox Text="{Binding PercentMinusColor}" Style="{DynamicResource HexColorTextBoxStyle}" Grid.Row="2" Grid.Column="3"/>
+                    <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="0" Grid.Column="1"/>
+                    <controls:AdvancedTextBox Text="{Binding MainAdditionalColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="1" Grid.Column="1"/>
+                    <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="2" Grid.Column="1"/>
+                    <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="3" Grid.Column="1"/>
+                    <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="0" Grid.Column="3"/>
+                    <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="1" Grid.Column="3"/>
+                    <controls:AdvancedTextBox Text="{Binding PercentMinusColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-f]"  
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Grid.Row="2" Grid.Column="3"/>
 
                     <Button Content="Сохранить" 
                             Command="{Binding SaveColorsCommand}"

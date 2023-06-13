@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
-using System.Windows.Media;
 
 namespace SteamStorage.ViewModels
 {
@@ -55,37 +54,37 @@ namespace SteamStorage.ViewModels
         public string MainColor
         {
             get => mainColor;
-            set => SetProperty(ref mainColor, value);
+            set => SetProperty(ref mainColor, value.ToUpper());
         }
         public string MainAdditionalColor
         {
             get => mainAdditionalColor;
-            set => SetProperty(ref mainAdditionalColor, value);
+            set => SetProperty(ref mainAdditionalColor, value.ToUpper());
         }
         public string AdditionalColor
         {
             get => additionalColor;
-            set => SetProperty(ref additionalColor, value);
+            set => SetProperty(ref additionalColor, value.ToUpper());
         }
         public string AccentColor
         {
             get => accentColor;
-            set => SetProperty(ref accentColor, value);
+            set => SetProperty(ref accentColor, value.ToUpper());
         }
         public string AccentAdditionalColor
         {
             get => accentAdditionalColor;
-            set => SetProperty(ref accentAdditionalColor, value);
+            set => SetProperty(ref accentAdditionalColor, value.ToUpper());
         }
         public string PercentPlusColor
         {
             get => percentPlusColor;
-            set => SetProperty(ref percentPlusColor, value);
+            set => SetProperty(ref percentPlusColor, value.ToUpper());
         }
         public string PercentMinusColor
         {
             get => percentMinusColor;
-            set => SetProperty(ref percentMinusColor, value);
+            set => SetProperty(ref percentMinusColor, value.ToUpper());
         }
         #endregion Properties
 
