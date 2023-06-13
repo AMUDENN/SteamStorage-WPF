@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
+using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -54,37 +55,65 @@ namespace SteamStorage.ViewModels
         public string MainColor
         {
             get => mainColor;
-            set => SetProperty(ref mainColor, value.ToUpper());
+            set
+            {
+                SetProperty(ref mainColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string MainAdditionalColor
         {
             get => mainAdditionalColor;
-            set => SetProperty(ref mainAdditionalColor, value.ToUpper());
+            set
+            {
+                SetProperty(ref mainAdditionalColor, value.ToUpper()); 
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string AdditionalColor
         {
             get => additionalColor;
-            set => SetProperty(ref additionalColor, value.ToUpper());
+            set
+            {
+                SetProperty(ref additionalColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string AccentColor
         {
             get => accentColor;
-            set => SetProperty(ref accentColor, value.ToUpper());
+            set
+            {
+                SetProperty(ref accentColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string AccentAdditionalColor
         {
             get => accentAdditionalColor;
-            set => SetProperty(ref accentAdditionalColor, value.ToUpper());
+            set 
+            {
+                SetProperty(ref accentAdditionalColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string PercentPlusColor
         {
             get => percentPlusColor;
-            set => SetProperty(ref percentPlusColor, value.ToUpper());
+            set 
+            {
+                SetProperty(ref percentPlusColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         public string PercentMinusColor
         {
             get => percentMinusColor;
-            set => SetProperty(ref percentMinusColor, value.ToUpper());
+            set 
+            {
+                SetProperty(ref percentMinusColor, value.ToUpper());
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            }
         }
         #endregion Properties
 
@@ -93,7 +122,7 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return saveColorsCommand ??= new RelayCommand(DoSaveColorsCommand);
+                return saveColorsCommand ??= new RelayCommand(DoSaveColorsCommand, CanExecuteSaveColorsCommand);
             }
         }
         public RelayCommand ResetColorsCommand
@@ -148,6 +177,15 @@ namespace SteamStorage.ViewModels
             Config.PercentPlusColor = PercentPlusColor;
             Config.PercentMinusColor = PercentMinusColor;
             Themes.SetCustomColors();
+        }
+        private bool CanExecuteSaveColorsCommand()
+        {
+            var colors = new string[] { MainColor, MainAdditionalColor, AdditionalColor, AccentColor,
+                AccentAdditionalColor, PercentPlusColor, PercentMinusColor };
+            if (colors.Where(x => x.Length != 6).Any()
+                || colors.Distinct().Count() != colors.Length)
+                return false;
+            return true;
         }
         private void DoResetColorsCommand()
         {

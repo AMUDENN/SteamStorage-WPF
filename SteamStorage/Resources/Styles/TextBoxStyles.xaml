@@ -50,25 +50,33 @@
                                 Padding="5, 0, 0, 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
+                            
+                            <Border HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    BorderBrush="{DynamicResource Additional}"
+                                    BorderThickness="1"
+                                    Height="20" Width="20"
+                                    Grid.Column="0">
+                                <Rectangle Fill="{TemplateBinding Tag}" />
+                            </Border>
+
                             <TextBlock Text="#" 
                                        FontSize="{TemplateBinding FontSize}" 
                                        Foreground="{TemplateBinding Foreground}" 
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        TextAlignment="Center"
-                                       Grid.Column="0"/>
-                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"/>
-                            <Label x:Name="PlaceholderLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                       Visibility="Collapsed" Foreground="{DynamicResource Additional}" Opacity="0.5" FontSize="16" Grid.Column="1"/>
+                                       Grid.Column="1"/>
+                            
+                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="2"/>
+                            
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Text" Value="">
-                            <Setter Property="Visibility" TargetName="PlaceholderLabel" Value="Visible"/>
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>

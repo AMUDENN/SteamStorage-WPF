@@ -69,32 +69,39 @@
                     <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
                     <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource Main}"
                                               Grid.Row="0" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding MainAdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource MainAdditional}"
                                               Grid.Row="1" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource Additional}"
                                               Grid.Row="2" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
-                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
+                                              Tag="{DynamicResource Accent}"
                                               Grid.Row="3" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource AccentAdditional}"
                                               Grid.Row="0" Grid.Column="3"/>
                     <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource PercentPlus}"
                                               Grid.Row="1" Grid.Column="3"/>
                     <controls:AdvancedTextBox Text="{Binding PercentMinusColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-f]"  
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"  
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{DynamicResource PercentMinus}"
                                               Grid.Row="2" Grid.Column="3"/>
 
                     <Button Content="Сохранить" 
