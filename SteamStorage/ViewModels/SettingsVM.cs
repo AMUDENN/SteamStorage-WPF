@@ -182,7 +182,7 @@ namespace SteamStorage.ViewModels
         {
             var colors = new string[] { MainColor, MainAdditionalColor, AdditionalColor, AccentColor,
                 AccentAdditionalColor, PercentPlusColor, PercentMinusColor };
-            if (colors.Where(x => x.Length < 3).Any()
+            if (colors.Select(x => x.Length).Where(x => x % 3 != 0).Any()
                 || colors.Distinct().Count() != colors.Length)
                 return false;
             return true;
