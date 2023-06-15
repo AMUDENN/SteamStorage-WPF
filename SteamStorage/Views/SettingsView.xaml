@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
              xmlns:controls="clr-namespace:SteamStorage.Resources.Controls"
+             xmlns:converters="clr-namespace:SteamStorage.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
-    
+
+    <UserControl.Resources>
+        <converters:ColorConverter x:Key="ColorConverter"/>
+    </UserControl.Resources>
+
     <Grid Margin="30, 5">
 
         <Grid.RowDefinitions>
@@ -71,48 +76,50 @@
                     <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource Main}"
+                                              Tag="{Binding MainColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding MainAdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource MainAdditional}"
+                                              Tag="{Binding MainAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource Additional}"
+                                              Tag="{Binding AdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
-                                              Tag="{DynamicResource Accent}"
+                                              Tag="{Binding AccentColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="3" Grid.Column="1"/>
                     <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource AccentAdditional}"
+                                              Tag="{Binding AccentAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="3"/>
                     <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource PercentPlus}"
+                                              Tag="{Binding PercentPlusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="3"/>
                     <controls:AdvancedTextBox Text="{Binding PercentMinusColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"  
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{DynamicResource PercentMinus}"
+                                              Tag="{Binding PercentMinusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="3"/>
 
-                    <Button Content="Сохранить" 
-                            Command="{Binding SaveColorsCommand}"
-                            Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                            Grid.Row="4" Grid.Column="0"/>
+                    <Grid Grid.Row="4" Grid.Column="0">
+                        <Button Content="Сохранить" 
+                                Command="{Binding SaveColorsCommand}"
+                                Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                    </Grid>
 
-                    <Button Content="Сбросить" 
-                            Command="{Binding ResetColorsCommand}"
-                            Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                            Grid.Row="4" Grid.Column="1"/>
+                    <Grid Grid.Row="4" Grid.Column="1">
+                        <Button Content="Сбросить"
+                                Command="{Binding ResetColorsCommand}"
+                                Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                    </Grid>
 
                 </Grid>
 

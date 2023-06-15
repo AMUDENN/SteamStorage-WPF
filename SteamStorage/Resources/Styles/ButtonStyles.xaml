@@ -21,6 +21,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" 
                             Style="{DynamicResource AccentAdditionalBorderStyle}" 
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="contentPresenter" 
                                       Focusable="False" 
@@ -35,10 +36,10 @@
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Padding" Value="2"/>
+                            <Setter Property="BorderThickness" Value="2"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Padding" Value="2.5"/>
+                            <Setter Property="BorderThickness" Value="3"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -125,31 +126,35 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <TextBlock x:Name="textBlock" 
-                               Text="{TemplateBinding Content}"
-                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                               Margin="{TemplateBinding Padding}" 
-                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <TextBlock.TextDecorations>
-                            <TextDecorationCollection>
-                                <TextDecoration>
-                                    <TextDecoration.Pen>
-                                        <Pen Brush="{DynamicResource Additional}"/>
-                                    </TextDecoration.Pen>
-                                </TextDecoration>
-                            </TextDecorationCollection>
-                        </TextBlock.TextDecorations>
-                    </TextBlock>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="TextBox"
+                                   Text="{TemplateBinding Content}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Grid.Row="0"/>
+                        <Rectangle x:Name="Rectangle" 
+                                   Width="{Binding Path=ActualWidth, ElementName=TextBox}" 
+                                   Height="1"
+                                   Fill="{DynamicResource Additional}" Opacity="0.5" 
+                                   Margin="-2, -34, -2, 0"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   Grid.Row="1"/>
+                    </Grid>
+                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Padding" Value="2"/>
+                            <Setter Property="Opacity" TargetName="Rectangle" Value="0.9"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Padding" Value="2.5"/>
+                            <Setter Property="Opacity" TargetName="Rectangle" Value="1"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
