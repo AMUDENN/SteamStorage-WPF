@@ -33,7 +33,7 @@ namespace SteamStorage.ViewModels
         private List<RemainGroupModel> groups;
         private List<RemainModel> displayedRemains;
 
-        private double totalCount;
+        private long totalCount;
         private double averageCostPurchase;
         private double totalAmountPurchase;
         private double averageCurrentCost;
@@ -95,7 +95,7 @@ namespace SteamStorage.ViewModels
             get => displayedRemains;
             set => SetProperty(ref displayedRemains, value);
         }
-        public double TotalCount
+        public long TotalCount
         {
             get => totalCount;
             set => SetProperty(ref totalCount, value);

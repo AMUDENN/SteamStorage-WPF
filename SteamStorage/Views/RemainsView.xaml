@@ -395,7 +395,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Итого:" Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalCount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                <TextBlock Text="{Binding TotalCount}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="1"/>
                 <TextBlock Text="{Binding AverageCostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="2"/>

@@ -35,7 +35,7 @@ namespace SteamStorage.ViewModels
         private List<ArchiveGroupModel> groups;
         private List<ArchiveModel> displayedArchives;
 
-        private double totalCount;
+        private long totalCount;
         private double averageCostPurchase;
         private double totalAmountPurchase;
         private double averageCostSold;
@@ -94,7 +94,7 @@ namespace SteamStorage.ViewModels
             get => displayedArchives;
             set => SetProperty(ref displayedArchives, value);
         }
-        public double TotalCount
+        public long TotalCount
         {
             get => totalCount;
             set => SetProperty(ref totalCount, value);
