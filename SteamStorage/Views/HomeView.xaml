@@ -6,7 +6,62 @@
              xmlns:local="clr-namespace:SteamStorage.Views"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
-    <Grid>
-            
-    </Grid>
+
+    <ScrollViewer>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Остатки" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="0"/>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding TotalRemainCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalRemainAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding TotalRemainPercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+
+            </Grid>
+
+            <Grid MinHeight="300" Grid.Row="2">
+
+            </Grid>
+
+            <TextBlock Text="Архив" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
+
+            <Grid Grid.Row="4">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding TotalRemainCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalRemainAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding TotalRemainPercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+
+            </Grid>
+
+            <Grid MinHeight="300" Grid.Row="5">
+
+            </Grid>
+        
+        </Grid>
+
+    </ScrollViewer>
+    
 </UserControl>

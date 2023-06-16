@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:SteamStorage"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        MinHeight="900" MinWidth="1440"
+        MinHeight="768" MinWidth="1366"
         Title="Steam Storage" 
         Style="{DynamicResource WindowStyle}">
+    
     <Behaviors:Interaction.Triggers>
         <Behaviors:EventTrigger EventName="Closing">
             <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"/>
@@ -20,7 +21,7 @@
             <Behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" PassEventArgsToCommand="True"/>
         </Behaviors:EventTrigger>
     </Behaviors:Interaction.Triggers>
-    <Grid>
-        <ContentControl Content="{Binding CurrentVM}"/>
-    </Grid>
+
+    <ContentControl Content="{Binding CurrentVM}"/>
+
 </Window>

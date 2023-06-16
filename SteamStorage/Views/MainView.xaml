@@ -6,21 +6,26 @@
              xmlns:local="clr-namespace:SteamStorage.Views"
              mc:Ignorable="d" 
              d:DesignHeight="1024" d:DesignWidth="1440">
+    
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="360"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Margin="0, 24, 0, 0" Grid.Column="0">
+            
             <Border Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="0, 20, 0, 0">
+
                 <Grid Margin="30, 45">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="200"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="130"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="370"/>
+                        <RowDefinition Height="9*"/>
                         <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
@@ -28,12 +33,16 @@
 
                     <TextBlock Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="2"/>
 
-                    <ContentControl Content="{Binding NavigationVM}" Grid.Row="4"/>
+                    <ContentControl Content="{Binding NavigationVM}" MaxHeight="350" Grid.Row="4"/>
+
                 </Grid>
+
             </Border>
+            
         </Grid>
-        
+
         <ContentControl Content="{Binding CurrentVM}" Margin="10, 24, 10, 10" Grid.Column="1"/>
 
     </Grid>
+    
 </UserControl>

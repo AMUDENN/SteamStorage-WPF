@@ -6,12 +6,15 @@
              xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:SteamStorage.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="370" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="350" d:DesignWidth="300">
+
+    <ScrollViewer>
+
         <ListView ItemsSource="{Binding NavigationOptions}" 
                   Style="{DynamicResource ListViewStyle}" 
-                  SelectionMode="Single">
-            
+                  SelectionMode="Single"
+                  MinHeight="350">
+
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="SelectionChanged">
                     <Behaviors:InvokeCommandAction Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True"/>
@@ -70,7 +73,9 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            
+
         </ListView>
-    </Grid>
+
+    </ScrollViewer>
+
 </UserControl>
