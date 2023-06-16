@@ -229,17 +229,14 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public RemainsVM()
         {
-            var context = Context.GetContext();
-
-            Groups = context.RemainGroups.Select(x => new RemainGroupModel(x)).ToList();
-            Groups[1].IsEditable = false;
+            Groups = Context.RemainGroups.ToList();
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
 
             Filter = string.Empty;
 
-            Remains = context.Remains.Select(x => new RemainModel(x)).ToList();
+            Remains = Context.GetRemainModels(null).ToList();
         }
         #endregion Constructor
 

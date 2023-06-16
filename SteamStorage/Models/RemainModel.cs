@@ -45,8 +45,8 @@ namespace SteamStorage.Models
             this.remain = remain;
             datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
             amountPurchase = remain.CostPurchase * remain.Count;
-            Context.GetContext().PriceDynamics.LoadAsync();
-            Context.GetContext().Skins.LoadAsync();
+            Context.DBContext.PriceDynamics.LoadAsync();
+            Context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
         #endregion Constructor

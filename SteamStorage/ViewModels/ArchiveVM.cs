@@ -207,17 +207,14 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public ArchiveVM()
         {
-            var context = Context.GetContext();
-
-            Groups = context.ArchiveGroups.Select(x => new ArchiveGroupModel(x)).ToList();
-            Groups[1].IsEditable = false;
+            Groups = Context.ArchiveGroups.ToList();
             Groups.Insert(0, new("Все"));
 
             SelectedGroup = Groups.First();
 
             Filter = string.Empty;
 
-            Archives = context.Archives.Select(x => new ArchiveModel(x)).ToList();
+            Archives = Context.GetArchiveModels(null).ToList();
         }
         #endregion Constructor
 

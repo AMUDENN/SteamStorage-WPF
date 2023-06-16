@@ -13,7 +13,7 @@
         <converters:ColorConverter x:Key="ColorConverter"/>
     </UserControl.Resources>
 
-    <ScrollViewer Margin="30, 5">
+    <ScrollViewer Margin="30, 5, 3, 5">
 
         <Grid>
 

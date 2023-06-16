@@ -7,17 +7,11 @@ namespace SteamStorage.Models
         #region Fields
         private RemainGroup? remainGroup;
         private string title;
-        private bool isEditable;
         #endregion Fields
 
         #region Properties
         public RemainGroup? RemainGroup => remainGroup;
         public string Title => title;
-        public bool IsEditable
-        {
-            get => isEditable;
-            set => isEditable = value;
-        }
         #endregion Properties
 
         #region Constructor
@@ -25,13 +19,12 @@ namespace SteamStorage.Models
         {
             this.remainGroup = remainGroup;
             title = remainGroup.Title;
-            isEditable = true;
         }
         public RemainGroupModel(string title)
         {
             this.title = title;
-            isEditable = false;
         }
         #endregion Constructor
+
     }
 }

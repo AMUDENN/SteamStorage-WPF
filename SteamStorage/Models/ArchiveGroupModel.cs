@@ -7,17 +7,11 @@ namespace SteamStorage.Models
         #region Fields
         private ArchiveGroup? archiveGroup;
         private string title;
-        private bool isEditable;
         #endregion Fields
 
         #region Properties
         public ArchiveGroup? ArchiveGroup => archiveGroup;
         public string Title => title;
-        public bool IsEditable
-        {
-            get => isEditable;
-            set => isEditable = value;
-        }
         #endregion Properties
 
         #region Constructor
@@ -25,12 +19,10 @@ namespace SteamStorage.Models
         {
             this.archiveGroup = archiveGroup;
             title = archiveGroup.Title;
-            isEditable = true;
         }
         public ArchiveGroupModel(string title)
         {
             this.title = title;
-            isEditable = false;
         }
         #endregion Constructor
     }

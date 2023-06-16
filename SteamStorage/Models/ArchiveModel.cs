@@ -38,7 +38,7 @@ namespace SteamStorage.Models
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
             percent = (CostSold - CostPurchase) / CostPurchase * 100;
-            Context.GetContext().Skins.LoadAsync();
+            Context.DBContext.Skins.LoadAsync();
         }
         #endregion Constructor
     }

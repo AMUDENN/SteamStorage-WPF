@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
 
-    <ScrollViewer>
+    <ScrollViewer Margin="30, 5, 3, 5">
 
         <Grid>
 
@@ -38,6 +38,14 @@
 
             <Grid MinHeight="300" Grid.Row="2">
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                
             </Grid>
 
             <TextBlock Text="Архив" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
@@ -50,14 +58,22 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding TotalRemainCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalRemainAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
-                <TextBlock Text="{Binding TotalRemainPercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalArchiveCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalArchiveAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding TotalArchivePercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
 
             </Grid>
 
             <Grid MinHeight="300" Grid.Row="5">
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                
             </Grid>
         
         </Grid>
