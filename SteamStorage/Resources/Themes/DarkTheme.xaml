@@ -9,7 +9,4 @@
     <SolidColorBrush x:Key="PercentPlus" Color="#02B478"/>
     <SolidColorBrush x:Key="PercentMinus" Color="#FD4534"/>
 
-    <Color x:Key="PercentPlusColor" R="2" G="180" B="120" A="255"/>
-    <Color x:Key="PercentMinusColor" R="253" G="69" B="52" A="255"/>
-
 </ResourceDictionary>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SteamStorage"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
+        MinHeight="900" MinWidth="1440"
         Title="Steam Storage" 
         Style="{DynamicResource WindowStyle}">
     <Behaviors:Interaction.Triggers>

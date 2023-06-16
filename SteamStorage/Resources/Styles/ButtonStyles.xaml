@@ -129,21 +129,22 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock x:Name="TextBox"
                                    Text="{TemplateBinding Content}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Grid.Row="0"/>
+                                   Grid.Row="1"/>
                         <Rectangle x:Name="Rectangle" 
                                    Width="{Binding Path=ActualWidth, ElementName=TextBox}" 
                                    Height="1"
                                    Fill="{DynamicResource Additional}" Opacity="0.5" 
-                                   Margin="-2, -34, -2, 0"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Grid.Row="1"/>
+                                   Margin="-2, -10, -2, 0"
+                                   Grid.Row="2"/>
                     </Grid>
                     
                     <ControlTemplate.Triggers>
