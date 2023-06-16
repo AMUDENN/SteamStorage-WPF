@@ -198,7 +198,6 @@ namespace SteamStorage.ViewModels
         public ArchiveVM()
         {
             Groups = Context.ArchiveGroups.ToList();
-            Groups.Insert(0, new("Все"));
             SelectedGroup = Groups.First();
         }
         #endregion Constructor
@@ -253,29 +252,17 @@ namespace SteamStorage.ViewModels
         {
             DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
-            if (DisplayedArchives.Any())
-            {
-                TotalCount = DisplayedArchives.Sum(x => x.Count);
+            TotalCount = Context.GetArchiveTotalCount(DisplayedArchives);
 
-                TotalAmountPurchase = DisplayedArchives.Sum(x => x.AmountPurchase);
+            TotalAmountPurchase = Context.GetArchiveTotalAmountPurchase(DisplayedArchives);
 
-                AverageCostPurchase = TotalAmountPurchase / TotalCount;
+            AverageCostPurchase = Context.GetArchiveAverageCostPurchase(DisplayedArchives);
 
-                TotalAmountSold = DisplayedArchives.Sum(x => x.AmountSold);
+            TotalAmountSold = Context.GetArchiveTotalAmountSold(DisplayedArchives);
 
-                AverageCostSold = TotalAmountSold / TotalCount;
+            AverageCostSold = Context.GetArchiveAverageCostSold(DisplayedArchives);
 
-                AveragePercent = (TotalAmountSold - TotalAmountPurchase) / TotalAmountPurchase * 100;
-            }
-            else
-            {
-                TotalCount = 0;
-                AverageCostPurchase = 0;
-                TotalAmountPurchase = 0;
-                AverageCostSold = 0;
-                TotalAmountSold = 0;
-                AveragePercent = 0;
-            }
+            AveragePercent = Context.GetArchiveAveragePercent(DisplayedArchives);
 
             DoSorting();
         }

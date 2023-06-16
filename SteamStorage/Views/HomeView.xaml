@@ -4,8 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
+             xmlns:converters="clr-namespace:SteamStorage.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+
+    <UserControl.Resources>
+        <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
+        <converters:PercentConverter x:Key="PercentConverter"/>
+        <converters:PercentForegroundConverter x:Key="PercentForegroundConverter"/>
+        <converters:CombiningConverter x:Key="DoublePercentConverter"
+            Converter1="{StaticResource DoubleRoundConverter}"
+            Converter2="{StaticResource PercentConverter}"/>
+    </UserControl.Resources>
 
     <ScrollViewer Margin="30, 5, 3, 5">
 
@@ -30,9 +40,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding TotalRemainCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalRemainAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
-                <TextBlock Text="{Binding TotalRemainPercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalRemainCount}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalRemainAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding TotalRemainPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                           Foreground="{Binding TotalRemainPercent, Converter={StaticResource PercentForegroundConverter}}"
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
 
             </Grid>
 
@@ -58,9 +72,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding TotalArchiveCount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalArchiveAmount}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
-                <TextBlock Text="{Binding TotalArchivePercent}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalArchiveCount}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
+                <TextBlock Text="{Binding TotalArchiveAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
+                <TextBlock Text="{Binding TotalArchivePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                           Foreground="{Binding TotalArchivePercent, Converter={StaticResource PercentForegroundConverter}}"
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
 
             </Grid>
 

@@ -18,6 +18,7 @@ namespace SteamStorage.Models
         private double maxPrice;
         private DateTime dateLastUpdate;
         private double lastCost;
+        private double currentAmount;
         private double percent;
         private List<DataPoint> priceDynamicsPoints = new();
         private Remain remain;
@@ -35,6 +36,7 @@ namespace SteamStorage.Models
         public double MaxPrice => maxPrice;
         public DateTime DateLastUpdate => dateLastUpdate;
         public double LastCost => lastCost;
+        public double CurrentAmount => currentAmount;
         public double Percent => percent;
         public List<DataPoint> PriceDynamicsPoints => priceDynamicsPoints;
         #endregion Properties
@@ -63,6 +65,7 @@ namespace SteamStorage.Models
             maxPrice = priceDynamics.Values.Max();
             dateLastUpdate = priceDynamics.Last().Key;
             lastCost = priceDynamics.Last().Value;
+            currentAmount = lastCost * Count;
             percent = (lastCost - CostPurchase) / CostPurchase * 100;
 
             int i = 0;

@@ -220,7 +220,6 @@ namespace SteamStorage.ViewModels
         public RemainsVM()
         {
             Groups = Context.RemainGroups.ToList();
-            Groups.Insert(0, new("Все"));
             SelectedGroup = Groups.First();
         }
         #endregion Constructor
@@ -287,29 +286,17 @@ namespace SteamStorage.ViewModels
         {
             DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
-            if (DisplayedRemains.Any())
-            {
-                TotalCount = DisplayedRemains.Sum(x => x.Count);
+            TotalCount = Context.GetRemainTotalCount(DisplayedRemains);
 
-                TotalAmountPurchase = DisplayedRemains.Sum(x => x.AmountPurchase);
+            TotalAmountPurchase = Context.GetRemainTotalAmountPurchase(DisplayedRemains);
 
-                AverageCostPurchase = TotalAmountPurchase / TotalCount;
+            AverageCostPurchase = Context.GetRemainAverageCostPurchase(DisplayedRemains);
 
-                TotalCurrentAmount = DisplayedRemains.Sum(x => x.LastCost * x.Count);
+            TotalCurrentAmount = Context.GetRemainTotalCurrentAmount(DisplayedRemains);
 
-                AverageCurrentCost = TotalCurrentAmount / TotalCount;
+            AverageCurrentCost = Context.GetRemainAverageCurrentCost(DisplayedRemains);
 
-                AveragePercent = (TotalCurrentAmount - TotalAmountPurchase) / TotalAmountPurchase * 100;
-            }
-            else
-            {
-                TotalCount = 0;
-                AverageCostPurchase = 0;
-                TotalAmountPurchase = 0;
-                AverageCurrentCost = 0;
-                AveragePercent = 0;
-                TotalCurrentAmount = 0;
-            }
+            AveragePercent = Context.GetRemainAveragePercent(DisplayedRemains);
 
             DoSorting();
         }
