@@ -11,7 +11,7 @@ namespace SteamStorage.ViewModels
     public class ArchiveVM : ObservableObject
     {
         #region Fields
-        private string filter;
+        private string filter = string.Empty;
         private readonly Dictionary<string, Func<ArchiveModel, object>> orderTitles = new()
         {
             { "Название", x => x.Title },
@@ -33,7 +33,6 @@ namespace SteamStorage.ViewModels
         private string? selectedOrderType;
 
         private List<ArchiveGroupModel> groups;
-        private List<ArchiveModel> archives;
         private List<ArchiveModel> displayedArchives;
 
         private double totalCount;
@@ -89,15 +88,6 @@ namespace SteamStorage.ViewModels
         {
             get => groups;
             set => SetProperty(ref groups, value);
-        }
-        public List<ArchiveModel> Archives
-        {
-            get => archives;
-            set
-            {
-                SetProperty(ref archives, value);
-                DoFiltering();
-            }
         }
         public List<ArchiveModel> DisplayedArchives
         {
@@ -209,12 +199,7 @@ namespace SteamStorage.ViewModels
         {
             Groups = Context.ArchiveGroups.ToList();
             Groups.Insert(0, new("Все"));
-
             SelectedGroup = Groups.First();
-
-            Filter = string.Empty;
-
-            Archives = Context.GetArchiveModels(null).ToList();
         }
         #endregion Constructor
 
@@ -225,7 +210,7 @@ namespace SteamStorage.ViewModels
             SelectedGroup = Groups.First();
             SelectedOrderTitle = null;
             SelectedOrderType = null;
-            DisplayedArchives = Archives;
+            DisplayedArchives = Context.GetArchiveModels(null).ToList();
         }
         private bool CanExecuteRemoveFilterCommand()
         {
@@ -266,10 +251,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoFiltering()
         {
-            if (Archives is null) return;
-            DisplayedArchives = Archives.Where(
-                x => (SelectedGroup.ArchiveGroup is null || x.ArchiveGroup == SelectedGroup.ArchiveGroup) && x.Title.ToLower().Contains(Filter)
-                ).ToList();
+            DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             if (DisplayedArchives.Any())
             {

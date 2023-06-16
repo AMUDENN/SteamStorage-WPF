@@ -11,7 +11,7 @@ namespace SteamStorage.ViewModels
     public class RemainsVM : ObservableObject
     {
         #region Fields
-        private string filter;
+        private string filter = string.Empty;
         private readonly Dictionary<string, Func<RemainModel, object>> orderTitles = new()
         {
             { "Название", x => x.Title },
@@ -31,7 +31,6 @@ namespace SteamStorage.ViewModels
         private string? selectedOrderType;
 
         private List<RemainGroupModel> groups;
-        private List<RemainModel> remains;
         private List<RemainModel> displayedRemains;
 
         private double totalCount;
@@ -90,15 +89,6 @@ namespace SteamStorage.ViewModels
         {
             get => groups;
             set => SetProperty(ref groups, value);
-        }
-        public List<RemainModel> Remains
-        {
-            get => remains;
-            set
-            {
-                SetProperty(ref remains, value);
-                DoFiltering();
-            }
         }
         public List<RemainModel> DisplayedRemains
         {
@@ -231,12 +221,7 @@ namespace SteamStorage.ViewModels
         {
             Groups = Context.RemainGroups.ToList();
             Groups.Insert(0, new("Все"));
-
             SelectedGroup = Groups.First();
-
-            Filter = string.Empty;
-
-            Remains = Context.GetRemainModels(null).ToList();
         }
         #endregion Constructor
 
@@ -247,7 +232,7 @@ namespace SteamStorage.ViewModels
             SelectedGroup = Groups.First();
             SelectedOrderTitle = null;
             SelectedOrderType = null;
-            DisplayedRemains = Remains;
+            DisplayedRemains = Context.GetRemainModels(null).ToList();
         }
         private bool CanExecuteRemoveFilterCommand()
         {
@@ -300,10 +285,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoFiltering()
         {
-            if (Remains is null) return;
-            DisplayedRemains = Remains.Where(
-                x => (SelectedGroup.RemainGroup is null || x.RemainGroup == SelectedGroup.RemainGroup) && x.Title.ToLower().Contains(Filter)
-                ).ToList();
+            DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             if (DisplayedRemains.Any())
             {
