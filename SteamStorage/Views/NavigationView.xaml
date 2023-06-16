@@ -11,7 +11,7 @@
     <ScrollViewer>
 
         <ListView ItemsSource="{Binding NavigationOptions}" 
-                  Style="{DynamicResource ListViewStyle}" 
+                  Style="{DynamicResource ListViewStyle}"
                   SelectionMode="Single"
                   MinHeight="350">
 

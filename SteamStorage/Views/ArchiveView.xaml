@@ -373,7 +373,6 @@
                            Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
                            Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="8"/>
 
-
                 <Border BorderBrush="{DynamicResource Additional}" 
                         Opacity="0.5"
                         BorderThickness="0, 1, 0, 0" 
