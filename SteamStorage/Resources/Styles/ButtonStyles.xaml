@@ -132,12 +132,6 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="TextBox"
-                                   Text="{TemplateBinding Content}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Grid.Row="1"/>
                         <Rectangle x:Name="Rectangle" 
                                    Width="{Binding Path=ActualWidth, ElementName=TextBox}" 
                                    Height="1"
@@ -145,8 +139,13 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                    Margin="-2, -10, -2, 0"
                                    Grid.Row="2"/>
+                        <TextBlock x:Name="TextBox"
+                                   Text="{TemplateBinding Content}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Grid.RowSpan="3" Grid.Row="0"/>
                     </Grid>
-                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>

@@ -38,15 +38,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="{Binding TotalRemainCount}" 
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalRemainAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                <TextBlock Text="{Binding TotalRemainAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
                 <TextBlock Text="{Binding TotalRemainPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                            Foreground="{Binding TotalRemainPercent, Converter={StaticResource PercentForegroundConverter}}"
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalRemainCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="3"/>
 
             </Grid>
 
@@ -70,15 +73,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="{Binding TotalArchiveCount}" 
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalArchiveAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                <TextBlock Text="{Binding TotalArchiveAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
                 <TextBlock Text="{Binding TotalArchivePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                            Foreground="{Binding TotalArchivePercent, Converter={StaticResource PercentForegroundConverter}}"
                            Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalArchiveAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="3"/>
 
             </Grid>
 

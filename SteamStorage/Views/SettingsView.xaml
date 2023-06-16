@@ -25,7 +25,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="350"/>
+                <RowDefinition Height="370"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
@@ -55,7 +55,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border IsEnabled="{Binding IsCustomTheme}" Style="{DynamicResource AccentAdditionalBorderStyle}">
+                <GroupBox IsEnabled="{Binding IsCustomTheme}" Header="Настройка цветов пользовательской темы" Style="{DynamicResource GroupBoxStyle}">
 
                     <Grid Margin="5">
 
@@ -132,7 +132,7 @@
 
                     </Grid>
 
-                </Border>
+                </GroupBox>
 
             </Grid>
 
@@ -163,23 +163,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Style="{DynamicResource AccentAdditionalBorderStyle}" 
-                Margin="0, 0, 5, 0" Grid.Column="0">
+                <GroupBox Style="{DynamicResource GroupBoxStyle}" Header="О программе" Margin="0, 0, 5, 0" Grid.Column="0">
                     <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
-                О программе
-                <LineBreak/>Лютый текст про программу для учёта инвестиций в Steam 0_0 
-                <LineBreak/>(by AMUDENN *ник*)
+                        Лютый текст про программу для учёта инвестиций в Steam 0_0 
+                        <LineBreak/>(by AMUDENN *ник*)
                     </TextBlock>
-                </Border>
+                </GroupBox>
 
-                <Border Style="{DynamicResource AccentAdditionalBorderStyle}" 
-                Margin="5, 0, 0, 0" Grid.Column="1">
+                <GroupBox Style="{DynamicResource GroupBoxStyle}" Header="Контакты" Margin="5, 0, 0, 0" Grid.Column="1">
                     <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
-                GitHub: <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage">https://github.com/AMUDENN/SteamStorage</Hyperlink>
-                <LineBreak/>TG: <Hyperlink NavigateUri="https://t.me/amudenn">@amudenn</Hyperlink>
-                <LineBreak/>Gmail: <Hyperlink NavigateUri="SteamStorage@gmail.com">SteamStorage@gmail.com</Hyperlink>
+                        GitHub: <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage">https://github.com/AMUDENN/SteamStorage</Hyperlink>
+                        <LineBreak/>TG: <Hyperlink NavigateUri="https://t.me/amudenn">@amudenn</Hyperlink>
+                        <LineBreak/>Gmail: <Hyperlink NavigateUri="SteamStorage@gmail.com">SteamStorage@gmail.com</Hyperlink>
                     </TextBlock>
-                </Border>
+                </GroupBox>
 
             </Grid>
 

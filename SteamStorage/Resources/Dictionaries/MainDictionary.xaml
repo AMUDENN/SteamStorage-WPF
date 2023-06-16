@@ -5,7 +5,7 @@
         <ResourceDictionary Source="\Resources\Styles\ButtonStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ComboBoxStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ContextMenuStyles.xaml"/>
-        <ResourceDictionary Source="\Resources\Styles\GridStyles.xaml"/>
+        <ResourceDictionary Source="\Resources\Styles\GroupBoxStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ListViewStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\PlotStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\RadioButtonStyles.xaml"/>

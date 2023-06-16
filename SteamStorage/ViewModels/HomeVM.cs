@@ -15,20 +15,24 @@ namespace SteamStorage.ViewModels
         private IEnumerable<RemainGroupModel> remainGroupModels = Context.RemainGroups;
 
         private long totalArchiveCount;
-        private double totalArchiveAmount;
+        private double totalArchiveAmountPurchase;
         private double totalArchivePercent;
+        private double totalArchiveAmountSold;
         private long totalRemainCount;
-        private double totalRemainAmount;
+        private double totalRemainAmountPurchase;
         private double totalRemainPercent;
+        private double totalRemainCurrentAmount;
         #endregion Fields
 
         #region Properties
         public long TotalArchiveCount => totalArchiveCount;
-        public double TotalArchiveAmount => totalArchiveAmount;
+        public double TotalArchiveAmountPurchase => totalArchiveAmountPurchase;
         public double TotalArchivePercent => totalArchivePercent;
+        public double TotalArchiveAmountSold => totalArchiveAmountSold;
         public long TotalRemainCount => totalRemainCount;
-        public double TotalRemainAmount => totalRemainAmount;
+        public double TotalRemainAmountPurchase => totalRemainAmountPurchase;
         public double TotalRemainPercent => totalRemainPercent;
+        public double TotalRemainCurrentAmount => totalRemainCurrentAmount;
         #endregion Properties
 
         #region Constructor
@@ -36,13 +40,15 @@ namespace SteamStorage.ViewModels
         {
             var archiveModels = Context.GetArchiveModels(null);
             totalArchiveCount = Context.GetArchiveTotalCount(archiveModels);
-            totalArchiveAmount = Context.GetArchiveTotalAmountPurchase(archiveModels);
+            totalArchiveAmountPurchase = Context.GetArchiveTotalAmountPurchase(archiveModels);
             totalArchivePercent = Context.GetArchiveAveragePercent(archiveModels);
+            totalArchiveAmountSold = Context.GetArchiveTotalAmountSold(archiveModels);
 
             var remainModels = Context.GetRemainModels(null);
             totalRemainCount = Context.GetRemainTotalCount(remainModels);
-            totalRemainAmount = Context.GetRemainTotalAmountPurchase(remainModels);
+            totalRemainAmountPurchase = Context.GetRemainTotalAmountPurchase(remainModels);
             totalRemainPercent = Context.GetRemainAveragePercent(remainModels);
+            totalRemainCurrentAmount = Context.GetRemainTotalCurrentAmount(remainModels);
         }
         #endregion Constructor
 
