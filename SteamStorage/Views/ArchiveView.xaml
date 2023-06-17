@@ -41,7 +41,10 @@
             <Expander Style="{DynamicResource ExpanderStyle}" Grid.Row="1">
 
                 <Expander.Header>
-                    <RadioButton Content="Все" IsChecked="{Binding IsAllArchivesDisplayed}"/>
+                    <RadioButton Content="Все" 
+                                 IsChecked="{Binding IsAllArchivesDisplayed}"
+                                 Style="{DynamicResource ExpanderRadioButtonStyle}"
+                                 Height="50"/>
                 </Expander.Header>
                 
                 <ListView ItemsSource="{Binding Groups}" 
