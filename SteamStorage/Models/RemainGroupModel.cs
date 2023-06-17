@@ -1,6 +1,5 @@
 ﻿using SteamStorage.Entities;
 using SteamStorage.Utilities;
-using System.Linq;
 
 namespace SteamStorage.Models
 {
@@ -53,9 +52,9 @@ namespace SteamStorage.Models
         private void UpdateRemains()
         {
             var remainModels = Context.GetRemainModels(this);
-            remainsCount = Context.GetRemainTotalCount(remainModels);
-            remainsAmount = Context.GetRemainTotalAmountPurchase(remainModels);
-            remainsPercent = Context.GetRemainAveragePercent(remainModels);
+            remainsCount = CalculationModel.GetRemainTotalCount(remainModels);
+            remainsAmount = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
+            remainsPercent = CalculationModel.GetRemainAveragePercent(remainModels);
         }
         #endregion Methods
     }

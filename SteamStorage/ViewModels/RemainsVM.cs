@@ -286,17 +286,17 @@ namespace SteamStorage.ViewModels
         {
             DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
-            TotalCount = Context.GetRemainTotalCount(DisplayedRemains);
+            TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
-            TotalAmountPurchase = Context.GetRemainTotalAmountPurchase(DisplayedRemains);
+            TotalAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(DisplayedRemains);
 
-            AverageCostPurchase = Context.GetRemainAverageCostPurchase(DisplayedRemains);
+            AverageCostPurchase = CalculationModel.GetRemainAverageCostPurchase(DisplayedRemains);
 
-            TotalCurrentAmount = Context.GetRemainTotalCurrentAmount(DisplayedRemains);
+            TotalCurrentAmount = CalculationModel.GetRemainTotalCurrentAmount(DisplayedRemains);
 
-            AverageCurrentCost = Context.GetRemainAverageCurrentCost(DisplayedRemains);
+            AverageCurrentCost = CalculationModel.GetRemainAverageCurrentCost(DisplayedRemains);
 
-            AveragePercent = Context.GetRemainAveragePercent(DisplayedRemains);
+            AveragePercent = CalculationModel.GetRemainAveragePercent(DisplayedRemains);
 
             DoSorting();
         }

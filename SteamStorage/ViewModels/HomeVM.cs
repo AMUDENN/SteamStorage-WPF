@@ -39,16 +39,16 @@ namespace SteamStorage.ViewModels
         public HomeVM()
         {
             var archiveModels = Context.GetArchiveModels(null);
-            totalArchiveCount = Context.GetArchiveTotalCount(archiveModels);
-            totalArchiveAmountPurchase = Context.GetArchiveTotalAmountPurchase(archiveModels);
-            totalArchivePercent = Context.GetArchiveAveragePercent(archiveModels);
-            totalArchiveAmountSold = Context.GetArchiveTotalAmountSold(archiveModels);
+            totalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
+            totalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
+            totalArchivePercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
+            totalArchiveAmountSold = CalculationModel.GetArchiveTotalAmountSold(archiveModels);
 
             var remainModels = Context.GetRemainModels(null);
-            totalRemainCount = Context.GetRemainTotalCount(remainModels);
-            totalRemainAmountPurchase = Context.GetRemainTotalAmountPurchase(remainModels);
-            totalRemainPercent = Context.GetRemainAveragePercent(remainModels);
-            totalRemainCurrentAmount = Context.GetRemainTotalCurrentAmount(remainModels);
+            totalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
+            totalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
+            totalRemainPercent = CalculationModel.GetRemainAveragePercent(remainModels);
+            totalRemainCurrentAmount = CalculationModel.GetRemainTotalCurrentAmount(remainModels);
         }
         #endregion Constructor
 

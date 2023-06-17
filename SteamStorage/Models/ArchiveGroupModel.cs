@@ -1,6 +1,5 @@
 ﻿using SteamStorage.Entities;
 using SteamStorage.Utilities;
-using System.Linq;
 
 namespace SteamStorage.Models
 {
@@ -53,9 +52,9 @@ namespace SteamStorage.Models
         private void UpdateRemains()
         {
             var archiveModels = Context.GetArchiveModels(this);
-            archivesCount = Context.GetArchiveTotalCount(archiveModels);
-            archivesAmount = Context.GetArchiveTotalAmountPurchase(archiveModels);
-            archivesPercent = Context.GetArchiveAveragePercent(archiveModels);
+            archivesCount = CalculationModel.GetArchiveTotalCount(archiveModels);
+            archivesAmount = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
+            archivesPercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
         }
         #endregion Methods
     }

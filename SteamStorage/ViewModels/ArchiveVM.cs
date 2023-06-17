@@ -252,17 +252,17 @@ namespace SteamStorage.ViewModels
         {
             DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
-            TotalCount = Context.GetArchiveTotalCount(DisplayedArchives);
+            TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
-            TotalAmountPurchase = Context.GetArchiveTotalAmountPurchase(DisplayedArchives);
+            TotalAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(DisplayedArchives);
 
-            AverageCostPurchase = Context.GetArchiveAverageCostPurchase(DisplayedArchives);
+            AverageCostPurchase = CalculationModel.GetArchiveAverageCostPurchase(DisplayedArchives);
 
-            TotalAmountSold = Context.GetArchiveTotalAmountSold(DisplayedArchives);
+            TotalAmountSold = CalculationModel.GetArchiveTotalAmountSold(DisplayedArchives);
 
-            AverageCostSold = Context.GetArchiveAverageCostSold(DisplayedArchives);
+            AverageCostSold = CalculationModel.GetArchiveAverageCostSold(DisplayedArchives);
 
-            AveragePercent = Context.GetArchiveAveragePercent(DisplayedArchives);
+            AveragePercent = CalculationModel.GetArchiveAveragePercent(DisplayedArchives);
 
             DoSorting();
         }
