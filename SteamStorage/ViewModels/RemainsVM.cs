@@ -40,7 +40,8 @@ namespace SteamStorage.ViewModels
         private double averagePercent;
         private double totalCurrentAmount;
 
-        private RemainGroupModel selectedGroup;
+        private RemainGroupModel? selectedGroup;
+        private bool isAllRemainsDisplayed;
 
         private RelayCommand removeFilterCommand;
         private RelayCommand<object> updateGroupCommand;
@@ -125,13 +126,22 @@ namespace SteamStorage.ViewModels
             get => totalCurrentAmount;
             set => SetProperty(ref totalCurrentAmount, value);
         }
-        public RemainGroupModel SelectedGroup
+        public RemainGroupModel? SelectedGroup
         {
             get => selectedGroup;
             set
             {
                 SetProperty(ref selectedGroup, value);
                 DoFiltering();
+            }
+        }
+        public bool IsAllRemainsDisplayed
+        {
+            get => isAllRemainsDisplayed;
+            set
+            {
+                SetProperty(ref isAllRemainsDisplayed, value);
+                if (isAllRemainsDisplayed) SelectedGroup = null;
             }
         }
         #endregion Properties
@@ -220,7 +230,7 @@ namespace SteamStorage.ViewModels
         public RemainsVM()
         {
             Groups = Context.RemainGroups.ToList();
-            SelectedGroup = Groups.First();
+            IsAllRemainsDisplayed = true;
         }
         #endregion Constructor
 
@@ -228,15 +238,14 @@ namespace SteamStorage.ViewModels
         private void DoRemoveFilterCommand()
         {
             Filter = string.Empty;
-            SelectedGroup = Groups.First();
             SelectedOrderTitle = null;
             SelectedOrderType = null;
-            DisplayedRemains = Context.GetRemainModels(null).ToList();
+            IsAllRemainsDisplayed = true;
         }
         private bool CanExecuteRemoveFilterCommand()
         {
             if (Filter == string.Empty
-                && SelectedGroup == Groups.First()
+                && SelectedGroup == null
                 && SelectedOrderTitle == null
                 && SelectedOrderType == null)
                 return false;
@@ -284,6 +293,8 @@ namespace SteamStorage.ViewModels
         }
         private void DoFiltering()
         {
+            if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
+
             DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);

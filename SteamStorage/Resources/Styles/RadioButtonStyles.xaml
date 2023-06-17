@@ -10,6 +10,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="OptionMarkFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -74,4 +75,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
 </ResourceDictionary>

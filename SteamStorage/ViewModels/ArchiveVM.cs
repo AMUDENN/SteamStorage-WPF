@@ -42,7 +42,8 @@ namespace SteamStorage.ViewModels
         private double totalAmountSold;
         private double averagePercent;
 
-        private ArchiveGroupModel selectedGroup;
+        private ArchiveGroupModel? selectedGroup;
+        private bool isAllArchivesDisplayed;
 
         private RelayCommand removeFilterCommand;
         private RelayCommand addGroupCommand;
@@ -124,13 +125,22 @@ namespace SteamStorage.ViewModels
             get => averagePercent;
             set => SetProperty(ref averagePercent, value);
         }
-        public ArchiveGroupModel SelectedGroup
+        public ArchiveGroupModel? SelectedGroup
         {
             get => selectedGroup;
             set
             {
                 SetProperty(ref selectedGroup, value);
                 DoFiltering();
+            }
+        }
+        public bool IsAllArchivesDisplayed
+        {
+            get => isAllArchivesDisplayed;
+            set
+            {
+                SetProperty(ref isAllArchivesDisplayed, value);
+                if (isAllArchivesDisplayed) SelectedGroup = null;
             }
         }
         #endregion Properties
@@ -198,7 +208,7 @@ namespace SteamStorage.ViewModels
         public ArchiveVM()
         {
             Groups = Context.ArchiveGroups.ToList();
-            SelectedGroup = Groups.First();
+            IsAllArchivesDisplayed = true;
         }
         #endregion Constructor
 
@@ -206,15 +216,14 @@ namespace SteamStorage.ViewModels
         private void DoRemoveFilterCommand()
         {
             Filter = string.Empty;
-            SelectedGroup = Groups.First();
             SelectedOrderTitle = null;
             SelectedOrderType = null;
-            DisplayedArchives = Context.GetArchiveModels(null).ToList();
+            IsAllArchivesDisplayed = true;
         }
         private bool CanExecuteRemoveFilterCommand()
         {
             if (Filter == string.Empty
-                && SelectedGroup == Groups.First()
+                && SelectedGroup == null
                 && SelectedOrderTitle == null
                 && SelectedOrderType == null)
                 return false;
@@ -250,6 +259,8 @@ namespace SteamStorage.ViewModels
         }
         private void DoFiltering()
         {
+            if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
+
             DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
