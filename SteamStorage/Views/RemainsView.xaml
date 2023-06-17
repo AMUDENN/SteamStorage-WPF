@@ -47,7 +47,7 @@
                                  Style="{DynamicResource ExpanderRadioButtonStyle}"
                                  Height="50" />
                 </Expander.Header>
-<!--Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"-->
+
                 <ListView ItemsSource="{Binding Groups}" 
                       SelectedItem="{Binding SelectedGroup}" 
                       Style="{DynamicResource ListViewStyle}">
