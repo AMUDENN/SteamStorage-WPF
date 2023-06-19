@@ -1,18 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace SteamStorage.ViewModels
 {
     public class HomeVM : ObservableObject
     {
         #region Fields
-        private IEnumerable<ArchiveGroupModel> archiveGroupModels = Context.ArchiveGroups;
-        private IEnumerable<RemainGroupModel> remainGroupModels = Context.RemainGroups;
+        private List<ArchiveGroupModel> archiveGroupModels = Context.ArchiveGroups.ToList();
+        private List<RemainGroupModel> remainGroupModels = Context.RemainGroups.ToList();
 
         private long totalArchiveCount;
         private double totalArchiveAmountPurchase;
@@ -25,6 +23,8 @@ namespace SteamStorage.ViewModels
         #endregion Fields
 
         #region Properties
+        public List<ArchiveGroupModel> ArchiveGroupModels => archiveGroupModels;
+        public List<RemainGroupModel> RemainGroupModels => remainGroupModels;
         public long TotalArchiveCount => totalArchiveCount;
         public double TotalArchiveAmountPurchase => totalArchiveAmountPurchase;
         public double TotalArchivePercent => totalArchivePercent;

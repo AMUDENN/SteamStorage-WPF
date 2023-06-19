@@ -255,6 +255,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+                        
                         <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
 
                             <Grid Height="100" Margin="15, 5">
