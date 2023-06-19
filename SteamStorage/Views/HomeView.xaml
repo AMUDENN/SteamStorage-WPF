@@ -126,10 +126,45 @@
 
                 </GroupBox>
 
-                <GroupBox Header="Что-то будет" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
+                <GroupBox Header="Прибыльность" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
+                    
+                    <Grid Margin="5, 0">
 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Text="{Binding MostProfitabilityRemainGroup.Title}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=": " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"
+                                       Foreground="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource PercentForegroundConverter}}"/>
+                        </StackPanel>    
+                            
+                        <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <TextBlock Text="{Binding MostProfitabilityRemain.Title}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=": " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"
+                                       Foreground="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
+                        </StackPanel>
+
+                    </Grid>
+                    
                 </GroupBox>
-                
+
             </Grid>
 
             <TextBlock Text="Архив" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
@@ -228,7 +263,42 @@
 
                 </GroupBox>
 
-                <GroupBox Header="Что-то будет" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
+                <GroupBox Header="Прибыльность" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
+
+                    <Grid Margin="5, 0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Text="{Binding MostProfitabilityArchiveGroup.Title}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=": " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"
+                                       Foreground="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource PercentForegroundConverter}}"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <TextBlock Text="{Binding MostProfitabilityArchive.Title}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=": " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"
+                                       Foreground="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
+                        </StackPanel>
+
+                    </Grid>
 
                 </GroupBox>
 
