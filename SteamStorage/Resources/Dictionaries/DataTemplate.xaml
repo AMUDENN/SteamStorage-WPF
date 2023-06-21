@@ -12,6 +12,10 @@
         <view:ArchiveView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:GreetingsVM}">
+        <view:GreetingsView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:HomeVM}">
         <view:HomeView/>
     </DataTemplate>

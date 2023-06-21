@@ -11,11 +11,38 @@ namespace SteamStorage.ViewModels
     public class NavigationVM : ObservableObject
     {
         #region Fields
+        private List<NavigationModel> navigationOptions = new()
+        {
+            new NavigationModel()
+            {
+                Name = "Главная",
+                ImageStyle = Dictionaries.GetStyle("DiagramImage"),
+                DestinationVM = new HomeVM()
+            },
+            new NavigationModel()
+            {
+                Name = "Остатки",
+                ImageStyle = Dictionaries.GetStyle("DollarImage"),
+                DestinationVM = new RemainsVM()
+            },
+            new NavigationModel()
+            {
+                Name = "Архив",
+                ImageStyle = Dictionaries.GetStyle("CubeImage"),
+                DestinationVM = new ArchiveVM()
+            },
+            new NavigationModel()
+            {
+                Name = "Настройки",
+                ImageStyle = Dictionaries.GetStyle("SettingsImage"),
+                DestinationVM = new SettingsVM()
+            }
+        };
         private RelayCommand<object> selectionChangedCommand;
         #endregion Fields
 
         #region Properties
-        public List<NavigationModel> NavigationOptions { get; set; } = new List<NavigationModel>();
+        public List<NavigationModel> NavigationOptions => navigationOptions;
         #endregion Properties
 
         #region Commands
@@ -31,33 +58,7 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public NavigationVM()
         {
-            NavigationOptions.Add(new NavigationModel()
-            {
-                Name = "Главная",
-                ImageStyle = Dictionaries.GetStyle("DiagramImage"),
-                DestinationVM = new HomeVM()
-            });
-            NavigationOptions.Add(new NavigationModel()
-            {
-                Name = "Остатки",
-                ImageStyle = Dictionaries.GetStyle("DollarImage"),
-                DestinationVM = new RemainsVM()
-            });
-            NavigationOptions.Add(new NavigationModel()
-            {
-                Name = "Архив",
-                ImageStyle = Dictionaries.GetStyle("CubeImage"),
-                DestinationVM = new ArchiveVM()
-            });
-            NavigationOptions.Add(new NavigationModel()
-            {
-                Name = "Настройки",
-                ImageStyle = Dictionaries.GetStyle("SettingsImage"),
-                DestinationVM = new SettingsVM()
-            });
-
-            var message = new NavigationChangedRequestedMessage(NavigationOptions[0]);
-            WeakReferenceMessenger.Default.Send(message);
+            
         }
         #endregion Constructor
 

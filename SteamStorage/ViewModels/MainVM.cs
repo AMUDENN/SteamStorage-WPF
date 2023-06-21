@@ -7,7 +7,7 @@ namespace SteamStorage.ViewModels
     public class MainVM : ObservableObject
     {
         #region Fields
-        private ObservableObject currentVM;
+        private ObservableObject currentVM = new GreetingsVM();
         #endregion Fields
 
         #region Properties
