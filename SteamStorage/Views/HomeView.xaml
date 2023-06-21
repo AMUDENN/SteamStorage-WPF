@@ -159,6 +159,16 @@
                             <TextBlock Text="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
+                            <TextBlock Text=" (" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityRemain.CostPurchase}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=" → " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityRemain.LastCost}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=")" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
                         </StackPanel>
 
                     </Grid>
@@ -296,6 +306,16 @@
                             <TextBlock Text="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
+                            <TextBlock Text=" (" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityArchive.CostPurchase}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=" → " 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text="{Binding MostProfitabilityArchive.CostSold}" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
+                            <TextBlock Text=")" 
+                                       Style="{DynamicResource CommonTextBlockStyle}"/>
                         </StackPanel>
 
                     </Grid>

@@ -73,7 +73,12 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Grid.Column="0"/>
-                            <Image Style="{DynamicResource FilterRemoveImage}" Margin="10" Grid.Column="1"/>
+                            <Image Style="{DynamicResource FilterRemoveImage}" 
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Height="{TemplateBinding FontSize}"
+                                   Margin="5, 0, 0, 0"
+                                   Grid.Column="1"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

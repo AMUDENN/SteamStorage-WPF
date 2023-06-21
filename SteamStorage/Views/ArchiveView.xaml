@@ -171,7 +171,7 @@
             <Grid Grid.Row="1" Margin="23, 5">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
@@ -254,7 +254,7 @@
                                 <Grid Grid.Row="0">
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="8*"/>
                                         <ColumnDefinition Width="3*"/>
                                         <ColumnDefinition Width="3*"/>
                                         <ColumnDefinition Width="3*"/>
@@ -343,7 +343,7 @@
             <Grid Grid.Row="3" Margin="23, 5">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
