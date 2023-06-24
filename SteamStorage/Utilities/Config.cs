@@ -71,6 +71,11 @@ namespace SteamStorage.Utilities
             get => config.AppSettings.Settings["PercentMinusColor"].Value;
             set => SaveProperty("PercentMinusColor", value);
         }
+        public static bool IsGreetingTextVisible
+        {
+            get => Convert.ToBoolean(config.AppSettings.Settings["IsGreetingTextVisible"].Value);
+            set => SaveProperty("IsGreetingTextVisible", value.ToString());
+        }
         private static void SaveProperty(string name, string value)
         {
             config.AppSettings.Settings[name].Value = value;

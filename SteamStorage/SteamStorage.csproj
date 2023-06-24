@@ -9,11 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\Bitmaps\Storage.ico" />
+    <None Remove="DataBase\SteamStorageDB.db" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataBase\" />
+    <Content Include="DataBase\SteamStorageDB.db" />
+    <Content Include="Resources\Images\Bitmaps\Storage.ico" />
   </ItemGroup>
 
   <ItemGroup>

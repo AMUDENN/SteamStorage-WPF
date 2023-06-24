@@ -63,14 +63,16 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Style="{Binding ImageStyle}" Margin="7" Grid.Column="0"/>
-                        <TextBlock Text="{Binding Name}" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0, 0, 0" Grid.Column="1"/>
-                    </Grid>
+                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" Background="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Style="{Binding ImageStyle}" Margin="7" Grid.Column="0"/>
+                            <TextBlock Text="{Binding Name}" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0, 0, 0" Grid.Column="1"/>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
 

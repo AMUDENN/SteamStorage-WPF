@@ -12,10 +12,6 @@
         <view:ArchiveView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:GreetingsVM}">
-        <view:GreetingsView/>
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type vm:HomeVM}">
         <view:HomeView/>
     </DataTemplate>
@@ -36,4 +32,8 @@
         <view:SettingsView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:WelcomeVM}">
+        <view:WelcomeView/>
+    </DataTemplate>
+    
 </ResourceDictionary>

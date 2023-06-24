@@ -2,9 +2,9 @@
 
 namespace SteamStorage.Views
 {
-    public partial class GreetingsView : UserControl
+    public partial class WelcomeView : UserControl
     {
-        public GreetingsView()
+        public WelcomeView()
         {
             InitializeComponent();
         }
