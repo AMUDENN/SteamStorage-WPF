@@ -25,8 +25,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="130"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="9*"/>
-                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
                     <Image Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" Margin="0, 40" Grid.Row="0"/>

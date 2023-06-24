@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace SteamStorage
+namespace SteamStorage.Windows
 {
     public partial class MainWindow : Window
     {

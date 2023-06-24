@@ -231,7 +231,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-
+            UserMessage.Error("DELETE THIS");
         }
         private void DoEditGroupCommand(object? data)
         {

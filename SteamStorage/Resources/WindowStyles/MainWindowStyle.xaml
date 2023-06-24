@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    x:Class="SteamStorage.Resources.WindowStyle.WindowStyle">
-    <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
+                    x:Class="SteamStorage.Resources.WindowStyles.MainWindowStyle">
+    
+    <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -24,18 +25,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Border x:Name="PART_Container" Padding="{TemplateBinding Padding}">
-                        <Border x:Name="PART_Border" Style="{DynamicResource WindowBorderStyle}">
+                        <Border x:Name="PART_Border" Style="{DynamicResource MainWindowBorderStyle}">
                             <Grid x:Name="PART_Content">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="36"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft"  WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Button x:Name="CloseButton" Content="r" Margin="6,0,2,0" Style="{DynamicResource CloseButtonStyle}"/>
-                                    <Button x:Name="MaxRestoreButton" Content="1" Margin="2,0,2,0" Style="{DynamicResource MaxRestoreButtonStyle}"/>
-                                    <Button x:Name="MinimizeButton" Content="0" Margin="2,0,2,0" Style="{DynamicResource MinimizeButtonStyle}"/>
+                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft" WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Button x:Name="CloseButton" Content="r" Margin="6,0,2,0" Style="{DynamicResource MainWindowCloseButtonStyle}"/>
+                                    <Button x:Name="MaxRestoreButton" Content="1" Margin="2,0,2,0" Style="{DynamicResource MainWindowMaxRestoreButtonStyle}"/>
+                                    <Button x:Name="MinimizeButton" Content="0" Margin="2,0,2,0" Style="{DynamicResource MainWindowMinimizeButtonStyle}"/>
                                 </StackPanel>
-                                <TextBlock Text="{TemplateBinding Title}" Style="{DynamicResource WindowTitleTextBlockStyle}"/>
+                                <TextBlock Text="{TemplateBinding Title}" Style="{DynamicResource MainWindowTitleTextBlockStyle}"/>
                                 <Image Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="10,4,4,4"/>
                                 <ContentPresenter Grid.Row="1"/>
                             </Grid>
@@ -51,13 +52,13 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="WindowBorderStyle" TargetType="{x:Type Border}">
+    <Style x:Key="MainWindowBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Accent}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
     
-    <Style x:Key="WindowTitleTextBlockStyle" TargetType="{x:Type TextBlock}">
+    <Style x:Key="MainWindowTitleTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="FontSize" Value="16"/>
@@ -65,7 +66,7 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
     
-    <Style x:Key="BaseWindowButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="BaseMainWindowButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FontFamily" Value="Webdings"/>
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
         <Setter Property="Background" Value="{DynamicResource Main}"/>
@@ -78,47 +79,29 @@
                         <Rectangle x:Name="Button_Rect" Fill="Transparent" RadiusX="6" RadiusY="6" SnapsToDevicePixels="True"/>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Fill" TargetName="Button_Rect" Value="{DynamicResource Main}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Fill" TargetName="Button_Rect" Value="{DynamicResource Main}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Rectangle x:Name="Button_Rect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6" SnapsToDevicePixels="True"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Grid>
-                                <Rectangle x:Name="Button_Rect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6" SnapsToDevicePixels="True"/>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
-    <Style x:Key="CloseButtonStyle" BasedOn="{StaticResource BaseWindowButtonStyle}" TargetType="{x:Type Button}">
+    <Style x:Key="MainWindowCloseButtonStyle" BasedOn="{StaticResource BaseMainWindowButtonStyle}" TargetType="{x:Type Button}">
         <EventSetter Event="Button.Click" Handler="CloseButton_Click"/>
     </Style>
 
-    <Style x:Key="MaxRestoreButtonStyle" BasedOn="{StaticResource BaseWindowButtonStyle}" TargetType="{x:Type Button}">
+    <Style x:Key="MainWindowMaxRestoreButtonStyle" BasedOn="{StaticResource BaseMainWindowButtonStyle}" TargetType="{x:Type Button}">
         <EventSetter Event="Button.Click" Handler="MaxRestoreButton_Click"/>
     </Style>
 
-    <Style x:Key="MinimizeButtonStyle" BasedOn="{StaticResource BaseWindowButtonStyle}" TargetType="{x:Type Button}">
+    <Style x:Key="MainWindowMinimizeButtonStyle" BasedOn="{StaticResource BaseMainWindowButtonStyle}" TargetType="{x:Type Button}">
         <EventSetter Event="Button.Click" Handler="MinimizeButton_Click"/>
     </Style>
 

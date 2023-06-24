@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace SteamStorage.Resources.WindowStyle
+namespace SteamStorage.Resources.WindowStyles
 {
-    public partial class WindowStyle
+    public partial class MainWindowStyle
     {
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

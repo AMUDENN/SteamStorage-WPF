@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
+using SteamStorage.Windows;
 using System;
 using System.Windows;
 
@@ -28,7 +29,7 @@ namespace SteamStorage
             window.Show();
 
             if (Config.IsMaximized) window.WindowState = WindowState.Maximized;
-            
+
             base.OnStartup(e);
         }
 

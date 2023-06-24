@@ -13,7 +13,7 @@
         <ListView ItemsSource="{Binding NavigationOptions}" 
                   Style="{DynamicResource ListViewStyle}"
                   SelectionMode="Single"
-                  MinHeight="350">
+                  Height="350">
 
             <Behaviors:Interaction.Triggers>
                 <Behaviors:EventTrigger EventName="SelectionChanged">

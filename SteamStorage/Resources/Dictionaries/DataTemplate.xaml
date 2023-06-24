@@ -2,12 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vm="clr-namespace:SteamStorage.ViewModels"
                     xmlns:view="clr-namespace:SteamStorage.Views"
-                    xmlns:steamstorage="clr-namespace:SteamStorage">
+                    xmlns:windows="clr-namespace:SteamStorage.Windows">
 
     <DataTemplate DataType="{x:Type vm:MainWindowVM}">
-        <steamstorage:MainWindow/>
+        <windows:MainWindow/>
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type vm:MessageWindowVM}">
+        <windows:MessageWindow/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:ArchiveVM}">
         <view:ArchiveView/>
     </DataTemplate>
