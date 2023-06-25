@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Resources\Themes\DarkTheme.xaml"/>
                 <ResourceDictionary Source="Resources\Dictionaries\MainDictionary.xaml"/>
                 <ResourceDictionary Source="Resources\WindowStyles\MainWindowStyle.xaml"/>
-                <ResourceDictionary Source="Resources\WindowStyles\MessageWindowStyle.xaml"/>
+                <ResourceDictionary Source="Resources\WindowStyles\DialogWindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

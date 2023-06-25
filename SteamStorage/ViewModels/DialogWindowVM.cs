@@ -2,7 +2,7 @@
 
 namespace SteamStorage.ViewModels
 {
-    public class MessageWindowVM : ObservableObject
+    public class DialogWindowVM : ObservableObject
     {
         #region Fields
         private string title;
@@ -26,7 +26,7 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public MessageWindowVM(string title, ObservableObject viewModel)
+        public DialogWindowVM(string title, ObservableObject viewModel)
         {
             Title = title;
             CurrentVM = viewModel;

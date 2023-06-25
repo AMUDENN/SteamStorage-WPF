@@ -5,6 +5,7 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -231,7 +232,8 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            UserMessage.Error("DELETE THIS");
+            var res = UserMessage.Question("JAjajaja?");
+            MessageBox.Show(res.ToString());
         }
         private void DoEditGroupCommand(object? data)
         {

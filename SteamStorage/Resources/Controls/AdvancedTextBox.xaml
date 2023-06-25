@@ -6,14 +6,11 @@
              xmlns:local="clr-namespace:SteamStorage.Resources.Controls"
              mc:Ignorable="d" Name="ThisElement"
              d:DesignHeight="100" d:DesignWidth="400">
-    <Grid>
 
-        <TextBox x:Name="MainTextBox" Style="{Binding ElementName=ThisElement, Path=TextBoxStyle}" 
-                 Tag="{Binding ElementName=ThisElement, Path=Tag}"
-                 Text="{Binding ElementName=ThisElement, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                 PreviewTextInput="MainTextBox_PreviewTextInput" 
-                 TextChanged="MainTextBox_TextChanged"/>
-
-    </Grid>
+    <TextBox x:Name="MainTextBox" Style="{Binding ElementName=ThisElement, Path=TextBoxStyle}" 
+             Tag="{Binding ElementName=ThisElement, Path=Tag}"
+             Text="{Binding ElementName=ThisElement, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+             PreviewTextInput="MainTextBox_PreviewTextInput" 
+             TextChanged="MainTextBox_TextChanged"/>
 
 </UserControl>

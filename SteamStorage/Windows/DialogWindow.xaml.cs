@@ -2,9 +2,9 @@
 
 namespace SteamStorage.Windows
 {
-    public partial class MessageWindow : Window
+    public partial class DialogWindow : Window
     {
-        public MessageWindow()
+        public DialogWindow()
         {
             InitializeComponent();
         }

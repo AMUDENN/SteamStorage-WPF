@@ -2,7 +2,7 @@
 
 namespace SteamStorage.Resources.WindowStyles
 {
-    public partial class MessageWindowStyle
+    public partial class DialogWindowStyle
     {
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {

@@ -1,27 +1,22 @@
-﻿using SteamStorage.ViewModels;
-using SteamStorage.Windows;
+﻿using SteamStorage.Services;
+using SteamStorage.ViewModels;
 
 namespace SteamStorage.Utilities
 {
     public class UserMessage
     {
-        public static bool? ActionConfirmation(string question)
+        public static WindowDialogService windowDialogService = new();
+        public static bool? Question(string question)
         {
-            MessageWindow messageWindow = new MessageWindow();
-            messageWindow.DataContext = new MessageWindowVM("Подтверждение", new WelcomeVM());
-            return messageWindow.ShowDialog();
+            return windowDialogService.ShowDialog("Подтверждение", new MessageBoxVM(question, MessageBoxVM.MessageImages.Question, MessageBoxVM.MessageButtons.OkCancel));
         }
         public static bool? Information(string info)
         {
-            MessageWindow messageWindow = new MessageWindow();
-            messageWindow.DataContext = new MessageWindowVM("Информация", new WelcomeVM());
-            return messageWindow.ShowDialog();
+            return windowDialogService.ShowDialog("Информация", new MessageBoxVM(info, MessageBoxVM.MessageImages.Information, MessageBoxVM.MessageButtons.Ok));
         }
-        public static bool? Error(string text)
+        public static bool? Error(string error)
         {
-            MessageWindow messageWindow = new MessageWindow();
-            messageWindow.DataContext = new MessageWindowVM("Ошибка", new WelcomeVM());
-            return messageWindow.ShowDialog();
+            return windowDialogService.ShowDialog("Ошибка", new MessageBoxVM(error, MessageBoxVM.MessageImages.Error, MessageBoxVM.MessageButtons.Ok));
         }
     }
 }
