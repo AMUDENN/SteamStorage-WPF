@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SteamStorage.Windows"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         Title="{Binding Title}" 
         Style="{DynamicResource DialogWindowStyle}">
 

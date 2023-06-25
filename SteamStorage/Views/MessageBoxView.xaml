@@ -17,8 +17,23 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Text="{Binding Text}" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Style="{Binding Image}" Margin="20" Grid.Column="0"/>
+
+            <ScrollViewer Margin="5, 10" Grid.Column="1">
+
+                <TextBlock Text="{Binding Text}" Style="{DynamicResource CommonTextBlockStyle}"/>
+
+            </ScrollViewer>
+
+        </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
             <Button Content="Ок" 

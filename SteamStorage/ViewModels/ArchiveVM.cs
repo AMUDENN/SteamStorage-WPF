@@ -233,7 +233,8 @@ namespace SteamStorage.ViewModels
         private void DoAddGroupCommand()
         {
             var res = UserMessage.Question("JAjajaja?");
-            MessageBox.Show(res.ToString());
+            res = UserMessage.Information("Dfjsdp32");
+            res = UserMessage.Error("dflksdlf");
         }
         private void DoEditGroupCommand(object? data)
         {

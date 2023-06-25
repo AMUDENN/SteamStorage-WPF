@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Services;
+using System.Collections.Generic;
+using SteamStorage.Utilities;
+using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -21,6 +24,13 @@ namespace SteamStorage.ViewModels
         private string text;
         private MessageImages messageImage;
         private MessageButtons messageButton;
+
+        private Dictionary<MessageImages, Style> images = new()
+        {
+            { MessageImages.Error, Dictionaries.GetStyle("ErrorImage") },
+            { MessageImages.Information, Dictionaries.GetStyle("InformationImage") },
+            { MessageImages.Question, Dictionaries.GetStyle("QuestionImage") }
+        };
 
         private RelayCommand okCommand;
         private RelayCommand cancelCommand;
@@ -45,6 +55,10 @@ namespace SteamStorage.ViewModels
         public bool IsCancelVisible
         {
             get => MessageButton == MessageButtons.OkCancel;
+        }
+        public Style Image
+        {
+            get => images[MessageImage];
         }
         #endregion Properties
 
