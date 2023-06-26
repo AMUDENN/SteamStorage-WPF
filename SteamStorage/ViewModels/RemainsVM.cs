@@ -262,12 +262,15 @@ namespace SteamStorage.ViewModels
         {
             var isAdded = userMessage.AddRemainGroup();
             if (!isAdded) return;
-            context.UpdateArchiveGroupModels();
+            context.UpdateRemainGroupModels();
             GetRemainGroups();
         }
         private void DoEditGroupCommand(object? data)
         {
-
+            var isEdit = userMessage.EditRemainGroup((RemainGroupModel)data);
+            if (!isEdit) return;
+            context.UpdateRemainGroupModels();
+            GetRemainGroups();
         }
         private void DoDeleteGroupCommand(object? data)
         {

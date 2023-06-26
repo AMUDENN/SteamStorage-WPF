@@ -241,7 +241,10 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditGroupCommand(object? data)
         {
-
+            var isEdit = userMessage.EditArchiveGroup((ArchiveGroupModel)data);
+            if (!isEdit) return;
+            context.UpdateArchiveGroupModels();
+            GetArchiveGroups();
         }
         private void DoDeleteGroupCommand(object? data)
         {
