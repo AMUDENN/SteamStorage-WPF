@@ -260,7 +260,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = Singleton.GetObject<UserMessage>().AddRemainGroup();
+            var isAdded = userMessage.AddRemainGroup();
             if (!isAdded) return;
             context.UpdateArchiveGroupModels();
             GetRemainGroups();
