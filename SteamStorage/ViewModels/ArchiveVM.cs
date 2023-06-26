@@ -5,7 +5,6 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -208,7 +207,7 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public ArchiveVM()
         {
-            Groups = Context.ArchiveGroups.ToList();
+            GetArchiveGroups();
             IsAllArchivesDisplayed = true;
         }
         #endregion Constructor
@@ -232,9 +231,10 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var res = UserMessage.Question("JAjajaja?");
-            res = UserMessage.Information("Dfjsdp32");
-            res = UserMessage.Error("dflksdlf");
+            var isAdded = UserMessage.AddArchiveGroup();
+            if (!isAdded) return;
+            Context.UpdateArchiveGroupModels();
+            GetArchiveGroups();
         }
         private void DoEditGroupCommand(object? data)
         {
@@ -286,6 +286,10 @@ namespace SteamStorage.ViewModels
             if (DisplayedArchives is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             var remains = orderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(orderTitles[SelectedOrderTitle]);
             DisplayedArchives = remains.ToList();
+        }
+        private void GetArchiveGroups()
+        {
+            Groups = Context.ArchiveGroups.ToList();
         }
         #endregion Methods
     }

@@ -14,7 +14,11 @@ namespace SteamStorage.Models
 
         #region Properties
         public ArchiveGroup ArchiveGroup => archiveGroup;
-        public string Title => archiveGroup.Title;
+        public string Title
+        {
+            get => archiveGroup.Title;
+            set => archiveGroup.Title = value;
+        }
         public long ArchivesCount
         {
             get
@@ -45,6 +49,11 @@ namespace SteamStorage.Models
         public ArchiveGroupModel(ArchiveGroup archiveGroup)
         {
             this.archiveGroup = archiveGroup;
+        }
+        public ArchiveGroupModel() 
+        {
+            archiveGroup = new ArchiveGroup();
+            Context.AddArchiveGroup(archiveGroup);
         }
         #endregion Constructor
 

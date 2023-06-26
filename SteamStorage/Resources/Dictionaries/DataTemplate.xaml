@@ -4,6 +4,7 @@
                     xmlns:view="clr-namespace:SteamStorage.Views"
                     xmlns:windows="clr-namespace:SteamStorage.Windows">
 
+    <!--Windows-->
     <DataTemplate DataType="{x:Type vm:MainWindowVM}">
         <windows:MainWindow/>
     </DataTemplate>
@@ -11,11 +12,17 @@
     <DataTemplate DataType="{x:Type vm:DialogWindowVM}">
         <windows:DialogWindow/>
     </DataTemplate>
-
+    
+    <!--Dialog-->
     <DataTemplate DataType="{x:Type vm:MessageBoxVM}">
         <view:MessageBoxView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:ArchiveGroupOperationsVM}">
+        <view:ArchiveGroupOperationsView/>
+    </DataTemplate>
+
+    <!--Pages-->
     <DataTemplate DataType="{x:Type vm:ArchiveVM}">
         <view:ArchiveView/>
     </DataTemplate>
