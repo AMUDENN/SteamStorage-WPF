@@ -10,6 +10,8 @@ namespace SteamStorage.Models
         private long? remainsCount;
         private double? remainsAmount;
         private double? remainsPercent;
+
+        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -53,14 +55,14 @@ namespace SteamStorage.Models
         public RemainGroupModel()
         {
             remainGroup = new();
-            Context.AddRemainGroup(remainGroup);
+            context.AddRemainGroup(remainGroup);
         }
         #endregion Constructor
 
         #region Methods
         private void UpdateRemains()
         {
-            var remainModels = Context.GetRemainModels(this);
+            var remainModels = context.GetRemainModels(this);
             remainsCount = CalculationModel.GetRemainTotalCount(remainModels);
             remainsAmount = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
             remainsPercent = CalculationModel.GetRemainAveragePercent(remainModels);

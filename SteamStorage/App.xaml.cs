@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SteamStorage.Services;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
@@ -15,9 +14,9 @@ namespace SteamStorage
         {
             InitContainer();
 
-            MainWindowVM MainWindowVM = Container.GetService<MainWindowVM>() as MainWindowVM;
+            MainWindowVM MainWindowVM = Singleton.GetObject<MainWindowVM>();
 
-            var window = Container.GetService(typeof(MainWindow)) as MainWindow;
+            var window = Singleton.GetObject<MainWindow>();
             if (window is null)
                 throw new Exception("something went wrong during initializing DI container. MainWindow is missing");
             window.DataContext = MainWindowVM;
@@ -33,13 +32,15 @@ namespace SteamStorage
 
             base.OnStartup(e);
         }
-
         private static void InitContainer()
         {
             ServiceCollection services = new();
 
             services.AddSingleton<MainWindowVM>();
             services.AddSingleton<MainWindow>();
+
+            services.AddSingleton<Context>();
+            services.AddSingleton<UserMessage>();
 
             Container = services.BuildServiceProvider();
         }

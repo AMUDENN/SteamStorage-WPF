@@ -22,6 +22,8 @@ namespace SteamStorage.Models
         private double percent;
         private List<DataPoint> priceDynamicsPoints = new();
         private Remain remain;
+
+        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -47,8 +49,8 @@ namespace SteamStorage.Models
             this.remain = remain;
             datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
             amountPurchase = remain.CostPurchase * remain.Count;
-            Context.DBContext.PriceDynamics.LoadAsync();
-            Context.DBContext.Skins.LoadAsync();
+            context.DBContext.PriceDynamics.LoadAsync();
+            context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
         #endregion Constructor

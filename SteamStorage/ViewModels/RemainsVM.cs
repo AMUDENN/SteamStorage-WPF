@@ -54,6 +54,9 @@ namespace SteamStorage.ViewModels
         private RelayCommand<object> editRemainCommand;
         private RelayCommand<object> sellRemainCommand;
         private RelayCommand<object> deleteRemainCommand;
+
+        private Context context = Singleton.GetObject<Context>();
+        private UserMessage userMessage = Singleton.GetObject<UserMessage>();
         #endregion Fields
 
         #region Properties
@@ -257,9 +260,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = UserMessage.AddRemainGroup();
+            var isAdded = Singleton.GetObject<UserMessage>().AddRemainGroup();
             if (!isAdded) return;
-            Context.UpdateArchiveGroupModels();
+            context.UpdateArchiveGroupModels();
             GetRemainGroups();
         }
         private void DoEditGroupCommand(object? data)
@@ -298,7 +301,7 @@ namespace SteamStorage.ViewModels
         {
             if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
 
-            DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
+            DisplayedRemains = context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
@@ -323,7 +326,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetRemainGroups()
         {
-            Groups = Context.RemainGroups.ToList();
+            Groups = context.RemainGroups.ToList();
         }
         #endregion Methods
     }

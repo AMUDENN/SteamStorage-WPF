@@ -53,6 +53,9 @@ namespace SteamStorage.ViewModels
         private RelayCommand addArchiveCommand;
         private RelayCommand<object> editArchiveCommand;
         private RelayCommand<object> deleteArchiveCommand;
+
+        private Context context = Singleton.GetObject<Context>();
+        private UserMessage userMessage = Singleton.GetObject<UserMessage>();
         #endregion Fields
 
         #region Properties
@@ -231,9 +234,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = UserMessage.AddArchiveGroup();
+            var isAdded = userMessage.AddArchiveGroup();
             if (!isAdded) return;
-            Context.UpdateArchiveGroupModels();
+            context.UpdateArchiveGroupModels();
             GetArchiveGroups();
         }
         private void DoEditGroupCommand(object? data)
@@ -264,7 +267,7 @@ namespace SteamStorage.ViewModels
         {
             if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
 
-            DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
+            DisplayedArchives = context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
 
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
@@ -289,7 +292,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetArchiveGroups()
         {
-            Groups = Context.ArchiveGroups.ToList();
+            Groups = context.ArchiveGroups.ToList();
         }
         #endregion Methods
     }

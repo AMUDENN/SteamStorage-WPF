@@ -9,8 +9,8 @@ namespace SteamStorage.ViewModels
     public class HomeVM : ObservableObject
     {
         #region Fields
-        private List<ArchiveGroupModel> archiveGroupModels = Context.ArchiveGroups.ToList();
-        private List<RemainGroupModel> remainGroupModels = Context.RemainGroups.ToList();
+        private List<ArchiveGroupModel> archiveGroupModels = Singleton.GetObject<Context>().ArchiveGroups.ToList();
+        private List<RemainGroupModel> remainGroupModels = Singleton.GetObject<Context>().RemainGroups.ToList();
 
         private long totalArchiveCount;
         private double totalArchiveAmountPurchase;
@@ -23,6 +23,8 @@ namespace SteamStorage.ViewModels
         private double totalRemainPercent;
         private double totalRemainCurrentAmount;
         private RemainModel mostProfitabilityRemain;
+
+        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -45,14 +47,14 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public HomeVM()
         {
-            var archiveModels = Context.GetArchiveModels(null);
+            var archiveModels = context.GetArchiveModels(null);
             totalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             totalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
             totalArchivePercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
             totalArchiveAmountSold = CalculationModel.GetArchiveTotalAmountSold(archiveModels);
             mostProfitabilityArchive = CalculationModel.GetMostProfitabilityArchive(archiveModels);
 
-            var remainModels = Context.GetRemainModels(null);
+            var remainModels = context.GetRemainModels(null);
             totalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
             totalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
             totalRemainPercent = CalculationModel.GetRemainAveragePercent(remainModels);

@@ -10,6 +10,8 @@ namespace SteamStorage.Models
         private long? archivesCount;
         private double? archivesAmount;
         private double? archivesPercent;
+
+        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -53,14 +55,14 @@ namespace SteamStorage.Models
         public ArchiveGroupModel() 
         {
             archiveGroup = new();
-            Context.AddArchiveGroup(archiveGroup);
+            context.AddArchiveGroup(archiveGroup);
         }
         #endregion Constructor
 
         #region Methods
         private void UpdateRemains()
         {
-            var archiveModels = Context.GetArchiveModels(this);
+            var archiveModels = context.GetArchiveModels(this);
             archivesCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             archivesAmount = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
             archivesPercent = CalculationModel.GetArchiveAveragePercent(archiveModels);

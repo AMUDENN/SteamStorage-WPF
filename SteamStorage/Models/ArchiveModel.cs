@@ -14,6 +14,8 @@ namespace SteamStorage.Models
         private double amountSold;
         private double percent;
         private Archive archive;
+
+        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -38,7 +40,7 @@ namespace SteamStorage.Models
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
             percent = (CostSold - CostPurchase) / CostPurchase * 100;
-            Context.DBContext.Skins.LoadAsync();
+            context.DBContext.Skins.LoadAsync();
         }
         #endregion Constructor
     }

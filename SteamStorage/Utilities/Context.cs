@@ -6,24 +6,24 @@ using System.Linq;
 
 namespace SteamStorage.Utilities
 {
-    public static class Context
+    public class Context
     {
         #region Fields
-        private static readonly SteamStorageDbContext DbContext = new();
-        private static IEnumerable<RemainModel> remainModels;
-        private static IEnumerable<ArchiveModel> archiveModels;
-        private static IEnumerable<RemainGroupModel> remainGroupModels;
-        private static IEnumerable<ArchiveGroupModel> archiveGroupModels;
+        private readonly SteamStorageDbContext DbContext = new();
+        private IEnumerable<RemainModel> remainModels;
+        private IEnumerable<ArchiveModel> archiveModels;
+        private IEnumerable<RemainGroupModel> remainGroupModels;
+        private IEnumerable<ArchiveGroupModel> archiveGroupModels;
         #endregion Fields
 
         #region Properties
-        public static SteamStorageDbContext DBContext => DbContext;
-        public static IEnumerable<RemainGroupModel> RemainGroups => remainGroupModels;
-        public static IEnumerable<ArchiveGroupModel> ArchiveGroups => archiveGroupModels;
+        public SteamStorageDbContext DBContext => DbContext;
+        public IEnumerable<RemainGroupModel> RemainGroups => remainGroupModels;
+        public IEnumerable<ArchiveGroupModel> ArchiveGroups => archiveGroupModels;
         #endregion Properties
 
         #region Constructor
-        static Context()
+        public Context()
         {
             UpdateRemainModels();
             UpdateArchiveModels();
@@ -33,27 +33,27 @@ namespace SteamStorage.Utilities
         #endregion Constructor
 
         #region Methods
-        public static IEnumerable<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
+        public IEnumerable<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
         {
             return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup);
         }
-        public static IEnumerable<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
+        public IEnumerable<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
         {
             return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup);
         }
-        public static void AddRemainGroup(RemainGroup remainGroup)
+        public void AddRemainGroup(RemainGroup remainGroup)
         {
             DbContext.RemainGroups.Add(remainGroup);
         }
-        public static void AddArchiveGroup(ArchiveGroup archiveGroup)
+        public void AddArchiveGroup(ArchiveGroup archiveGroup)
         {
             DbContext.ArchiveGroups.Add(archiveGroup);
         }
-        public static void SaveChanges()
+        public void SaveChanges()
         {
             DbContext.SaveChanges();
         }
-        public static void UndoChanges()
+        public void UndoChanges()
         {
             foreach (var entry in DbContext.ChangeTracker.Entries())
             {
@@ -71,19 +71,19 @@ namespace SteamStorage.Utilities
                 }
             }
         }
-        public static void UpdateRemainModels()
+        public void UpdateRemainModels()
         {
             remainModels = DBContext.Remains.Select(x => new RemainModel(x));
         }
-        public static void UpdateArchiveModels()
+        public void UpdateArchiveModels()
         {
             archiveModels = DBContext.Archives.Select(x => new ArchiveModel(x));
         }
-        public static void UpdateRemainGroupModels()
+        public void UpdateRemainGroupModels()
         {
             remainGroupModels = DBContext.RemainGroups.Select(x => new RemainGroupModel(x));
         }
-        public static void UpdateArchiveGroupModels()
+        public void UpdateArchiveGroupModels()
         {
             archiveGroupModels = DBContext.ArchiveGroups.Select(x => new ArchiveGroupModel(x));
         }
