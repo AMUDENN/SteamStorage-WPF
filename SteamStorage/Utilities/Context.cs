@@ -41,6 +41,10 @@ namespace SteamStorage.Utilities
         {
             return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup);
         }
+        public static void AddRemainGroup(RemainGroup remainGroup)
+        {
+            DbContext.RemainGroups.Add(remainGroup);
+        }
         public static void AddArchiveGroup(ArchiveGroup archiveGroup)
         {
             DbContext.ArchiveGroups.Add(archiveGroup);

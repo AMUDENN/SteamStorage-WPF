@@ -18,8 +18,8 @@
         <view:MessageBoxView/>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:ArchiveGroupOperationsVM}">
-        <view:ArchiveGroupOperationsView/>
+    <DataTemplate DataType="{x:Type vm:GroupOperationsVM}">
+        <view:GroupOperationsView/>
     </DataTemplate>
 
     <!--Pages-->

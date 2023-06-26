@@ -229,7 +229,7 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public RemainsVM()
         {
-            Groups = Context.RemainGroups.ToList();
+            GetRemainGroups();
             IsAllRemainsDisplayed = true;
         }
         #endregion Constructor
@@ -257,7 +257,10 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-
+            var isAdded = UserMessage.AddRemainGroup();
+            if (!isAdded) return;
+            Context.UpdateArchiveGroupModels();
+            GetRemainGroups();
         }
         private void DoEditGroupCommand(object? data)
         {
@@ -317,6 +320,10 @@ namespace SteamStorage.ViewModels
             if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             var remains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
             DisplayedRemains = remains.ToList();
+        }
+        private void GetRemainGroups()
+        {
+            Groups = Context.RemainGroups.ToList();
         }
         #endregion Methods
     }

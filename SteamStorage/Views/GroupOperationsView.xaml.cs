@@ -2,9 +2,9 @@
 
 namespace SteamStorage.Views
 {
-    public partial class ArchiveGroupOperationsView : UserControl
+    public partial class GroupOperationsView : UserControl
     {
-        public ArchiveGroupOperationsView()
+        public GroupOperationsView()
         {
             InitializeComponent();
         }

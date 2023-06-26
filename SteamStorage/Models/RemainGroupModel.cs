@@ -14,7 +14,11 @@ namespace SteamStorage.Models
 
         #region Properties
         public RemainGroup? RemainGroup => remainGroup;
-        public string Title => remainGroup.Title;
+        public string Title
+        {
+            get => remainGroup.Title;
+            set => remainGroup.Title = value;
+        }
         public long RemainsCount
         {
             get
@@ -45,6 +49,11 @@ namespace SteamStorage.Models
         public RemainGroupModel(RemainGroup remainGroup)
         {
             this.remainGroup = remainGroup;
+        }
+        public RemainGroupModel()
+        {
+            remainGroup = new();
+            Context.AddRemainGroup(remainGroup);
         }
         #endregion Constructor
 

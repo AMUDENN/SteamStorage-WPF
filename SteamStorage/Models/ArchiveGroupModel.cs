@@ -52,7 +52,7 @@ namespace SteamStorage.Models
         }
         public ArchiveGroupModel() 
         {
-            archiveGroup = new ArchiveGroup();
+            archiveGroup = new();
             Context.AddArchiveGroup(archiveGroup);
         }
         #endregion Constructor
