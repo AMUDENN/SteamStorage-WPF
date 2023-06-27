@@ -2,6 +2,7 @@
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Utilities;
+using SteamStorage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace SteamStorage.Models
     public class RemainModel
     {
         #region Fields
+        private Remain remain;
         private DateTime datePurchase;
         private double amountPurchase;
         private Dictionary<DateTime, double> priceDynamics;
@@ -21,13 +23,13 @@ namespace SteamStorage.Models
         private double currentAmount;
         private double percent;
         private List<DataPoint> priceDynamicsPoints = new();
-        private Remain remain;
 
         private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public RemainGroup RemainGroup => remain.IdGroupNavigation;
+        public string Url => remain.IdSkinNavigation.Url;
         public string Title => remain.IdSkinNavigation.Title;
         public DateTime DatePurchase => datePurchase;
         public long Count => remain.Count;
@@ -53,6 +55,11 @@ namespace SteamStorage.Models
             context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
+        public RemainModel()
+        {
+            remain = new();
+            context.AddRemain(remain);
+        }
         #endregion Constructor
 
         #region Methods
@@ -76,6 +83,10 @@ namespace SteamStorage.Models
                 priceDynamicsPoints.Add(new(i, item.Value));
                 i++;
             }
+        }
+        public void EditRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupModel? remainGroupModel)
+        {
+
         }
         #endregion Methods
     }

@@ -8,18 +8,19 @@ namespace SteamStorage.Models
     public class ArchiveModel
     {
         #region Fields
+        private Archive archive;
         private DateTime datePurchase;
         private DateTime dateSold;
         private double amountPurchase;
         private double amountSold;
         private double percent;
-        private Archive archive;
 
         private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public ArchiveGroup ArchiveGroup => archive.IdGroupNavigation;
+        public string Url => archive.IdSkinNavigation.Url;
         public string Title => archive.IdSkinNavigation.Title;
         public DateTime DatePurchase => datePurchase;
         public DateTime DateSold => dateSold;
@@ -42,6 +43,18 @@ namespace SteamStorage.Models
             percent = (CostSold - CostPurchase) / CostPurchase * 100;
             context.DBContext.Skins.LoadAsync();
         }
+        public ArchiveModel()
+        {
+            archive = new();
+            context.AddArchive(archive);
+        }
         #endregion Constructor
+
+        #region Methods
+        public void EditArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        {
+            
+        }
+        #endregion Methods
     }
 }

@@ -49,6 +49,14 @@ namespace SteamStorage.Utilities
         {
             DbContext.ArchiveGroups.Add(archiveGroup);
         }
+        public void AddRemain(Remain remain)
+        {
+            DbContext.Remains.Add(remain);
+        }
+        public void AddArchive(Archive archive)
+        {
+            DbContext.Archives.Add(archive);
+        }
         public void SaveChanges()
         {
             DbContext.SaveChanges();
