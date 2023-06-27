@@ -83,8 +83,8 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (groupType == GroupTypes.Archive) archiveGroupModel.Title = Title;
-            else if (groupType == GroupTypes.Remain) remainGroupModel.Title = Title;
+            if (groupType == GroupTypes.Archive) archiveGroupModel.EditGroup(Title);
+            else if (groupType == GroupTypes.Remain) remainGroupModel.EditGroup(Title);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }

@@ -16,11 +16,7 @@ namespace SteamStorage.Models
 
         #region Properties
         public RemainGroup? RemainGroup => remainGroup;
-        public string Title
-        {
-            get => remainGroup.Title;
-            set => remainGroup.Title = value;
-        }
+        public string Title => remainGroup.Title;
         public long RemainsCount
         {
             get
@@ -66,6 +62,10 @@ namespace SteamStorage.Models
             remainsCount = CalculationModel.GetRemainTotalCount(remainModels);
             remainsAmount = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
             remainsPercent = CalculationModel.GetRemainAveragePercent(remainModels);
+        }
+        public void EditGroup(string title)
+        {
+            remainGroup.Title = title;
         }
         #endregion Methods
     }

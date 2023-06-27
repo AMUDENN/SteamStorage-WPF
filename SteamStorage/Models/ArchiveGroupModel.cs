@@ -16,16 +16,12 @@ namespace SteamStorage.Models
 
         #region Properties
         public ArchiveGroup ArchiveGroup => archiveGroup;
-        public string Title
-        {
-            get => archiveGroup.Title;
-            set => archiveGroup.Title = value;
-        }
+        public string Title => archiveGroup.Title;
         public long ArchivesCount
         {
             get
             {
-                if (archivesCount is null) UpdateRemains();
+                if (archivesCount is null) UpdateArchives();
                 return (long)archivesCount;
             }
         }
@@ -33,7 +29,7 @@ namespace SteamStorage.Models
         {
             get
             {
-                if (archivesAmount is null) UpdateRemains();
+                if (archivesAmount is null) UpdateArchives();
                 return (double)archivesAmount;
             }
         }
@@ -41,7 +37,7 @@ namespace SteamStorage.Models
         {
             get
             {
-                if (archivesPercent is null) UpdateRemains();
+                if (archivesPercent is null) UpdateArchives();
                 return (double)archivesPercent;
             }
         }
@@ -60,12 +56,16 @@ namespace SteamStorage.Models
         #endregion Constructor
 
         #region Methods
-        private void UpdateRemains()
+        private void UpdateArchives()
         {
             var archiveModels = context.GetArchiveModels(this);
             archivesCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             archivesAmount = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
             archivesPercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
+        }
+        public void EditGroup(string title)
+        {
+            archiveGroup.Title = title;
         }
         #endregion Methods
     }
