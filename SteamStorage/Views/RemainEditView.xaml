@@ -13,16 +13,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
+
+        <ComboBox ItemsSource="{Binding Groups}" 
+                  DisplayMemberPath="Title"
+                  SelectedItem="{Binding SelectedRemainGroupModel}" 
+                  Style="{DynamicResource ComboBoxStyle}" 
+                  Tag="Выберите группу"
+                  Margin="20, 10" Grid.Row="0"/>
 
         <controls:AdvancedTextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   MaxLength="100" PreviewRegex="[\w_+=\-!@#№%^:*()'`~.,]" 
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Ссылка на скин"
-                                  MaxHeight="80" Margin="20" Grid.Row="0"/>
+                                  MaxHeight="80" Margin="20, 10" Grid.Row="1"/>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -33,18 +41,17 @@
                                   MaxLength="30" PreviewRegex="[0-9]" 
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Количество"
-                                  MaxHeight="80" Margin="20, 20, 10, 20" Grid.Column="0"/>
+                                  MaxHeight="80" Margin="20, 10, 10, 10" Grid.Column="0"/>
 
             <controls:AdvancedTextBox Text="{Binding CostPurchase, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   MaxLength="30" PreviewRegex="[0-9.]" 
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Цена покупки"
-                                  MaxHeight="80" Margin="10, 20, 20, 20" Grid.Column="1"/>
+                                  MaxHeight="80" Margin="10, 10, 20, 10" Grid.Column="1"/>
 
         </Grid>
 
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3">
             <Button Content="Сохранить" 
                     Command="{Binding SaveCommand}" 
                     Style="{DynamicResource AccentAdditionalButtonStyle}" 

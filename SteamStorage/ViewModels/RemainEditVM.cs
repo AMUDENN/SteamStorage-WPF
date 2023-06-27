@@ -4,6 +4,8 @@ using SteamStorage.Models;
 using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -13,9 +15,11 @@ namespace SteamStorage.ViewModels
         private RemainModel remainModel;
 
         private string url;
-        private long count;
-        private double costPurchase;
+        private long? count = null;
+        private double? costPurchase = null;
         private RemainGroupModel? selectedRemainGroupModel;
+
+        private IEnumerable<RemainGroupModel> groups;
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
@@ -33,7 +37,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public long Count
+        public long? Count
         {
             get => count;
             set
@@ -42,7 +46,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public double CostPurchase
+        public double? CostPurchase
         {
             get => costPurchase;
             set
@@ -59,6 +63,11 @@ namespace SteamStorage.ViewModels
                 SetProperty(ref selectedRemainGroupModel, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
+        }
+        public IEnumerable<RemainGroupModel> Groups
+        {
+            get => groups;
+            set => SetProperty(ref groups, value);
         }
         #endregion Properties
 
@@ -80,18 +89,20 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public RemainEditVM(RemainModel remainModel, RemainGroupModel remainGroupModel)
+        public RemainEditVM(RemainModel remainModel)
         {
             this.remainModel = remainModel;
             Url = remainModel.Url;
             Count = remainModel.Count;
             CostPurchase = remainModel.CostPurchase;
-            SelectedRemainGroupModel = remainGroupModel;
+            Groups = context.RemainGroups.ToList();
+            SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
         public RemainEditVM(RemainGroupModel remainGroupModel)
         {
             remainModel = new();
             Url = string.Empty;
+            Groups = context.RemainGroups.ToList(); 
             SelectedRemainGroupModel = remainGroupModel;
         }
         #endregion Constructor
@@ -99,13 +110,13 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            remainModel.EditRemain(Url, (long)Count, (double)CostPurchase, DateTime.Now, SelectedRemainGroupModel);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
         {
-            return Url.Length >= 30;
+            return Count is not null && CostPurchase is not null && Url.Length >= 30;
         }
         private void DoCancelCommand()
         {

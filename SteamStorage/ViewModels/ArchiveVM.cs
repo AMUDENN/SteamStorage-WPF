@@ -32,8 +32,8 @@ namespace SteamStorage.ViewModels
         };
         private string? selectedOrderType;
 
-        private List<ArchiveGroupModel> groups;
-        private List<ArchiveModel> displayedArchives;
+        private IEnumerable<ArchiveGroupModel> groups;
+        private IEnumerable<ArchiveModel> displayedArchives;
 
         private long totalCount;
         private double averageCostPurchase;
@@ -88,12 +88,12 @@ namespace SteamStorage.ViewModels
                 DoSorting();
             }
         }
-        public List<ArchiveGroupModel> Groups
+        public IEnumerable<ArchiveGroupModel> Groups
         {
             get => groups;
             set => SetProperty(ref groups, value);
         }
-        public List<ArchiveModel> DisplayedArchives
+        public IEnumerable<ArchiveModel> DisplayedArchives
         {
             get => displayedArchives;
             set => SetProperty(ref displayedArchives, value);
@@ -256,11 +256,17 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddArchiveCommand()
         {
-
+            var isAdded = userMessage.AddArchive(SelectedGroup);
+            if (!isAdded) return;
+            context.UpdateArchiveModels();
+            DoFiltering();
         }
         private void DoEditArchiveCommand(object? data)
         {
-
+            var isEdit = userMessage.EditArchive((ArchiveModel)data);
+            if (!isEdit) return;
+            context.UpdateArchiveModels();
+            DoFiltering();
         }
         private void DoDeleteArchiveCommand(object? data)
         {
@@ -270,7 +276,7 @@ namespace SteamStorage.ViewModels
         {
             if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
 
-            DisplayedArchives = context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
+            DisplayedArchives = context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
 
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
@@ -290,8 +296,7 @@ namespace SteamStorage.ViewModels
         {
             RemoveFilterCommand.NotifyCanExecuteChanged();
             if (DisplayedArchives is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
-            var remains = orderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(orderTitles[SelectedOrderTitle]);
-            DisplayedArchives = remains.ToList();
+            DisplayedArchives = orderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(orderTitles[SelectedOrderTitle]);
         }
         private void GetArchiveGroups()
         {

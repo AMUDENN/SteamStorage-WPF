@@ -30,8 +30,8 @@ namespace SteamStorage.ViewModels
         };
         private string? selectedOrderType;
 
-        private List<RemainGroupModel> groups;
-        private List<RemainModel> displayedRemains;
+        private IEnumerable<RemainGroupModel> groups;
+        private IEnumerable<RemainModel> displayedRemains;
 
         private long totalCount;
         private double averageCostPurchase;
@@ -89,12 +89,12 @@ namespace SteamStorage.ViewModels
                 DoSorting();
             }
         }
-        public List<RemainGroupModel> Groups
+        public IEnumerable<RemainGroupModel> Groups
         {
             get => groups;
             set => SetProperty(ref groups, value);
         }
-        public List<RemainModel> DisplayedRemains
+        public IEnumerable<RemainModel> DisplayedRemains
         {
             get => displayedRemains;
             set => SetProperty(ref displayedRemains, value);
@@ -286,11 +286,17 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddRemainCommand()
         {
-
+            var isAdded = userMessage.AddRemain(SelectedGroup);
+            if (!isAdded) return;
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoEditRemainCommand(object? data)
         {
-
+            var isEdit = userMessage.EditRemain((RemainModel)data);
+            if (!isEdit) return;
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoSellRemainCommand(object? data)
         {
@@ -304,7 +310,7 @@ namespace SteamStorage.ViewModels
         {
             if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
 
-            DisplayedRemains = context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)).ToList();
+            DisplayedRemains = context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
 
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
@@ -324,8 +330,7 @@ namespace SteamStorage.ViewModels
         {
             RemoveFilterCommand.NotifyCanExecuteChanged();
             if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
-            var remains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
-            DisplayedRemains = remains.ToList();
+            DisplayedRemains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
         }
         private void GetRemainGroups()
         {

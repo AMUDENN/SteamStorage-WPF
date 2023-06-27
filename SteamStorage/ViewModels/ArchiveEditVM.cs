@@ -4,6 +4,8 @@ using SteamStorage.Models;
 using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -13,10 +15,12 @@ namespace SteamStorage.ViewModels
         private ArchiveModel archiveModel;
 
         private string url;
-        private long count;
-        private double costPurchase;
-        private double costSold;
+        private long? count;
+        private double? costPurchase;
+        private double? costSold;
         private ArchiveGroupModel? selectedArchiveGroupModel;
+
+        private IEnumerable<ArchiveGroupModel> groups;
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
@@ -34,7 +38,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public long Count
+        public long? Count
         {
             get => count;
             set
@@ -43,7 +47,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public double CostPurchase
+        public double? CostPurchase
         {
             get => costPurchase;
             set
@@ -52,7 +56,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public double CostSold
+        public double? CostSold
         {
             get => costSold;
             set
@@ -69,6 +73,11 @@ namespace SteamStorage.ViewModels
                 SetProperty(ref selectedArchiveGroupModel, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
+        }
+        public IEnumerable<ArchiveGroupModel> Groups
+        {
+            get => groups;
+            set => SetProperty(ref groups, value);
         }
         #endregion Properties
 
@@ -90,19 +99,21 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public ArchiveEditVM(ArchiveModel archiveModel, ArchiveGroupModel? archiveGroupModel)
+        public ArchiveEditVM(ArchiveModel archiveModel)
         {
             this.archiveModel = archiveModel;
             Url = archiveModel.Url;
             Count = archiveModel.Count;
             CostPurchase = archiveModel.CostPurchase;
             CostSold = archiveModel.CostSold;
-            SelectedArchiveGroupModel = archiveGroupModel;
+            Groups = context.ArchiveGroups.ToList();
+            SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
         {
             archiveModel = new();
             Url = string.Empty;
+            Groups = context.ArchiveGroups.ToList();
             SelectedArchiveGroupModel = archiveGroupModel;
         }
         #endregion Constructor
@@ -110,13 +121,13 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            archiveModel.EditArchive(Url, (long)Count, (double)CostPurchase, (double)CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
         {
-            return Url.Length >= 30;
+            return Count is not null && CostPurchase is not null && CostSold is not null && Url.Length >= 30;
         }
         private void DoCancelCommand()
         {
