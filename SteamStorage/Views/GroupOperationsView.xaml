@@ -15,9 +15,9 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
-        <controls:AdvancedTextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        <controls:AdvancedTextBox AdvancedText="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   MaxLength="30" PreviewRegex="[\w_+=\-!@#№%^:*()'`~.,]" 
-                                  TextBoxStyle="{DynamicResource TextBoxStyle}" 
+                                  AdvancedTextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Введите название группы"
                                   MaxHeight="80" Margin="20" Grid.Row="0"/>
 

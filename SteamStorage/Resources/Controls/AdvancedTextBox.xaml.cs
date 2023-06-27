@@ -16,11 +16,11 @@ namespace SteamStorage.Resources.Controls
         public static readonly DependencyProperty PreviewRegexProperty = DependencyProperty.Register(
             name: "PreviewRegex", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
         );
-        public static readonly DependencyProperty TextBoxStyleProperty = DependencyProperty.Register(
-            name: "TextBoxStyle", propertyType: typeof(Style), ownerType: typeof(AdvancedTextBox)
+        public static readonly DependencyProperty AdvancedTextBoxStyleProperty = DependencyProperty.Register(
+            name: "AdvancedTextBoxStyle", propertyType: typeof(Style), ownerType: typeof(AdvancedTextBox)
         );
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            name: "Text", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
+        public static readonly DependencyProperty AdvancedTextProperty = DependencyProperty.Register(
+            name: "AdvancedText", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
         );
         #endregion Fields
 
@@ -35,15 +35,15 @@ namespace SteamStorage.Resources.Controls
             get => (string)GetValue(dp: PreviewRegexProperty);
             set => SetValue(dp: PreviewRegexProperty, value: value);
         }
-        public Style TextBoxStyle
+        public Style AdvancedTextBoxStyle
         {
-            get => (Style)GetValue(dp: TextBoxStyleProperty);
-            set => SetValue(dp: TextBoxStyleProperty, value: value);
+            get => (Style)GetValue(dp: AdvancedTextBoxStyleProperty);
+            set => SetValue(dp: AdvancedTextBoxStyleProperty, value: value);
         }
-        public string Text
+        public string AdvancedText
         {
-            get => (string)GetValue(dp: TextProperty);
-            set => SetValue(dp: TextProperty, value: value);
+            get => (string)GetValue(dp: AdvancedTextProperty);
+            set => SetValue(dp: AdvancedTextProperty, value: value);
         }
         private Regex PreviewRegexExpression
         {
@@ -72,6 +72,21 @@ namespace SteamStorage.Resources.Controls
             {
                 tb.Text = text[..MaxLength];
                 tb.SelectionStart = MaxLength;
+            }
+        }
+        private void MainTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                string text = (string)e.DataObject.GetData(typeof(string));
+                if (PreviewRegexExpression.Count(text) != text.Length)
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
         #endregion Methods
