@@ -83,51 +83,55 @@
                         <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
                         <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding MainColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding MainAdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding MainAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding AdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
                                               Tag="{Binding AccentColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="3" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding AccentAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="3"/>
                         <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding PercentPlusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="3"/>
                         <controls:AdvancedTextBox Text="{Binding PercentMinusColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]"  
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding PercentMinusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="3"/>
 
                         <Grid Grid.Row="4" Grid.Column="0">
+                            
                             <Button Content="Сохранить" 
                                 Command="{Binding SaveColorsCommand}"
                                 Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                            
                         </Grid>
 
                         <Grid Grid.Row="4" Grid.Column="1">
+                            
                             <Button Content="Сбросить"
                                 Command="{Binding ResetColorsCommand}"
                                 Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                            
                         </Grid>
 
                     </Grid>

@@ -13,6 +13,9 @@ namespace SteamStorage.Resources.Controls
         public static readonly DependencyProperty MaxLengthProperty = DependencyProperty.Register(
             name: "MaxLength", propertyType: typeof(int), ownerType: typeof(AdvancedTextBox)
         );
+        public static readonly DependencyProperty AllowSpaceProperty = DependencyProperty.Register(
+            name: "AllowSpace", propertyType: typeof(bool), ownerType: typeof(AdvancedTextBox)
+        );
         public static readonly DependencyProperty PreviewRegexProperty = DependencyProperty.Register(
             name: "PreviewRegex", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
         );
@@ -29,6 +32,11 @@ namespace SteamStorage.Resources.Controls
         {
             get => Convert.ToInt32(GetValue(dp: MaxLengthProperty));
             set => SetValue(dp: MaxLengthProperty, value: value);
+        }
+        public bool AllowSpace
+        {
+            get => Convert.ToBoolean(GetValue(dp: AllowSpaceProperty));
+            set => SetValue(dp: AllowSpaceProperty, value: value);
         }
         public string PreviewRegex
         {
@@ -73,6 +81,11 @@ namespace SteamStorage.Resources.Controls
         {
             TextBox tb = sender as TextBox;
             string text = tb.Text;
+            if (!AllowSpace)
+            {
+                tb.Text = text.Replace(" ", string.Empty);
+                tb.SelectionStart = MaxLength;
+            }
             if (text.Length >= MaxLength)
             {
                 tb.Text = text[..MaxLength];

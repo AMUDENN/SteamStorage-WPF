@@ -25,7 +25,7 @@
                   Margin="20, 10" Grid.Row="0"/>
 
         <controls:AdvancedTextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  MaxLength="100"
+                                  MaxLength="100" AllowSpace="False"
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Ссылка на скин"
                                   MaxHeight="80" Margin="20, 10" Grid.Row="1"/>
@@ -39,19 +39,19 @@
             </Grid.ColumnDefinitions>
 
             <controls:AdvancedTextBox Text="{Binding CountString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  PreviewRegex="[0-9]" MaxLength="40"
+                                  PreviewRegex="[0-9]" MaxLength="40" AllowSpace="False"
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Количество"
                                   MaxHeight="80" Margin="20, 10, 10, 10" Grid.Column="0"/>
 
             <controls:AdvancedTextBox Text="{Binding CostPurchaseString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  PreviewRegex="[0-9.,]" MaxLength="40"
+                                  PreviewRegex="[0-9.,]" MaxLength="40" AllowSpace="False"
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Цена покупки"
                                   MaxHeight="80" Margin="10, 10, 10, 10" Grid.Column="1"/>
 
             <controls:AdvancedTextBox Text="{Binding CostSoldString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  PreviewRegex="[0-9.,]" MaxLength="40"
+                                  PreviewRegex="[0-9.,]" MaxLength="40" AllowSpace="False"
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Цена продажи"
                                   MaxHeight="80" Margin="10, 10, 20, 10" Grid.Column="2"/>
