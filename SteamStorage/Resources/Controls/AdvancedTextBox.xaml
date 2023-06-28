@@ -8,9 +8,9 @@
              d:DesignHeight="100" d:DesignWidth="400">
 
     <TextBox x:Name="MainTextBox" 
-             Style="{Binding ElementName=ThisElement, Path=AdvancedTextBoxStyle}" 
+             Style="{Binding ElementName=ThisElement, Path=TextBoxStyle}" 
              Tag="{Binding ElementName=ThisElement, Path=Tag}"
-             Text="{Binding ElementName=ThisElement, Path=AdvancedText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+             Text="{Binding ElementName=ThisElement, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
              PreviewTextInput="MainTextBox_PreviewTextInput" 
              DataObject.Pasting="MainTextBox_Pasting"
              TextChanged="MainTextBox_TextChanged"/>

@@ -15,9 +15,13 @@ namespace SteamStorage.ViewModels
         private ArchiveModel archiveModel;
 
         private string url;
-        private long? count;
-        private double? costPurchase;
-        private double? costSold;
+        private string countString = string.Empty;
+        private string costPurchaseString = string.Empty;
+        private string costSoldString = string.Empty;
+
+        private long count;
+        private double costPurchase;
+        private double costSold;
         private ArchiveGroupModel? selectedArchiveGroupModel;
 
         private IEnumerable<ArchiveGroupModel> groups;
@@ -38,32 +42,47 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public long? Count
+        public string CountString
+        {
+            get => countString;
+            set
+            {
+                SetProperty(ref countString, value.Replace(".", ","));
+                SaveCommand.NotifyCanExecuteChanged();
+            }
+        }
+        public string CostPurchaseString
+        {
+            get => costPurchaseString;
+            set
+            {
+                SetProperty(ref costPurchaseString, value.Replace(".", ","));
+                SaveCommand.NotifyCanExecuteChanged();
+            }
+        }
+        public string CostSoldString
+        {
+            get => costSoldString;
+            set
+            {
+                SetProperty(ref costSoldString, value.Replace(".", ","));
+                SaveCommand.NotifyCanExecuteChanged();
+            }
+        }
+        public long Count
         {
             get => count;
-            set
-            {
-                SetProperty(ref count, value);
-                SaveCommand.NotifyCanExecuteChanged();
-            }
+            set => SetProperty(ref count, value);
         }
-        public double? CostPurchase
+        public double CostPurchase
         {
             get => costPurchase;
-            set
-            {
-                SetProperty(ref costPurchase, value);
-                SaveCommand.NotifyCanExecuteChanged();
-            }
+            set => SetProperty(ref costPurchase, value);
         }
-        public double? CostSold
+        public double CostSold
         {
             get => costSold;
-            set
-            {
-                SetProperty(ref costSold, value);
-                SaveCommand.NotifyCanExecuteChanged();
-            }
+            set => SetProperty(ref costSold, value);
         }
         public ArchiveGroupModel? SelectedArchiveGroupModel
         {
@@ -106,6 +125,9 @@ namespace SteamStorage.ViewModels
             Count = archiveModel.Count;
             CostPurchase = archiveModel.CostPurchase;
             CostSold = archiveModel.CostSold;
+            CountString = archiveModel.Count.ToString();
+            CostPurchaseString = archiveModel.CostPurchase.ToString();
+            CostSoldString = archiveModel.CostSold.ToString();
             Groups = context.ArchiveGroups.ToList();
             SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
@@ -121,13 +143,23 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            archiveModel.EditArchive(Url, (long)Count, (double)CostPurchase, (double)CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
         {
-            return Count is not null && CostPurchase is not null && CostSold is not null && Url.Length >= 30;
+            try
+            {
+                Count = Convert.ToInt64(CountString);
+                CostPurchase = Convert.ToDouble(CostPurchaseString);
+                CostSold = Convert.ToDouble(CostSoldString);
+                return Url.Length >= 30;
+            }
+            catch
+            {
+                return false;
+            }
         }
         private void DoCancelCommand()
         {

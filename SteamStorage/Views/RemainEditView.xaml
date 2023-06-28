@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SteamStorage.Views"
              xmlns:controls="clr-namespace:SteamStorage.Resources.Controls"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
 
@@ -25,9 +24,9 @@
                   Tag="Выберите группу"
                   Margin="20, 10" Grid.Row="0"/>
 
-        <controls:AdvancedTextBox AdvancedText="{Binding Url, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  MaxLength="100" PreviewRegex="[\w_+=\-!@#№%^:*()'`~.,]" 
-                                  AdvancedTextBoxStyle="{DynamicResource TextBoxStyle}" 
+        <controls:AdvancedTextBox Text="{Binding Url, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  MaxLength="100"
+                                  TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Ссылка на скин"
                                   MaxHeight="80" Margin="20, 10" Grid.Row="1"/>
 
@@ -38,15 +37,15 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:NumericTextBox NumericText="{Binding Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  InputType="{x:Type sys:Int64}"
-                                  NumericTextBoxStyle="{DynamicResource TextBoxStyle}" 
+            <controls:AdvancedTextBox Text="{Binding CountString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  PreviewRegex="[0-9]" MaxLength="40"
+                                  TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Количество"
                                   MaxHeight="80" Margin="20, 10, 10, 10" Grid.Column="0"/>
 
-            <controls:NumericTextBox NumericText="{Binding CostPurchase, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                  InputType="{x:Type sys:Double}"
-                                  NumericTextBoxStyle="{DynamicResource TextBoxStyle}" 
+            <controls:AdvancedTextBox Text="{Binding CostPurchaseString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                  PreviewRegex="[0-9.,]" MaxLength="40"
+                                  TextBoxStyle="{DynamicResource TextBoxStyle}" 
                                   Tag="Цена покупки"
                                   MaxHeight="80" Margin="10, 10, 20, 10" Grid.Column="1"/>
 

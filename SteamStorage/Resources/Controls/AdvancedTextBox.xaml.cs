@@ -9,18 +9,18 @@ namespace SteamStorage.Resources.Controls
     public partial class AdvancedTextBox : UserControl
     {
         #region Fields
-        private Regex previewRegexExpression;
+        private Regex? previewRegexExpression;
         public static readonly DependencyProperty MaxLengthProperty = DependencyProperty.Register(
             name: "MaxLength", propertyType: typeof(int), ownerType: typeof(AdvancedTextBox)
         );
         public static readonly DependencyProperty PreviewRegexProperty = DependencyProperty.Register(
             name: "PreviewRegex", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
         );
-        public static readonly DependencyProperty AdvancedTextBoxStyleProperty = DependencyProperty.Register(
-            name: "AdvancedTextBoxStyle", propertyType: typeof(Style), ownerType: typeof(AdvancedTextBox)
+        public static readonly DependencyProperty TextBoxStyleProperty = DependencyProperty.Register(
+            name: "TextBoxStyle", propertyType: typeof(Style), ownerType: typeof(AdvancedTextBox)
         );
-        public static readonly DependencyProperty AdvancedTextProperty = DependencyProperty.Register(
-            name: "AdvancedText", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            name: "Text", propertyType: typeof(string), ownerType: typeof(AdvancedTextBox)
         );
         #endregion Fields
 
@@ -35,19 +35,23 @@ namespace SteamStorage.Resources.Controls
             get => (string)GetValue(dp: PreviewRegexProperty);
             set => SetValue(dp: PreviewRegexProperty, value: value);
         }
-        public Style AdvancedTextBoxStyle
+        public Style TextBoxStyle
         {
-            get => (Style)GetValue(dp: AdvancedTextBoxStyleProperty);
-            set => SetValue(dp: AdvancedTextBoxStyleProperty, value: value);
+            get => (Style)GetValue(dp: TextBoxStyleProperty);
+            set => SetValue(dp: TextBoxStyleProperty, value: value);
         }
-        public string AdvancedText
+        public string Text
         {
-            get => (string)GetValue(dp: AdvancedTextProperty);
-            set => SetValue(dp: AdvancedTextProperty, value: value);
+            get => (string)GetValue(dp: TextProperty);
+            set => SetValue(dp: TextProperty, value: value);
         }
-        private Regex PreviewRegexExpression
+        private Regex? PreviewRegexExpression
         {
-            get => previewRegexExpression ??= new Regex(PreviewRegex);
+            get 
+            {
+                if (PreviewRegex is null) return null;
+                return previewRegexExpression ??= new Regex(PreviewRegex);
+            }
             set => previewRegexExpression = value;
         }
         #endregion Properties
@@ -62,7 +66,8 @@ namespace SteamStorage.Resources.Controls
         #region Methods
         private void MainTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !PreviewRegexExpression.IsMatch(e.Text);
+            if (PreviewRegexExpression is not null)
+                e.Handled = !PreviewRegexExpression.IsMatch(e.Text);
         }
         private void MainTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -76,6 +81,7 @@ namespace SteamStorage.Resources.Controls
         }
         private void MainTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
+            if (PreviewRegexExpression is null) return;
             if (e.DataObject.GetDataPresent(typeof(string)))
             {
                 string text = (string)e.DataObject.GetData(typeof(string));

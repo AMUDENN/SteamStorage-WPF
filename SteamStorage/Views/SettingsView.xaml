@@ -82,39 +82,39 @@
                         <TextBlock Text="Percent plus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="2"/>
                         <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
-                        <controls:AdvancedTextBox AdvancedText="{Binding MainColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding MainColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="1"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding MainAdditionalColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding MainAdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding MainAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="1"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding AdditionalColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding AdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="1"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding AccentColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
                                               Tag="{Binding AccentColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="3" Grid.Column="1"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding AccentAdditionalColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding AccentAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="3"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding PercentPlusColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding PercentPlusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="3"/>
-                        <controls:AdvancedTextBox AdvancedText="{Binding PercentMinusColor, Mode=TwoWay}" 
+                        <controls:AdvancedTextBox Text="{Binding PercentMinusColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]"  
-                                              AdvancedTextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding PercentMinusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="3"/>
 
