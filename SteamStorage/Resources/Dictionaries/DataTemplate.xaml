@@ -30,6 +30,10 @@
         <view:RemainEditView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:RemainSellVM}">
+        <view:RemainSellView/>
+    </DataTemplate>
+
     <!--Pages-->
     <DataTemplate DataType="{x:Type vm:ArchiveVM}">
         <view:ArchiveView/>

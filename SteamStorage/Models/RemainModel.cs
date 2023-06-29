@@ -88,6 +88,10 @@ namespace SteamStorage.Models
         {
 
         }
+        public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        {
+
+        }
         #endregion Methods
     }
 }

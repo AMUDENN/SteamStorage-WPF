@@ -51,5 +51,9 @@ namespace SteamStorage.Utilities
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Добавление элемента", new RemainEditVM(remainGroupModel));
         }
+        public bool SellRemain(RemainModel remainModel) 
+        {
+            return (bool)windowDialogService.ShowDialog(250, 450, $"Продажа элемента \"{remainModel.Title}\"", new RemainSellVM(remainModel));
+        }
     }
 }

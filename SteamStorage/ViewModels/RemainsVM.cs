@@ -300,7 +300,10 @@ namespace SteamStorage.ViewModels
         }
         private void DoSellRemainCommand(object? data)
         {
-
+            var isSell = userMessage.SellRemain((RemainModel)data);
+            if (!isSell) return;
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoDeleteRemainCommand(object? data)
         {
