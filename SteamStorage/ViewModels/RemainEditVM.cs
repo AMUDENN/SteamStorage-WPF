@@ -114,12 +114,12 @@ namespace SteamStorage.ViewModels
             Groups = context.RemainGroups.ToList();
             SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
-        public RemainEditVM(RemainGroupModel remainGroupModel)
+        public RemainEditVM(RemainGroupModel? remainGroupModel)
         {
             remainModel = new();
             Url = string.Empty;
             Groups = context.RemainGroups.ToList(); 
-            SelectedRemainGroupModel = remainGroupModel;
+            SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor
 

@@ -136,7 +136,7 @@ namespace SteamStorage.ViewModels
             archiveModel = new();
             Url = string.Empty;
             Groups = context.ArchiveGroups.ToList();
-            SelectedArchiveGroupModel = archiveGroupModel;
+            SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
         }
         #endregion Constructor
 
