@@ -67,6 +67,14 @@ namespace SteamStorage.Models
         {
             remainGroup.Title = title;
         }
+        public void DeleteGroup()
+        {
+
+        }
+        public void DeletGroupWithSkins()
+        {
+
+        }
         #endregion Methods
     }
 }

@@ -45,7 +45,16 @@
                     <RadioButton Content="Все" 
                                  IsChecked="{Binding IsAllRemainsDisplayed}" 
                                  Style="{DynamicResource ExpanderRadioButtonStyle}"
-                                 Height="50" />
+                                 Height="50">
+                        <RadioButton.ContextMenu>
+                            <ContextMenu Style="{DynamicResource ContextMenuStyle}">
+                                <MenuItem Header="Обновить" 
+                                  Command="{Binding UpdateGroupCommand}"
+                                  CommandParameter="{x:Null}"
+                                  Style="{DynamicResource ContextMenuItemStyle}"/>
+                            </ContextMenu>
+                        </RadioButton.ContextMenu>
+                    </RadioButton>
                 </Expander.Header>
 
                 <ListView ItemsSource="{Binding Groups}" 

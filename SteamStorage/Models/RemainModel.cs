@@ -62,7 +62,7 @@ namespace SteamStorage.Models
         #endregion Constructor
 
         #region Methods
-        public void UpdatePriceDynamics()
+        private void UpdatePriceDynamics()
         {
             priceDynamics = remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateTimeFormat, null), x => x.CostUpdate);
             priceDynamics.Add(DatePurchase, CostPurchase);
@@ -92,6 +92,10 @@ namespace SteamStorage.Models
 
         }
         public void DeleteRemain()
+        {
+
+        }
+        public void UpdateCurrentCost()
         {
 
         }

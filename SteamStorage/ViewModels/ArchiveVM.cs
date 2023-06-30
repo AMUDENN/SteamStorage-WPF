@@ -248,11 +248,25 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteGroupCommand(object? data)
         {
-
+            ArchiveGroupModel model = (ArchiveGroupModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
+            if (!delete) return;
+            model.DeleteGroup();
+            context.UpdateArchiveGroupModels();
+            context.UpdateArchiveModels();
+            GetArchiveGroups();
+            DoFiltering();
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-
+            ArchiveGroupModel model = (ArchiveGroupModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
+            if (!delete) return;
+            model.DeletGroupWithSkins();
+            context.UpdateArchiveGroupModels();
+            context.UpdateArchiveModels();
+            GetArchiveGroups();
+            DoFiltering();
         }
         private void DoAddArchiveCommand()
         {

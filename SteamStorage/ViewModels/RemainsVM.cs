@@ -5,6 +5,7 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -274,15 +275,31 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteGroupCommand(object? data)
         {
-
+            RemainGroupModel model = (RemainGroupModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
+            if (!delete) return;
+            model.DeleteGroup();
+            context.UpdateRemainGroupModels();
+            context.UpdateRemainGroupModels();
+            GetRemainGroups();
+            DoFiltering();
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-
+            RemainGroupModel model = (RemainGroupModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
+            if (!delete) return;
+            model.DeletGroupWithSkins();
+            context.UpdateRemainGroupModels();
+            context.UpdateRemainModels();
+            GetRemainGroups();
+            DoFiltering();
         }
         private void DoUpdateRemainCommand(object? data)
         {
-
+            ((RemainModel)data).UpdateCurrentCost();
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoAddRemainCommand()
         {
