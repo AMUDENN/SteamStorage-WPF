@@ -5,7 +5,6 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -43,6 +42,9 @@ namespace SteamStorage.ViewModels
 
         private RemainGroupModel? selectedGroup;
         private bool isAllRemainsDisplayed;
+
+        private bool isProgressBarVisible;
+        private int progressBarValue;
 
         private RelayCommand removeFilterCommand;
         private RelayCommand<object> updateGroupCommand;
@@ -147,6 +149,16 @@ namespace SteamStorage.ViewModels
                 SetProperty(ref isAllRemainsDisplayed, value);
                 if (isAllRemainsDisplayed) SelectedGroup = null;
             }
+        }
+        public bool IsProgressBarVisible
+        {
+            get => isProgressBarVisible;
+            set => SetProperty(ref isProgressBarVisible, value);
+        }
+        public int ProgressBarValue
+        {
+            get => progressBarValue;
+            set => SetProperty(ref progressBarValue, value);
         }
         #endregion Properties
 
@@ -257,7 +269,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-
+            UpdateRemainModelsCurrentCosts(context.GetRemainModels((RemainGroupModel)data));
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoAddGroupCommand()
         {
@@ -268,7 +282,13 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditGroupCommand(object? data)
         {
-            var isEdit = userMessage.EditRemainGroup((RemainGroupModel)data);
+            RemainGroupModel model = (RemainGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу изменить нельзя!");
+                return;
+            }
+            var isEdit = userMessage.EditRemainGroup(model);
             if (!isEdit) return;
             context.UpdateRemainGroupModels();
             GetRemainGroups();
@@ -276,6 +296,11 @@ namespace SteamStorage.ViewModels
         private void DoDeleteGroupCommand(object? data)
         {
             RemainGroupModel model = (RemainGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу удалить нельзя!");
+                return;
+            }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
             if (!delete) return;
             model.DeleteGroup();
@@ -287,6 +312,11 @@ namespace SteamStorage.ViewModels
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
             RemainGroupModel model = (RemainGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу удалить нельзя!");
+                return;
+            }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
             model.DeletGroupWithSkins();
@@ -297,7 +327,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateRemainCommand(object? data)
         {
-            ((RemainModel)data).UpdateCurrentCost();
+            UpdateRemainModelsCurrentCosts(new List<RemainModel>() { (RemainModel)data });
             context.UpdateRemainModels();
             DoFiltering();
         }
@@ -360,6 +390,22 @@ namespace SteamStorage.ViewModels
         private void GetRemainGroups()
         {
             Groups = context.RemainGroups.ToList();
+        }
+        private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
+        {
+            return remainGroupModel.RemainGroup.Id == 1;
+        }
+        private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainModel> remainModels)
+        {
+            IsProgressBarVisible = true;
+            ProgressBarValue = 0;
+            int percentageIncrease = 100 / remainModels.Count();
+            foreach (RemainModel remainModel in remainModels)
+            {
+                remainModel.UpdateCurrentCost();
+                ProgressBarValue += percentageIncrease;
+            }
+            IsProgressBarVisible = false;
         }
         #endregion Methods
     }

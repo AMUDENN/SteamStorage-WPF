@@ -241,7 +241,13 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditGroupCommand(object? data)
         {
-            var isEdit = userMessage.EditArchiveGroup((ArchiveGroupModel)data);
+            ArchiveGroupModel model = (ArchiveGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу изменить нельзя!");
+                return;
+            }
+            var isEdit = userMessage.EditArchiveGroup(model);
             if (!isEdit) return;
             context.UpdateArchiveGroupModels();
             GetArchiveGroups();
@@ -249,6 +255,11 @@ namespace SteamStorage.ViewModels
         private void DoDeleteGroupCommand(object? data)
         {
             ArchiveGroupModel model = (ArchiveGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу удалить нельзя!");
+                return;
+            }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
             if (!delete) return;
             model.DeleteGroup();
@@ -260,6 +271,11 @@ namespace SteamStorage.ViewModels
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
             ArchiveGroupModel model = (ArchiveGroupModel)data;
+            if (IsDefaultGroup(model))
+            {
+                userMessage.Error("Эту группу удалить нельзя!");
+                return;
+            }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
             model.DeletGroupWithSkins();
@@ -320,6 +336,10 @@ namespace SteamStorage.ViewModels
         private void GetArchiveGroups()
         {
             Groups = context.ArchiveGroups.ToList();
+        }
+        private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
+        {
+            return archiveGroupModel.ArchiveGroup.Id == 1;
         }
         #endregion Methods
     }

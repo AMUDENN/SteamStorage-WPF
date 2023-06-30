@@ -10,6 +10,7 @@
              d:DesignHeight="900" d:DesignWidth="1600">
 
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
         <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
         <converters:PercentConverter x:Key="PercentConverter"/>
@@ -39,100 +40,112 @@
                 <Button Content="Добавить скин" Command="{Binding AddRemainCommand}" Style="{DynamicResource AccentAdditionalButtonStyle}" Height="50" Margin="0, 5"/>
             </StackPanel>
 
-            <Expander Style="{DynamicResource ExpanderStyle}" Grid.Row="1">
+            <DockPanel Grid.Row="1">
 
-                <Expander.Header>
-                    <RadioButton Content="Все" 
+                <Expander Style="{DynamicResource ExpanderStyle}" 
+                          VerticalAlignment="Top"
+                          DockPanel.Dock="Top">
+
+                    <Expander.Header>
+                        <RadioButton Content="Все" 
                                  IsChecked="{Binding IsAllRemainsDisplayed}" 
                                  Style="{DynamicResource ExpanderRadioButtonStyle}"
                                  Height="50">
-                        <RadioButton.ContextMenu>
-                            <ContextMenu Style="{DynamicResource ContextMenuStyle}">
-                                <MenuItem Header="Обновить" 
+                            <RadioButton.ContextMenu>
+                                <ContextMenu Style="{DynamicResource ContextMenuStyle}">
+                                    <MenuItem Header="Обновить" 
                                   Command="{Binding UpdateGroupCommand}"
                                   CommandParameter="{x:Null}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                            </ContextMenu>
-                        </RadioButton.ContextMenu>
-                    </RadioButton>
-                </Expander.Header>
+                                </ContextMenu>
+                            </RadioButton.ContextMenu>
+                        </RadioButton>
+                    </Expander.Header>
 
-                <ListView ItemsSource="{Binding Groups}" 
+                    <ListView ItemsSource="{Binding Groups}" 
                       SelectedItem="{Binding SelectedGroup}" 
                       Style="{DynamicResource ListViewStyle}">
 
-                    <ListView.Resources>
-                        <ContextMenu x:Key="GroupContextMenu" Style="{DynamicResource ContextMenuStyle}">
-                            <MenuItem Header="Обновить" 
+                        <ListView.Resources>
+                            <ContextMenu x:Key="GroupContextMenu" Style="{DynamicResource ContextMenuStyle}">
+                                <MenuItem Header="Обновить" 
                                   Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.UpdateGroupCommand}"
                                   CommandParameter="{Binding}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                            <Separator Style="{DynamicResource SeparatorStyle}"/>
-                            <MenuItem Header="Добавить" 
+                                <Separator Style="{DynamicResource SeparatorStyle}"/>
+                                <MenuItem Header="Добавить" 
                                   Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.AddGroupCommand}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                            <Separator Style="{DynamicResource SeparatorStyle}"/>
-                            <MenuItem Header="Изменить" 
+                                <Separator Style="{DynamicResource SeparatorStyle}"/>
+                                <MenuItem Header="Изменить" 
                                   Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.EditGroupCommand}"
                                   CommandParameter="{Binding}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                            <Separator Style="{DynamicResource SeparatorStyle}"/>
-                            <MenuItem Header="Удалить" 
+                                <Separator Style="{DynamicResource SeparatorStyle}"/>
+                                <MenuItem Header="Удалить" 
                                   Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteGroupCommand}"
                                   CommandParameter="{Binding}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                            <Separator Style="{DynamicResource SeparatorStyle}"/>
-                            <MenuItem Header="Удалить со скинами" 
+                                <Separator Style="{DynamicResource SeparatorStyle}"/>
+                                <MenuItem Header="Удалить со скинами" 
                                   Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.DeleteWithSkinsGroupCommand}"
                                   CommandParameter="{Binding}"
                                   Style="{DynamicResource ContextMenuItemStyle}"/>
-                        </ContextMenu>
-                    </ListView.Resources>
+                            </ContextMenu>
+                        </ListView.Resources>
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ContextMenu" Value="{StaticResource GroupContextMenu}"/>
-                            <Setter Property="Margin" Value="2"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                        <Border x:Name="Border" Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="7, 0, 0, 7">
-                                            <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="FontWeight" Value="DemiBold"/>
-                                                <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
-                                                <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
-                                                <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource GroupContextMenu}"/>
+                                <Setter Property="Margin" Value="2"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border x:Name="Border" Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="7, 0, 0, 7">
+                                                <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="FontWeight" Value="DemiBold"/>
+                                                    <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
+                                                    <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
+                                                    <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Height="50">
-                                <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTitleTextBlockStyle}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                        
-                </ListView>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="50">
+                                    <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTitleTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
-            </Expander>
+                    </ListView>
+
+                </Expander>
+
+                <ProgressBar Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BoolToVisibilityConverter}}" 
+                             Value="{Binding ProgressBarValue}"
+                             Style="{DynamicResource ProgressBarStyle}"
+                             VerticalAlignment="Bottom" DockPanel.Dock="Bottom"
+                             Margin="0, 17" Height="46"/>
+
+            </DockPanel>
 
         </Grid>
 
