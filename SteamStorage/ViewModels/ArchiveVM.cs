@@ -270,7 +270,12 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteArchiveCommand(object? data)
         {
-
+            ArchiveModel model = (ArchiveModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
+            if (!delete) return;
+            model.DeleteArchive();
+            context.UpdateArchiveModels();
+            DoFiltering();
         }
         private void DoFiltering()
         {

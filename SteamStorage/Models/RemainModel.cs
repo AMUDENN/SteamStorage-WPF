@@ -2,7 +2,6 @@
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Utilities;
-using SteamStorage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +88,10 @@ namespace SteamStorage.Models
 
         }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        {
+
+        }
+        public void DeleteRemain()
         {
 
         }

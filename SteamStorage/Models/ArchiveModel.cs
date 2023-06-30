@@ -55,6 +55,10 @@ namespace SteamStorage.Models
         {
             
         }
+        public void DeleteArchive()
+        {
+            
+        }
         #endregion Methods
     }
 }

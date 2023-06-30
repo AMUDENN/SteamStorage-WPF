@@ -307,7 +307,12 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteRemainCommand(object? data)
         {
-
+            RemainModel model = (RemainModel)data;
+            var delete = userMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
+            if (!delete) return;
+            model.DeleteRemain();
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         private void DoFiltering()
         {
