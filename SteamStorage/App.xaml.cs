@@ -41,6 +41,7 @@ namespace SteamStorage
 
             services.AddSingleton<Context>();
             services.AddSingleton<UserMessage>();
+            services.AddSingleton<Logger>();
 
             Container = services.BuildServiceProvider();
         }

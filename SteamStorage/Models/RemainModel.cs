@@ -24,6 +24,7 @@ namespace SteamStorage.Models
         private List<DataPoint> priceDynamicsPoints = new();
 
         private Context context = Singleton.GetObject<Context>();
+        private Logger logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -85,19 +86,51 @@ namespace SteamStorage.Models
         }
         public void EditRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupModel? remainGroupModel)
         {
-
+            try
+            {
+                logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
         {
-
+            try
+            {
+                logger.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         public void DeleteRemain()
         {
-
+            try
+            {
+                logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         public void UpdateCurrentCost()
         {
-
+            try
+            {
+                logger.WriteMessage($"Текущая цена элемент {Title} успешно добавлена!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         #endregion Methods
     }

@@ -16,6 +16,7 @@ namespace SteamStorage.Models
         private double percent;
 
         private Context context = Singleton.GetObject<Context>();
+        private Logger logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -53,11 +54,27 @@ namespace SteamStorage.Models
         #region Methods
         public void EditArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
         {
-            
+            try
+            {
+                logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         public void DeleteArchive()
         {
-            
+            try
+            {
+                logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         #endregion Methods
     }

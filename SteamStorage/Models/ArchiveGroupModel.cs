@@ -1,5 +1,6 @@
 ﻿using SteamStorage.Entities;
 using SteamStorage.Utilities;
+using System;
 
 namespace SteamStorage.Models
 {
@@ -12,6 +13,7 @@ namespace SteamStorage.Models
         private double? archivesPercent;
 
         private Context context = Singleton.GetObject<Context>();
+        private Logger logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -48,7 +50,7 @@ namespace SteamStorage.Models
         {
             this.archiveGroup = archiveGroup;
         }
-        public ArchiveGroupModel() 
+        public ArchiveGroupModel()
         {
             archiveGroup = new();
             context.AddArchiveGroup(archiveGroup);
@@ -65,15 +67,40 @@ namespace SteamStorage.Models
         }
         public void EditGroup(string title)
         {
-            archiveGroup.Title = title;
+            try
+            {
+                archiveGroup.Title = title;
+                logger.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
-        public void DeleteGroup() 
+        public void DeleteGroup()
         {
-        
+            try
+            {
+                logger.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         public void DeletGroupWithSkins()
         {
-
+            try
+            {
+                logger.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                context.UndoChanges();
+                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+            }
         }
         #endregion Methods
     }

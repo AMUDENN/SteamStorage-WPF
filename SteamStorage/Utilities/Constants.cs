@@ -6,5 +6,6 @@
         public const string DateTimeFormat = "yyyy.MM.dd HH:mm:ss";
         public const string DateFormat = "dd.MM.yyyy";
         public const string DBpath = @"../../../DataBase/SteamStorageDB.db";
+        public const string Logpath = @"../../../Logs/logs.txt";
     }
 }
