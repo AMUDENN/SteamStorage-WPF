@@ -9,11 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DataBase\SteamStorageDB.db" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="DataBase\SteamStorageDB.db" />
     <Content Include="Resources\Images\Bitmaps\Storage.ico" />
   </ItemGroup>
 
@@ -25,6 +20,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Contrib.Wpf" Version="2.1.2" />
   </ItemGroup>
 

@@ -11,9 +11,9 @@ namespace SteamStorage.Utilities
         #endregion Fields
 
         #region Constructor
-        public Logger()
+        public Logger(string logPath)
         {
-            InnerWriter = new StreamWriter(Constants.Logpath, true, Encoding.UTF8, 8192);
+            InnerWriter = new StreamWriter(logPath, true, Encoding.UTF8, 8192);
         }
         #endregion Constructor
 
