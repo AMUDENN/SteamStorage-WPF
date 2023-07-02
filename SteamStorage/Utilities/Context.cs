@@ -119,11 +119,11 @@ namespace SteamStorage.Utilities
                 };
                 DbContext.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                logger.WriteMessage($"Добавление новой записи PriceDynamics успешно!");
+                logger.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
             {
-                logger.WriteMessage($"Добавление новой записи PriceDynamics неудачно! {ex.Message}");
+                logger.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
                 UndoChanges();
             }
         }

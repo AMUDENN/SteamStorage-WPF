@@ -11,8 +11,16 @@ namespace SteamStorage.ViewModels
 {
     public class ArchiveEditVM : ObservableObject
     {
+        #region Enums
+        private enum CommandType
+        {
+            Add, Edit
+        }
+        #endregion Enums
+
         #region Fields
         private ArchiveModel archiveModel;
+        private CommandType selectedCommandType;
 
         private string url;
         private string countString = string.Empty;
@@ -121,6 +129,7 @@ namespace SteamStorage.ViewModels
         public ArchiveEditVM(ArchiveModel archiveModel)
         {
             this.archiveModel = archiveModel;
+            selectedCommandType = CommandType.Edit;
             Url = archiveModel.Url;
             Count = archiveModel.Count;
             CostPurchase = archiveModel.CostPurchase;
@@ -134,6 +143,7 @@ namespace SteamStorage.ViewModels
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
         {
             archiveModel = new();
+            selectedCommandType = CommandType.Add;
             Url = string.Empty;
             Groups = context.ArchiveGroups.ToList();
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
@@ -143,7 +153,8 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            if (selectedCommandType == CommandType.Add) archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            else archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, archiveModel.DatePurchase, archiveModel.DateSold, SelectedArchiveGroupModel);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }

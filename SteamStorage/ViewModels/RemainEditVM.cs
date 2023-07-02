@@ -6,14 +6,21 @@ using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace SteamStorage.ViewModels
 {
     public class RemainEditVM : ObservableObject
     {
+        #region Enums
+        private enum CommandType
+        {
+            Add, Edit
+        }
+        #endregion Enums
+
         #region Fields
         private RemainModel remainModel;
+        private CommandType selectedCommandType;
 
         private string url;
         private string countString = string.Empty;
@@ -106,6 +113,7 @@ namespace SteamStorage.ViewModels
         public RemainEditVM(RemainModel remainModel)
         {
             this.remainModel = remainModel;
+            selectedCommandType = CommandType.Edit;
             Url = remainModel.Url;
             Count = remainModel.Count;
             CostPurchase = remainModel.CostPurchase;
@@ -117,8 +125,9 @@ namespace SteamStorage.ViewModels
         public RemainEditVM(RemainGroupModel? remainGroupModel)
         {
             remainModel = new();
+            selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = context.RemainGroups.ToList(); 
+            Groups = context.RemainGroups.ToList();
             SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor
@@ -126,7 +135,8 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            if (selectedCommandType == CommandType.Add) remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            else remainModel.EditRemain(Url, Count, CostPurchase, remainModel.DatePurchase, SelectedRemainGroupModel);
             context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }

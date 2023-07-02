@@ -1,10 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
+using SteamStorage.Windows;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using System.Windows.Controls;
 
 namespace SteamStorage.ViewModels
 {
@@ -60,6 +65,8 @@ namespace SteamStorage.ViewModels
 
         private Context context = Singleton.GetObject<Context>();
         private UserMessage userMessage = Singleton.GetObject<UserMessage>();
+
+        private BackgroundWorker updateInfoWorker = new BackgroundWorker();
         #endregion Fields
 
         #region Properties
@@ -174,7 +181,7 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return updateGroupCommand ??= new RelayCommand<object>(DoUpdateGroupCommand);
+                return updateGroupCommand ??= new RelayCommand<object>(DoUpdateGroupCommand, CanExecuteUpdateGroupCommand);
             }
         }
         public RelayCommand AddGroupCommand
@@ -209,7 +216,7 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return updateRemainCommand ??= new RelayCommand<object>(DoUpdateRemainCommand);
+                return updateRemainCommand ??= new RelayCommand<object>(DoUpdateRemainCommand, CanExecuteUpdateRemainCommand);
             }
         }
         public RelayCommand AddRemainCommand
@@ -247,6 +254,12 @@ namespace SteamStorage.ViewModels
         {
             GetRemainGroups();
             IsAllRemainsDisplayed = true;
+
+            updateInfoWorker.DoWork += UpdateInfoWork;
+            updateInfoWorker.WorkerSupportsCancellation = false;
+            updateInfoWorker.RunWorkerCompleted += UpdateInfoComplete;
+            updateInfoWorker.WorkerReportsProgress = true;
+            updateInfoWorker.ProgressChanged += UpdateInfoProgress;
         }
         #endregion Constructor
 
@@ -269,9 +282,13 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-            UpdateRemainModelsCurrentCosts(context.GetRemainModels((RemainGroupModel)data));
+            updateInfoWorker.RunWorkerAsync(context.GetRemainModels((RemainGroupModel)data).ToList());
             context.UpdateRemainModels();
             DoFiltering();
+        }
+        private bool CanExecuteUpdateGroupCommand(object? data)
+        {
+            return !updateInfoWorker.IsBusy;
         }
         private void DoAddGroupCommand()
         {
@@ -327,9 +344,13 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateRemainCommand(object? data)
         {
-            UpdateRemainModelsCurrentCosts(new List<RemainModel>() { (RemainModel)data });
+            updateInfoWorker.RunWorkerAsync(new List<RemainModel>() { (RemainModel)data });
             context.UpdateRemainModels();
             DoFiltering();
+        }
+        private bool CanExecuteUpdateRemainCommand(object? data)
+        {
+            return !updateInfoWorker.IsBusy;
         }
         private void DoAddRemainCommand()
         {
@@ -398,15 +419,30 @@ namespace SteamStorage.ViewModels
         }
         private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainModel> remainModels)
         {
-            IsProgressBarVisible = true;
-            ProgressBarValue = 0;
             int percentageIncrease = 100 / remainModels.Count();
             foreach (RemainModel remainModel in remainModels)
             {
+                Thread.Sleep(500);
                 remainModel.UpdateCurrentCost();
-                ProgressBarValue += percentageIncrease;
+                updateInfoWorker.ReportProgress(percentageIncrease);
             }
+        }
+        public void UpdateInfoWork(object sender, DoWorkEventArgs e)
+        {
+            List<RemainModel> arg = (List<RemainModel>)e.Argument;
+            IsProgressBarVisible = true;
+            ProgressBarValue = 0;
+            UpdateRemainModelsCurrentCosts(arg);
+        }
+        public void UpdateInfoProgress(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBarValue += e.ProgressPercentage;
+        }
+        public void UpdateInfoComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
             IsProgressBarVisible = false;
+            context.UpdateRemainModels();
+            DoFiltering();
         }
         #endregion Methods
     }
