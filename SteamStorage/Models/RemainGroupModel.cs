@@ -17,7 +17,7 @@ namespace SteamStorage.Models
         #endregion Fields
 
         #region Properties
-        public RemainGroup? RemainGroup => remainGroup;
+        public RemainGroup RemainGroup => remainGroup;
         public string Title => remainGroup.Title;
         public long RemainsCount
         {

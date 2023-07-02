@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
 using SteamStorage.Models;
+using SteamStorage.Parser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +16,9 @@ namespace SteamStorage.Utilities
         private IEnumerable<ArchiveModel> archiveModels;
         private IEnumerable<RemainGroupModel> remainGroupModels;
         private IEnumerable<ArchiveGroupModel> archiveGroupModels;
+
+        private Logger logger = Singleton.GetObject<Logger>();
+        private SteamParser parser = Singleton.GetObject<SteamParser>();
         #endregion Fields
 
         #region Properties
@@ -56,6 +61,33 @@ namespace SteamStorage.Utilities
         public void AddArchive(Archive archive)
         {
             DbContext.Archives.Add(archive);
+        }
+        public Skin? GetSkin(string url)
+        {
+            var skins = DBContext.Skins.Where(x => x.Url == url);
+            if (skins.Any())
+                return skins.First();
+            else
+            {
+                try
+                {
+                    Skin skin = new()
+                    {
+                        Url = url,
+                        Title = parser.GetSkinTitle(url)
+                    };
+                    DBContext.Skins.Add(skin);
+                    SaveChanges();
+                    logger.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    return skin;
+                }
+                catch (Exception ex)
+                {
+                    logger.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    UndoChanges();
+                    return null;
+                }
+            }
         }
         public void SaveChanges()
         {

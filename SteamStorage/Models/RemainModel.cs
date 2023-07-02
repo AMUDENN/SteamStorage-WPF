@@ -2,6 +2,7 @@
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Utilities;
+using SteamStorage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,13 @@ namespace SteamStorage.Models
         {
             try
             {
+                var skin = context.GetSkin(url);
+                if (skin is null) throw new Exception("Ссылка на скин неверна!");
+                remain.IdSkinNavigation = skin;
+                remain.Count = count;
+                remain.CostPurchase = costPurchase;
+                remain.DatePurchase = datePurchase.ToString(Constants.DateFormat);
+                remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
-using SteamStorage.Parser;
 using SteamStorage.Utilities;
 using System;
 
@@ -57,7 +56,9 @@ namespace SteamStorage.Models
         {
             try
             {
-                //TODO: skin
+                var skin = context.GetSkin(url);
+                if (skin is null) throw new Exception("Ссылка на скин неверна!");
+                archive.IdSkinNavigation = skin;
                 archive.Count = count;
                 archive.CostPurchase = costPurchase;
                 archive.CostSold = costSold;
