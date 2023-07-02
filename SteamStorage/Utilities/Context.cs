@@ -62,6 +62,22 @@ namespace SteamStorage.Utilities
         {
             DbContext.Archives.Add(archive);
         }
+        public void RemoveRemainGroup(RemainGroup remainGroup)
+        {
+            DbContext.RemainGroups.Remove(remainGroup);
+        }
+        public void RemoveArchiveGroup(ArchiveGroup archiveGroup)
+        {
+            DbContext.ArchiveGroups.Remove(archiveGroup);
+        }
+        public void RemoveRemain(Remain remain)
+        {
+            DbContext.Remains.Remove(remain);
+        }
+        public void RemoveArchive(Archive archive)
+        {
+            DbContext.Archives.Remove(archive);
+        }
         public Skin? GetSkin(string url)
         {
             var skins = DBContext.Skins.Where(x => x.Url == url);

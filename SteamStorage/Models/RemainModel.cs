@@ -96,6 +96,7 @@ namespace SteamStorage.Models
                 remain.CostPurchase = costPurchase;
                 remain.DatePurchase = datePurchase.ToString(Constants.DateFormat);
                 remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
+                context.SaveChanges();
                 logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
@@ -120,6 +121,8 @@ namespace SteamStorage.Models
         {
             try
             {
+                context.RemoveRemain(remain);
+                context.SaveChanges();
                 logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
