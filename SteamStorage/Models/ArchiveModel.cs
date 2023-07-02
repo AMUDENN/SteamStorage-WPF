@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
+using SteamStorage.Parser;
 using SteamStorage.Utilities;
 using System;
 
@@ -56,6 +57,13 @@ namespace SteamStorage.Models
         {
             try
             {
+                //TODO: skin
+                archive.Count = count;
+                archive.CostPurchase = costPurchase;
+                archive.CostSold = costSold;
+                archive.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
+                archive.DateSold = dateSold.ToString(Constants.DateTimeFormat);
+                archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
                 logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
@@ -68,6 +76,8 @@ namespace SteamStorage.Models
         {
             try
             {
+                context.DBContext.Archives.Remove(archive);
+                context.SaveChanges();
                 logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)

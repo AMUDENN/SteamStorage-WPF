@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SteamStorage.Models;
 using SteamStorage.Parser.Models;
 using SteamStorage.Utilities;
 using System;
@@ -7,7 +8,7 @@ using System.Net.Http;
 
 namespace SteamStorage.Parser
 {
-    public class Parser
+    public class SteamParser
     {
         #region Fields
         private readonly HttpClient client = new();
@@ -19,7 +20,7 @@ namespace SteamStorage.Parser
         public (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
         {
             string result = client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
-            SkinModel skinParse = JsonConvert.DeserializeObject<SkinModel>(result);
+            SkinParseModel skinParse = JsonConvert.DeserializeObject<SkinParseModel>(result);
             try
             {
                 var final = (DateTime.Now, Convert.ToDouble(skinParse.lowest_price[..^4]));

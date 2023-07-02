@@ -82,6 +82,8 @@ namespace SteamStorage.Models
         {
             try
             {
+                context.DBContext.ArchiveGroups.Remove(archiveGroup);
+                context.SaveChanges();
                 logger.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }
             catch (Exception ex)
@@ -94,6 +96,13 @@ namespace SteamStorage.Models
         {
             try
             {
+                var archives = context.GetArchiveModels(this);
+                foreach (var item in archives)
+                {
+                    item.DeleteArchive();
+                }
+                context.DBContext.ArchiveGroups.Remove(archiveGroup);
+                context.SaveChanges();
                 logger.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
             }
             catch (Exception ex)
