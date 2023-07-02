@@ -278,7 +278,7 @@ namespace SteamStorage.ViewModels
             }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
-            model.DeletGroupWithSkins();
+            model.DeleteGroupWithSkins();
             context.UpdateArchiveGroupModels();
             context.UpdateArchiveModels();
             GetArchiveGroups();

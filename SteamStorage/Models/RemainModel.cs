@@ -2,7 +2,6 @@
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Utilities;
-using SteamStorage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace SteamStorage.Models
         private double lastCost;
         private double currentAmount;
         private double percent;
-        private List<DataPoint> priceDynamicsPoints = new();
+        private List<DataPoint> priceDynamicsPoints;
 
         private Context context = Singleton.GetObject<Context>();
         private Logger logger = Singleton.GetObject<Logger>();
@@ -32,6 +31,7 @@ namespace SteamStorage.Models
         public RemainGroup RemainGroup => remain.IdGroupNavigation;
         public string Url => remain.IdSkinNavigation.Url;
         public string Title => remain.IdSkinNavigation.Title;
+        public Remain Remain => remain;
         public DateTime DatePurchase => datePurchase;
         public long Count => remain.Count;
         public double CostPurchase => remain.CostPurchase;
@@ -79,6 +79,7 @@ namespace SteamStorage.Models
             percent = (lastCost - CostPurchase) / CostPurchase * 100;
 
             int i = 0;
+            priceDynamicsPoints = new();
             foreach (var item in priceDynamics)
             {
                 priceDynamicsPoints.Add(new(i, item.Value));
@@ -94,7 +95,7 @@ namespace SteamStorage.Models
                 remain.IdSkinNavigation = skin;
                 remain.Count = count;
                 remain.CostPurchase = costPurchase;
-                remain.DatePurchase = datePurchase.ToString(Constants.DateFormat);
+                remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
                 remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 context.SaveChanges();
                 logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
@@ -109,6 +110,11 @@ namespace SteamStorage.Models
         {
             try
             {
+                ArchiveModel archiveModel = new();
+                archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
+                if (count >= remain.Count) context.RemoveRemain(remain);
+                EditRemain(Url, Count - count, CostPurchase, DatePurchase, context.RemainGroups.ToList().Where(x => x.RemainGroup == RemainGroup).First());
+                context.SaveChanges();
                 logger.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
             }
             catch (Exception ex)
@@ -135,6 +141,9 @@ namespace SteamStorage.Models
         {
             try
             {
+                context.AddPriceDynamic(this);
+                context.SaveChanges();
+                UpdatePriceDynamics();
                 logger.WriteMessage($"Текущая цена элемент {Title} успешно добавлена!", this.GetType());
             }
             catch (Exception ex)

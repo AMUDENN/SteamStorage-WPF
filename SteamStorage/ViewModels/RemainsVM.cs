@@ -319,7 +319,7 @@ namespace SteamStorage.ViewModels
             }
             var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
-            model.DeletGroupWithSkins();
+            model.DeleteGroupWithSkins();
             context.UpdateRemainGroupModels();
             context.UpdateRemainModels();
             GetRemainGroups();
@@ -350,6 +350,7 @@ namespace SteamStorage.ViewModels
             var isSell = userMessage.SellRemain((RemainModel)data);
             if (!isSell) return;
             context.UpdateRemainModels();
+            context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoDeleteRemainCommand(object? data)

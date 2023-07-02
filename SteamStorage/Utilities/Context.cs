@@ -5,6 +5,7 @@ using SteamStorage.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace SteamStorage.Utilities
 {
@@ -103,6 +104,27 @@ namespace SteamStorage.Utilities
                     UndoChanges();
                     return null;
                 }
+            }
+        }
+        public void AddPriceDynamic(RemainModel remainModel)
+        {
+            try
+            {
+                var (DateUpdate, Price) = parser.GetCurrentSkinInfo(remainModel.Url);
+                PriceDynamic priceDynamic = new()
+                {
+                    IdRemainNavigation = remainModel.Remain,
+                    CostUpdate = Price,
+                    DateUpdate = DateUpdate.ToString(Constants.DateTimeFormat)
+                };
+                DbContext.PriceDynamics.Add(priceDynamic);
+                SaveChanges();
+                logger.WriteMessage($"Добавление новой записи PriceDynamics успешно!");
+            }
+            catch (Exception ex)
+            {
+                logger.WriteMessage($"Добавление новой записи PriceDynamics неудачно! {ex.Message}");
+                UndoChanges();
             }
         }
         public void SaveChanges()

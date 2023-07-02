@@ -70,6 +70,7 @@ namespace SteamStorage.Models
             try
             {
                 remainGroup.Title = title;
+                context.SaveChanges();
                 logger.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
             }
             catch (Exception ex)
@@ -92,7 +93,7 @@ namespace SteamStorage.Models
                 logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
-        public void DeletGroupWithSkins()
+        public void DeleteGroupWithSkins()
         {
             try
             {
