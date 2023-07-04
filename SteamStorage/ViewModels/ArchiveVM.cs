@@ -335,7 +335,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetArchiveGroups()
         {
-            Groups = context.ArchiveGroups.ToList();
+            Groups = context.ArchiveGroups;
         }
         private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
         {

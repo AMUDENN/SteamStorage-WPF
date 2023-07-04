@@ -5,7 +5,6 @@ using SteamStorage.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 
 namespace SteamStorage.Utilities
 {
@@ -24,8 +23,8 @@ namespace SteamStorage.Utilities
 
         #region Properties
         public SteamStorageDbContext DBContext => DbContext;
-        public IEnumerable<RemainGroupModel> RemainGroups => remainGroupModels;
-        public IEnumerable<ArchiveGroupModel> ArchiveGroups => archiveGroupModels;
+        public List<RemainGroupModel> RemainGroups => remainGroupModels.ToList();
+        public List<ArchiveGroupModel> ArchiveGroups => archiveGroupModels.ToList();
         #endregion Properties
 
         #region Constructor
@@ -39,13 +38,13 @@ namespace SteamStorage.Utilities
         #endregion Constructor
 
         #region Methods
-        public IEnumerable<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
+        public List<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
         {
-            return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup);
+            return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup).ToList();
         }
-        public IEnumerable<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
+        public List<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
         {
-            return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup);
+            return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
         }
         public void AddRemainGroup(RemainGroup remainGroup)
         {

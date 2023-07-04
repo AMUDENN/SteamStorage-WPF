@@ -283,8 +283,6 @@ namespace SteamStorage.ViewModels
         private void DoUpdateGroupCommand(object? data)
         {
             updateInfoWorker.RunWorkerAsync(context.GetRemainModels((RemainGroupModel)data).ToList());
-            context.UpdateRemainModels();
-            DoFiltering();
         }
         private bool CanExecuteUpdateGroupCommand(object? data)
         {
@@ -345,8 +343,6 @@ namespace SteamStorage.ViewModels
         private void DoUpdateRemainCommand(object? data)
         {
             updateInfoWorker.RunWorkerAsync(new List<RemainModel>() { (RemainModel)data });
-            context.UpdateRemainModels();
-            DoFiltering();
         }
         private bool CanExecuteUpdateRemainCommand(object? data)
         {
@@ -411,7 +407,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetRemainGroups()
         {
-            Groups = context.RemainGroups.ToList();
+            Groups = context.RemainGroups;
         }
         private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
         {
