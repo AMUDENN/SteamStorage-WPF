@@ -13,6 +13,7 @@ namespace SteamStorage.ViewModels
         private bool isDarkTheme;
         private bool isLightTheme;
         private bool isCustomTheme;
+
         private string mainColor;
         private string mainAdditionalColor;
         private string additionalColor;
@@ -20,6 +21,9 @@ namespace SteamStorage.ViewModels
         private string accentAdditionalColor;
         private string percentPlusColor;
         private string percentMinusColor;
+
+        private RelayCommand exportToDB;
+        private RelayCommand exportToExcel;
         private RelayCommand saveColorsCommand;
         private RelayCommand resetColorsCommand;
         private RelayCommand openLogCommand;
@@ -120,6 +124,20 @@ namespace SteamStorage.ViewModels
         #endregion Properties
 
         #region Commands
+        public RelayCommand ExportToDB
+        {
+            get
+            {
+                return exportToDB ??= new RelayCommand(DoExportToDBCommand);
+            }
+        }
+        public RelayCommand ExportToExcel
+        {
+            get
+            {
+                return exportToExcel ??= new RelayCommand(DoExportToExcelCommand);
+            }
+        }
         public RelayCommand SaveColorsCommand
         {
             get
@@ -169,6 +187,14 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
+        private void DoExportToDBCommand()
+        {
+
+        }
+        private void DoExportToExcelCommand()
+        {
+
+        }
         private void DoSaveColorsCommand()
         {
             Config.MainColor = MainColor;

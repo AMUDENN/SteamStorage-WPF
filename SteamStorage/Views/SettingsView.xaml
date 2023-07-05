@@ -34,12 +34,12 @@
             </Grid.RowDefinitions>
 
             <Button Content="Экспортировать в .db" 
-                Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                HorizontalAlignment="Left" Grid.Row="1"/>
+                    Style="{DynamicResource UnderlineTransparentButtonStyle}" 
+                    HorizontalAlignment="Left" Grid.Row="1"/>
 
             <Button Content="Экспортировать в .xlsx" 
-                Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                HorizontalAlignment="Left" Grid.Row="3"/>
+                    Style="{DynamicResource UnderlineTransparentButtonStyle}" 
+                    HorizontalAlignment="Left" Grid.Row="3"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="5">
                 <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
