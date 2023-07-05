@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -199,7 +201,8 @@ namespace SteamStorage.ViewModels
         }
         private void DoOpenLogCommand()
         {
-
+            if (File.Exists(Constants.Logpath))
+                Process.Start(@"notepad.exe", Constants.Logpath);
         }
         private void DoClearDatabaseCommand()
         {

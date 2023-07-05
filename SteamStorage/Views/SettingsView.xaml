@@ -33,7 +33,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Экспортировать в .dt" 
+            <Button Content="Экспортировать в .db" 
                 Style="{DynamicResource UnderlineTransparentButtonStyle}" 
                 HorizontalAlignment="Left" Grid.Row="1"/>
 
@@ -149,14 +149,16 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Content="Открыть логи"
-                FontSize="24"
-                Style="{DynamicResource AccentAdditionalButtonStyle}"
-                HorizontalAlignment="Stretch" Padding="15, 0" Margin="0, 10, 5, 10" Grid.Column="0"/>
+                        Command="{Binding OpenLogCommand}"
+                        FontSize="24"
+                        Style="{DynamicResource AccentAdditionalButtonStyle}"
+                        HorizontalAlignment="Stretch" Padding="15, 0" Margin="0, 10, 5, 10" Grid.Column="0"/>
 
                 <Button Content="Очистить базу данных"
-                FontSize="24"
-                Style="{DynamicResource AccentAdditionalButtonStyle}"
-                HorizontalAlignment="Stretch" Padding="15, 0" Margin="5, 10, 0, 10" Grid.Column="1"/>
+                        Command="{Binding DoClearDatabaseCommand}"
+                        FontSize="24"
+                        Style="{DynamicResource AccentAdditionalButtonStyle}"
+                        HorizontalAlignment="Stretch" Padding="15, 0" Margin="5, 10, 0, 10" Grid.Column="1"/>
 
             </Grid>
 
