@@ -15,8 +15,7 @@ namespace SteamStorage.Models
         private double amountSold;
         private double percent;
 
-        private Context context = Singleton.GetObject<Context>();
-        private Logger logger = Singleton.GetObject<Logger>();
+        private Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -42,12 +41,12 @@ namespace SteamStorage.Models
             amountPurchase = archive.CostPurchase * archive.Count;
             amountSold = archive.CostSold * archive.Count;
             percent = (CostSold - CostPurchase) / CostPurchase * 100;
-            context.DBContext.Skins.LoadAsync();
+            Context.DBContext.Skins.LoadAsync();
         }
         public ArchiveModel()
         {
             archive = new();
-            context.AddArchive(archive);
+            Context.AddArchive(archive);
         }
         #endregion Constructor
 
@@ -56,7 +55,7 @@ namespace SteamStorage.Models
         {
             try
             {
-                var skin = context.GetSkin(url);
+                var skin = Context.GetSkin(url);
                 if (skin is null) throw new Exception("Ссылка на скин неверна!");
                 archive.IdSkinNavigation = skin;
                 archive.Count = count;
@@ -65,27 +64,27 @@ namespace SteamStorage.Models
                 archive.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
                 archive.DateSold = dateSold.ToString(Constants.DateTimeFormat);
                 archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
-                context.SaveChanges();
-                logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                Context.SaveChanges();
+                logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteArchive()
         {
             try
             {
-                context.RemoveArchive(archive);
-                context.SaveChanges();
-                logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                Context.RemoveArchive(archive);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         #endregion Methods

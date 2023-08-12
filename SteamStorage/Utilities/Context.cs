@@ -8,27 +8,26 @@ using System.Linq;
 
 namespace SteamStorage.Utilities
 {
-    public class Context
+    public static class Context
     {
         #region Fields
-        private readonly SteamStorageDbContext DbContext = new();
-        private IEnumerable<RemainModel> remainModels;
-        private IEnumerable<ArchiveModel> archiveModels;
-        private IEnumerable<RemainGroupModel> remainGroupModels;
-        private IEnumerable<ArchiveGroupModel> archiveGroupModels;
+        private static readonly SteamStorageDbContext DbContext = new();
+        private static IEnumerable<RemainModel> remainModels;
+        private static IEnumerable<ArchiveModel> archiveModels;
+        private static IEnumerable<RemainGroupModel> remainGroupModels;
+        private static IEnumerable<ArchiveGroupModel> archiveGroupModels;
 
-        private Logger logger = Singleton.GetObject<Logger>();
-        private SteamParser parser = Singleton.GetObject<SteamParser>();
+        private static Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
-        public SteamStorageDbContext DBContext => DbContext;
-        public List<RemainGroupModel> RemainGroups => remainGroupModels.ToList();
-        public List<ArchiveGroupModel> ArchiveGroups => archiveGroupModels.ToList();
+        public static SteamStorageDbContext DBContext => DbContext;
+        public static List<RemainGroupModel> RemainGroups => remainGroupModels.ToList();
+        public static List<ArchiveGroupModel> ArchiveGroups => archiveGroupModels.ToList();
         #endregion Properties
 
         #region Constructor
-        public Context()
+        static Context()
         {
             UpdateRemainModels();
             UpdateArchiveModels();
@@ -38,47 +37,47 @@ namespace SteamStorage.Utilities
         #endregion Constructor
 
         #region Methods
-        public List<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
+        public static List<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
         {
             return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup).ToList();
         }
-        public List<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
+        public static List<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
         {
             return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
         }
-        public void AddRemainGroup(RemainGroup remainGroup)
+        public static void AddRemainGroup(RemainGroup remainGroup)
         {
             DbContext.RemainGroups.Add(remainGroup);
         }
-        public void AddArchiveGroup(ArchiveGroup archiveGroup)
+        public static void AddArchiveGroup(ArchiveGroup archiveGroup)
         {
             DbContext.ArchiveGroups.Add(archiveGroup);
         }
-        public void AddRemain(Remain remain)
+        public static void AddRemain(Remain remain)
         {
             DbContext.Remains.Add(remain);
         }
-        public void AddArchive(Archive archive)
+        public static void AddArchive(Archive archive)
         {
             DbContext.Archives.Add(archive);
         }
-        public void RemoveRemainGroup(RemainGroup remainGroup)
+        public static void RemoveRemainGroup(RemainGroup remainGroup)
         {
             DbContext.RemainGroups.Remove(remainGroup);
         }
-        public void RemoveArchiveGroup(ArchiveGroup archiveGroup)
+        public static void RemoveArchiveGroup(ArchiveGroup archiveGroup)
         {
             DbContext.ArchiveGroups.Remove(archiveGroup);
         }
-        public void RemoveRemain(Remain remain)
+        public static void RemoveRemain(Remain remain)
         {
             DbContext.Remains.Remove(remain);
         }
-        public void RemoveArchive(Archive archive)
+        public static void RemoveArchive(Archive archive)
         {
             DbContext.Archives.Remove(archive);
         }
-        public Skin? GetSkin(string url)
+        public static Skin? GetSkin(string url)
         {
             var skins = DBContext.Skins.Where(x => x.Url == url);
             if (skins.Any())
@@ -90,26 +89,26 @@ namespace SteamStorage.Utilities
                     Skin skin = new()
                     {
                         Url = url,
-                        Title = parser.GetSkinTitle(url)
+                        Title = SteamParser.GetSkinTitle(url)
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
-                    logger.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
                     return skin;
                 }
                 catch (Exception ex)
                 {
-                    logger.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
                     UndoChanges();
                     return null;
                 }
             }
         }
-        public void AddPriceDynamic(RemainModel remainModel)
+        public static void AddPriceDynamic(RemainModel remainModel)
         {
             try
             {
-                var (DateUpdate, Price) = parser.GetCurrentSkinInfo(remainModel.Url);
+                var (DateUpdate, Price) = SteamParser.GetCurrentSkinInfo(remainModel.Url);
                 PriceDynamic priceDynamic = new()
                 {
                     IdRemainNavigation = remainModel.Remain,
@@ -118,19 +117,19 @@ namespace SteamStorage.Utilities
                 };
                 DbContext.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                logger.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
+                logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
             {
-                logger.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
+                logger?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
                 UndoChanges();
             }
         }
-        public void SaveChanges()
+        public static void SaveChanges()
         {
             DbContext.SaveChanges();
         }
-        public void UndoChanges()
+        public static void UndoChanges()
         {
             foreach (var entry in DbContext.ChangeTracker.Entries())
             {
@@ -148,19 +147,19 @@ namespace SteamStorage.Utilities
                 }
             }
         }
-        public void UpdateRemainModels()
+        public static void UpdateRemainModels()
         {
             remainModels = DBContext.Remains.Select(x => new RemainModel(x));
         }
-        public void UpdateArchiveModels()
+        public static void UpdateArchiveModels()
         {
             archiveModels = DBContext.Archives.Select(x => new ArchiveModel(x));
         }
-        public void UpdateRemainGroupModels()
+        public static void UpdateRemainGroupModels()
         {
             remainGroupModels = DBContext.RemainGroups.Select(x => new RemainGroupModel(x));
         }
-        public void UpdateArchiveGroupModels()
+        public static void UpdateArchiveGroupModels()
         {
             archiveGroupModels = DBContext.ArchiveGroups.Select(x => new ArchiveGroupModel(x));
         }

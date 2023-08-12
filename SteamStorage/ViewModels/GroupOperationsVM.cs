@@ -24,8 +24,6 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
-
-        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -85,7 +83,7 @@ namespace SteamStorage.ViewModels
         {
             if (groupType == GroupTypes.Archive) archiveGroupModel.EditGroup(Title);
             else if (groupType == GroupTypes.Remain) remainGroupModel.EditGroup(Title);
-            context.SaveChanges();
+            Context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -94,7 +92,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            context.UndoChanges();
+            Context.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

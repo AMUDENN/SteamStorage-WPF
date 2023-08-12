@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace SteamStorage.Utilities
 {
-    public class Config
+    public static class Config
     {
         private static readonly Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         public static string CurrentTheme

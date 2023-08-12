@@ -36,8 +36,6 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
-
-        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -137,7 +135,7 @@ namespace SteamStorage.ViewModels
             CountString = archiveModel.Count.ToString();
             CostPurchaseString = archiveModel.CostPurchase.ToString();
             CostSoldString = archiveModel.CostSold.ToString();
-            Groups = context.ArchiveGroups.ToList();
+            Groups = Context.ArchiveGroups.ToList();
             SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
@@ -145,7 +143,7 @@ namespace SteamStorage.ViewModels
             archiveModel = new();
             selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = context.ArchiveGroups.ToList();
+            Groups = Context.ArchiveGroups.ToList();
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
         }
         #endregion Constructor
@@ -155,7 +153,7 @@ namespace SteamStorage.ViewModels
         {
             if (selectedCommandType == CommandType.Add) archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
             else archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, archiveModel.DatePurchase, archiveModel.DateSold, SelectedArchiveGroupModel);
-            context.SaveChanges();
+            Context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -174,7 +172,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            context.UndoChanges();
+            Context.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

@@ -25,8 +25,6 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
-
-        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -97,7 +95,7 @@ namespace SteamStorage.ViewModels
             this.remainModel = remainModel;
             Count = remainModel.Count;
             CountString = remainModel.Count.ToString();
-            Groups = context.ArchiveGroups.ToList();
+            Groups = Context.ArchiveGroups.ToList();
         }
         #endregion Constructor
 
@@ -105,7 +103,7 @@ namespace SteamStorage.ViewModels
         private void DoSaveCommand()
         {
             remainModel.SellRemain(Count, CostSold, DateTime.Now, SelectedArchiveGroupModel);
-            context.SaveChanges();
+            Context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -123,7 +121,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            context.UndoChanges();
+            Context.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

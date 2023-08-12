@@ -23,8 +23,7 @@ namespace SteamStorage.Models
         private double percent;
         private List<DataPoint> priceDynamicsPoints;
 
-        private Context context = Singleton.GetObject<Context>();
-        private Logger logger = Singleton.GetObject<Logger>();
+        private Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -52,14 +51,14 @@ namespace SteamStorage.Models
             this.remain = remain;
             datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
             amountPurchase = remain.CostPurchase * remain.Count;
-            context.DBContext.PriceDynamics.LoadAsync();
-            context.DBContext.Skins.LoadAsync();
+            Context.DBContext.PriceDynamics.LoadAsync();
+            Context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
         public RemainModel()
         {
             remain = new();
-            context.AddRemain(remain);
+            Context.AddRemain(remain);
         }
         #endregion Constructor
 
@@ -90,20 +89,20 @@ namespace SteamStorage.Models
         {
             try
             {
-                var skin = context.GetSkin(url);
+                var skin = Context.GetSkin(url);
                 if (skin is null) throw new Exception("Ссылка на скин неверна!");
                 remain.IdSkinNavigation = skin;
                 remain.Count = count;
                 remain.CostPurchase = costPurchase;
                 remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
                 remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
-                context.SaveChanges();
-                logger.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                Context.SaveChanges();
+                logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
@@ -112,44 +111,44 @@ namespace SteamStorage.Models
             {
                 ArchiveModel archiveModel = new();
                 archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
-                if (count >= remain.Count) context.RemoveRemain(remain);
-                EditRemain(Url, Count - count, CostPurchase, DatePurchase, context.RemainGroups.ToList().Where(x => x.RemainGroup == RemainGroup).First());
-                context.SaveChanges();
-                logger.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
+                if (count >= remain.Count) Context.RemoveRemain(remain);
+                EditRemain(Url, Count - count, CostPurchase, DatePurchase, Context.RemainGroups.ToList().Where(x => x.RemainGroup == RemainGroup).First());
+                Context.SaveChanges();
+                logger?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteRemain()
         {
             try
             {
-                context.RemoveRemain(remain);
-                context.SaveChanges();
-                logger.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                Context.RemoveRemain(remain);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void UpdateCurrentCost()
         {
             try
             {
-                context.AddPriceDynamic(this);
-                context.SaveChanges();
+                Context.AddPriceDynamic(this);
+                Context.SaveChanges();
                 UpdatePriceDynamics();
-                logger.WriteMessage($"Текущая цена элемент {Title} успешно добавлена!", this.GetType());
+                logger?.WriteMessage($"Текущая цена элемент {Title} успешно добавлена!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         #endregion Methods

@@ -12,8 +12,7 @@ namespace SteamStorage.Models
         private double? remainsAmount;
         private double? remainsPercent;
 
-        private Context context = Singleton.GetObject<Context>();
-        private Logger logger = Singleton.GetObject<Logger>();
+        private Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -53,14 +52,14 @@ namespace SteamStorage.Models
         public RemainGroupModel()
         {
             remainGroup = new();
-            context.AddRemainGroup(remainGroup);
+            Context.AddRemainGroup(remainGroup);
         }
         #endregion Constructor
 
         #region Methods
         private void UpdateRemains()
         {
-            var remainModels = context.GetRemainModels(this);
+            var remainModels = Context.GetRemainModels(this);
             remainsCount = CalculationModel.GetRemainTotalCount(remainModels);
             remainsAmount = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
             remainsPercent = CalculationModel.GetRemainAveragePercent(remainModels);
@@ -70,46 +69,46 @@ namespace SteamStorage.Models
             try
             {
                 remainGroup.Title = title;
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteGroup()
         {
             try
             {
-                context.RemoveRemainGroup(remainGroup);
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
+                Context.RemoveRemainGroup(remainGroup);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteGroupWithSkins()
         {
             try
             {
-                var remains = context.GetRemainModels(this);
+                var remains = Context.GetRemainModels(this);
                 foreach (var item in remains)
                 {
                     item.DeleteRemain();
                 }
-                context.RemoveRemainGroup(remainGroup);
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
+                Context.RemoveRemainGroup(remainGroup);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         #endregion Methods

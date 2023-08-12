@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SteamStorage.Models
 {
-    public class CalculationModel
+    public static class CalculationModel
     {
         public static long GetRemainTotalCount(IEnumerable<RemainModel> remainModels) => remainModels.Sum(x => x.Count);
         public static double GetRemainTotalAmountPurchase(IEnumerable<RemainModel> remainModels) => remainModels.Sum(x => x.AmountPurchase);
@@ -26,7 +26,7 @@ namespace SteamStorage.Models
             if (totalAmountPurchase == 0) return 0;
             return (GetRemainTotalCurrentAmount(remainModels) - totalAmountPurchase) / totalAmountPurchase * 100;
         }
-        public static RemainModel GetMostProfitabilityRemain(IEnumerable<RemainModel> remainModels) => remainModels.MaxBy(x => x.Percent);
+        public static RemainModel? GetMostProfitabilityRemain(IEnumerable<RemainModel> remainModels) => remainModels.MaxBy(x => x.Percent);
         public static long GetArchiveTotalCount(IEnumerable<ArchiveModel> archiveModels) => archiveModels.Sum(x => x.Count);
         public static double GetArchiveTotalAmountPurchase(IEnumerable<ArchiveModel> archiveModels) => archiveModels.Sum(x => x.AmountPurchase);
         public static double GetArchiveAverageCostPurchase(IEnumerable<ArchiveModel> archiveModels)
@@ -48,6 +48,6 @@ namespace SteamStorage.Models
             if (totalAmountPurchase == 0) return 0;
             return (GetArchiveTotalAmountSold(archiveModels) - totalAmountPurchase) / totalAmountPurchase * 100;
         }
-        public static ArchiveModel GetMostProfitabilityArchive(IEnumerable<ArchiveModel> archiveModels) => archiveModels.MaxBy(x => x.Percent);
+        public static ArchiveModel? GetMostProfitabilityArchive(IEnumerable<ArchiveModel> archiveModels) => archiveModels.MaxBy(x => x.Percent);
     }
 }

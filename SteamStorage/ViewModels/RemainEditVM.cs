@@ -34,8 +34,6 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand saveCommand;
         private RelayCommand cancelCommand;
-
-        private Context context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -119,7 +117,7 @@ namespace SteamStorage.ViewModels
             CostPurchase = remainModel.CostPurchase;
             CountString = remainModel.Count.ToString();
             CostPurchaseString = remainModel.CostPurchase.ToString();
-            Groups = context.RemainGroups.ToList();
+            Groups = Context.RemainGroups.ToList();
             SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
         public RemainEditVM(RemainGroupModel? remainGroupModel)
@@ -127,7 +125,7 @@ namespace SteamStorage.ViewModels
             remainModel = new();
             selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = context.RemainGroups.ToList();
+            Groups = Context.RemainGroups.ToList();
             SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor
@@ -137,7 +135,7 @@ namespace SteamStorage.ViewModels
         {
             if (selectedCommandType == CommandType.Add) remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
             else remainModel.EditRemain(Url, Count, CostPurchase, remainModel.DatePurchase, SelectedRemainGroupModel);
-            context.SaveChanges();
+            Context.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -155,7 +153,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            context.UndoChanges();
+            Context.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

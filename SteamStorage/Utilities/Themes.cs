@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace SteamStorage.Utilities
 {
-    public class Themes
+    public static class Themes
     {
         public enum ThemesEnum { Light, Dark, Custom };
         private static Dictionary<ThemesEnum, string> themesPath = new Dictionary<ThemesEnum, string>()

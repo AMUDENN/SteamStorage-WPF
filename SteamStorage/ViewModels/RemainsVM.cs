@@ -63,9 +63,6 @@ namespace SteamStorage.ViewModels
         private RelayCommand<object> sellRemainCommand;
         private RelayCommand<object> deleteRemainCommand;
 
-        private Context context = Singleton.GetObject<Context>();
-        private UserMessage userMessage = Singleton.GetObject<UserMessage>();
-
         private BackgroundWorker updateInfoWorker = new BackgroundWorker();
         #endregion Fields
 
@@ -282,7 +279,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-            updateInfoWorker.RunWorkerAsync(context.GetRemainModels((RemainGroupModel)data).ToList());
+            updateInfoWorker.RunWorkerAsync(Context.GetRemainModels((RemainGroupModel)data).ToList());
         }
         private bool CanExecuteUpdateGroupCommand(object? data)
         {
@@ -290,9 +287,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = userMessage.AddRemainGroup();
+            var isAdded = UserMessage.AddRemainGroup();
             if (!isAdded) return;
-            context.UpdateRemainGroupModels();
+            Context.UpdateRemainGroupModels();
             GetRemainGroups();
         }
         private void DoEditGroupCommand(object? data)
@@ -300,12 +297,12 @@ namespace SteamStorage.ViewModels
             RemainGroupModel model = (RemainGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу изменить нельзя!");
+                UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            var isEdit = userMessage.EditRemainGroup(model);
+            var isEdit = UserMessage.EditRemainGroup(model);
             if (!isEdit) return;
-            context.UpdateRemainGroupModels();
+            Context.UpdateRemainGroupModels();
             GetRemainGroups();
         }
         private void DoDeleteGroupCommand(object? data)
@@ -313,14 +310,14 @@ namespace SteamStorage.ViewModels
             RemainGroupModel model = (RemainGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу удалить нельзя!");
+                UserMessage.Error("Эту группу удалить нельзя!");
                 return;
             }
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
             if (!delete) return;
             model.DeleteGroup();
-            context.UpdateRemainGroupModels();
-            context.UpdateRemainGroupModels();
+            Context.UpdateRemainGroupModels();
+            Context.UpdateRemainGroupModels();
             GetRemainGroups();
             DoFiltering();
         }
@@ -329,14 +326,14 @@ namespace SteamStorage.ViewModels
             RemainGroupModel model = (RemainGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу удалить нельзя!");
+                UserMessage.Error("Эту группу удалить нельзя!");
                 return;
             }
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
             model.DeleteGroupWithSkins();
-            context.UpdateRemainGroupModels();
-            context.UpdateRemainModels();
+            Context.UpdateRemainGroupModels();
+            Context.UpdateRemainModels();
             GetRemainGroups();
             DoFiltering();
         }
@@ -350,40 +347,40 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddRemainCommand()
         {
-            var isAdded = userMessage.AddRemain(SelectedGroup);
+            var isAdded = UserMessage.AddRemain(SelectedGroup);
             if (!isAdded) return;
-            context.UpdateRemainModels();
+            Context.UpdateRemainModels();
             DoFiltering();
         }
         private void DoEditRemainCommand(object? data)
         {
-            var isEdit = userMessage.EditRemain((RemainModel)data);
+            var isEdit = UserMessage.EditRemain((RemainModel)data);
             if (!isEdit) return;
-            context.UpdateRemainModels();
+            Context.UpdateRemainModels();
             DoFiltering();
         }
         private void DoSellRemainCommand(object? data)
         {
-            var isSell = userMessage.SellRemain((RemainModel)data);
+            var isSell = UserMessage.SellRemain((RemainModel)data);
             if (!isSell) return;
-            context.UpdateRemainModels();
-            context.UpdateArchiveModels();
+            Context.UpdateRemainModels();
+            Context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoDeleteRemainCommand(object? data)
         {
             RemainModel model = (RemainModel)data;
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteRemain();
-            context.UpdateRemainModels();
+            Context.UpdateRemainModels();
             DoFiltering();
         }
         private void DoFiltering()
         {
             if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
 
-            DisplayedRemains = context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
+            DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
 
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
@@ -407,7 +404,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetRemainGroups()
         {
-            Groups = context.RemainGroups;
+            Groups = Context.RemainGroups;
         }
         private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
         {
@@ -437,7 +434,7 @@ namespace SteamStorage.ViewModels
         public void UpdateInfoComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             IsProgressBarVisible = false;
-            context.UpdateRemainModels();
+            Context.UpdateRemainModels();
             DoFiltering();
         }
         #endregion Methods

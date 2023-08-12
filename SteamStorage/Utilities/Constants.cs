@@ -1,6 +1,6 @@
 ﻿namespace SteamStorage.Utilities
 {
-    public class Constants
+    public static class Constants
     {
         public const string Version = "v 0.0.1";
         public const string DateTimeFormat = "yyyy.MM.dd HH:mm:ss";

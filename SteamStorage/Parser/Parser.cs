@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using SteamStorage.Models;
 using SteamStorage.Parser.Models;
 using SteamStorage.Utilities;
 using System;
@@ -8,16 +7,16 @@ using System.Net.Http;
 
 namespace SteamStorage.Parser
 {
-    public class SteamParser
+    internal static class SteamParser
     {
         #region Fields
-        private readonly HttpClient client = new();
-        private readonly List<string> extraChars = new() { "amp;" };
-        private readonly Logger logger = Singleton.GetObject<Logger>();
+        private static readonly HttpClient client = new();
+        private static readonly List<string> extraChars = new() { "amp;" };
+        private static readonly Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Methods
-        public (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
+        public static (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
         {
             string result = client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
             SkinParseModel skinParse = JsonConvert.DeserializeObject<SkinParseModel>(result);
@@ -33,7 +32,7 @@ namespace SteamStorage.Parser
                 return (DateTime.Now, -1);
             }
         }
-        public string GetSkinTitle(string url)
+        public static string GetSkinTitle(string url)
         {
             try
             {
@@ -49,7 +48,7 @@ namespace SteamStorage.Parser
                 return string.Empty;
             }
         }
-        private string DeleteExtraChar(string title)
+        private static string DeleteExtraChar(string title)
         {
             foreach (string str in extraChars)
             {
@@ -57,13 +56,13 @@ namespace SteamStorage.Parser
             }
             return title;
         }
-        private void SuccessParsing()
+        private static void SuccessParsing()
         {
-            logger.WriteMessage("Успешно получена информация!", this.GetType());
+            logger?.WriteMessage("Успешно получена информация!", typeof(SteamParser));
         }
-        private void FailParsing(string message)
+        private static void FailParsing(string message)
         {
-            logger.WriteMessage($"Произошла ошибка при получении информации: {message}!", this.GetType());
+            logger?.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParser));
         }
         #endregion Methods
     }

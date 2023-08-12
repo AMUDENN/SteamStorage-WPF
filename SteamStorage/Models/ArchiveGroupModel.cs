@@ -12,8 +12,7 @@ namespace SteamStorage.Models
         private double? archivesAmount;
         private double? archivesPercent;
 
-        private Context context = Singleton.GetObject<Context>();
-        private Logger logger = Singleton.GetObject<Logger>();
+        private Logger? logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -53,14 +52,14 @@ namespace SteamStorage.Models
         public ArchiveGroupModel()
         {
             archiveGroup = new();
-            context.AddArchiveGroup(archiveGroup);
+            Context.AddArchiveGroup(archiveGroup);
         }
         #endregion Constructor
 
         #region Methods
         private void UpdateArchives()
         {
-            var archiveModels = context.GetArchiveModels(this);
+            var archiveModels = Context.GetArchiveModels(this);
             archivesCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             archivesAmount = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
             archivesPercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
@@ -70,46 +69,46 @@ namespace SteamStorage.Models
             try
             {
                 archiveGroup.Title = title;
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteGroup()
         {
             try
             {
-                context.RemoveArchiveGroup(archiveGroup);
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
+                Context.RemoveArchiveGroup(archiveGroup);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteGroupWithSkins()
         {
             try
             {
-                var archives = context.GetArchiveModels(this);
+                var archives = Context.GetArchiveModels(this);
                 foreach (var item in archives)
                 {
                     item.DeleteArchive();
                 }
-                context.RemoveArchiveGroup(archiveGroup);
-                context.SaveChanges();
-                logger.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
+                Context.RemoveArchiveGroup(archiveGroup);
+                Context.SaveChanges();
+                logger?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
             }
             catch (Exception ex)
             {
-                context.UndoChanges();
-                logger.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                Context.UndoChanges();
+                logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         #endregion Methods

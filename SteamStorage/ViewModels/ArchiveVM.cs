@@ -53,9 +53,6 @@ namespace SteamStorage.ViewModels
         private RelayCommand addArchiveCommand;
         private RelayCommand<object> editArchiveCommand;
         private RelayCommand<object> deleteArchiveCommand;
-
-        private Context context = Singleton.GetObject<Context>();
-        private UserMessage userMessage = Singleton.GetObject<UserMessage>();
         #endregion Fields
 
         #region Properties
@@ -234,9 +231,9 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = userMessage.AddArchiveGroup();
+            var isAdded = UserMessage.AddArchiveGroup();
             if (!isAdded) return;
-            context.UpdateArchiveGroupModels();
+            Context.UpdateArchiveGroupModels();
             GetArchiveGroups();
         }
         private void DoEditGroupCommand(object? data)
@@ -244,12 +241,12 @@ namespace SteamStorage.ViewModels
             ArchiveGroupModel model = (ArchiveGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу изменить нельзя!");
+                UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            var isEdit = userMessage.EditArchiveGroup(model);
+            var isEdit = UserMessage.EditArchiveGroup(model);
             if (!isEdit) return;
-            context.UpdateArchiveGroupModels();
+            Context.UpdateArchiveGroupModels();
             GetArchiveGroups();
         }
         private void DoDeleteGroupCommand(object? data)
@@ -257,14 +254,14 @@ namespace SteamStorage.ViewModels
             ArchiveGroupModel model = (ArchiveGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу удалить нельзя!");
+                UserMessage.Error("Эту группу удалить нельзя!");
                 return;
             }
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
             if (!delete) return;
             model.DeleteGroup();
-            context.UpdateArchiveGroupModels();
-            context.UpdateArchiveModels();
+            Context.UpdateArchiveGroupModels();
+            Context.UpdateArchiveModels();
             GetArchiveGroups();
             DoFiltering();
         }
@@ -273,45 +270,45 @@ namespace SteamStorage.ViewModels
             ArchiveGroupModel model = (ArchiveGroupModel)data;
             if (IsDefaultGroup(model))
             {
-                userMessage.Error("Эту группу удалить нельзя!");
+                UserMessage.Error("Эту группу удалить нельзя!");
                 return;
             }
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
             if (!delete) return;
             model.DeleteGroupWithSkins();
-            context.UpdateArchiveGroupModels();
-            context.UpdateArchiveModels();
+            Context.UpdateArchiveGroupModels();
+            Context.UpdateArchiveModels();
             GetArchiveGroups();
             DoFiltering();
         }
         private void DoAddArchiveCommand()
         {
-            var isAdded = userMessage.AddArchive(SelectedGroup);
+            var isAdded = UserMessage.AddArchive(SelectedGroup);
             if (!isAdded) return;
-            context.UpdateArchiveModels();
+            Context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoEditArchiveCommand(object? data)
         {
-            var isEdit = userMessage.EditArchive((ArchiveModel)data);
+            var isEdit = UserMessage.EditArchive((ArchiveModel)data);
             if (!isEdit) return;
-            context.UpdateArchiveModels();
+            Context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoDeleteArchiveCommand(object? data)
         {
             ArchiveModel model = (ArchiveModel)data;
-            var delete = userMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
+            var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteArchive();
-            context.UpdateArchiveModels();
+            Context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoFiltering()
         {
             if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
 
-            DisplayedArchives = context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
+            DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
 
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
@@ -335,7 +332,7 @@ namespace SteamStorage.ViewModels
         }
         private void GetArchiveGroups()
         {
-            Groups = context.ArchiveGroups;
+            Groups = Context.ArchiveGroups;
         }
         private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
         {

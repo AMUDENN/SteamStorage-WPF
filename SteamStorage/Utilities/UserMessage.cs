@@ -4,54 +4,54 @@ using SteamStorage.ViewModels;
 
 namespace SteamStorage.Utilities
 {
-    public class UserMessage
+    public static class UserMessage
     {
-        public WindowDialogService windowDialogService = new();
-        public bool Question(string question)
+        public static WindowDialogService windowDialogService = new();
+        public static bool Question(string question)
         {
             return (bool)windowDialogService.ShowDialog("Подтверждение", new MessageBoxVM(question, MessageBoxVM.MessageImages.Question, MessageBoxVM.MessageButtons.OkCancel));
         }
-        public bool Information(string info)
+        public static bool Information(string info)
         {
             return (bool)windowDialogService.ShowDialog("Информация", new MessageBoxVM(info, MessageBoxVM.MessageImages.Information, MessageBoxVM.MessageButtons.Ok));
         }
-        public bool Error(string error)
+        public static bool Error(string error)
         {
             return (bool)windowDialogService.ShowDialog("Ошибка", new MessageBoxVM(error, MessageBoxVM.MessageImages.Error, MessageBoxVM.MessageButtons.Ok));
         }
-        public bool EditArchiveGroup(ArchiveGroupModel archiveGroupModel) 
+        public static bool EditArchiveGroup(ArchiveGroupModel archiveGroupModel) 
         {
             return (bool)windowDialogService.ShowDialog($"Изменение группы \"{archiveGroupModel.Title}\"", new GroupOperationsVM(archiveGroupModel));
         }
-        public bool AddArchiveGroup()
+        public static bool AddArchiveGroup()
         {
             return (bool)windowDialogService.ShowDialog("Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Archive));
         }
-        public bool EditRemainGroup(RemainGroupModel remainGroupModel)
+        public static bool EditRemainGroup(RemainGroupModel remainGroupModel)
         {
             return (bool)windowDialogService.ShowDialog($"Изменение группы \"{remainGroupModel.Title}\"", new GroupOperationsVM(remainGroupModel));
         }
-        public bool AddRemainGroup()
+        public static bool AddRemainGroup()
         {
             return (bool)windowDialogService.ShowDialog("Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Remain));
         }
-        public bool EditArchive(ArchiveModel archiveModel)
+        public static bool EditArchive(ArchiveModel archiveModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Изменение элемента \"{archiveModel.Title}\"", new ArchiveEditVM(archiveModel));
         }
-        public bool AddArchive(ArchiveGroupModel? archiveGroupModel)
+        public static bool AddArchive(ArchiveGroupModel? archiveGroupModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Добавление элемента", new ArchiveEditVM(archiveGroupModel));
         }
-        public bool EditRemain(RemainModel remainModel)
+        public static bool EditRemain(RemainModel remainModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Изменение элемента \"{remainModel.Title}\"", new RemainEditVM(remainModel));
         }
-        public bool AddRemain(RemainGroupModel? remainGroupModel)
+        public static bool AddRemain(RemainGroupModel? remainGroupModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Добавление элемента", new RemainEditVM(remainGroupModel));
         }
-        public bool SellRemain(RemainModel remainModel) 
+        public static bool SellRemain(RemainModel remainModel) 
         {
             return (bool)windowDialogService.ShowDialog(250, 450, $"Продажа элемента \"{remainModel.Title}\"", new RemainSellVM(remainModel));
         }

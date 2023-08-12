@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SteamStorage.Parser;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
@@ -40,11 +39,7 @@ namespace SteamStorage
             services.AddSingleton<MainWindowVM>();
             services.AddSingleton<MainWindow>();
 
-            services.AddSingleton<Context>();
-            services.AddSingleton<UserMessage>();
             services.AddSingleton<Logger>(new Logger(Constants.Logpath));
-
-            services.AddSingleton<SteamParser>();
 
             Container = services.BuildServiceProvider();
         }
