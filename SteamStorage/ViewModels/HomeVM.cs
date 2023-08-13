@@ -12,6 +12,9 @@ namespace SteamStorage.ViewModels
         private List<ArchiveGroupModel>? _archiveGroupModels;
         private List<RemainGroupModel>? _remainGroupModels;
 
+        private ArchiveGroupModel? _mostProfitabilityArchiveGroup;
+        private RemainGroupModel? _mostProfitabilityRemainGroup;
+
         private long _totalArchiveCount;
         private double _totalArchiveAmountPurchase;
         private double _totalArchivePercent;
@@ -28,44 +31,107 @@ namespace SteamStorage.ViewModels
         #endregion Fields
 
         #region Properties
-        public List<ArchiveGroupModel>? ArchiveGroupModels => _archiveGroupModels;
-        public List<RemainGroupModel>? RemainGroupModels => _remainGroupModels;
-        public ArchiveGroupModel? MostProfitabilityArchiveGroup => _archiveGroupModels?.MaxBy(x => x.ArchivesPercent);
-        public RemainGroupModel? MostProfitabilityRemainGroup => _remainGroupModels?.MaxBy(x => x.RemainsPercent);
-        public long TotalArchiveCount => _totalArchiveCount;
-        public double TotalArchiveAmountPurchase => _totalArchiveAmountPurchase;
-        public double TotalArchivePercent => _totalArchivePercent;
-        public double TotalArchiveAmountSold => _totalArchiveAmountSold;
-        public ArchiveElementModel? MostProfitabilityArchive => _mostProfitabilityArchive;
-        public long TotalRemainCount => _totalRemainCount;
-        public double TotalRemainAmountPurchase => _totalRemainAmountPurchase;
-        public double TotalRemainPercent => _totalRemainPercent;
-        public double TotalRemainCurrentAmount => _totalRemainCurrentAmount;
-        public RemainElementModel? MostProfitabilityRemain => _mostProfitabilityRemain;
+        public List<ArchiveGroupModel>? ArchiveGroupModels
+        {
+            get => _archiveGroupModels;
+            set => SetProperty(ref _archiveGroupModels, value);
+        }
+        public List<RemainGroupModel>? RemainGroupModels
+        {
+            get => _remainGroupModels;
+            set => SetProperty(ref _remainGroupModels, value);
+        }
+        public ArchiveGroupModel? MostProfitabilityArchiveGroup
+        {
+            get => _mostProfitabilityArchiveGroup;
+            set => SetProperty(ref _mostProfitabilityArchiveGroup, value);
+        }
+        public RemainGroupModel? MostProfitabilityRemainGroup
+        {
+            get => _mostProfitabilityRemainGroup;
+            set => SetProperty(ref _mostProfitabilityRemainGroup, value);
+        }
+        public long TotalArchiveCount
+        {
+            get => _totalArchiveCount;
+            set => SetProperty(ref _totalArchiveCount, value);
+        }
+        public double TotalArchiveAmountPurchase
+        {
+            get => _totalArchiveAmountPurchase;
+            set => SetProperty(ref _totalArchiveAmountPurchase, value);
+        }
+        public double TotalArchivePercent
+        {
+            get => _totalArchivePercent;
+            set => SetProperty(ref _totalArchivePercent, value);
+        }
+        public double TotalArchiveAmountSold
+        {
+            get => _totalArchiveAmountSold;
+            set => SetProperty(ref _totalArchiveAmountSold, value);
+        }
+        public ArchiveElementModel? MostProfitabilityArchive
+        {
+            get => _mostProfitabilityArchive;
+            set => SetProperty(ref _mostProfitabilityArchive, value);
+        }
+        public long TotalRemainCount
+        {
+            get => _totalRemainCount;
+            set => SetProperty(ref _totalRemainCount, value);
+        }
+        public double TotalRemainAmountPurchase
+        {
+            get => _totalRemainAmountPurchase;
+            set => SetProperty(ref _totalRemainAmountPurchase, value);
+        }
+        public double TotalRemainPercent
+        {
+            get => _totalRemainPercent;
+            set => SetProperty(ref _totalRemainPercent, value);
+        }
+        public double TotalRemainCurrentAmount
+        {
+            get => _totalRemainCurrentAmount;
+            set => SetProperty(ref _totalRemainCurrentAmount, value);
+        }
+        public RemainElementModel? MostProfitabilityRemain
+        {
+            get => _mostProfitabilityRemain;
+            set => SetProperty(ref _mostProfitabilityRemain, value);
+        }
         #endregion Properties
 
         #region Constructor
         public HomeVM()
         {
-            var archiveModels = _context?.GetArchiveModels(null);
-            _archiveGroupModels = _context?.GetArchiveGroupModels();
-            _totalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
-            _totalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
-            _totalArchivePercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
-            _totalArchiveAmountSold = CalculationModel.GetArchiveTotalAmountSold(archiveModels);
-            _mostProfitabilityArchive = CalculationModel.GetMostProfitabilityArchive(archiveModels);
-
-            var remainModels = _context?.GetRemainModels(null);
-            _remainGroupModels = _context?.GetRemainGroupModels();
-            _totalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
-            _totalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
-            _totalRemainPercent = CalculationModel.GetRemainAveragePercent(remainModels);
-            _totalRemainCurrentAmount = CalculationModel.GetRemainTotalCurrentAmount(remainModels);
-            _mostProfitabilityRemain = CalculationModel.GetMostProfitabilityRemain(remainModels);
+            UpdateInfo();
+            _context.PropertyChanged += (s, e) => UpdateInfo();
         }
         #endregion Constructor
 
         #region Methods
+        private void UpdateInfo()
+        {
+            var archiveModels = _context?.GetArchiveModels(null);
+            ArchiveGroupModels = _context?.GetArchiveGroupModels();
+            MostProfitabilityArchiveGroup = ArchiveGroupModels?.MaxBy(x => x.ArchivesPercent);
+            TotalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
+            TotalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
+            TotalArchivePercent = CalculationModel.GetArchiveAveragePercent(archiveModels);
+            TotalArchiveAmountSold = CalculationModel.GetArchiveTotalAmountSold(archiveModels);
+            MostProfitabilityArchive = CalculationModel.GetMostProfitabilityArchive(archiveModels);
+
+            var remainModels = _context?.GetRemainModels(null);
+            RemainGroupModels = _context?.GetRemainGroupModels();
+            MostProfitabilityRemainGroup = RemainGroupModels?.MaxBy(x => x.RemainsPercent);
+            TotalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
+            TotalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);
+            TotalRemainPercent = CalculationModel.GetRemainAveragePercent(remainModels);
+            TotalRemainCurrentAmount = CalculationModel.GetRemainTotalCurrentAmount(remainModels);
+            MostProfitabilityRemain = CalculationModel.GetMostProfitabilityRemain(remainModels);
+        }
         #endregion Methods
     }
 }
