@@ -1,15 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
-using SteamStorage.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Windows.Controls;
 
 namespace SteamStorage.ViewModels
 {
@@ -17,7 +14,7 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private string filter = string.Empty;
-        private readonly Dictionary<string, Func<RemainModel, object>> orderTitles = new()
+        private readonly Dictionary<string, Func<RemainElementModel, object>> orderTitles = new()
         {
             { "Название", x => x.Title },
             { "Количество", x => x.Count },
@@ -36,7 +33,7 @@ namespace SteamStorage.ViewModels
         private string? selectedOrderType;
 
         private IEnumerable<RemainGroupModel> groups;
-        private IEnumerable<RemainModel> displayedRemains;
+        private IEnumerable<RemainElementModel> displayedRemains;
 
         private long totalCount;
         private double averageCostPurchase;
@@ -101,7 +98,7 @@ namespace SteamStorage.ViewModels
             get => groups;
             set => SetProperty(ref groups, value);
         }
-        public IEnumerable<RemainModel> DisplayedRemains
+        public IEnumerable<RemainElementModel> DisplayedRemains
         {
             get => displayedRemains;
             set => SetProperty(ref displayedRemains, value);
@@ -339,7 +336,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateRemainCommand(object? data)
         {
-            updateInfoWorker.RunWorkerAsync(new List<RemainModel>() { (RemainModel)data });
+            updateInfoWorker.RunWorkerAsync(new List<RemainElementModel>() { (RemainElementModel)data });
         }
         private bool CanExecuteUpdateRemainCommand(object? data)
         {
@@ -354,14 +351,14 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditRemainCommand(object? data)
         {
-            var isEdit = UserMessage.EditRemain((RemainModel)data);
+            var isEdit = UserMessage.EditRemain((RemainElementModel)data);
             if (!isEdit) return;
             Context.UpdateRemainModels();
             DoFiltering();
         }
         private void DoSellRemainCommand(object? data)
         {
-            var isSell = UserMessage.SellRemain((RemainModel)data);
+            var isSell = UserMessage.SellRemain((RemainElementModel)data);
             if (!isSell) return;
             Context.UpdateRemainModels();
             Context.UpdateArchiveModels();
@@ -369,7 +366,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteRemainCommand(object? data)
         {
-            RemainModel model = (RemainModel)data;
+            RemainElementModel model = (RemainElementModel)data;
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteRemain();
@@ -410,10 +407,10 @@ namespace SteamStorage.ViewModels
         {
             return remainGroupModel.RemainGroup.Id == 1;
         }
-        private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainModel> remainModels)
+        private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainElementModel> remainModels)
         {
             int percentageIncrease = 100 / remainModels.Count();
-            foreach (RemainModel remainModel in remainModels)
+            foreach (RemainElementModel remainModel in remainModels)
             {
                 Thread.Sleep(500);
                 remainModel.UpdateCurrentCost();
@@ -422,7 +419,7 @@ namespace SteamStorage.ViewModels
         }
         public void UpdateInfoWork(object sender, DoWorkEventArgs e)
         {
-            List<RemainModel> arg = (List<RemainModel>)e.Argument;
+            List<RemainElementModel> arg = (List<RemainElementModel>)e.Argument;
             IsProgressBarVisible = true;
             ProgressBarValue = 0;
             UpdateRemainModelsCurrentCosts(arg);

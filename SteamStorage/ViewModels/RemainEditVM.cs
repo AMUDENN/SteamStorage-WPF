@@ -19,7 +19,7 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private RemainModel remainModel;
+        private RemainElementModel remainModel;
         private CommandType selectedCommandType;
 
         private string url;
@@ -108,7 +108,7 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public RemainEditVM(RemainModel remainModel)
+        public RemainEditVM(RemainElementModel remainModel)
         {
             this.remainModel = remainModel;
             selectedCommandType = CommandType.Edit;

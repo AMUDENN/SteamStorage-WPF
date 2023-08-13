@@ -19,7 +19,7 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private ArchiveModel archiveModel;
+        private ArchiveElementModel archiveModel;
         private CommandType selectedCommandType;
 
         private string url;
@@ -124,7 +124,7 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public ArchiveEditVM(ArchiveModel archiveModel)
+        public ArchiveEditVM(ArchiveElementModel archiveModel)
         {
             this.archiveModel = archiveModel;
             selectedCommandType = CommandType.Edit;

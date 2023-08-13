@@ -12,8 +12,8 @@ namespace SteamStorage.Utilities
     {
         #region Fields
         private static readonly SteamStorageDbContext DbContext = new();
-        private static IEnumerable<RemainModel> remainModels;
-        private static IEnumerable<ArchiveModel> archiveModels;
+        private static IEnumerable<RemainElementModel> remainModels;
+        private static IEnumerable<ArchiveElementModel> archiveModels;
         private static IEnumerable<RemainGroupModel> remainGroupModels;
         private static IEnumerable<ArchiveGroupModel> archiveGroupModels;
 
@@ -37,11 +37,11 @@ namespace SteamStorage.Utilities
         #endregion Constructor
 
         #region Methods
-        public static List<RemainModel> GetRemainModels(RemainGroupModel? groupModel)
+        public static List<RemainElementModel> GetRemainModels(RemainGroupModel? groupModel)
         {
             return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup).ToList();
         }
-        public static List<ArchiveModel> GetArchiveModels(ArchiveGroupModel? groupModel)
+        public static List<ArchiveElementModel> GetArchiveModels(ArchiveGroupModel? groupModel)
         {
             return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
         }
@@ -104,7 +104,7 @@ namespace SteamStorage.Utilities
                 }
             }
         }
-        public static void AddPriceDynamic(RemainModel remainModel)
+        public static void AddPriceDynamic(RemainElementModel remainModel)
         {
             try
             {
@@ -149,11 +149,11 @@ namespace SteamStorage.Utilities
         }
         public static void UpdateRemainModels()
         {
-            remainModels = DBContext.Remains.Select(x => new RemainModel(x));
+            remainModels = DBContext.Remains.Select(x => new RemainElementModel(x));
         }
         public static void UpdateArchiveModels()
         {
-            archiveModels = DBContext.Archives.Select(x => new ArchiveModel(x));
+            archiveModels = DBContext.Archives.Select(x => new ArchiveElementModel(x));
         }
         public static void UpdateRemainGroupModels()
         {

@@ -12,7 +12,7 @@ namespace SteamStorage.ViewModels
     public class RemainSellVM : ObservableObject
     {
         #region Fields
-        private RemainModel remainModel;
+        private RemainElementModel remainModel;
 
         private string countString = string.Empty;
         private string costSoldString = string.Empty;
@@ -90,7 +90,7 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public RemainSellVM(RemainModel remainModel)
+        public RemainSellVM(RemainElementModel remainModel)
         {
             this.remainModel = remainModel;
             Count = remainModel.Count;

@@ -5,7 +5,7 @@ using System;
 
 namespace SteamStorage.Models
 {
-    public class ArchiveModel
+    public class ArchiveElementModel
     {
         #region Fields
         private Archive archive;
@@ -33,7 +33,7 @@ namespace SteamStorage.Models
         #endregion Properties
 
         #region Constructor
-        public ArchiveModel(Archive archive)
+        public ArchiveElementModel(Archive archive)
         {
             this.archive = archive;
             datePurchase = DateTime.ParseExact(this.archive.DatePurchase, Constants.DateTimeFormat, null);
@@ -43,7 +43,7 @@ namespace SteamStorage.Models
             percent = (CostSold - CostPurchase) / CostPurchase * 100;
             Context.DBContext.Skins.LoadAsync();
         }
-        public ArchiveModel()
+        public ArchiveElementModel()
         {
             archive = new();
             Context.AddArchive(archive);

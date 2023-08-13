@@ -12,7 +12,7 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private string filter = string.Empty;
-        private readonly Dictionary<string, Func<ArchiveModel, object>> orderTitles = new()
+        private readonly Dictionary<string, Func<ArchiveElementModel, object>> orderTitles = new()
         {
             { "Название", x => x.Title },
             { "Количество", x => x.Count },
@@ -33,7 +33,7 @@ namespace SteamStorage.ViewModels
         private string? selectedOrderType;
 
         private IEnumerable<ArchiveGroupModel> groups;
-        private IEnumerable<ArchiveModel> displayedArchives;
+        private IEnumerable<ArchiveElementModel> displayedArchives;
 
         private long totalCount;
         private double averageCostPurchase;
@@ -90,7 +90,7 @@ namespace SteamStorage.ViewModels
             get => groups;
             set => SetProperty(ref groups, value);
         }
-        public IEnumerable<ArchiveModel> DisplayedArchives
+        public IEnumerable<ArchiveElementModel> DisplayedArchives
         {
             get => displayedArchives;
             set => SetProperty(ref displayedArchives, value);
@@ -290,14 +290,14 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditArchiveCommand(object? data)
         {
-            var isEdit = UserMessage.EditArchive((ArchiveModel)data);
+            var isEdit = UserMessage.EditArchive((ArchiveElementModel)data);
             if (!isEdit) return;
             Context.UpdateArchiveModels();
             DoFiltering();
         }
         private void DoDeleteArchiveCommand(object? data)
         {
-            ArchiveModel model = (ArchiveModel)data;
+            ArchiveElementModel model = (ArchiveElementModel)data;
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteArchive();

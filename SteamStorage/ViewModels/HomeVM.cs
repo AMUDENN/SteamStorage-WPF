@@ -16,13 +16,13 @@ namespace SteamStorage.ViewModels
         private double totalArchiveAmountPurchase;
         private double totalArchivePercent;
         private double totalArchiveAmountSold;
-        private ArchiveModel? mostProfitabilityArchive;
+        private ArchiveElementModel? mostProfitabilityArchive;
 
         private long totalRemainCount;
         private double totalRemainAmountPurchase;
         private double totalRemainPercent;
         private double totalRemainCurrentAmount;
-        private RemainModel? mostProfitabilityRemain;
+        private RemainElementModel? mostProfitabilityRemain;
         #endregion Fields
 
         #region Properties
@@ -34,12 +34,12 @@ namespace SteamStorage.ViewModels
         public double TotalArchiveAmountPurchase => totalArchiveAmountPurchase;
         public double TotalArchivePercent => totalArchivePercent;
         public double TotalArchiveAmountSold => totalArchiveAmountSold;
-        public ArchiveModel? MostProfitabilityArchive => mostProfitabilityArchive;
+        public ArchiveElementModel? MostProfitabilityArchive => mostProfitabilityArchive;
         public long TotalRemainCount => totalRemainCount;
         public double TotalRemainAmountPurchase => totalRemainAmountPurchase;
         public double TotalRemainPercent => totalRemainPercent;
         public double TotalRemainCurrentAmount => totalRemainCurrentAmount;
-        public RemainModel? MostProfitabilityRemain => mostProfitabilityRemain;
+        public RemainElementModel? MostProfitabilityRemain => mostProfitabilityRemain;
         #endregion Properties
 
         #region Constructor

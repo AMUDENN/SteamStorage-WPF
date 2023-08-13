@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SteamStorage.Models
 {
-    public class RemainModel
+    public class RemainElementModel
     {
         #region Fields
         private Remain remain;
@@ -46,7 +46,7 @@ namespace SteamStorage.Models
         #endregion Properties
 
         #region Constructor
-        public RemainModel(Remain remain)
+        public RemainElementModel(Remain remain)
         {
             this.remain = remain;
             datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
@@ -55,7 +55,7 @@ namespace SteamStorage.Models
             Context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
-        public RemainModel()
+        public RemainElementModel()
         {
             remain = new();
             Context.AddRemain(remain);
@@ -109,7 +109,7 @@ namespace SteamStorage.Models
         {
             try
             {
-                ArchiveModel archiveModel = new();
+                ArchiveElementModel archiveModel = new();
                 archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
                 if (count >= remain.Count) Context.RemoveRemain(remain);
                 EditRemain(Url, Count - count, CostPurchase, DatePurchase, Context.RemainGroups.ToList().Where(x => x.RemainGroup == RemainGroup).First());

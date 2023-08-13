@@ -35,7 +35,7 @@ namespace SteamStorage.Utilities
         {
             return (bool)windowDialogService.ShowDialog("Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Remain));
         }
-        public static bool EditArchive(ArchiveModel archiveModel)
+        public static bool EditArchive(ArchiveElementModel archiveModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Изменение элемента \"{archiveModel.Title}\"", new ArchiveEditVM(archiveModel));
         }
@@ -43,7 +43,7 @@ namespace SteamStorage.Utilities
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Добавление элемента", new ArchiveEditVM(archiveGroupModel));
         }
-        public static bool EditRemain(RemainModel remainModel)
+        public static bool EditRemain(RemainElementModel remainModel)
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Изменение элемента \"{remainModel.Title}\"", new RemainEditVM(remainModel));
         }
@@ -51,7 +51,7 @@ namespace SteamStorage.Utilities
         {
             return (bool)windowDialogService.ShowDialog(350, 550, $"Добавление элемента", new RemainEditVM(remainGroupModel));
         }
-        public static bool SellRemain(RemainModel remainModel) 
+        public static bool SellRemain(RemainElementModel remainModel) 
         {
             return (bool)windowDialogService.ShowDialog(250, 450, $"Продажа элемента \"{remainModel.Title}\"", new RemainSellVM(remainModel));
         }
