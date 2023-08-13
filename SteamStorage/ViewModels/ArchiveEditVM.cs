@@ -19,90 +19,92 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private ArchiveElementModel archiveModel;
-        private CommandType selectedCommandType;
+        private ArchiveElementModel _archiveModel;
+        private CommandType _selectedCommandType;
 
-        private string url;
-        private string countString = string.Empty;
-        private string costPurchaseString = string.Empty;
-        private string costSoldString = string.Empty;
+        private string _url;
+        private string _countString = string.Empty;
+        private string _costPurchaseString = string.Empty;
+        private string _costSoldString = string.Empty;
 
-        private long count;
-        private double costPurchase;
-        private double costSold;
-        private ArchiveGroupModel? selectedArchiveGroupModel;
+        private long _count;
+        private double _costPurchase;
+        private double _costSold;
+        private ArchiveGroupModel? _selectedArchiveGroupModel;
 
-        private IEnumerable<ArchiveGroupModel> groups;
+        private IEnumerable<ArchiveGroupModel> _groups;
 
-        private RelayCommand saveCommand;
-        private RelayCommand cancelCommand;
+        private RelayCommand _saveCommand;
+        private RelayCommand _cancelCommand;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public string Url
         {
-            get => url;
+            get => _url;
             set
             {
-                SetProperty(ref url, value);
+                SetProperty(ref _url, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CountString
         {
-            get => countString;
+            get => _countString;
             set
             {
-                SetProperty(ref countString, value.Replace(".", ","));
+                SetProperty(ref _countString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CostPurchaseString
         {
-            get => costPurchaseString;
+            get => _costPurchaseString;
             set
             {
-                SetProperty(ref costPurchaseString, value.Replace(".", ","));
+                SetProperty(ref _costPurchaseString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CostSoldString
         {
-            get => costSoldString;
+            get => _costSoldString;
             set
             {
-                SetProperty(ref costSoldString, value.Replace(".", ","));
+                SetProperty(ref _costSoldString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public long Count
         {
-            get => count;
-            set => SetProperty(ref count, value);
+            get => _count;
+            set => SetProperty(ref _count, value);
         }
         public double CostPurchase
         {
-            get => costPurchase;
-            set => SetProperty(ref costPurchase, value);
+            get => _costPurchase;
+            set => SetProperty(ref _costPurchase, value);
         }
         public double CostSold
         {
-            get => costSold;
-            set => SetProperty(ref costSold, value);
+            get => _costSold;
+            set => SetProperty(ref _costSold, value);
         }
         public ArchiveGroupModel? SelectedArchiveGroupModel
         {
-            get => selectedArchiveGroupModel;
+            get => _selectedArchiveGroupModel;
             set
             {
-                SetProperty(ref selectedArchiveGroupModel, value);
+                SetProperty(ref _selectedArchiveGroupModel, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public IEnumerable<ArchiveGroupModel> Groups
         {
-            get => groups;
-            set => SetProperty(ref groups, value);
+            get => _groups;
+            set => SetProperty(ref _groups, value);
         }
         #endregion Properties
 
@@ -111,14 +113,14 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
+                return _saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
             }
         }
         public RelayCommand CancelCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(DoCancelCommand);
+                return _cancelCommand ??= new RelayCommand(DoCancelCommand);
             }
         }
         #endregion Commands
@@ -126,8 +128,8 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public ArchiveEditVM(ArchiveElementModel archiveModel)
         {
-            this.archiveModel = archiveModel;
-            selectedCommandType = CommandType.Edit;
+            this._archiveModel = archiveModel;
+            _selectedCommandType = CommandType.Edit;
             Url = archiveModel.Url;
             Count = archiveModel.Count;
             CostPurchase = archiveModel.CostPurchase;
@@ -135,15 +137,15 @@ namespace SteamStorage.ViewModels
             CountString = archiveModel.Count.ToString();
             CostPurchaseString = archiveModel.CostPurchase.ToString();
             CostSoldString = archiveModel.CostSold.ToString();
-            Groups = Context.ArchiveGroups.ToList();
+            Groups = _context?.GetArchiveGroupModels();
             SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
         {
-            archiveModel = new();
-            selectedCommandType = CommandType.Add;
+            _archiveModel = new();
+            _selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = Context.ArchiveGroups.ToList();
+            Groups = _context?.GetArchiveGroupModels();
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
         }
         #endregion Constructor
@@ -151,9 +153,9 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (selectedCommandType == CommandType.Add) archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
-            else archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, archiveModel.DatePurchase, archiveModel.DateSold, SelectedArchiveGroupModel);
-            Context.SaveChanges();
+            if (_selectedCommandType == CommandType.Add) _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            else _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, _archiveModel.DatePurchase, _archiveModel.DateSold, SelectedArchiveGroupModel);
+            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -172,7 +174,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            Context.UndoChanges();
+            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

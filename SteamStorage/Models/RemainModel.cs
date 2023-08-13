@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace SteamStorage.Models
         private int _progressBarValue;
 
         private BackgroundWorker _updateInfoWorker = new();
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -171,13 +173,13 @@ namespace SteamStorage.Models
         }
         public void UpdateGroup(RemainGroupModel model)
         {
-            _updateInfoWorker.RunWorkerAsync(Context.GetRemainModels(model));
+            _updateInfoWorker.RunWorkerAsync(_context?.GetRemainModels(model));
         }
         public void AddGroup()
         {
             var isAdded = UserMessage.AddRemainGroup();
             if (!isAdded) return;
-            Context.UpdateRemainGroupModels();
+            _context?.UpdateRemainGroupModels();
             GetRemainGroups();
         }
         public void EditGroupCommand(RemainGroupModel model)
@@ -189,7 +191,7 @@ namespace SteamStorage.Models
             }
             var isEdit = UserMessage.EditRemainGroup(model);
             if (!isEdit) return;
-            Context.UpdateRemainGroupModels();
+            _context?.UpdateRemainGroupModels();
             GetRemainGroups();
         }
         public void DeleteGroup(RemainGroupModel model)
@@ -203,8 +205,8 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroup();
             IsAllRemainsDisplayed = true;
-            Context.UpdateRemainGroupModels();
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainGroupModels();
+            _context?.UpdateRemainModels();
             GetRemainGroups();
             Filtering();
         }
@@ -219,8 +221,8 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroupWithSkins();
             IsAllRemainsDisplayed = true;
-            Context.UpdateRemainGroupModels();
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainGroupModels();
+            _context?.UpdateRemainModels();
             GetRemainGroups();
             Filtering();
         }
@@ -232,22 +234,22 @@ namespace SteamStorage.Models
         {
             var isAdded = UserMessage.AddRemain(SelectedGroup);
             if (!isAdded) return;
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainModels();
             Filtering();
         }
         public void EditRemain(RemainElementModel model)
         {
             var isEdit = UserMessage.EditRemain(model);
             if (!isEdit) return;
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainModels();
             Filtering();
         }
         public void SellRemain(RemainElementModel model)
         {
             var isSell = UserMessage.SellRemain(model);
             if (!isSell) return;
-            Context.UpdateRemainModels();
-            Context.UpdateArchiveModels();
+            _context?.UpdateRemainModels();
+            _context?.UpdateArchiveModels();
             Filtering();
         }
         public void DeleteRemain(RemainElementModel model)
@@ -255,14 +257,14 @@ namespace SteamStorage.Models
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteRemain();
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainModels();
             Filtering();
         }
         public void Filtering()
         {
             if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
 
-            DisplayedRemains = new ObservableCollection<RemainElementModel>(Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
+            DisplayedRemains = new ObservableCollection<RemainElementModel>(_context?.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
 
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
@@ -285,7 +287,7 @@ namespace SteamStorage.Models
         }
         public void GetRemainGroups()
         {
-            Groups = new ObservableCollection<RemainGroupModel>(Context.RemainGroups);
+            Groups = new ObservableCollection<RemainGroupModel>(_context?.GetRemainGroupModels());
         }
         public bool IsDefaultGroup(RemainGroupModel remainGroupModel)
         {
@@ -324,7 +326,7 @@ namespace SteamStorage.Models
         public void UpdateInfoComplete(object? sender, RunWorkerCompletedEventArgs e)
         {
             IsProgressBarVisible = false;
-            Context.UpdateRemainModels();
+            _context?.UpdateRemainModels();
             Filtering();
         }
         #endregion Methods

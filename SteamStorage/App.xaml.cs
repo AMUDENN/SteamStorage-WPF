@@ -14,7 +14,7 @@ namespace SteamStorage
         {
             InitContainer();
 
-            MainWindowVM MainWindowVM = Singleton.GetObject<MainWindowVM>();
+            MainWindowVM? MainWindowVM = Singleton.GetObject<MainWindowVM>();
 
             var window = Singleton.GetObject<MainWindow>();
             if (window is null)
@@ -39,6 +39,7 @@ namespace SteamStorage
             services.AddSingleton<MainWindowVM>();
             services.AddSingleton<MainWindow>();
 
+            services.AddSingleton<Context>();
             services.AddSingleton<Logger>(new Logger(Constants.Logpath));
 
             Container = services.BuildServiceProvider();

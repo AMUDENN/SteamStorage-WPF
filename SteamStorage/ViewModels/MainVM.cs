@@ -7,15 +7,15 @@ namespace SteamStorage.ViewModels
     public class MainVM : ObservableObject
     {
         #region Fields
-        private ObservableObject currentVM = new WelcomeVM();
+        private ObservableObject _currentVM = new WelcomeVM();
         #endregion Fields
 
         #region Properties
         public ObservableObject NavigationVM { get; set; }
         public ObservableObject CurrentVM
         {
-            get => currentVM;
-            set => SetProperty(ref currentVM, value);
+            get => _currentVM;
+            set => SetProperty(ref _currentVM, value);
         }
         #endregion Properties
 

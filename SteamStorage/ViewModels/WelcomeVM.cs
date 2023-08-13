@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Utilities;
 
 namespace SteamStorage.ViewModels
@@ -7,22 +6,22 @@ namespace SteamStorage.ViewModels
     public class WelcomeVM : ObservableObject
     {
         #region Fields
-        private bool isGreetingTextVisible;
-        private bool isDontShowAgainEnabled;
+        private bool _isGreetingTextVisible;
+        private bool _isDontShowAgainEnabled;
         #endregion Fields
 
         #region Properties
         public bool IsGreetingTextVisible
         {
-            get => isGreetingTextVisible;
-            set => SetProperty(ref isGreetingTextVisible, value);
+            get => _isGreetingTextVisible;
+            set => SetProperty(ref _isGreetingTextVisible, value);
         }
         public bool IsDontShowAgainEnabled
         {
-            get => isDontShowAgainEnabled;
+            get => _isDontShowAgainEnabled;
             set
             {
-                SetProperty(ref isDontShowAgainEnabled, value);
+                SetProperty(ref _isDontShowAgainEnabled, value);
                 SaveGreetingTextVisible();
             }
         }

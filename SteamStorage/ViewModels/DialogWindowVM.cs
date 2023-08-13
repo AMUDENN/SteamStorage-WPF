@@ -5,20 +5,20 @@ namespace SteamStorage.ViewModels
     public class DialogWindowVM : ObservableObject
     {
         #region Fields
-        private string title;
-        private ObservableObject currentVM;
+        private string _title;
+        private ObservableObject _currentVM;
         #endregion Fields
 
         #region Properties
         public string Title
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
         public ObservableObject CurrentVM
         {
-            get => currentVM;
-            set => SetProperty(ref currentVM, value);
+            get => _currentVM;
+            set => SetProperty(ref _currentVM, value);
         }
         #endregion Properties
 

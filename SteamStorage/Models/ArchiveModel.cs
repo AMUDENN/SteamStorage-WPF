@@ -25,6 +25,8 @@ namespace SteamStorage.Models
         private double _averageCostSold;
         private double _totalAmountSold;
         private double _averagePercent;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -151,7 +153,7 @@ namespace SteamStorage.Models
         {
             var isAdded = UserMessage.AddArchiveGroup();
             if (!isAdded) return;
-            Context.UpdateArchiveGroupModels();
+            _context?.UpdateArchiveGroupModels();
             GetArchiveGroups();
         }
         public void EditGroup(ArchiveGroupModel model)
@@ -163,7 +165,7 @@ namespace SteamStorage.Models
             }
             var isEdit = UserMessage.EditArchiveGroup(model);
             if (!isEdit) return;
-            Context.UpdateArchiveGroupModels();
+            _context?.UpdateArchiveGroupModels();
             GetArchiveGroups();
         }
         public void DeleteGroup(ArchiveGroupModel model)
@@ -177,8 +179,8 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroup();
             IsAllArchivesDisplayed = true;
-            Context.UpdateArchiveGroupModels();
-            Context.UpdateArchiveModels();
+            _context?.UpdateArchiveGroupModels();
+            _context?.UpdateArchiveModels();
             GetArchiveGroups();
             Filtering();
         }
@@ -193,8 +195,8 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroupWithSkins();
             IsAllArchivesDisplayed = true;
-            Context.UpdateArchiveGroupModels();
-            Context.UpdateArchiveModels();
+            _context?.UpdateArchiveGroupModels();
+            _context?.UpdateArchiveModels();
             GetArchiveGroups();
             Filtering();
         }
@@ -202,14 +204,14 @@ namespace SteamStorage.Models
         {
             var isAdded = UserMessage.AddArchive(SelectedGroup);
             if (!isAdded) return;
-            Context.UpdateArchiveModels();
+            _context?.UpdateArchiveModels();
             Filtering();
         }
         public void EditArchive(ArchiveElementModel model)
         {
             var isEdit = UserMessage.EditArchive(model);
             if (!isEdit) return;
-            Context.UpdateArchiveModels();
+            _context?.UpdateArchiveModels();
             Filtering();
         }
         public void DeleteArchive(ArchiveElementModel model)
@@ -217,14 +219,14 @@ namespace SteamStorage.Models
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteArchive();
-            Context.UpdateArchiveModels();
+            _context?.UpdateArchiveModels();
             Filtering();
         }
         public void Filtering()
         {
             if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
 
-            DisplayedArchives = new ObservableCollection<ArchiveElementModel>(Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
+            DisplayedArchives = new ObservableCollection<ArchiveElementModel>(_context?.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
 
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
@@ -247,7 +249,7 @@ namespace SteamStorage.Models
         }
         public void GetArchiveGroups()
         {
-            Groups = new ObservableCollection<ArchiveGroupModel>(Context.ArchiveGroups);
+            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.GetArchiveGroupModels());
         }
         public bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
         {

@@ -7,34 +7,34 @@ namespace SteamStorage.Utilities
     public class Logger : IDisposable
     {
         #region Fields
-        private StreamWriter InnerWriter;
+        private StreamWriter _InnerWriter;
         #endregion Fields
 
         #region Constructor
         public Logger(string logPath)
         {
-            InnerWriter = new StreamWriter(logPath, true, Encoding.UTF8, 8192);
+            _InnerWriter = new StreamWriter(logPath, true, Encoding.UTF8, 8192);
         }
         #endregion Constructor
 
         #region Dispose
         public void Dispose()
         {
-            InnerWriter.Flush();
-            InnerWriter.Dispose();
+            _InnerWriter.Flush();
+            _InnerWriter.Dispose();
         }
         #endregion Dispose
 
         #region Methods
         public void WriteMessage(string message)
         {
-            InnerWriter.WriteLine($"[{DateTime.Now}]: {message}");
-            InnerWriter.Flush();
+            _InnerWriter.WriteLine($"[{DateTime.Now}]: {message}");
+            _InnerWriter.Flush();
         }
         public void WriteMessage(string message, Type sender)
         {
-            InnerWriter.WriteLine($"[{DateTime.Now}]: ({sender.Name}) {message}");
-            InnerWriter.Flush();
+            _InnerWriter.WriteLine($"[{DateTime.Now}]: ({sender.Name}) {message}");
+            _InnerWriter.Flush();
         }
         #endregion Methods
     }

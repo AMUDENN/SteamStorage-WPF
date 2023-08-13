@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
-using SteamStorage.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading;
 
 namespace SteamStorage.ViewModels
 {
@@ -16,17 +12,17 @@ namespace SteamStorage.ViewModels
         #region Fields
         private readonly RemainModel _remainModel = new();
 
-        private RelayCommand removeFilterCommand;
-        private RelayCommand<object> updateGroupCommand;
-        private RelayCommand addGroupCommand;
-        private RelayCommand<object> editGroupCommand;
-        private RelayCommand<object> deleteGroupCommand;
-        private RelayCommand<object> deleteWithSkinsGroupCommand;
-        private RelayCommand<object> updateRemainCommand;
-        private RelayCommand addRemainCommand;
-        private RelayCommand<object> editRemainCommand;
-        private RelayCommand<object> sellRemainCommand;
-        private RelayCommand<object> deleteRemainCommand;
+        private RelayCommand _removeFilterCommand;
+        private RelayCommand<object> _updateGroupCommand;
+        private RelayCommand _addGroupCommand;
+        private RelayCommand<object> _editGroupCommand;
+        private RelayCommand<object> _deleteGroupCommand;
+        private RelayCommand<object> _deleteWithSkinsGroupCommand;
+        private RelayCommand<object> _updateRemainCommand;
+        private RelayCommand _addRemainCommand;
+        private RelayCommand<object> _editRemainCommand;
+        private RelayCommand<object> _sellRemainCommand;
+        private RelayCommand<object> _deleteRemainCommand;
         #endregion Fields
 
         #region Properties
@@ -83,77 +79,77 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
+                return _removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
             }
         }
         public RelayCommand<object> UpdateGroupCommand
         {
             get
             {
-                return updateGroupCommand ??= new RelayCommand<object>(DoUpdateGroupCommand, CanExecuteUpdateGroupCommand);
+                return _updateGroupCommand ??= new RelayCommand<object>(DoUpdateGroupCommand, CanExecuteUpdateGroupCommand);
             }
         }
         public RelayCommand AddGroupCommand
         {
             get
             {
-                return addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
+                return _addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
             }
         }
         public RelayCommand<object> EditGroupCommand
         {
             get
             {
-                return editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
+                return _editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
             }
         }
         public RelayCommand<object> DeleteGroupCommand
         {
             get
             {
-                return deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
+                return _deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
             }
         }
         public RelayCommand<object> DeleteWithSkinsGroupCommand
         {
             get
             {
-                return deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
+                return _deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
             }
         }
         public RelayCommand<object> UpdateRemainCommand
         {
             get
             {
-                return updateRemainCommand ??= new RelayCommand<object>(DoUpdateRemainCommand, CanExecuteUpdateRemainCommand);
+                return _updateRemainCommand ??= new RelayCommand<object>(DoUpdateRemainCommand, CanExecuteUpdateRemainCommand);
             }
         }
         public RelayCommand AddRemainCommand
         {
             get
             {
-                return addRemainCommand ??= new RelayCommand(DoAddRemainCommand);
+                return _addRemainCommand ??= new RelayCommand(DoAddRemainCommand);
             }
         }
         public RelayCommand<object> EditRemainCommand
         {
             get
             {
-                return editRemainCommand ??= new RelayCommand<object>(DoEditRemainCommand);
+                return _editRemainCommand ??= new RelayCommand<object>(DoEditRemainCommand);
             }
         }
         public RelayCommand<object> SellRemainCommand
         {
             get
             {
-                return sellRemainCommand ??= new RelayCommand<object>(DoSellRemainCommand);
+                return _sellRemainCommand ??= new RelayCommand<object>(DoSellRemainCommand);
             }
         }
         public RelayCommand<object> DeleteRemainCommand
         {
             get
             {
-                return deleteRemainCommand ??= new RelayCommand<object>(DoDeleteRemainCommand);
+                return _deleteRemainCommand ??= new RelayCommand<object>(DoDeleteRemainCommand);
             }
         }
         #endregion Commands
@@ -203,7 +199,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoDeleteGroupCommand(object? data)
         {
-           _remainModel.DeleteGroup((RemainGroupModel)data);
+            _remainModel.DeleteGroup((RemainGroupModel)data);
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {

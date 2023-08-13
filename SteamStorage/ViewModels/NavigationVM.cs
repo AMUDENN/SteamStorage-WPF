@@ -11,7 +11,7 @@ namespace SteamStorage.ViewModels
     public class NavigationVM : ObservableObject
     {
         #region Fields
-        private readonly List<NavigationModel> navigationOptions = new()
+        private readonly List<NavigationModel> _navigationOptions = new()
         {
             new NavigationModel()
             {
@@ -38,11 +38,11 @@ namespace SteamStorage.ViewModels
                 DestinationVM = new SettingsVM()
             }
         };
-        private RelayCommand<object> selectionChangedCommand;
+        private RelayCommand<object> _selectionChangedCommand;
         #endregion Fields
 
         #region Properties
-        public List<NavigationModel> NavigationOptions => navigationOptions;
+        public List<NavigationModel> NavigationOptions => _navigationOptions;
         #endregion Properties
 
         #region Commands
@@ -50,7 +50,7 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return selectionChangedCommand ??= new RelayCommand<object>(DoSelectionChangedCommand);
+                return _selectionChangedCommand ??= new RelayCommand<object>(DoSelectionChangedCommand);
             }
         }
         #endregion Commands

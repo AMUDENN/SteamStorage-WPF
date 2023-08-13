@@ -5,70 +5,71 @@ using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
     public class RemainSellVM : ObservableObject
     {
         #region Fields
-        private RemainElementModel remainModel;
+        private RemainElementModel _remainModel;
 
-        private string countString = string.Empty;
-        private string costSoldString = string.Empty;
+        private string _countString = string.Empty;
+        private string _costSoldString = string.Empty;
 
-        private long count;
-        private double costSold;
-        private ArchiveGroupModel? selectedArchiveGroupModel;
+        private long _count;
+        private double _costSold;
+        private ArchiveGroupModel? _selectedArchiveGroupModel;
 
-        private IEnumerable<ArchiveGroupModel> groups;
+        private IEnumerable<ArchiveGroupModel> _groups;
 
-        private RelayCommand saveCommand;
-        private RelayCommand cancelCommand;
+        private RelayCommand _saveCommand;
+        private RelayCommand _cancelCommand;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public string CountString
         {
-            get => countString;
+            get => _countString;
             set
             {
-                SetProperty(ref countString, value.Replace(".", ","));
+                SetProperty(ref _countString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CostSoldString
         {
-            get => costSoldString;
+            get => _costSoldString;
             set
             {
-                SetProperty(ref costSoldString, value.Replace(".", ","));
+                SetProperty(ref _costSoldString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public long Count
         {
-            get => count;
-            set => SetProperty(ref count, value);
+            get => _count;
+            set => SetProperty(ref _count, value);
         }
         public double CostSold
         {
-            get => costSold;
-            set => SetProperty(ref costSold, value);
+            get => _costSold;
+            set => SetProperty(ref _costSold, value);
         }
         public ArchiveGroupModel? SelectedArchiveGroupModel
         {
-            get => selectedArchiveGroupModel;
+            get => _selectedArchiveGroupModel;
             set
             {
-                SetProperty(ref selectedArchiveGroupModel, value);
+                SetProperty(ref _selectedArchiveGroupModel, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public IEnumerable<ArchiveGroupModel> Groups
         {
-            get => groups;
-            set => SetProperty(ref groups, value);
+            get => _groups;
+            set => SetProperty(ref _groups, value);
         }
         #endregion Properties
 
@@ -77,14 +78,14 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
+                return _saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
             }
         }
         public RelayCommand CancelCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(DoCancelCommand);
+                return _cancelCommand ??= new RelayCommand(DoCancelCommand);
             }
         }
         #endregion Commands
@@ -92,18 +93,18 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public RemainSellVM(RemainElementModel remainModel)
         {
-            this.remainModel = remainModel;
+            this._remainModel = remainModel;
             Count = remainModel.Count;
             CountString = remainModel.Count.ToString();
-            Groups = Context.ArchiveGroups.ToList();
+            Groups = _context?.GetArchiveGroupModels();
         }
         #endregion Constructor
 
         #region Methods
         private void DoSaveCommand()
         {
-            remainModel.SellRemain(Count, CostSold, DateTime.Now, SelectedArchiveGroupModel);
-            Context.SaveChanges();
+            _remainModel.SellRemain(Count, CostSold, DateTime.Now, SelectedArchiveGroupModel);
+            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -121,7 +122,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            Context.UndoChanges();
+            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

@@ -8,18 +8,18 @@ namespace SteamStorage.ViewModels
     public class MainWindowVM : ObservableObject
     {
         #region Fields
-        private ObservableObject currentVM;
+        private ObservableObject _currentVM;
 
-        private RelayCommand closingCommand;
-        private RelayCommand stateChangedCommand;
-        private RelayCommand loadedCommand;
+        private RelayCommand _closingCommand;
+        private RelayCommand _stateChangedCommand;
+        private RelayCommand _loadedCommand;
         #endregion Fields
 
         #region Properties
         public ObservableObject CurrentVM
         {
-            get => currentVM;
-            set => SetProperty(ref currentVM, value);
+            get => _currentVM;
+            set => SetProperty(ref _currentVM, value);
         }
         #endregion Properties
 
@@ -28,21 +28,21 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return closingCommand ??= new RelayCommand(DoClosingCommand);
+                return _closingCommand ??= new RelayCommand(DoClosingCommand);
             }
         }
         public RelayCommand StateChangedCommand
         {
             get
             {
-                return stateChangedCommand ??= new RelayCommand(DoStateChangedCommand);
+                return _stateChangedCommand ??= new RelayCommand(DoStateChangedCommand);
             }
         }
         public RelayCommand LoadedCommand
         {
             get
             {
-                return loadedCommand ??= new RelayCommand(DoLoadedCommand);
+                return _loadedCommand ??= new RelayCommand(DoLoadedCommand);
             }
         }
         #endregion Commands

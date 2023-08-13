@@ -1,11 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
-using SteamStorage.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -14,14 +11,14 @@ namespace SteamStorage.ViewModels
         #region Fields
         private readonly ArchiveModel _archiveModel = new();
 
-        private RelayCommand removeFilterCommand;
-        private RelayCommand addGroupCommand;
-        private RelayCommand<object> editGroupCommand;
-        private RelayCommand<object> deleteGroupCommand;
-        private RelayCommand<object> deleteWithSkinsGroupCommand;
-        private RelayCommand addArchiveCommand;
-        private RelayCommand<object> editArchiveCommand;
-        private RelayCommand<object> deleteArchiveCommand;
+        private RelayCommand _removeFilterCommand;
+        private RelayCommand _addGroupCommand;
+        private RelayCommand<object> _editGroupCommand;
+        private RelayCommand<object> _deleteGroupCommand;
+        private RelayCommand<object> _deleteWithSkinsGroupCommand;
+        private RelayCommand _addArchiveCommand;
+        private RelayCommand<object> _editArchiveCommand;
+        private RelayCommand<object> _deleteArchiveCommand;
         #endregion Fields
 
         #region Properties
@@ -67,56 +64,56 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
+                return _removeFilterCommand ??= new RelayCommand(DoRemoveFilterCommand, CanExecuteRemoveFilterCommand);
             }
         }
         public RelayCommand AddGroupCommand
         {
             get
             {
-                return addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
+                return _addGroupCommand ??= new RelayCommand(DoAddGroupCommand);
             }
         }
         public RelayCommand<object> EditGroupCommand
         {
             get
             {
-                return editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
+                return _editGroupCommand ??= new RelayCommand<object>(DoEditGroupCommand);
             }
         }
         public RelayCommand<object> DeleteGroupCommand
         {
             get
             {
-                return deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
+                return _deleteGroupCommand ??= new RelayCommand<object>(DoDeleteGroupCommand);
             }
         }
         public RelayCommand<object> DeleteWithSkinsGroupCommand
         {
             get
             {
-                return deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
+                return _deleteWithSkinsGroupCommand ??= new RelayCommand<object>(DoDeleteWithSkinsGroupCommand);
             }
         }
         public RelayCommand AddArchiveCommand
         {
             get
             {
-                return addArchiveCommand ??= new RelayCommand(DoAddArchiveCommand);
+                return _addArchiveCommand ??= new RelayCommand(DoAddArchiveCommand);
             }
         }
         public RelayCommand<object> EditArchiveCommand
         {
             get
             {
-                return editArchiveCommand ??= new RelayCommand<object>(DoEditArchiveCommand);
+                return _editArchiveCommand ??= new RelayCommand<object>(DoEditArchiveCommand);
             }
         }
         public RelayCommand<object> DeleteArchiveCommand
         {
             get
             {
-                return deleteArchiveCommand ??= new RelayCommand<object>(DoDeleteArchiveCommand);
+                return _deleteArchiveCommand ??= new RelayCommand<object>(DoDeleteArchiveCommand);
             }
         }
         #endregion Commands

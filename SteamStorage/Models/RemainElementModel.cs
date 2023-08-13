@@ -11,77 +11,78 @@ namespace SteamStorage.Models
     public class RemainElementModel
     {
         #region Fields
-        private Remain remain;
-        private DateTime datePurchase;
-        private double amountPurchase;
-        private Dictionary<DateTime, double> priceDynamics;
-        private double minPrice;
-        private double maxPrice;
-        private DateTime dateLastUpdate;
-        private double lastCost;
-        private double currentAmount;
-        private double percent;
-        private List<DataPoint> priceDynamicsPoints;
+        private Remain _remain;
+        private DateTime _datePurchase;
+        private double _amountPurchase;
+        private Dictionary<DateTime, double> _priceDynamics;
+        private double _minPrice;
+        private double _maxPrice;
+        private DateTime _dateLastUpdate;
+        private double _lastCost;
+        private double _currentAmount;
+        private double _percent;
+        private List<DataPoint> _priceDynamicsPoints;
 
-        private Logger? logger = Singleton.GetObject<Logger>();
+        private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
-        public RemainGroup RemainGroup => remain.IdGroupNavigation;
-        public string Url => remain.IdSkinNavigation.Url;
-        public string Title => remain.IdSkinNavigation.Title;
-        public Remain Remain => remain;
-        public DateTime DatePurchase => datePurchase;
-        public long Count => remain.Count;
-        public double CostPurchase => remain.CostPurchase;
-        public double AmountPurchase => amountPurchase;
-        public Dictionary<DateTime, double> PriceDynamics => priceDynamics;
-        public double MinPrice => minPrice;
-        public double MaxPrice => maxPrice;
-        public DateTime DateLastUpdate => dateLastUpdate;
-        public double LastCost => lastCost;
-        public double CurrentAmount => currentAmount;
-        public double Percent => percent;
-        public List<DataPoint> PriceDynamicsPoints => priceDynamicsPoints;
+        public RemainGroup RemainGroup => _remain.IdGroupNavigation;
+        public string Url => _remain.IdSkinNavigation.Url;
+        public string Title => _remain.IdSkinNavigation.Title;
+        public Remain Remain => _remain;
+        public DateTime DatePurchase => _datePurchase;
+        public long Count => _remain.Count;
+        public double CostPurchase => _remain.CostPurchase;
+        public double AmountPurchase => _amountPurchase;
+        public Dictionary<DateTime, double> PriceDynamics => _priceDynamics;
+        public double MinPrice => _minPrice;
+        public double MaxPrice => _maxPrice;
+        public DateTime DateLastUpdate => _dateLastUpdate;
+        public double LastCost => _lastCost;
+        public double CurrentAmount => _currentAmount;
+        public double Percent => _percent;
+        public List<DataPoint> PriceDynamicsPoints => _priceDynamicsPoints;
         #endregion Properties
 
         #region Constructor
         public RemainElementModel(Remain remain)
         {
-            this.remain = remain;
-            datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
-            amountPurchase = remain.CostPurchase * remain.Count;
+            this._remain = remain;
+            _datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
+            _amountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
         }
         public RemainElementModel()
         {
-            remain = new();
-            Context.AddRemain(remain);
+            _remain = new();
+            _context?.AddRemain(_remain);
         }
         #endregion Constructor
 
         #region Methods
         private void UpdatePriceDynamics()
         {
-            Context.DBContext.PriceDynamics.LoadAsync();
-            Context.DBContext.Skins.LoadAsync();
-            priceDynamics = remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateTimeFormat, null), x => x.CostUpdate);
-            priceDynamics.Add(DatePurchase, CostPurchase);
-            if (priceDynamics.Count == 1) priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
-            priceDynamics = priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
+            _context?.DBContext.PriceDynamics.LoadAsync();
+            _context?.DBContext.Skins.LoadAsync();
+            _priceDynamics = _remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateTimeFormat, null), x => x.CostUpdate);
+            _priceDynamics.Add(DatePurchase, CostPurchase);
+            if (_priceDynamics.Count == 1) _priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
+            _priceDynamics = _priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
 
-            minPrice = priceDynamics.Values.Min();
-            maxPrice = priceDynamics.Values.Max();
-            dateLastUpdate = priceDynamics.Last().Key;
-            lastCost = priceDynamics.Last().Value;
-            currentAmount = lastCost * Count;
-            percent = (lastCost - CostPurchase) / CostPurchase * 100;
+            _minPrice = _priceDynamics.Values.Min();
+            _maxPrice = _priceDynamics.Values.Max();
+            _dateLastUpdate = _priceDynamics.Last().Key;
+            _lastCost = _priceDynamics.Last().Value;
+            _currentAmount = _lastCost * Count;
+            _percent = (_lastCost - CostPurchase) / CostPurchase * 100;
 
             int i = 0;
-            priceDynamicsPoints = new();
-            foreach (var item in priceDynamics)
+            _priceDynamicsPoints = new();
+            foreach (var item in _priceDynamics)
             {
-                priceDynamicsPoints.Add(new(i, item.Value));
+                _priceDynamicsPoints.Add(new(i, item.Value));
                 i++;
             }
         }
@@ -89,20 +90,20 @@ namespace SteamStorage.Models
         {
             try
             {
-                var skin = Context.GetSkin(url);
+                var skin = _context?.GetSkin(url);
                 if (skin is null) throw new Exception("Ссылка на скин неверна!");
-                remain.IdSkinNavigation = skin;
-                remain.Count = count;
-                remain.CostPurchase = costPurchase;
-                remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
-                remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
-                Context.SaveChanges();
-                logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _remain.IdSkinNavigation = skin;
+                _remain.Count = count;
+                _remain.CostPurchase = costPurchase;
+                _remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
+                _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
+                _context?.SaveChanges();
+                _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
             {
-                Context.UndoChanges();
-                logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
@@ -111,44 +112,44 @@ namespace SteamStorage.Models
             {
                 ArchiveElementModel archiveModel = new();
                 archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
-                if (count >= remain.Count) Context.RemoveRemain(remain);
-                EditRemain(Url, Count - count, CostPurchase, DatePurchase, Context.RemainGroups.ToList().Where(x => x.RemainGroup == RemainGroup).First());
-                Context.SaveChanges();
-                logger?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
+                if (count >= _remain.Count) _context?.RemoveRemain(_remain);
+                EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.GetRemainGroupModels().Where(x => x.RemainGroup == RemainGroup).First());
+                _context?.SaveChanges();
+                _logger?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
             }
             catch (Exception ex)
             {
-                Context.UndoChanges();
-                logger?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void DeleteRemain()
         {
             try
             {
-                Context.RemoveRemain(remain);
-                Context.SaveChanges();
-                logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                _context?.RemoveRemain(_remain);
+                _context?.SaveChanges();
+                _logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
             {
-                Context.UndoChanges();
-                logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         public void UpdateCurrentCost()
         {
             try
             {
-                Context.AddPriceDynamic(this);
-                Context.SaveChanges();
+                _context?.AddPriceDynamic(this);
+                _context?.SaveChanges();
                 UpdatePriceDynamics();
-                logger?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
+                _logger?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
             }
             catch (Exception ex)
             {
-                Context.UndoChanges();
-                logger?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
             }
         }
         #endregion Methods

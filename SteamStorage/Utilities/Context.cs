@@ -1,34 +1,55 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace SteamStorage.Utilities
 {
-    public static class Context
+    public class Context : ObservableObject
     {
         #region Fields
-        private static readonly SteamStorageDbContext DbContext = new();
-        private static IEnumerable<RemainElementModel> remainModels;
-        private static IEnumerable<ArchiveElementModel> archiveModels;
-        private static IEnumerable<RemainGroupModel> remainGroupModels;
-        private static IEnumerable<ArchiveGroupModel> archiveGroupModels;
+        private readonly SteamStorageDbContext _dbContext = new();
+        private IEnumerable<RemainElementModel> _remainElementModels;
+        private IEnumerable<ArchiveElementModel> _archiveElementModels;
+        private IEnumerable<RemainGroupModel> _remainGroupModels;
+        private IEnumerable<ArchiveGroupModel> _archiveGroupModels;
 
-        private static Logger? logger = Singleton.GetObject<Logger>();
+        private readonly Logger? _logger;
         #endregion Fields
 
         #region Properties
-        public static SteamStorageDbContext DBContext => DbContext;
-        public static List<RemainGroupModel> RemainGroups => remainGroupModels.ToList();
-        public static List<ArchiveGroupModel> ArchiveGroups => archiveGroupModels.ToList();
+        public SteamStorageDbContext DBContext => _dbContext;
+        private IEnumerable<RemainElementModel> RemainElementModels
+        {
+            get => _remainElementModels.ToList();
+            set => SetProperty(ref _remainElementModels, value);
+        }
+        private IEnumerable<ArchiveElementModel> ArchiveElementModels
+        {
+            get => _archiveElementModels.ToList();
+            set => SetProperty(ref _archiveElementModels, value);
+        }
+        private IEnumerable<RemainGroupModel> RemainGroupModels
+        {
+            get => _remainGroupModels.ToList();
+            set => SetProperty(ref _remainGroupModels, value);
+        }
+        private IEnumerable<ArchiveGroupModel> ArchiveGroupModels
+        {
+            get => _archiveGroupModels.ToList();
+            set => SetProperty(ref _archiveGroupModels, value);
+        }
         #endregion Properties
 
         #region Constructor
-        static Context()
+        public Context(Logger logger)
         {
+            _logger = logger;
             UpdateRemainModels();
             UpdateArchiveModels();
             UpdateRemainGroupModels();
@@ -37,47 +58,49 @@ namespace SteamStorage.Utilities
         #endregion Constructor
 
         #region Methods
-        public static List<RemainElementModel> GetRemainModels(RemainGroupModel? groupModel)
+        public List<RemainElementModel> GetRemainModels(RemainGroupModel? groupModel)
         {
-            return remainModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup).ToList();
+            return RemainElementModels.Where(x => groupModel is null || x.RemainGroup == groupModel.RemainGroup).ToList();
         }
-        public static List<ArchiveElementModel> GetArchiveModels(ArchiveGroupModel? groupModel)
+        public List<ArchiveElementModel> GetArchiveModels(ArchiveGroupModel? groupModel)
         {
-            return archiveModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
+            return ArchiveElementModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
         }
-        public static void AddRemainGroup(RemainGroup remainGroup)
+        public List<RemainGroupModel> GetRemainGroupModels() => RemainGroupModels.ToList();
+        public List<ArchiveGroupModel> GetArchiveGroupModels() => ArchiveGroupModels.ToList();
+        public void AddRemainGroup(RemainGroup remainGroup)
         {
-            DbContext.RemainGroups.Add(remainGroup);
+            DBContext.RemainGroups.Add(remainGroup);
         }
-        public static void AddArchiveGroup(ArchiveGroup archiveGroup)
+        public void AddArchiveGroup(ArchiveGroup archiveGroup)
         {
-            DbContext.ArchiveGroups.Add(archiveGroup);
+            DBContext.ArchiveGroups.Add(archiveGroup);
         }
-        public static void AddRemain(Remain remain)
+        public void AddRemain(Remain remain)
         {
-            DbContext.Remains.Add(remain);
+            DBContext.Remains.Add(remain);
         }
-        public static void AddArchive(Archive archive)
+        public void AddArchive(Archive archive)
         {
-            DbContext.Archives.Add(archive);
+            DBContext.Archives.Add(archive);
         }
-        public static void RemoveRemainGroup(RemainGroup remainGroup)
+        public void RemoveRemainGroup(RemainGroup remainGroup)
         {
-            DbContext.RemainGroups.Remove(remainGroup);
+            DBContext.RemainGroups.Remove(remainGroup);
         }
-        public static void RemoveArchiveGroup(ArchiveGroup archiveGroup)
+        public void RemoveArchiveGroup(ArchiveGroup archiveGroup)
         {
-            DbContext.ArchiveGroups.Remove(archiveGroup);
+            DBContext.ArchiveGroups.Remove(archiveGroup);
         }
-        public static void RemoveRemain(Remain remain)
+        public void RemoveRemain(Remain remain)
         {
-            DbContext.Remains.Remove(remain);
+            DBContext.Remains.Remove(remain);
         }
-        public static void RemoveArchive(Archive archive)
+        public void RemoveArchive(Archive archive)
         {
-            DbContext.Archives.Remove(archive);
+            DBContext.Archives.Remove(archive);
         }
-        public static Skin? GetSkin(string url)
+        public Skin? GetSkin(string url)
         {
             var skins = DBContext.Skins.Where(x => x.Url == url);
             if (skins.Any())
@@ -93,18 +116,18 @@ namespace SteamStorage.Utilities
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
-                    logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    _logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
                     return skin;
                 }
                 catch (Exception ex)
                 {
-                    logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    _logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
                     UndoChanges();
                     return null;
                 }
             }
         }
-        public static void AddPriceDynamic(RemainElementModel remainModel)
+        public void AddPriceDynamic(RemainElementModel remainModel)
         {
             try
             {
@@ -115,23 +138,23 @@ namespace SteamStorage.Utilities
                     CostUpdate = Price,
                     DateUpdate = DateUpdate.ToString(Constants.DateTimeFormat)
                 };
-                DbContext.PriceDynamics.Add(priceDynamic);
+                DBContext.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
+                _logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
             {
-                logger?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
+                _logger?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
                 UndoChanges();
             }
         }
-        public static void SaveChanges()
+        public void SaveChanges()
         {
-            DbContext.SaveChanges();
+            DBContext.SaveChanges();
         }
-        public static void UndoChanges()
+        public void UndoChanges()
         {
-            foreach (var entry in DbContext.ChangeTracker.Entries())
+            foreach (var entry in DBContext.ChangeTracker.Entries())
             {
                 switch (entry.State)
                 {
@@ -147,21 +170,21 @@ namespace SteamStorage.Utilities
                 }
             }
         }
-        public static void UpdateRemainModels()
+        public void UpdateRemainModels()
         {
-            remainModels = DBContext.Remains.Select(x => new RemainElementModel(x));
+            RemainElementModels = DBContext.Remains.Select(x => new RemainElementModel(x));
         }
-        public static void UpdateArchiveModels()
+        public void UpdateArchiveModels()
         {
-            archiveModels = DBContext.Archives.Select(x => new ArchiveElementModel(x));
+            ArchiveElementModels = DBContext.Archives.Select(x => new ArchiveElementModel(x));
         }
-        public static void UpdateRemainGroupModels()
+        public void UpdateRemainGroupModels()
         {
-            remainGroupModels = DBContext.RemainGroups.Select(x => new RemainGroupModel(x));
+            RemainGroupModels = DBContext.RemainGroups.Select(x => new RemainGroupModel(x));
         }
-        public static void UpdateArchiveGroupModels()
+        public void UpdateArchiveGroupModels()
         {
-            archiveGroupModels = DBContext.ArchiveGroups.Select(x => new ArchiveGroupModel(x));
+            ArchiveGroupModels = DBContext.ArchiveGroups.Select(x => new ArchiveGroupModel(x));
         }
         #endregion Methods
     }

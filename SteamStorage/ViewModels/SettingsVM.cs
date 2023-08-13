@@ -10,114 +10,114 @@ namespace SteamStorage.ViewModels
     public class SettingsVM : ObservableObject
     {
         #region Fields
-        private bool isDarkTheme;
-        private bool isLightTheme;
-        private bool isCustomTheme;
+        private bool _isDarkTheme;
+        private bool _isLightTheme;
+        private bool _isCustomTheme;
 
-        private string mainColor;
-        private string mainAdditionalColor;
-        private string additionalColor;
-        private string accentColor;
-        private string accentAdditionalColor;
-        private string percentPlusColor;
-        private string percentMinusColor;
+        private string _mainColor;
+        private string _mainAdditionalColor;
+        private string _additionalColor;
+        private string _accentColor;
+        private string _accentAdditionalColor;
+        private string _percentPlusColor;
+        private string _percentMinusColor;
 
-        private RelayCommand exportToDB;
-        private RelayCommand exportToExcel;
-        private RelayCommand saveColorsCommand;
-        private RelayCommand resetColorsCommand;
-        private RelayCommand openLogCommand;
-        private RelayCommand clearDatabaseCommand;
+        private RelayCommand _exportToDB;
+        private RelayCommand _exportToExcel;
+        private RelayCommand _saveColorsCommand;
+        private RelayCommand _resetColorsCommand;
+        private RelayCommand _openLogCommand;
+        private RelayCommand _clearDatabaseCommand;
         #endregion Fields
 
         #region Properties
         public bool IsDarkTheme
         {
-            get => isDarkTheme;
+            get => _isDarkTheme;
             set
             {
-                SetProperty(ref isDarkTheme, value);
+                SetProperty(ref _isDarkTheme, value);
                 ChangeTheme();
             }
         }
         public bool IsLightTheme
         {
-            get => isLightTheme;
+            get => _isLightTheme;
             set
             {
-                SetProperty(ref isLightTheme, value);
+                SetProperty(ref _isLightTheme, value);
                 ChangeTheme();
             }
         }
         public bool IsCustomTheme
         {
-            get => isCustomTheme;
+            get => _isCustomTheme;
             set
             {
-                SetProperty(ref isCustomTheme, value);
+                SetProperty(ref _isCustomTheme, value);
                 ChangeTheme();
             }
         }
         public string MainColor
         {
-            get => mainColor;
+            get => _mainColor;
             set
             {
-                SetProperty(ref mainColor, value.ToUpper());
+                SetProperty(ref _mainColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string MainAdditionalColor
         {
-            get => mainAdditionalColor;
+            get => _mainAdditionalColor;
             set
             {
-                SetProperty(ref mainAdditionalColor, value.ToUpper()); 
+                SetProperty(ref _mainAdditionalColor, value.ToUpper()); 
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string AdditionalColor
         {
-            get => additionalColor;
+            get => _additionalColor;
             set
             {
-                SetProperty(ref additionalColor, value.ToUpper());
+                SetProperty(ref _additionalColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string AccentColor
         {
-            get => accentColor;
+            get => _accentColor;
             set
             {
-                SetProperty(ref accentColor, value.ToUpper());
+                SetProperty(ref _accentColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string AccentAdditionalColor
         {
-            get => accentAdditionalColor;
+            get => _accentAdditionalColor;
             set 
             {
-                SetProperty(ref accentAdditionalColor, value.ToUpper());
+                SetProperty(ref _accentAdditionalColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string PercentPlusColor
         {
-            get => percentPlusColor;
+            get => _percentPlusColor;
             set 
             {
-                SetProperty(ref percentPlusColor, value.ToUpper());
+                SetProperty(ref _percentPlusColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
         public string PercentMinusColor
         {
-            get => percentMinusColor;
+            get => _percentMinusColor;
             set 
             {
-                SetProperty(ref percentMinusColor, value.ToUpper());
+                SetProperty(ref _percentMinusColor, value.ToUpper());
                 SaveColorsCommand.NotifyCanExecuteChanged();
             }
         }
@@ -128,42 +128,42 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return exportToDB ??= new RelayCommand(DoExportToDBCommand);
+                return _exportToDB ??= new RelayCommand(DoExportToDBCommand);
             }
         }
         public RelayCommand ExportToExcel
         {
             get
             {
-                return exportToExcel ??= new RelayCommand(DoExportToExcelCommand);
+                return _exportToExcel ??= new RelayCommand(DoExportToExcelCommand);
             }
         }
         public RelayCommand SaveColorsCommand
         {
             get
             {
-                return saveColorsCommand ??= new RelayCommand(DoSaveColorsCommand, CanExecuteSaveColorsCommand);
+                return _saveColorsCommand ??= new RelayCommand(DoSaveColorsCommand, CanExecuteSaveColorsCommand);
             }
         }
         public RelayCommand ResetColorsCommand
         {
             get
             {
-                return resetColorsCommand ??= new RelayCommand(DoResetColorsCommand);
+                return _resetColorsCommand ??= new RelayCommand(DoResetColorsCommand);
             }
         }
         public RelayCommand OpenLogCommand
         {
             get
             {
-                return openLogCommand ??= new RelayCommand(DoOpenLogCommand);
+                return _openLogCommand ??= new RelayCommand(DoOpenLogCommand);
             }
         }
         public RelayCommand ClearDatabaseCommand
         {
             get
             {
-                return clearDatabaseCommand ??= new RelayCommand(DoClearDatabaseCommand);
+                return _clearDatabaseCommand ??= new RelayCommand(DoClearDatabaseCommand);
             }
         }
         #endregion Commands

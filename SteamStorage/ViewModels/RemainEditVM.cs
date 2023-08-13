@@ -19,74 +19,76 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private RemainElementModel remainModel;
-        private CommandType selectedCommandType;
+        private RemainElementModel _remainModel;
+        private CommandType _selectedCommandType;
 
-        private string url;
-        private string countString = string.Empty;
-        private string costPurchaseString = string.Empty;
+        private string _url;
+        private string _countString = string.Empty;
+        private string _costPurchaseString = string.Empty;
 
-        private long count;
-        private double costPurchase;
-        private RemainGroupModel? selectedRemainGroupModel;
+        private long _count;
+        private double _costPurchase;
+        private RemainGroupModel? _selectedRemainGroupModel;
 
-        private IEnumerable<RemainGroupModel> groups;
+        private IEnumerable<RemainGroupModel> _groups;
 
-        private RelayCommand saveCommand;
-        private RelayCommand cancelCommand;
+        private RelayCommand _saveCommand;
+        private RelayCommand _cancelCommand;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public string Url
         {
-            get => url;
+            get => _url;
             set
             {
-                SetProperty(ref url, value);
+                SetProperty(ref _url, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CountString
         {
-            get => countString;
+            get => _countString;
             set
             {
-                SetProperty(ref countString, value.Replace(".", ","));
+                SetProperty(ref _countString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public string CostPurchaseString
         {
-            get => costPurchaseString;
+            get => _costPurchaseString;
             set
             {
-                SetProperty(ref costPurchaseString, value.Replace(".", ","));
+                SetProperty(ref _costPurchaseString, value.Replace(".", ","));
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public long Count
         {
-            get => count;
-            set => SetProperty(ref count, value);
+            get => _count;
+            set => SetProperty(ref _count, value);
         }
         public double CostPurchase
         {
-            get => costPurchase;
-            set => SetProperty(ref costPurchase, value);
+            get => _costPurchase;
+            set => SetProperty(ref _costPurchase, value);
         }
         public RemainGroupModel? SelectedRemainGroupModel
         {
-            get => selectedRemainGroupModel;
+            get => _selectedRemainGroupModel;
             set
             {
-                SetProperty(ref selectedRemainGroupModel, value);
+                SetProperty(ref _selectedRemainGroupModel, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
         public IEnumerable<RemainGroupModel> Groups
         {
-            get => groups;
-            set => SetProperty(ref groups, value);
+            get => _groups;
+            set => SetProperty(ref _groups, value);
         }
         #endregion Properties
 
@@ -95,14 +97,14 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
+                return _saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
             }
         }
         public RelayCommand CancelCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(DoCancelCommand);
+                return _cancelCommand ??= new RelayCommand(DoCancelCommand);
             }
         }
         #endregion Commands
@@ -110,22 +112,22 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public RemainEditVM(RemainElementModel remainModel)
         {
-            this.remainModel = remainModel;
-            selectedCommandType = CommandType.Edit;
+            this._remainModel = remainModel;
+            _selectedCommandType = CommandType.Edit;
             Url = remainModel.Url;
             Count = remainModel.Count;
             CostPurchase = remainModel.CostPurchase;
             CountString = remainModel.Count.ToString();
             CostPurchaseString = remainModel.CostPurchase.ToString();
-            Groups = Context.RemainGroups.ToList();
+            Groups = _context?.GetRemainGroupModels();
             SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
         public RemainEditVM(RemainGroupModel? remainGroupModel)
         {
-            remainModel = new();
-            selectedCommandType = CommandType.Add;
+            _remainModel = new();
+            _selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = Context.RemainGroups.ToList();
+            Groups = _context?.GetRemainGroupModels();
             SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor
@@ -133,9 +135,9 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (selectedCommandType == CommandType.Add) remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
-            else remainModel.EditRemain(Url, Count, CostPurchase, remainModel.DatePurchase, SelectedRemainGroupModel);
-            Context.SaveChanges();
+            if (_selectedCommandType == CommandType.Add) _remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            else _remainModel.EditRemain(Url, Count, CostPurchase, _remainModel.DatePurchase, SelectedRemainGroupModel);
+            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -153,7 +155,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            Context.UndoChanges();
+            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

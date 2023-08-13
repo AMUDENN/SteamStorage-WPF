@@ -8,7 +8,7 @@ namespace SteamStorage.Utilities
     public static class Themes
     {
         public enum ThemesEnum { Light, Dark, Custom };
-        private static Dictionary<ThemesEnum, string> themesPath = new Dictionary<ThemesEnum, string>()
+        private static Dictionary<ThemesEnum, string> _themesPath = new Dictionary<ThemesEnum, string>()
         {
             { ThemesEnum.Light, @"Resources\Themes\LightTheme.xaml" },
             { ThemesEnum.Dark, @"Resources\Themes\DarkTheme.xaml" }
@@ -23,7 +23,7 @@ namespace SteamStorage.Utilities
                 return;
             }
 
-            var uri = new Uri(themesPath[theme], UriKind.Relative);
+            var uri = new Uri(_themesPath[theme], UriKind.Relative);
             ResourceDictionary? resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(resourceDict);

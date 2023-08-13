@@ -16,23 +16,25 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private ArchiveGroupModel? archiveGroupModel;
-        private RemainGroupModel? remainGroupModel;
-        private GroupTypes groupType;
+        private ArchiveGroupModel? _archiveGroupModel;
+        private RemainGroupModel? _remainGroupModel;
+        private GroupTypes _groupType;
 
-        private string title;
+        private string _title;
 
-        private RelayCommand saveCommand;
-        private RelayCommand cancelCommand;
+        private RelayCommand _saveCommand;
+        private RelayCommand _cancelCommand;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
         public string Title
         {
-            get => title;
+            get => _title;
             set
             {
-                SetProperty(ref title, value);
+                SetProperty(ref _title, value);
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
@@ -43,14 +45,14 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
+                return _saveCommand ??= new RelayCommand(DoSaveCommand, CanExecuteSaveCommand);
             }
         }
         public RelayCommand CancelCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(DoCancelCommand);
+                return _cancelCommand ??= new RelayCommand(DoCancelCommand);
             }
         }
         #endregion Commands
@@ -59,21 +61,21 @@ namespace SteamStorage.ViewModels
 
         public GroupOperationsVM(ArchiveGroupModel archiveGroupModel)
         {
-            this.archiveGroupModel = archiveGroupModel;
-            this.groupType = GroupTypes.Archive;
+            this._archiveGroupModel = archiveGroupModel;
+            this._groupType = GroupTypes.Archive;
             Title = archiveGroupModel.Title;
         }
         public GroupOperationsVM(RemainGroupModel remainGroupModel)
         {
-            this.remainGroupModel = remainGroupModel;
-            this.groupType = GroupTypes.Remain;
+            this._remainGroupModel = remainGroupModel;
+            this._groupType = GroupTypes.Remain;
             Title = remainGroupModel.Title;
         }
         public GroupOperationsVM(GroupTypes groupType)
         {
-            if (groupType == GroupTypes.Archive) archiveGroupModel = new();
-            else if (groupType == GroupTypes.Remain) remainGroupModel = new();
-            this.groupType = groupType;
+            if (groupType == GroupTypes.Archive) _archiveGroupModel = new();
+            else if (groupType == GroupTypes.Remain) _remainGroupModel = new();
+            this._groupType = groupType;
             Title = string.Empty;
         }
         #endregion Constructor
@@ -81,9 +83,9 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (groupType == GroupTypes.Archive) archiveGroupModel?.EditGroup(Title);
-            else if (groupType == GroupTypes.Remain) remainGroupModel?.EditGroup(Title);
-            Context.SaveChanges();
+            if (_groupType == GroupTypes.Archive) _archiveGroupModel?.EditGroup(Title);
+            else if (_groupType == GroupTypes.Remain) _remainGroupModel?.EditGroup(Title);
+            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -92,7 +94,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            Context.UndoChanges();
+            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

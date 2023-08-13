@@ -21,36 +21,36 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private string text;
-        private MessageImages messageImage;
-        private MessageButtons messageButton;
+        private string _text;
+        private MessageImages _messageImage;
+        private MessageButtons _messageButton;
 
-        private readonly Dictionary<MessageImages, Style> images = new()
+        private readonly Dictionary<MessageImages, Style> _images = new()
         {
             { MessageImages.Error, Dictionaries.GetStyle("ErrorImage") },
             { MessageImages.Information, Dictionaries.GetStyle("InformationImage") },
             { MessageImages.Question, Dictionaries.GetStyle("QuestionImage") }
         };
 
-        private RelayCommand okCommand;
-        private RelayCommand cancelCommand;
+        private RelayCommand _okCommand;
+        private RelayCommand _cancelCommand;
         #endregion Fields
 
         #region Properties
         public string Text
         {
-            get => text;
-            set => text = value;
+            get => _text;
+            set => _text = value;
         }
         public MessageImages MessageImage
         {
-            get => messageImage;
-            set => messageImage = value;
+            get => _messageImage;
+            set => _messageImage = value;
         }
         public MessageButtons MessageButton
         {
-            get => messageButton;
-            set => messageButton = value;
+            get => _messageButton;
+            set => _messageButton = value;
         }
         public bool IsCancelVisible
         {
@@ -58,7 +58,7 @@ namespace SteamStorage.ViewModels
         }
         public Style Image
         {
-            get => images[MessageImage];
+            get => _images[MessageImage];
         }
         #endregion Properties
 
@@ -67,14 +67,14 @@ namespace SteamStorage.ViewModels
         {
             get
             {
-                return okCommand ??= new RelayCommand(DoOkCommand);
+                return _okCommand ??= new RelayCommand(DoOkCommand);
             }
         }
         public RelayCommand CancelCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(DoCancelCommand);
+                return _cancelCommand ??= new RelayCommand(DoCancelCommand);
             }
         }
         #endregion Commands
