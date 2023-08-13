@@ -11,7 +11,7 @@ namespace SteamStorage.ViewModels
     public class NavigationVM : ObservableObject
     {
         #region Fields
-        private List<NavigationModel> navigationOptions = new()
+        private readonly List<NavigationModel> navigationOptions = new()
         {
             new NavigationModel()
             {

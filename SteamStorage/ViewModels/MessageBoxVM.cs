@@ -25,7 +25,7 @@ namespace SteamStorage.ViewModels
         private MessageImages messageImage;
         private MessageButtons messageButton;
 
-        private Dictionary<MessageImages, Style> images = new()
+        private readonly Dictionary<MessageImages, Style> images = new()
         {
             { MessageImages.Error, Dictionaries.GetStyle("ErrorImage") },
             { MessageImages.Information, Dictionaries.GetStyle("InformationImage") },

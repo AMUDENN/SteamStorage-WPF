@@ -24,7 +24,7 @@ namespace SteamStorage.Utilities
             }
 
             var uri = new Uri(themesPath[theme], UriKind.Relative);
-            ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+            ResourceDictionary? resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
             Application.Current.Resources.Clear();
             Application.Current.Resources.MergedDictionaries.Add(resourceDict);
         }

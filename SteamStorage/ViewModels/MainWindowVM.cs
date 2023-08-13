@@ -9,6 +9,7 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private ObservableObject currentVM;
+
         private RelayCommand closingCommand;
         private RelayCommand stateChangedCommand;
         private RelayCommand loadedCommand;
@@ -71,6 +72,7 @@ namespace SteamStorage.ViewModels
         private void DoStateChangedCommand()
         {
             var mw = Application.Current.MainWindow;
+            if (mw.WindowState == WindowState.Maximized) return;
             Config.Width = mw.ActualWidth;
             Config.Height = mw.ActualHeight;
             Config.Top = mw.Top;
@@ -78,12 +80,11 @@ namespace SteamStorage.ViewModels
         }
         private void DoLoadedCommand()
         {
-            if (Config.CurrentTheme == "Light") Themes.ChangeTheme(Themes.ThemesEnum.Light);
-            else if (Config.CurrentTheme == "Dark") Themes.ChangeTheme(Themes.ThemesEnum.Dark);
-            else if (Config.CurrentTheme == "Custom")
-            {
-                Themes.ChangeTheme(Themes.ThemesEnum.Custom);
-            }
+            Themes.ThemesEnum currentTheme;
+            if (Config.CurrentTheme == "Light") currentTheme = Themes.ThemesEnum.Light;
+            else if (Config.CurrentTheme == "Dark") currentTheme = Themes.ThemesEnum.Dark;
+            else currentTheme = Themes.ThemesEnum.Custom;
+            Themes.ChangeTheme(currentTheme);
         }
         #endregion Methods
     }
