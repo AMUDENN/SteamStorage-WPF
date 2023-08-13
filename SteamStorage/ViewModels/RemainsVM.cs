@@ -4,6 +4,7 @@ using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -13,40 +14,7 @@ namespace SteamStorage.ViewModels
     public class RemainsVM : ObservableObject
     {
         #region Fields
-        private string filter = string.Empty;
-        private readonly Dictionary<string, Func<RemainElementModel, object>> orderTitles = new()
-        {
-            { "Название", x => x.Title },
-            { "Количество", x => x.Count },
-            { "Цена", x => x.CostPurchase },
-            { "Сумма", x => x.AmountPurchase },
-            { "Дата покупки", x => x.DatePurchase },
-            { "Текущая цена", x => x.LastCost },
-            { "Изменение", x => x.Percent }
-        };
-        private string? selectedOrderTitle;
-        private readonly Dictionary<string, bool> orderTypes = new()
-        {
-            { "По возрастанию", true },
-            { "По убыванию", false }
-        };
-        private string? selectedOrderType;
-
-        private IEnumerable<RemainGroupModel> groups;
-        private IEnumerable<RemainElementModel> displayedRemains;
-
-        private long totalCount;
-        private double averageCostPurchase;
-        private double totalAmountPurchase;
-        private double averageCurrentCost;
-        private double averagePercent;
-        private double totalCurrentAmount;
-
-        private RemainGroupModel? selectedGroup;
-        private bool isAllRemainsDisplayed;
-
-        private bool isProgressBarVisible;
-        private int progressBarValue;
+        private readonly RemainModel _remainModel = new();
 
         private RelayCommand removeFilterCommand;
         private RelayCommand<object> updateGroupCommand;
@@ -59,108 +27,55 @@ namespace SteamStorage.ViewModels
         private RelayCommand<object> editRemainCommand;
         private RelayCommand<object> sellRemainCommand;
         private RelayCommand<object> deleteRemainCommand;
-
-        private BackgroundWorker updateInfoWorker = new BackgroundWorker();
         #endregion Fields
 
         #region Properties
         public string Filter
         {
-            get => filter;
-            set
-            {
-                SetProperty(ref filter, value.ToLower());
-                DoFiltering();
-            }
+            get => _remainModel.Filter;
+            set => _remainModel.Filter = value;
         }
-        public IEnumerable<string> OrderTitles => orderTitles.Keys;
+        public IEnumerable<string> OrderTitles => _remainModel.OrderTitles.Keys;
         public string? SelectedOrderTitle
         {
-            get => selectedOrderTitle;
-            set
-            {
-                SetProperty(ref selectedOrderTitle, value);
-                DoSorting();
-            }
+            get => _remainModel.SelectedOrderTitle;
+            set => _remainModel.SelectedOrderTitle = value;
         }
-        public IEnumerable<string> OrderTypes => orderTypes.Keys;
+        public IEnumerable<string> OrderTypes => _remainModel.OrderTypes.Keys;
         public string? SelectedOrderType
         {
-            get => selectedOrderType;
-            set
-            {
-                SetProperty(ref selectedOrderType, value);
-                DoSorting();
-            }
+            get => _remainModel.SelectedOrderType;
+            set => _remainModel.SelectedOrderType = value;
         }
-        public IEnumerable<RemainGroupModel> Groups
-        {
-            get => groups;
-            set => SetProperty(ref groups, value);
-        }
-        public IEnumerable<RemainElementModel> DisplayedRemains
-        {
-            get => displayedRemains;
-            set => SetProperty(ref displayedRemains, value);
-        }
-        public long TotalCount
-        {
-            get => totalCount;
-            set => SetProperty(ref totalCount, value);
-        }
-        public double AverageCostPurchase
-        {
-            get => averageCostPurchase;
-            set => SetProperty(ref averageCostPurchase, value);
-        }
-        public double TotalAmountPurchase
-        {
-            get => totalAmountPurchase;
-            set => SetProperty(ref totalAmountPurchase, value);
-        }
-        public double AverageCurrentCost
-        {
-            get => averageCurrentCost;
-            set => SetProperty(ref averageCurrentCost, value);
-        }
-        public double AveragePercent
-        {
-            get => averagePercent;
-            set => SetProperty(ref averagePercent, value);
-        }
-        public double TotalCurrentAmount
-        {
-            get => totalCurrentAmount;
-            set => SetProperty(ref totalCurrentAmount, value);
-        }
+        public ObservableCollection<RemainGroupModel> Groups => _remainModel.Groups;
+        public ObservableCollection<RemainElementModel> DisplayedRemains => _remainModel.DisplayedRemains;
+        public long TotalCount => _remainModel.TotalCount;
+        public double AverageCostPurchase => _remainModel.AverageCostPurchase;
+        public double TotalAmountPurchase => _remainModel.TotalAmountPurchase;
+        public double AverageCurrentCost => _remainModel.AverageCurrentCost;
+        public double AveragePercent => _remainModel.AveragePercent;
+        public double TotalCurrentAmount => _remainModel.TotalCurrentAmount;
         public RemainGroupModel? SelectedGroup
         {
-            get => selectedGroup;
-            set
-            {
-                SetProperty(ref selectedGroup, value);
-                DoFiltering();
-            }
+            get => _remainModel.SelectedGroup;
+            set => _remainModel.SelectedGroup = value;
         }
         public bool IsAllRemainsDisplayed
         {
-            get => isAllRemainsDisplayed;
-            set
-            {
-                SetProperty(ref isAllRemainsDisplayed, value);
-                if (isAllRemainsDisplayed) SelectedGroup = null;
-            }
+            get => _remainModel.IsAllRemainsDisplayed;
+            set => _remainModel.IsAllRemainsDisplayed = value;
         }
         public bool IsProgressBarVisible
         {
-            get => isProgressBarVisible;
-            set => SetProperty(ref isProgressBarVisible, value);
+            get => _remainModel.IsProgressBarVisible;
+            set => _remainModel.IsProgressBarVisible = value;
         }
         public int ProgressBarValue
         {
-            get => progressBarValue;
-            set => SetProperty(ref progressBarValue, value);
+            get => _remainModel.ProgressBarValue;
+            set => _remainModel.ProgressBarValue = value;
         }
+        public BackgroundWorker UpdateInfoWorker => _remainModel.UpdateInfoWorker;
         #endregion Properties
 
         #region Commands
@@ -246,24 +161,20 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public RemainsVM()
         {
-            GetRemainGroups();
+            _remainModel.PropertyChanged += (s, e) =>
+            {
+                OnPropertyChanged(e.PropertyName);
+                //RemoveFilterCommand.NotifyCanExecuteChanged(); Что-то там с потоками не работает :(
+                //UpdateGroupCommand.NotifyCanExecuteChanged();
+            };
             IsAllRemainsDisplayed = true;
-
-            updateInfoWorker.DoWork += UpdateInfoWork;
-            updateInfoWorker.WorkerSupportsCancellation = false;
-            updateInfoWorker.RunWorkerCompleted += UpdateInfoComplete;
-            updateInfoWorker.WorkerReportsProgress = true;
-            updateInfoWorker.ProgressChanged += UpdateInfoProgress;
         }
         #endregion Constructor
 
         #region Methods
         private void DoRemoveFilterCommand()
         {
-            Filter = string.Empty;
-            SelectedOrderTitle = null;
-            SelectedOrderType = null;
-            IsAllRemainsDisplayed = true;
+            _remainModel.RemoveFilter();
         }
         private bool CanExecuteRemoveFilterCommand()
         {
@@ -276,163 +187,51 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-            updateInfoWorker.RunWorkerAsync(Context.GetRemainModels((RemainGroupModel)data).ToList());
+            _remainModel.UpdateGroup((RemainGroupModel)data);
         }
         private bool CanExecuteUpdateGroupCommand(object? data)
         {
-            return !updateInfoWorker.IsBusy;
+            return !UpdateInfoWorker.IsBusy;
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = UserMessage.AddRemainGroup();
-            if (!isAdded) return;
-            Context.UpdateRemainGroupModels();
-            GetRemainGroups();
+            _remainModel.AddGroup();
         }
         private void DoEditGroupCommand(object? data)
         {
-            RemainGroupModel model = (RemainGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу изменить нельзя!");
-                return;
-            }
-            var isEdit = UserMessage.EditRemainGroup(model);
-            if (!isEdit) return;
-            Context.UpdateRemainGroupModels();
-            GetRemainGroups();
+            _remainModel.EditGroupCommand((RemainGroupModel)data);
         }
         private void DoDeleteGroupCommand(object? data)
         {
-            RemainGroupModel model = (RemainGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу удалить нельзя!");
-                return;
-            }
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
-            if (!delete) return;
-            model.DeleteGroup();
-            Context.UpdateRemainGroupModels();
-            Context.UpdateRemainGroupModels();
-            GetRemainGroups();
-            DoFiltering();
+           _remainModel.DeleteGroup((RemainGroupModel)data);
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-            RemainGroupModel model = (RemainGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу удалить нельзя!");
-                return;
-            }
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
-            if (!delete) return;
-            model.DeleteGroupWithSkins();
-            Context.UpdateRemainGroupModels();
-            Context.UpdateRemainModels();
-            GetRemainGroups();
-            DoFiltering();
+            _remainModel.DeleteWithSkinsGroup((RemainGroupModel)data);
         }
         private void DoUpdateRemainCommand(object? data)
         {
-            updateInfoWorker.RunWorkerAsync(new List<RemainElementModel>() { (RemainElementModel)data });
+            _remainModel.UpdateRemain((RemainElementModel)data);
         }
         private bool CanExecuteUpdateRemainCommand(object? data)
         {
-            return !updateInfoWorker.IsBusy;
+            return !UpdateInfoWorker.IsBusy;
         }
         private void DoAddRemainCommand()
         {
-            var isAdded = UserMessage.AddRemain(SelectedGroup);
-            if (!isAdded) return;
-            Context.UpdateRemainModels();
-            DoFiltering();
+            _remainModel.AddRemain();
         }
         private void DoEditRemainCommand(object? data)
         {
-            var isEdit = UserMessage.EditRemain((RemainElementModel)data);
-            if (!isEdit) return;
-            Context.UpdateRemainModels();
-            DoFiltering();
+            _remainModel.EditRemain((RemainElementModel)data);
         }
         private void DoSellRemainCommand(object? data)
         {
-            var isSell = UserMessage.SellRemain((RemainElementModel)data);
-            if (!isSell) return;
-            Context.UpdateRemainModels();
-            Context.UpdateArchiveModels();
-            DoFiltering();
+            _remainModel.SellRemain((RemainElementModel)data);
         }
         private void DoDeleteRemainCommand(object? data)
         {
-            RemainElementModel model = (RemainElementModel)data;
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
-            if (!delete) return;
-            model.DeleteRemain();
-            Context.UpdateRemainModels();
-            DoFiltering();
-        }
-        private void DoFiltering()
-        {
-            if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
-
-            DisplayedRemains = Context.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
-
-            TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
-
-            TotalAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(DisplayedRemains);
-
-            AverageCostPurchase = CalculationModel.GetRemainAverageCostPurchase(DisplayedRemains);
-
-            TotalCurrentAmount = CalculationModel.GetRemainTotalCurrentAmount(DisplayedRemains);
-
-            AverageCurrentCost = CalculationModel.GetRemainAverageCurrentCost(DisplayedRemains);
-
-            AveragePercent = CalculationModel.GetRemainAveragePercent(DisplayedRemains);
-
-            DoSorting();
-        }
-        private void DoSorting()
-        {
-            RemoveFilterCommand.NotifyCanExecuteChanged();
-            if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
-            DisplayedRemains = orderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(orderTitles[SelectedOrderTitle]);
-        }
-        private void GetRemainGroups()
-        {
-            Groups = Context.RemainGroups;
-        }
-        private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
-        {
-            return remainGroupModel.RemainGroup.Id == 1;
-        }
-        private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainElementModel> remainModels)
-        {
-            int percentageIncrease = 100 / remainModels.Count();
-            foreach (RemainElementModel remainModel in remainModels)
-            {
-                Thread.Sleep(500);
-                remainModel.UpdateCurrentCost();
-                updateInfoWorker.ReportProgress(percentageIncrease);
-            }
-        }
-        public void UpdateInfoWork(object sender, DoWorkEventArgs e)
-        {
-            List<RemainElementModel> arg = (List<RemainElementModel>)e.Argument;
-            IsProgressBarVisible = true;
-            ProgressBarValue = 0;
-            UpdateRemainModelsCurrentCosts(arg);
-        }
-        public void UpdateInfoProgress(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressBarValue += e.ProgressPercentage;
-        }
-        public void UpdateInfoComplete(object sender, RunWorkerCompletedEventArgs e)
-        {
-            IsProgressBarVisible = false;
-            Context.UpdateRemainModels();
-            DoFiltering();
+            _remainModel.DeleteRemain((RemainElementModel)data);
         }
         #endregion Methods
     }

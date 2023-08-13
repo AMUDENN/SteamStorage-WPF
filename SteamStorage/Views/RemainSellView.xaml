@@ -39,7 +39,7 @@
             <controls:AdvancedTextBox Text="{Binding CostSoldString, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                   PreviewRegex="[0-9.,]" MaxLength="40" AllowSpace="False"
                                   TextBoxStyle="{DynamicResource TextBoxStyle}" 
-                                  Tag="Цена покупки"
+                                  Tag="Цена продажи"
                                   MaxHeight="80" Margin="10, 10, 20, 10" Grid.Column="1"/>
 
         </Grid>

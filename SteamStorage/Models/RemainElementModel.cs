@@ -51,8 +51,6 @@ namespace SteamStorage.Models
             this.remain = remain;
             datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
             amountPurchase = remain.CostPurchase * remain.Count;
-            Context.DBContext.PriceDynamics.LoadAsync();
-            Context.DBContext.Skins.LoadAsync();
             UpdatePriceDynamics();
         }
         public RemainElementModel()
@@ -65,6 +63,8 @@ namespace SteamStorage.Models
         #region Methods
         private void UpdatePriceDynamics()
         {
+            Context.DBContext.PriceDynamics.LoadAsync();
+            Context.DBContext.Skins.LoadAsync();
             priceDynamics = remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateTimeFormat, null), x => x.CostUpdate);
             priceDynamics.Add(DatePurchase, CostPurchase);
             if (priceDynamics.Count == 1) priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
@@ -143,7 +143,7 @@ namespace SteamStorage.Models
                 Context.AddPriceDynamic(this);
                 Context.SaveChanges();
                 UpdatePriceDynamics();
-                logger?.WriteMessage($"Текущая цена элемент {Title} успешно добавлена!", this.GetType());
+                logger?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
             }
             catch (Exception ex)
             {

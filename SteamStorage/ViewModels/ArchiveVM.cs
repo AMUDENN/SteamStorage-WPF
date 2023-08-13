@@ -4,6 +4,7 @@ using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -11,39 +12,7 @@ namespace SteamStorage.ViewModels
     public class ArchiveVM : ObservableObject
     {
         #region Fields
-        private string filter = string.Empty;
-        private readonly Dictionary<string, Func<ArchiveElementModel, object>> orderTitles = new()
-        {
-            { "Название", x => x.Title },
-            { "Количество", x => x.Count },
-            { "Цена покупки", x => x.CostPurchase },
-            { "Сумма покупки", x => x.AmountPurchase },
-            { "Дата покупки", x => x.DatePurchase },
-            { "Цена продажи", x => x.CostSold },
-            { "Сумма продажи", x => x.AmountSold },
-            { "Дата продажи", x => x.DateSold },
-            { "Изменение", x => x.Percent }
-        };
-        private string? selectedOrderTitle;
-        private readonly Dictionary<string, bool> orderTypes = new()
-        {
-            { "По возрастанию", true },
-            { "По убыванию", false }
-        };
-        private string? selectedOrderType;
-
-        private IEnumerable<ArchiveGroupModel> groups;
-        private IEnumerable<ArchiveElementModel> displayedArchives;
-
-        private long totalCount;
-        private double averageCostPurchase;
-        private double totalAmountPurchase;
-        private double averageCostSold;
-        private double totalAmountSold;
-        private double averagePercent;
-
-        private ArchiveGroupModel? selectedGroup;
-        private bool isAllArchivesDisplayed;
+        private readonly ArchiveModel _archiveModel = new();
 
         private RelayCommand removeFilterCommand;
         private RelayCommand addGroupCommand;
@@ -58,90 +27,38 @@ namespace SteamStorage.ViewModels
         #region Properties
         public string Filter
         {
-            get => filter;
-            set
-            {
-                SetProperty(ref filter, value.ToLower());
-                DoFiltering();
-            }
+            get => _archiveModel.Filter;
+            set => _archiveModel.Filter = value;
         }
-        public IEnumerable<string> OrderTitles => orderTitles.Keys;
+        public IEnumerable<string> OrderTitles => _archiveModel.OrderTitles.Keys;
         public string? SelectedOrderTitle
         {
-            get => selectedOrderTitle;
-            set
-            {
-                SetProperty(ref selectedOrderTitle, value);
-                DoSorting();
-            }
+            get => _archiveModel.SelectedOrderTitle;
+            set => _archiveModel.SelectedOrderTitle = value;
         }
-        public IEnumerable<string> OrderTypes => orderTypes.Keys;
+        public IEnumerable<string> OrderTypes => _archiveModel.OrderTypes.Keys;
         public string? SelectedOrderType
         {
-            get => selectedOrderType;
-            set
-            {
-                SetProperty(ref selectedOrderType, value);
-                DoSorting();
-            }
+            get => _archiveModel.SelectedOrderType;
+            set => _archiveModel.SelectedOrderType = value;
         }
-        public IEnumerable<ArchiveGroupModel> Groups
-        {
-            get => groups;
-            set => SetProperty(ref groups, value);
-        }
-        public IEnumerable<ArchiveElementModel> DisplayedArchives
-        {
-            get => displayedArchives;
-            set => SetProperty(ref displayedArchives, value);
-        }
-        public long TotalCount
-        {
-            get => totalCount;
-            set => SetProperty(ref totalCount, value);
-        }
-        public double AverageCostPurchase
-        {
-            get => averageCostPurchase;
-            set => SetProperty(ref averageCostPurchase, value);
-        }
-        public double TotalAmountPurchase
-        {
-            get => totalAmountPurchase;
-            set => SetProperty(ref totalAmountPurchase, value);
-        }
-        public double AverageCostSold
-        {
-            get => averageCostSold;
-            set => SetProperty(ref averageCostSold, value);
-        }
-        public double TotalAmountSold
-        {
-            get => totalAmountSold;
-            set => SetProperty(ref totalAmountSold, value);
-        }
-        public double AveragePercent
-        {
-            get => averagePercent;
-            set => SetProperty(ref averagePercent, value);
-        }
+        public ObservableCollection<ArchiveGroupModel> Groups => _archiveModel.Groups;
+        public ObservableCollection<ArchiveElementModel> DisplayedArchives => _archiveModel.DisplayedArchives;
+        public long TotalCount => _archiveModel.TotalCount;
+        public double AverageCostPurchase => _archiveModel.AverageCostPurchase;
+        public double TotalAmountPurchase => _archiveModel.TotalAmountPurchase;
+        public double AverageCostSold => _archiveModel.AverageCostSold;
+        public double TotalAmountSold => _archiveModel.TotalAmountSold;
+        public double AveragePercent => _archiveModel.AveragePercent;
         public ArchiveGroupModel? SelectedGroup
         {
-            get => selectedGroup;
-            set
-            {
-                SetProperty(ref selectedGroup, value);
-                DoFiltering();
-            }
+            get => _archiveModel.SelectedGroup;
+            set => _archiveModel.SelectedGroup = value;
         }
         public bool IsAllArchivesDisplayed
         {
-            get => isAllArchivesDisplayed;
-            set
-            {
-                SetProperty(ref isAllArchivesDisplayed, value);
-                if (isAllArchivesDisplayed) SelectedGroup = null;
-            }
+            get => _archiveModel.IsAllArchivesDisplayed;
+            set => _archiveModel.IsAllArchivesDisplayed = value;
         }
         #endregion Properties
 
@@ -207,7 +124,11 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public ArchiveVM()
         {
-            GetArchiveGroups();
+            _archiveModel.PropertyChanged += (s, e) =>
+            {
+                OnPropertyChanged(e.PropertyName);
+                RemoveFilterCommand.NotifyCanExecuteChanged();
+            };
             IsAllArchivesDisplayed = true;
         }
         #endregion Constructor
@@ -215,10 +136,7 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoRemoveFilterCommand()
         {
-            Filter = string.Empty;
-            SelectedOrderTitle = null;
-            SelectedOrderType = null;
-            IsAllArchivesDisplayed = true;
+            _archiveModel.RemoveFilter();
         }
         private bool CanExecuteRemoveFilterCommand()
         {
@@ -231,112 +149,31 @@ namespace SteamStorage.ViewModels
         }
         private void DoAddGroupCommand()
         {
-            var isAdded = UserMessage.AddArchiveGroup();
-            if (!isAdded) return;
-            Context.UpdateArchiveGroupModels();
-            GetArchiveGroups();
+            _archiveModel.AddGroup();
         }
         private void DoEditGroupCommand(object? data)
         {
-            ArchiveGroupModel model = (ArchiveGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу изменить нельзя!");
-                return;
-            }
-            var isEdit = UserMessage.EditArchiveGroup(model);
-            if (!isEdit) return;
-            Context.UpdateArchiveGroupModels();
-            GetArchiveGroups();
+            _archiveModel.EditGroup((ArchiveGroupModel)data);
         }
         private void DoDeleteGroupCommand(object? data)
         {
-            ArchiveGroupModel model = (ArchiveGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу удалить нельзя!");
-                return;
-            }
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу: {model.Title}");
-            if (!delete) return;
-            model.DeleteGroup();
-            Context.UpdateArchiveGroupModels();
-            Context.UpdateArchiveModels();
-            GetArchiveGroups();
-            DoFiltering();
+            _archiveModel.DeleteGroup((ArchiveGroupModel)data);
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-            ArchiveGroupModel model = (ArchiveGroupModel)data;
-            if (IsDefaultGroup(model))
-            {
-                UserMessage.Error("Эту группу удалить нельзя!");
-                return;
-            }
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить группу и находящиеся в ней скины: {model.Title}");
-            if (!delete) return;
-            model.DeleteGroupWithSkins();
-            Context.UpdateArchiveGroupModels();
-            Context.UpdateArchiveModels();
-            GetArchiveGroups();
-            DoFiltering();
+            _archiveModel.DeleteWithSkinsGroup((ArchiveGroupModel)data);
         }
         private void DoAddArchiveCommand()
         {
-            var isAdded = UserMessage.AddArchive(SelectedGroup);
-            if (!isAdded) return;
-            Context.UpdateArchiveModels();
-            DoFiltering();
+            _archiveModel.AddArchive();
         }
         private void DoEditArchiveCommand(object? data)
         {
-            var isEdit = UserMessage.EditArchive((ArchiveElementModel)data);
-            if (!isEdit) return;
-            Context.UpdateArchiveModels();
-            DoFiltering();
+            _archiveModel.EditArchive((ArchiveElementModel)data);
         }
         private void DoDeleteArchiveCommand(object? data)
         {
-            ArchiveElementModel model = (ArchiveElementModel)data;
-            var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
-            if (!delete) return;
-            model.DeleteArchive();
-            Context.UpdateArchiveModels();
-            DoFiltering();
-        }
-        private void DoFiltering()
-        {
-            if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
-
-            DisplayedArchives = Context.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter));
-
-            TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
-
-            TotalAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(DisplayedArchives);
-
-            AverageCostPurchase = CalculationModel.GetArchiveAverageCostPurchase(DisplayedArchives);
-
-            TotalAmountSold = CalculationModel.GetArchiveTotalAmountSold(DisplayedArchives);
-
-            AverageCostSold = CalculationModel.GetArchiveAverageCostSold(DisplayedArchives);
-
-            AveragePercent = CalculationModel.GetArchiveAveragePercent(DisplayedArchives);
-
-            DoSorting();
-        }
-        private void DoSorting()
-        {
-            RemoveFilterCommand.NotifyCanExecuteChanged();
-            if (DisplayedArchives is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
-            DisplayedArchives = orderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(orderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(orderTitles[SelectedOrderTitle]);
-        }
-        private void GetArchiveGroups()
-        {
-            Groups = Context.ArchiveGroups;
-        }
-        private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
-        {
-            return archiveGroupModel.ArchiveGroup.Id == 1;
+            _archiveModel.DeleteArchive((ArchiveElementModel)data);
         }
         #endregion Methods
     }
