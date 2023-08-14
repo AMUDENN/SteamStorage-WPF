@@ -160,8 +160,13 @@ namespace SteamStorage.ViewModels
             _remainModel.PropertyChanged += (s, e) =>
             {
                 OnPropertyChanged(e.PropertyName);
-                //RemoveFilterCommand.NotifyCanExecuteChanged(); Что-то там с потоками не работает :(
-                //UpdateGroupCommand.NotifyCanExecuteChanged();
+                try
+                {
+                    RemoveFilterCommand.NotifyCanExecuteChanged();
+                    UpdateGroupCommand.NotifyCanExecuteChanged();
+                }
+                catch { } //Надо тут тоже что-то передалать
+
             };
             IsAllRemainsDisplayed = true;
         }

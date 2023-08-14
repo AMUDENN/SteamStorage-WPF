@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.EntityFrameworkCore;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;

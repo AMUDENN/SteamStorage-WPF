@@ -6,7 +6,6 @@ using SteamStorage.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace SteamStorage.Utilities
 {
@@ -14,6 +13,7 @@ namespace SteamStorage.Utilities
     {
         #region Fields
         private readonly SteamStorageDbContext _dbContext = new();
+        private readonly SteamStorageDbContext _dbContextAdditional = new();
         private IEnumerable<RemainElementModel> _remainElementModels;
         private IEnumerable<ArchiveElementModel> _archiveElementModels;
         private IEnumerable<RemainGroupModel> _remainGroupModels;
@@ -24,6 +24,7 @@ namespace SteamStorage.Utilities
 
         #region Properties
         public SteamStorageDbContext DBContext => _dbContext;
+        public SteamStorageDbContext DBContextAdditional => _dbContextAdditional;
         private IEnumerable<RemainElementModel> RemainElementModels
         {
             get => _remainElementModels.ToList();
@@ -138,7 +139,7 @@ namespace SteamStorage.Utilities
                     CostUpdate = Price,
                     DateUpdate = DateUpdate.ToString(Constants.DateTimeFormat)
                 };
-                DBContext.PriceDynamics.Add(priceDynamic);
+                DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
                 _logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
