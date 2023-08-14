@@ -32,7 +32,7 @@ namespace SteamStorage.Models
         private bool _isProgressBarVisible;
         private int _progressBarValue;
 
-        private BackgroundWorker _updateInfoWorker = new();
+        private readonly BackgroundWorker _updateInfoWorker = new();
         private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
@@ -40,7 +40,11 @@ namespace SteamStorage.Models
         public ObservableCollection<RemainElementModel> DisplayedRemains
         {
             get => _displayedRemains;
-            set => SetProperty(ref _displayedRemains, value);
+            set
+            {
+                SetProperty(ref _displayedRemains, value);
+                Summarize();
+            }
         }
         public ObservableCollection<RemainGroupModel> Groups
         {
@@ -266,6 +270,12 @@ namespace SteamStorage.Models
 
             DisplayedRemains = new ObservableCollection<RemainElementModel>(_context?.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
 
+            Summarize();
+
+            Sorting();
+        }
+        private void Summarize()
+        {
             TotalCount = CalculationModel.GetRemainTotalCount(DisplayedRemains);
 
             TotalAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(DisplayedRemains);
@@ -277,10 +287,8 @@ namespace SteamStorage.Models
             AverageCurrentCost = CalculationModel.GetRemainAverageCurrentCost(DisplayedRemains);
 
             AveragePercent = CalculationModel.GetRemainAveragePercent(DisplayedRemains);
-
-            Sorting();
         }
-        public void Sorting()
+        private void Sorting()
         {
             if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             DisplayedRemains = new ObservableCollection<RemainElementModel>(OrderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(OrderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(OrderTitles[SelectedOrderTitle]));
