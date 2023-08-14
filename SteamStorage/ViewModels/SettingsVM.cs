@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Utilities;
-using System.Diagnostics;
-using System.IO;
+using SteamStorage.Models;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -10,17 +8,7 @@ namespace SteamStorage.ViewModels
     public class SettingsVM : ObservableObject
     {
         #region Fields
-        private bool _isDarkTheme;
-        private bool _isLightTheme;
-        private bool _isCustomTheme;
-
-        private string _mainColor;
-        private string _mainAdditionalColor;
-        private string _additionalColor;
-        private string _accentColor;
-        private string _accentAdditionalColor;
-        private string _percentPlusColor;
-        private string _percentMinusColor;
+        private SettingsModel _settingsModel = new();
 
         private RelayCommand _exportToDB;
         private RelayCommand _exportToExcel;
@@ -33,93 +21,53 @@ namespace SteamStorage.ViewModels
         #region Properties
         public bool IsDarkTheme
         {
-            get => _isDarkTheme;
-            set
-            {
-                SetProperty(ref _isDarkTheme, value);
-                ChangeTheme();
-            }
+            get => _settingsModel.IsDarkTheme;
+            set => _settingsModel.IsDarkTheme = value;
         }
         public bool IsLightTheme
         {
-            get => _isLightTheme;
-            set
-            {
-                SetProperty(ref _isLightTheme, value);
-                ChangeTheme();
-            }
+            get => _settingsModel.IsLightTheme;
+            set => _settingsModel.IsLightTheme = value;
         }
         public bool IsCustomTheme
         {
-            get => _isCustomTheme;
-            set
-            {
-                SetProperty(ref _isCustomTheme, value);
-                ChangeTheme();
-            }
+            get => _settingsModel.IsCustomTheme;
+            set => _settingsModel.IsCustomTheme = value;
         }
         public string MainColor
         {
-            get => _mainColor;
-            set
-            {
-                SetProperty(ref _mainColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.MainColor;
+            set => _settingsModel.MainColor = value;
         }
         public string MainAdditionalColor
         {
-            get => _mainAdditionalColor;
-            set
-            {
-                SetProperty(ref _mainAdditionalColor, value.ToUpper()); 
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.MainAdditionalColor;
+            set => _settingsModel.MainAdditionalColor = value;
         }
         public string AdditionalColor
         {
-            get => _additionalColor;
-            set
-            {
-                SetProperty(ref _additionalColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.AdditionalColor;
+            set => _settingsModel.AdditionalColor = value;
         }
         public string AccentColor
         {
-            get => _accentColor;
-            set
-            {
-                SetProperty(ref _accentColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.AccentColor;
+            set => _settingsModel.AccentColor = value;
         }
         public string AccentAdditionalColor
         {
-            get => _accentAdditionalColor;
-            set 
-            {
-                SetProperty(ref _accentAdditionalColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.AccentAdditionalColor;
+            set => _settingsModel.AccentAdditionalColor = value;
         }
         public string PercentPlusColor
         {
-            get => _percentPlusColor;
-            set 
-            {
-                SetProperty(ref _percentPlusColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.PercentPlusColor;
+            set => _settingsModel.PercentPlusColor = value;
         }
         public string PercentMinusColor
         {
-            get => _percentMinusColor;
-            set 
-            {
-                SetProperty(ref _percentMinusColor, value.ToUpper());
-                SaveColorsCommand.NotifyCanExecuteChanged();
-            }
+            get => _settingsModel.PercentMinusColor;
+            set => _settingsModel.PercentMinusColor = value;
         }
         #endregion Properties
 
@@ -171,40 +119,26 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public SettingsVM()
         {
-            MainColor = Config.MainColor;
-            MainAdditionalColor = Config.MainAdditionalColor;
-            AdditionalColor = Config.AdditionalColor;
-            AccentColor = Config.AccentColor;
-            AccentAdditionalColor = Config.AccentAdditionalColor;
-            PercentPlusColor = Config.PercentPlusColor;
-            PercentMinusColor = Config.PercentMinusColor;
-
-            var currentTheme = Config.CurrentTheme;
-            IsLightTheme = currentTheme == "Light";
-            IsDarkTheme = currentTheme == "Dark";
-            IsCustomTheme = currentTheme == "Custom";
+            _settingsModel.PropertyChanged += (s, e) =>
+            {
+                OnPropertyChanged(e.PropertyName);
+                SaveColorsCommand.NotifyCanExecuteChanged();
+            };
         }
         #endregion Constructor
 
         #region Methods
         private void DoExportToDBCommand()
         {
-
+            _settingsModel.ExportToDB();
         }
         private void DoExportToExcelCommand()
         {
-
+            _settingsModel.ExportToExcel();
         }
         private void DoSaveColorsCommand()
         {
-            Config.MainColor = MainColor;
-            Config.MainAdditionalColor = MainAdditionalColor;
-            Config.AdditionalColor = AdditionalColor;
-            Config.AccentColor = AccentColor;
-            Config.AccentAdditionalColor = AccentAdditionalColor;
-            Config.PercentPlusColor = PercentPlusColor;
-            Config.PercentMinusColor = PercentMinusColor;
-            Themes.SetCustomColors();
+            _settingsModel.SaveColors();
         }
         private bool CanExecuteSaveColorsCommand()
         {
@@ -217,28 +151,15 @@ namespace SteamStorage.ViewModels
         }
         private void DoResetColorsCommand()
         {
-            MainColor = "7371FF";
-            MainAdditionalColor = "00AD71";
-            AdditionalColor = "FFFFFF";
-            AccentColor = "0D1117";
-            AccentAdditionalColor = "21262D";
-            PercentPlusColor = "02B478";
-            PercentMinusColor = "FD4534";
+            _settingsModel.ResetColors();
         }
         private void DoOpenLogCommand()
         {
-            if (File.Exists(Constants.Logpath))
-                Process.Start(@"notepad.exe", Constants.Logpath);
+            _settingsModel.OpenLog();
         }
         private void DoClearDatabaseCommand()
         {
-
-        }
-        private void ChangeTheme()
-        {
-            if (IsLightTheme) Themes.ChangeTheme(Themes.ThemesEnum.Light);
-            if (IsDarkTheme) Themes.ChangeTheme(Themes.ThemesEnum.Dark);
-            if (IsCustomTheme) Themes.ChangeTheme(Themes.ThemesEnum.Custom);
+            _settingsModel.ClearDatabase();
         }
         #endregion Methods
     }

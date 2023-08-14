@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace SteamStorage.Parser
 {
-    internal static class SteamParser
+    public static class SteamParser
     {
         #region Fields
         private static readonly HttpClient _client = new();
