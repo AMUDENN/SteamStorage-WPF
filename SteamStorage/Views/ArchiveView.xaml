@@ -357,19 +357,31 @@
 
                 <TextBlock Text="Итого:" Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="0"/>
                 <TextBlock Text="{Binding TotalCount}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="1"/>
+                           ToolTip="Общее количество"
+                           Style="{DynamicResource SmallTitleTextBlockStyle}"
+                           Grid.Column="1"/>
                 <TextBlock Text="{Binding AverageCostPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="2"/>
-                <TextBlock Text="{Binding TotalAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="3"/>
+                           ToolTip="Средняя сумма покупки"
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" 
+                           Grid.Column="2"/>
+                <TextBlock Text="{Binding TotalAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}"
+                           ToolTip="Общая сумма покупки"
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" 
+                           Grid.Column="3"/>
 
                 <TextBlock Text="{Binding AverageCostSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="5" />
+                           ToolTip="Средняя сумма продажи"
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" 
+                           Grid.Column="5" />
                 <TextBlock Text="{Binding TotalAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="6"/>
+                           ToolTip="Общая сумма продажи"
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" 
+                           Grid.Column="6"/>
                 <TextBlock Text="{Binding AveragePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                           ToolTip="Общее изменение"
                            Foreground="{Binding AveragePercent, Converter={StaticResource PercentForegroundConverter}}" 
-                           Style="{DynamicResource SmallTitleTextBlockStyle}" Grid.Column="8"/>
+                           Style="{DynamicResource SmallTitleTextBlockStyle}" 
+                           Grid.Column="8"/>
 
                 <Border BorderBrush="{DynamicResource Additional}" 
                         Opacity="0.5"

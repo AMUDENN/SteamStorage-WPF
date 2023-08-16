@@ -8,9 +8,10 @@ namespace SteamStorage.ViewModels
     public class SettingsVM : ObservableObject
     {
         #region Fields
-        private SettingsModel _settingsModel = new();
+        private readonly SettingsModel _settingsModel = new();
 
         private RelayCommand _exportToDB;
+        private RelayCommand _importFromDB;
         private RelayCommand _exportToExcel;
         private RelayCommand _saveColorsCommand;
         private RelayCommand _resetColorsCommand;
@@ -79,6 +80,13 @@ namespace SteamStorage.ViewModels
                 return _exportToDB ??= new RelayCommand(DoExportToDBCommand);
             }
         }
+        public RelayCommand ImportFromDB
+        {
+            get
+            {
+                return _importFromDB ??= new RelayCommand(DoImportFromDBCommand);
+            }
+        }
         public RelayCommand ExportToExcel
         {
             get
@@ -131,6 +139,10 @@ namespace SteamStorage.ViewModels
         private void DoExportToDBCommand()
         {
             _settingsModel.ExportToDB();
+        }
+        private void DoImportFromDBCommand()
+        {
+            _settingsModel.ImportFromDB();
         }
         private void DoExportToExcelCommand()
         {

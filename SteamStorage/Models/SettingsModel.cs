@@ -128,7 +128,11 @@ namespace SteamStorage.Models
         #region Methods
         public void ExportToDB()
         {
-
+                
+        }
+        public void ImportFromDB() 
+        {
+        
         }
         public void ExportToExcel()
         {

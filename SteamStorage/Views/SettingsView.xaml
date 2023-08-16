@@ -33,11 +33,22 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Экспортировать в .db" 
-                    Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                    HorizontalAlignment="Left" Grid.Row="1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1">
+                
+                <Button Content="Экспортировать в .db" 
+                        Command="{Binding ExportToDB}"
+                        Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                
+                <TextBlock Text="/" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0"/>
+                
+                <Button Content="Импортировать из .db" 
+                        Command="{Binding ImportFromDB}"
+                        Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                
+            </StackPanel>
 
             <Button Content="Экспортировать в .xlsx" 
+                    Command="{Binding ExportToExcel}"
                     Style="{DynamicResource UnderlineTransparentButtonStyle}" 
                     HorizontalAlignment="Left" Grid.Row="3"/>
 
@@ -155,7 +166,7 @@
                         HorizontalAlignment="Stretch" Padding="15, 0" Margin="0, 10, 5, 10" Grid.Column="0"/>
 
                 <Button Content="Очистить базу данных"
-                        Command="{Binding DoClearDatabaseCommand}"
+                        Command="{Binding ClearDatabaseCommand}"
                         FontSize="24"
                         Style="{DynamicResource AccentAdditionalButtonStyle}"
                         HorizontalAlignment="Stretch" Padding="15, 0" Margin="5, 10, 0, 10" Grid.Column="1"/>

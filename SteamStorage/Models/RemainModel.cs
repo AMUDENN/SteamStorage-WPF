@@ -314,6 +314,7 @@ namespace SteamStorage.Models
 
                 _updateInfoWorker.ReportProgress(percentageIncrease);
 
+                //Вот это тоже не очень :(
                 i++;
                 if (i % 15 == 0) Thread.Sleep(random.Next(23000, 30000));
                 Thread.Sleep(random.Next(1500, 2650));
