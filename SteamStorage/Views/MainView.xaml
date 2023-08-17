@@ -39,88 +39,75 @@
 
                     <ContentControl x:Name="NavigationContentControl" Content="{Binding NavigationVM}" MaxHeight="350" Grid.Row="4"/>
 
-                    <Button x:Name="ExpandMenu"
-                            Command="{Binding ChangeMenuCommand}"
-                            Style="{DynamicResource ImageButtonStyle}" 
-                            Height="50" Width="50" 
-                            HorizontalAlignment="Right" VerticalAlignment="Top" 
-                            Margin="0, -15">
+                    <CheckBox Style="{DynamicResource ImageCheckBoxStyle}"
+                              IsChecked="{Binding IsMenuExpanded}"
+                              Height="50" Width="50"
+                              HorizontalAlignment="Right" VerticalAlignment="Top" 
+                              Margin="0, -15">
                         <Image Style="{DynamicResource HamburgerImage}"/>
-                        <Button.Triggers>
-                            <EventTrigger RoutedEvent="Button.Click">
+                        <CheckBox.Triggers>
+                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                    From="150"
-                                    To="360"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="MenuGrid"
-                                    Storyboard.TargetProperty="Width"/>
+                                            From="150"
+                                            To="360"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="MenuGrid"
+                                            Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
-                                    From="0, 40, 40, 40"
-                                    To="0, 40, 180, 40"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="IconImage"
-                                    Storyboard.TargetProperty="Margin"/>
+                                            From="0, 40, 40, 40"
+                                            To="0, 40, 180, 40"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="IconImage"
+                                            Storyboard.TargetProperty="Margin"/>
                                         <DoubleAnimation
-                                    From="24"
-                                    To="48"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="TitleTextBlock"
-                                    Storyboard.TargetProperty="FontSize"/>
+                                            From="24"
+                                            To="48"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="TitleTextBlock"
+                                            Storyboard.TargetProperty="FontSize"/>
                                         <DoubleAnimation
-                                    From="450"
-                                    To="350"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="NavigationContentControl"
-                                    Storyboard.TargetProperty="MaxHeight"/>
+                                            From="450"
+                                            To="350"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="NavigationContentControl"
+                                            Storyboard.TargetProperty="MaxHeight"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </Button.Triggers>
-                    </Button>
-
-                    <Button x:Name="ShrinkMenu"
-                            Command="{Binding ChangeMenuCommand}"
-                            Style="{DynamicResource ImageButtonStyle}" 
-                            Visibility="{Binding IsMenuExpanded, Converter={StaticResource BoolToVisibilityConverter}}"
-                            Height="50" Width="50" 
-                            HorizontalAlignment="Right" VerticalAlignment="Top" 
-                            Margin="0, -15">
-                        <Image Style="{DynamicResource HamburgerImage}"/>
-                        <Button.Triggers>
-                            <EventTrigger RoutedEvent="Button.Click">
+                            <EventTrigger RoutedEvent="CheckBox.Checked">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                    From="360"
-                                    To="150"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="MenuGrid"
-                                    Storyboard.TargetProperty="Width"/>
+                                            From="360"
+                                            To="150"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="MenuGrid"
+                                            Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
-                                    From="0, 40, 180, 40"
-                                    To="0, 40, 40, 40"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="IconImage"
-                                    Storyboard.TargetProperty="Margin"/>
+                                            From="0, 40, 180, 40"
+                                            To="0, 40, 40, 40"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="IconImage"
+                                            Storyboard.TargetProperty="Margin"/>
                                         <DoubleAnimation
-                                    From="48"
-                                    To="24"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="TitleTextBlock"
-                                    Storyboard.TargetProperty="FontSize"/>
+                                            From="48"
+                                            To="24"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="TitleTextBlock"
+                                            Storyboard.TargetProperty="FontSize"/>
                                         <DoubleAnimation
-                                    From="350"
-                                    To="450"
-                                    Duration="0:0:1"
-                                    Storyboard.TargetName="NavigationContentControl"
-                                    Storyboard.TargetProperty="MaxHeight"/>
+                                            From="350"
+                                            To="450"
+                                            Duration="0:0:1"
+                                            Storyboard.TargetName="NavigationContentControl"
+                                            Storyboard.TargetProperty="MaxHeight"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                        </Button.Triggers>
-                    </Button>
+                        </CheckBox.Triggers>
+                    </CheckBox>
 
                 </Grid>
 

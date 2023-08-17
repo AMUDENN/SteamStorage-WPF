@@ -71,7 +71,7 @@ namespace SteamStorage.Models
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось изменить элемент . Ошибка: {ex.Message}", this.GetType());
+                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }

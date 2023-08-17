@@ -9,13 +9,11 @@
              x:Name="MainUserControl"
              d:DesignHeight="350" d:DesignWidth="300">
 
-
-
     <ListView x:Name="MainListView"
-                  ItemsSource="{Binding NavigationOptions}" 
-                  Style="{DynamicResource ListViewStyle}"
-                  SelectionMode="Single"
-                  Height="{Binding ElementName=MainUserControl, Path=ActualHeight}">
+              ItemsSource="{Binding NavigationOptions}" 
+              Style="{DynamicResource ListViewStyle}"
+              SelectionMode="Single"
+              Height="{Binding ElementName=MainUserControl, Path=ActualHeight}">
 
         <ListView.Resources>
             <ControlTemplate x:Key="BigButtons" TargetType="{x:Type ContentControl}">

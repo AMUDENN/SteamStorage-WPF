@@ -75,7 +75,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="ExpanderRadioButtonStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
@@ -109,5 +109,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
 </ResourceDictionary>

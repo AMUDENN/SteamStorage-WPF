@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using SteamStorage.Models;
 
@@ -9,9 +8,7 @@ namespace SteamStorage.ViewModels
     {
         #region Fields
         private ObservableObject _currentVM = new WelcomeVM();
-        private bool _isMenuExpanded = true;
-
-        private RelayCommand _changeMenuCommand;
+        private bool _isMenuExpanded;
         #endregion Fields
 
         #region Properties
@@ -28,16 +25,6 @@ namespace SteamStorage.ViewModels
         }
         #endregion Properties
 
-        #region Commands
-        public RelayCommand ChangeMenuCommand
-        {
-            get
-            {
-                return _changeMenuCommand ??= new RelayCommand(DoChangeMenuCommand);
-            }
-        }
-        #endregion Commands
-
         #region Constructor
         public MainVM()
         {
@@ -51,10 +38,6 @@ namespace SteamStorage.ViewModels
         {
             if (message.Value is NavigationModel navModel)
                 CurrentVM = navModel.DestinationVM;
-        }
-        private void DoChangeMenuCommand()
-        {
-            IsMenuExpanded = !IsMenuExpanded;
         }
         #endregion Methods
     }
