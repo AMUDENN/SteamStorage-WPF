@@ -77,6 +77,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось изменить группу {Title}");
             }
         }
         public void DeleteGroup()
@@ -91,6 +92,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }
         public void DeleteGroupWithSkins()
@@ -110,6 +112,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }
         #endregion Methods

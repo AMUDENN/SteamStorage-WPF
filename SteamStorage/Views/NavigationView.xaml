@@ -6,78 +6,116 @@
              xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:SteamStorage.Views"
              mc:Ignorable="d" 
+             x:Name="MainUserControl"
              d:DesignHeight="350" d:DesignWidth="300">
 
-    <ScrollViewer>
 
-        <ListView ItemsSource="{Binding NavigationOptions}" 
+
+    <ListView x:Name="MainListView"
+                  ItemsSource="{Binding NavigationOptions}" 
                   Style="{DynamicResource ListViewStyle}"
                   SelectionMode="Single"
-                  Height="350">
+                  Height="{Binding ElementName=MainUserControl, Path=ActualHeight}">
 
-            <Behaviors:Interaction.Triggers>
-                <Behaviors:EventTrigger EventName="SelectionChanged">
-                    <Behaviors:InvokeCommandAction Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True"/>
-                </Behaviors:EventTrigger>
-            </Behaviors:Interaction.Triggers>
+        <ListView.Resources>
+            <ControlTemplate x:Key="BigButtons" TargetType="{x:Type ContentControl}">
+                <Border Style="{DynamicResource AccentAdditionalBorderStyle}" Background="Transparent">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Style="{Binding ImageStyle}" Margin="7" Grid.Column="0"/>
+                        <TextBlock Text="{Binding Name}" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0, 0, 0" Grid.Column="1"/>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+            <ControlTemplate x:Key="SmallButtons" TargetType="{x:Type ContentControl}">
+                <Border Style="{DynamicResource AccentAdditionalBorderStyle}" VerticalAlignment="Center" Background="Transparent">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Style="{Binding ImageStyle}" Margin="5" Grid.Row="0"/>
+                        <TextBlock Text="{Binding Name}" Style="{DynamicResource SmallTextBlockStyle}" Margin="0" Grid.Row="1"/>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </ListView.Resources>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding NavigationOptions.Count}"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="SelectionChanged">
+                <Behaviors:InvokeCommandAction Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True"/>
+            </Behaviors:EventTrigger>
+        </Behaviors:Interaction.Triggers>
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Grid>
-                                    <ContentPresenter x:Name="PART_ContentHost"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Rows="{Binding NavigationOptions.Count}"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <ContentPresenter x:Name="PART_ContentHost"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border Style="{DynamicResource AccentBorderStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Style="{DynamicResource AdditionalBorderStyle}" CornerRadius="7, 0, 0, 7" Grid.Column="0"/>
+                                            <ContentPresenter x:Name="PART_ContentHost" Margin="5, 0, 0, 0" Grid.Column="1"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsSelected}" Value="True"/>
+                            <Condition Binding="{Binding ElementName=MainUserControl, Path=ActualWidth}" Value="90"/>
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListViewItem}">
                                         <Border Style="{DynamicResource AccentBorderStyle}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="3"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Style="{DynamicResource AdditionalBorderStyle}" CornerRadius="7, 0, 0, 7" Grid.Column="0"/>
-                                                <ContentPresenter x:Name="PART_ContentHost" Margin="5, 0, 0, 0" Grid.Column="1"/>
-                                            </Grid>
+                                            <ContentPresenter x:Name="PART_ContentHost"/>
                                         </Border>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ListView.ItemContainerStyle>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" Background="Transparent">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Style="{Binding ImageStyle}" Margin="7" Grid.Column="0"/>
-                            <TextBlock Text="{Binding Name}" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0, 0, 0" Grid.Column="1"/>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ContentControl x:Name="MainContentControl" Template="{StaticResource BigButtons}"/>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=MainUserControl, Path=ActualWidth}" Value="90">
+                        <Setter Property="Template" TargetName="MainContentControl" Value="{StaticResource SmallButtons}"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </ListView.ItemTemplate>
 
-        </ListView>
-
-    </ScrollViewer>
+    </ListView>
 
 </UserControl>

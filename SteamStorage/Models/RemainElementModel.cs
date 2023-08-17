@@ -104,6 +104,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
@@ -121,6 +122,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось продать элемент {Title}");
             }
         }
         public void DeleteRemain()
@@ -135,6 +137,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }
         public void UpdateCurrentCost()
@@ -150,6 +153,7 @@ namespace SteamStorage.Models
             {
                 _context?.UndoChanges();
                 _logger?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось узнать текущую цену элемента {Title}");
             }
         }
         #endregion Methods

@@ -7,6 +7,7 @@
         <ResourceDictionary Source="\Resources\Images\Vectors\EditImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\ErrorImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\FilterRemoveImage.xaml"/>
+        <ResourceDictionary Source="\Resources\Images\Vectors\HamburgerImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\InformationImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\MagnifyingGlassImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\PricetagImage.xaml"/>
