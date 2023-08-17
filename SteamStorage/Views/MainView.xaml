@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="MenuGrid" Width="360" Margin="0, 24, 0, 0" Grid.Column="0">
+        <Grid x:Name="MenuGrid" Width="340" Margin="0, 24, 0, 0" Grid.Column="0">
 
             <Border Style="{DynamicResource AccentAdditionalBorderStyle}" 
                     CornerRadius="0, 20, 0, 0">
@@ -26,24 +26,26 @@
                 <Grid Margin="30, 45">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="200"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="130"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="40*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
 
-                    <Image x:Name="IconImage" Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" Margin="0, 40, 180, 40" Grid.Row="0"/>
+                    <Image x:Name="IconImage" Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0, 20, 160, 20" Grid.Row="1"/>
 
-                    <TextBlock x:Name="TitleTextBlock" Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="2"/>
+                    <TextBlock x:Name="TitleTextBlock" Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
 
-                    <ContentControl x:Name="NavigationContentControl" Content="{Binding NavigationVM}" MaxHeight="350" Grid.Row="4"/>
+                    <ContentControl x:Name="NavigationContentControl" Content="{Binding NavigationVM}" MaxHeight="380" Grid.Row="5"/>
 
                     <CheckBox Style="{DynamicResource ImageCheckBoxStyle}"
                               IsChecked="{Binding IsMenuExpanded}"
-                              Height="50" Width="50"
+                              Height="45" Width="45"
                               HorizontalAlignment="Right" VerticalAlignment="Top" 
-                              Margin="0, -15">
+                              Margin="-5, -20">
                         <Image Style="{DynamicResource HamburgerImage}"/>
                         <CheckBox.Triggers>
                             <EventTrigger RoutedEvent="CheckBox.Unchecked">
@@ -51,26 +53,26 @@
                                     <Storyboard>
                                         <DoubleAnimation
                                             From="150"
-                                            To="360"
-                                            Duration="0:0:1"
+                                            To="340"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="MenuGrid"
                                             Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
-                                            From="20, 40, 20, 40"
-                                            To="0, 40, 180, 40"
-                                            Duration="0:0:1"
+                                            From="20"
+                                            To="0, 20, 180, 20"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="IconImage"
                                             Storyboard.TargetProperty="Margin"/>
                                         <DoubleAnimation
                                             From="24"
                                             To="48"
-                                            Duration="0:0:1"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="TitleTextBlock"
                                             Storyboard.TargetProperty="FontSize"/>
                                         <DoubleAnimation
                                             From="450"
                                             To="350"
-                                            Duration="0:0:1"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="NavigationContentControl"
                                             Storyboard.TargetProperty="MaxHeight"/>
                                     </Storyboard>
@@ -80,27 +82,27 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                            From="360"
+                                            From="340"
                                             To="150"
-                                            Duration="0:0:1"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="MenuGrid"
                                             Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
-                                            From="0, 40, 180, 40"
-                                            To="20, 40, 20, 40"
-                                            Duration="0:0:1"
+                                            From="0, 20, 180, 20"
+                                            To="20"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="IconImage"
                                             Storyboard.TargetProperty="Margin"/>
                                         <DoubleAnimation
                                             From="48"
                                             To="24"
-                                            Duration="0:0:1"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="TitleTextBlock"
                                             Storyboard.TargetProperty="FontSize"/>
                                         <DoubleAnimation
                                             From="350"
                                             To="450"
-                                            Duration="0:0:1"
+                                            Duration="0:0:0.45"
                                             Storyboard.TargetName="NavigationContentControl"
                                             Storyboard.TargetProperty="MaxHeight"/>
                                     </Storyboard>
