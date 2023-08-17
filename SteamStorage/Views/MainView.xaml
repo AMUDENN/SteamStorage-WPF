@@ -56,7 +56,7 @@
                                             Storyboard.TargetName="MenuGrid"
                                             Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
-                                            From="0, 40, 40, 40"
+                                            From="20, 40, 20, 40"
                                             To="0, 40, 180, 40"
                                             Duration="0:0:1"
                                             Storyboard.TargetName="IconImage"
@@ -87,7 +87,7 @@
                                             Storyboard.TargetProperty="Width"/>
                                         <ThicknessAnimation
                                             From="0, 40, 180, 40"
-                                            To="0, 40, 40, 40"
+                                            To="20, 40, 20, 40"
                                             Duration="0:0:1"
                                             Storyboard.TargetName="IconImage"
                                             Storyboard.TargetProperty="Margin"/>

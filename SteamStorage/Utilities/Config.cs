@@ -76,6 +76,11 @@ namespace SteamStorage.Utilities
             get => Convert.ToBoolean(_config.AppSettings.Settings["IsGreetingTextVisible"].Value);
             set => SaveProperty("IsGreetingTextVisible", value.ToString());
         }
+        public static bool IsMenuExpanded
+        {
+            get => Convert.ToBoolean(_config.AppSettings.Settings["IsMenuExpanded"].Value);
+            set => SaveProperty("IsMenuExpanded", value.ToString());
+        }
         private static void SaveProperty(string name, string value)
         {
             _config.AppSettings.Settings[name].Value = value;

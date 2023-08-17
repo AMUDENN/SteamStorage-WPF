@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using SteamStorage.Models;
+using SteamStorage.Utilities;
+using SteamStorage.Windows;
 
 namespace SteamStorage.ViewModels
 {
@@ -28,6 +30,8 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public MainVM()
         {
+            IsMenuExpanded = Config.IsMenuExpanded;
+            Singleton.GetObject<MainWindow>().Closing += (s, e) => Config.IsMenuExpanded = IsMenuExpanded;
             NavigationVM = new NavigationVM();
             WeakReferenceMessenger.Default.Register<NavigationChangedRequestedMessage>(this, NavigateTo);
         }
