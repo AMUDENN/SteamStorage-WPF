@@ -17,40 +17,77 @@
 
         <Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="370"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="210"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-            <Button Content="Экспортировать в .xlsx" 
-                    Command="{Binding ExportToExcel}"
-                    Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                    HorizontalAlignment="Left" Grid.Row="1"/>
+            <Grid Grid.Column="1">
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3">
-                <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
-                <RadioButton Content="Тёмная" IsChecked="{Binding IsDarkTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
-                <RadioButton Content="Светлая" IsChecked="{Binding IsLightTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
-                <RadioButton Content="Пользовательская" IsChecked="{Binding IsCustomTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
-            </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="230"/>
+                    <RowDefinition Height="*" MinHeight="10"/>
+                    <RowDefinition Height="370"/>
+                    <RowDefinition Height="*" MinHeight="10"/>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="*" MinHeight="10"/>
+                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="5">
+                <GroupBox Header="Внешний вид приложения" 
+                          Style="{DynamicResource SettingsGroupBoxStyle}" 
+                          Grid.Row="1">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid HorizontalAlignment="Stretch" Margin="7">
 
-                <GroupBox IsEnabled="{Binding IsCustomTheme}" Header="Настройка цветов пользовательской темы" Style="{DynamicResource GroupBoxStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" MinHeight="1"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" MinHeight="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <RadioButton Content="Тёмная тема" 
+                                     IsChecked="{Binding IsDarkTheme}" 
+                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     GroupName="Themes" 
+                                     HorizontalAlignment="Stretch"
+                                     HorizontalContentAlignment="Left" 
+                                     Margin="5, 0" Grid.Row="0"/>
+                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                                   Margin="-12, 0" Grid.Row="1"/>
+                        <RadioButton Content="Светлая тема" 
+                                     IsChecked="{Binding IsLightTheme}" 
+                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     GroupName="Themes" 
+                                     HorizontalAlignment="Stretch"
+                                     HorizontalContentAlignment="Left"  
+                                     Margin="5, 0" Grid.Row="2"/>
+                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                                   Margin="-12, 0" Grid.Row="3"/>
+                        <RadioButton Content="Пользовательская тема" 
+                                     IsChecked="{Binding IsCustomTheme}" 
+                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     GroupName="Themes" 
+                                     HorizontalAlignment="Stretch"
+                                     HorizontalContentAlignment="Left"  
+                                     Margin="5, 0" Grid.Row="4"/>
+
+                    </Grid>
+
+                </GroupBox>
+
+                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="2"/>
+
+                <GroupBox Header="Настройка цветов пользовательской темы" 
+                          IsEnabled="{Binding IsCustomTheme}" 
+                          Style="{DynamicResource SettingsGroupBoxStyle}"
+                          Margin="7"
+                          Grid.Row="3">
 
                     <Grid Margin="5">
 
@@ -114,86 +151,122 @@
                                               Grid.Row="2" Grid.Column="3"/>
 
                         <Grid Grid.Row="4" Grid.Column="0">
-                            
+
                             <Button Content="Сохранить" 
                                 Command="{Binding SaveColorsCommand}"
                                 Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
-                            
+
                         </Grid>
 
                         <Grid Grid.Row="4" Grid.Column="1">
-                            
+
                             <Button Content="Сбросить"
                                 Command="{Binding ResetColorsCommand}"
                                 Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
-                            
+
                         </Grid>
 
                     </Grid>
 
                 </GroupBox>
 
-            </Grid>
+                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="4"/>
 
-            <Grid Grid.Row="7">
+                <GroupBox Header="Управление данными" 
+                          Style="{DynamicResource SettingsGroupBoxStyle}" 
+                          Grid.Row="5">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid HorizontalAlignment="Stretch" Margin="7">
 
-                <Button Content="Открыть логи"
-                        Command="{Binding OpenLogCommand}"
-                        FontSize="24"
-                        Style="{DynamicResource AccentAdditionalButtonStyle}"
-                        HorizontalAlignment="Stretch" Padding="15, 0" Margin="0, 10, 5, 10" Grid.Column="0"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" MinHeight="1"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" MinHeight="1"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                <Button Content="Очистить базу данных"
-                        Command="{Binding ClearDatabaseCommand}"
-                        FontSize="24"
-                        Style="{DynamicResource AccentAdditionalButtonStyle}"
-                        HorizontalAlignment="Stretch" Padding="15, 0" Margin="5, 10, 0, 10" Grid.Column="1"/>
+                        <Button Content="Экспортировать в .xlsx" 
+                                Command="{Binding ExportToExcel}"
+                                FontSize="24"
+                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Grid.Row="0"/>
+                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                                   Margin="-12, 0" Grid.Row="1"/>
+                        <Button Content="Открыть логи"
+                                Command="{Binding OpenLogCommand}"
+                                FontSize="24"
+                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Grid.Row="2"/>
+                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                                   Margin="-12, 0" Grid.Row="3"/>
+                        <Button Content="Очистить базу данных"
+                                Command="{Binding ClearDatabaseCommand}"
+                                FontSize="24"
+                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left" 
+                                Grid.Row="4"/>
 
-            </Grid>
+                    </Grid>
 
-            <Grid Grid.Row="9">
+                </GroupBox>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="6"/>
 
-                <GroupBox Style="{DynamicResource GroupBoxStyle}" Header="О программе" Margin="0, 0, 5, 0" Grid.Column="0">
+                <Grid Grid.Row="7">
 
-                    <ScrollViewer>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
 
-                        <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
+                    <GroupBox Header="О программе" 
+                              Style="{DynamicResource SettingsGroupBoxStyle}" 
+                              Margin="0, 0, 5, 0" Grid.Column="0">
+
+                        <ScrollViewer Margin="7">
+
+                            <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
                             SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
                             <LineBreak/>Отслеживайте покупки, продажи и изменение стоимости активов. 
                             <LineBreak/>Принимайте взвешенные решения и достигайте финансового успеха.
                             <LineBreak/>(by AMUDENN)
-                        </TextBlock>
+                            </TextBlock>
 
-                    </ScrollViewer>
+                        </ScrollViewer>
 
-                </GroupBox>
+                    </GroupBox>
 
-                <GroupBox Style="{DynamicResource GroupBoxStyle}" Header="Контакты" Margin="5, 0, 0, 0" Grid.Column="1">
-                    <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
-                        GitHub: 
-                        <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage" 
-                                   Style="{DynamicResource HyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
-                        <LineBreak/>
-                        TG: 
-                        <Hyperlink NavigateUri="https://t.me/amudenn" 
-                                   Style="{DynamicResource HyperlinkStyle}">@amudenn</Hyperlink>
-                        <LineBreak/>
-                        Gmail: 
-                        <Hyperlink NavigateUri="SteamStorage@gmail.com" 
-                                   Style="{DynamicResource HyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
-                    </TextBlock>
-                </GroupBox>
+                    <GroupBox Header="Контакты" 
+                              Style="{DynamicResource SettingsGroupBoxStyle}" 
+                              Margin="5, 0, 0, 0" Grid.Column="1">
+
+                        <ScrollViewer Margin="7">
+                            
+                            <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
+                                GitHub: 
+                                <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage" 
+                                           Style="{DynamicResource HyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
+                                <LineBreak/>
+                                TG: 
+                                <Hyperlink NavigateUri="https://t.me/amudenn" 
+                                           Style="{DynamicResource HyperlinkStyle}">@amudenn</Hyperlink>
+                                <LineBreak/>
+                                Gmail: 
+                                <Hyperlink NavigateUri="SteamStorage@gmail.com" 
+                                           Style="{DynamicResource HyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
+                            </TextBlock>
+                            
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                </Grid>
 
             </Grid>
 
