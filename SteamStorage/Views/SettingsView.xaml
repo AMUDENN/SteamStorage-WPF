@@ -27,13 +27,13 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="230"/>
-                    <RowDefinition Height="*" MinHeight="10"/>
-                    <RowDefinition Height="370"/>
-                    <RowDefinition Height="*" MinHeight="10"/>
-                    <RowDefinition Height="250"/>
-                    <RowDefinition Height="*" MinHeight="10"/>
                     <RowDefinition Height="220"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="360"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="240"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="230"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -41,7 +41,7 @@
                           Style="{DynamicResource SettingsGroupBoxStyle}" 
                           Grid.Row="1">
 
-                    <Grid HorizontalAlignment="Stretch" Margin="7">
+                    <Grid HorizontalAlignment="Stretch" Margin="1">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -53,29 +53,29 @@
 
                         <RadioButton Content="Тёмная тема" 
                                      IsChecked="{Binding IsDarkTheme}" 
-                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     Style="{DynamicResource SettingsRadioButtonStyle}" 
                                      GroupName="Themes" 
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Left" 
-                                     Margin="5, 0" Grid.Row="0"/>
+                                     Margin="1, 0" Padding="10, 5" Grid.Row="0"/>
                         <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
-                                   Margin="-12, 0" Grid.Row="1"/>
+                                   Margin="-5, 0" Grid.Row="1"/>
                         <RadioButton Content="Светлая тема" 
                                      IsChecked="{Binding IsLightTheme}" 
-                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     Style="{DynamicResource SettingsRadioButtonStyle}" 
                                      GroupName="Themes" 
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Left"  
-                                     Margin="5, 0" Grid.Row="2"/>
+                                     Margin="1, 0" Padding="10, 5" Grid.Row="2"/>
                         <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
-                                   Margin="-12, 0" Grid.Row="3"/>
+                                   Margin="-5, 0" Grid.Row="3"/>
                         <RadioButton Content="Пользовательская тема" 
                                      IsChecked="{Binding IsCustomTheme}" 
-                                     Style="{DynamicResource RadioButtonStyle}" 
+                                     Style="{DynamicResource SettingsRadioButtonStyle}" 
                                      GroupName="Themes" 
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Left"  
-                                     Margin="5, 0" Grid.Row="4"/>
+                                     Margin="1, 0" Padding="10, 5" Grid.Row="4"/>
 
                     </Grid>
 
@@ -96,23 +96,25 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" MinHeight="10"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*" MinWidth="220" MaxWidth="270"/>
+                            <ColumnDefinition Width="*" MinWidth="130" MaxWidth="160"/>
+                            <ColumnDefinition Width="3*" MinWidth="300" MaxWidth="430"/>
+                            <ColumnDefinition Width="*" MinWidth="130" MaxWidth="160"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Main color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="0"/>
-                        <TextBlock Text="Main additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="0"/>
-                        <TextBlock Text="Additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="0"/>
-                        <TextBlock Text="Accent color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="3" Grid.Column="0"/>
-                        <TextBlock Text="Accent additional color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="2"/>
-                        <TextBlock Text="Percent plus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="2"/>
-                        <TextBlock Text="Percent minus color: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
+                        <TextBlock Text="Цвет выделения 1: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock Text="Цвет выделения 2: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="Цвет фона 1: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock Text="Цвет фона 2: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="3" Grid.Column="0" />
+                        <TextBlock Text="Цвет текста: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="0" Grid.Column="2"/>
+                        <TextBlock Text="Цвет положительного изменения: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="1" Grid.Column="2"/>
+                        <TextBlock Text="Цвет отрицательного изменения: " Style="{DynamicResource CommonTextBlockStyle}" TextAlignment="Right" Margin="5, 0" Grid.Row="2" Grid.Column="2"/>
 
                         <controls:AdvancedTextBox Text="{Binding MainColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
@@ -124,20 +126,20 @@
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding MainAdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="1" Grid.Column="1"/>
-                        <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
-                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
-                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
-                                              Tag="{Binding AdditionalColor, Converter={StaticResource ColorConverter}}"
-                                              Grid.Row="2" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding AccentColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}"
                                               Tag="{Binding AccentColor, Converter={StaticResource ColorConverter}}"
-                                              Grid.Row="3" Grid.Column="1"/>
+                                              Grid.Row="2" Grid.Column="1"/>
                         <controls:AdvancedTextBox Text="{Binding AccentAdditionalColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
                                               TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
                                               Tag="{Binding AccentAdditionalColor, Converter={StaticResource ColorConverter}}"
+                                              Grid.Row="3" Grid.Column="1"/>
+                        <controls:AdvancedTextBox Text="{Binding AdditionalColor, Mode=TwoWay}" 
+                                              MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
+                                              TextBoxStyle="{DynamicResource HexColorTextBoxStyle}" 
+                                              Tag="{Binding AdditionalColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="0" Grid.Column="3"/>
                         <controls:AdvancedTextBox Text="{Binding PercentPlusColor, Mode=TwoWay}" 
                                               MaxLength="6" PreviewRegex="[0-9a-fA-F]" AllowSpace="False"
@@ -150,21 +152,17 @@
                                               Tag="{Binding PercentMinusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="3"/>
 
-                        <Grid Grid.Row="4" Grid.Column="0">
+                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" Margin="-10, 0" Grid.Row="4" Grid.ColumnSpan="5" Grid.Column="0"/>
 
-                            <Button Content="Сохранить" 
+                        <Button Content="Сохранить" 
                                 Command="{Binding SaveColorsCommand}"
-                                Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
+                                Style="{DynamicResource SettingsButtonStyle}" 
+                                Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0"/>
 
-                        </Grid>
-
-                        <Grid Grid.Row="4" Grid.Column="1">
-
-                            <Button Content="Сбросить"
+                        <Button Content="Сбросить"
                                 Command="{Binding ResetColorsCommand}"
-                                Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
-
-                        </Grid>
+                                Style="{DynamicResource SettingsButtonStyle}"
+                                Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2"/>
 
                     </Grid>
 
@@ -176,7 +174,7 @@
                           Style="{DynamicResource SettingsGroupBoxStyle}" 
                           Grid.Row="5">
 
-                    <Grid HorizontalAlignment="Stretch" Margin="7">
+                    <Grid HorizontalAlignment="Stretch" Margin="1">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -188,29 +186,26 @@
 
                         <Button Content="Экспортировать в .xlsx" 
                                 Command="{Binding ExportToExcel}"
-                                FontSize="24"
-                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                Style="{DynamicResource SettingsButtonStyle}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
-                                Grid.Row="0"/>
+                                Padding="10, 5" Grid.Row="0"/>
                         <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
-                                   Margin="-12, 0" Grid.Row="1"/>
+                                   Margin="-5, 0" Grid.Row="1"/>
                         <Button Content="Открыть логи"
                                 Command="{Binding OpenLogCommand}"
-                                FontSize="24"
-                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                Style="{DynamicResource SettingsButtonStyle}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
-                                Grid.Row="2"/>
+                                Padding="10, 5" Grid.Row="2"/>
                         <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
-                                   Margin="-12, 0" Grid.Row="3"/>
+                                   Margin="-5, 0" Grid.Row="3"/>
                         <Button Content="Очистить базу данных"
                                 Command="{Binding ClearDatabaseCommand}"
-                                FontSize="24"
-                                Style="{DynamicResource AccentAdditionalButtonStyle}"
+                                Style="{DynamicResource SettingsButtonStyle}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left" 
-                                Grid.Row="4"/>
+                                Padding="10, 5" Grid.Row="4"/>
 
                     </Grid>
 
@@ -229,13 +224,13 @@
                               Style="{DynamicResource SettingsGroupBoxStyle}" 
                               Margin="0, 0, 5, 0" Grid.Column="0">
 
-                        <ScrollViewer Margin="7">
+                        <ScrollViewer Padding="10, 5">
 
-                            <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
-                            SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
-                            <LineBreak/>Отслеживайте покупки, продажи и изменение стоимости активов. 
-                            <LineBreak/>Принимайте взвешенные решения и достигайте финансового успеха.
-                            <LineBreak/>(by AMUDENN)
+                            <TextBlock Style="{DynamicResource CommonTextBlockStyle}">
+                                SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
+                                <LineBreak/>Отслеживайте покупки, продажи и изменение стоимости активов. 
+                                <LineBreak/>Принимайте взвешенные решения и достигайте финансового успеха.
+                                <LineBreak/>(by AMUDENN)
                             </TextBlock>
 
                         </ScrollViewer>

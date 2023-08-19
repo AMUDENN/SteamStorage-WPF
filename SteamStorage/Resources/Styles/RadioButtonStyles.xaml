@@ -21,7 +21,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+    <Style x:Key="SettingsRadioButtonStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="{DynamicResource AccentAdditional}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Additional}"/>
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
@@ -30,27 +30,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Border x:Name="radioButtonBorder" 
+                    <Border Style="{DynamicResource BaseBorderStyle}" 
+                            Background="{TemplateBinding Background}">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True" Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="radioButtonBorder" 
                                 Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="10" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center">
-                            <Grid x:Name="markGrid" Margin="3">
-                                <Ellipse x:Name="optionMark" 
+                                <Grid x:Name="markGrid" Margin="3">
+                                    <Ellipse x:Name="optionMark" 
                                          Fill="{DynamicResource Additional}" 
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
                                          MinWidth="10" MinHeight="10" Opacity="0"/>
-                            </Grid>
-                        </Border>
-                        <ContentPresenter x:Name="contentPresenter" 
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" 
                                           Grid.Column="1" 
                                           Focusable="False" 
                                           Margin="7, 0, 0, 0" 
@@ -58,17 +60,22 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                    </Grid>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="HasContent" Value="true">
+                        <Trigger Property="HasContent" Value="True">
                             <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
                             <Setter Property="Padding" Value="4,-1,0,0"/>
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="true">
+                        <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
                             <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Accent}"/>
+                            <Setter Property="Opacity" Value="0.9"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
