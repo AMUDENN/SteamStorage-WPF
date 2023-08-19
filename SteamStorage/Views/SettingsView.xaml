@@ -224,7 +224,7 @@
                               Style="{DynamicResource SettingsGroupBoxStyle}" 
                               Margin="0, 0, 5, 0" Grid.Column="0">
 
-                        <ScrollViewer Padding="10, 5">
+                        <ScrollViewer Margin="10, 5, 5, 5">
 
                             <TextBlock Style="{DynamicResource CommonTextBlockStyle}">
                                 SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
@@ -241,7 +241,7 @@
                               Style="{DynamicResource SettingsGroupBoxStyle}" 
                               Margin="5, 0, 0, 0" Grid.Column="1">
 
-                        <ScrollViewer Margin="7">
+                        <ScrollViewer Margin="10, 5, 5, 5">
                             
                             <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
                                 GitHub: 
