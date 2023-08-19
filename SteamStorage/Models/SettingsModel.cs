@@ -126,14 +126,6 @@ namespace SteamStorage.Models
         #endregion Constructor
 
         #region Methods
-        public void ExportToDB()
-        {
-                
-        }
-        public void ImportFromDB() 
-        {
-        
-        }
         public void ExportToExcel()
         {
 

@@ -23,8 +23,6 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="370"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
@@ -33,33 +31,19 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1">
-                
-                <Button Content="Экспортировать в .db" 
-                        Command="{Binding ExportToDB}"
-                        Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
-                
-                <TextBlock Text="/" Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0"/>
-                
-                <Button Content="Импортировать из .db" 
-                        Command="{Binding ImportFromDB}"
-                        Style="{DynamicResource UnderlineTransparentButtonStyle}"/>
-                
-            </StackPanel>
-
             <Button Content="Экспортировать в .xlsx" 
                     Command="{Binding ExportToExcel}"
                     Style="{DynamicResource UnderlineTransparentButtonStyle}" 
-                    HorizontalAlignment="Left" Grid.Row="3"/>
+                    HorizontalAlignment="Left" Grid.Row="1"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <StackPanel Orientation="Horizontal" Grid.Row="3">
                 <TextBlock Text="Выбрать тему: " Style="{DynamicResource CommonTextBlockStyle}"/>
                 <RadioButton Content="Тёмная" IsChecked="{Binding IsDarkTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
                 <RadioButton Content="Светлая" IsChecked="{Binding IsLightTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
                 <RadioButton Content="Пользовательская" IsChecked="{Binding IsCustomTheme}" Style="{DynamicResource RadioButtonStyle}" GroupName="Themes" Margin="5, 0"/>
             </StackPanel>
 
-            <Grid Grid.Row="7">
+            <Grid Grid.Row="5">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
@@ -151,7 +135,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="9">
+            <Grid Grid.Row="7">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -173,7 +157,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="11">
+            <Grid Grid.Row="9">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
@@ -197,9 +181,17 @@
 
                 <GroupBox Style="{DynamicResource GroupBoxStyle}" Header="Контакты" Margin="5, 0, 0, 0" Grid.Column="1">
                     <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
-                        GitHub: <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage">https://github.com/AMUDENN/SteamStorage</Hyperlink>
-                        <LineBreak/>TG: <Hyperlink NavigateUri="https://t.me/amudenn">@amudenn</Hyperlink>
-                        <LineBreak/>Gmail: <Hyperlink NavigateUri="SteamStorage@gmail.com">SteamStorage@gmail.com</Hyperlink>
+                        GitHub: 
+                        <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage" 
+                                   Style="{DynamicResource HyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
+                        <LineBreak/>
+                        TG: 
+                        <Hyperlink NavigateUri="https://t.me/amudenn" 
+                                   Style="{DynamicResource HyperlinkStyle}">@amudenn</Hyperlink>
+                        <LineBreak/>
+                        Gmail: 
+                        <Hyperlink NavigateUri="SteamStorage@gmail.com" 
+                                   Style="{DynamicResource HyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
                     </TextBlock>
                 </GroupBox>
 

@@ -10,8 +10,6 @@ namespace SteamStorage.ViewModels
         #region Fields
         private readonly SettingsModel _settingsModel = new();
 
-        private RelayCommand _exportToDB;
-        private RelayCommand _importFromDB;
         private RelayCommand _exportToExcel;
         private RelayCommand _saveColorsCommand;
         private RelayCommand _resetColorsCommand;
@@ -73,20 +71,6 @@ namespace SteamStorage.ViewModels
         #endregion Properties
 
         #region Commands
-        public RelayCommand ExportToDB
-        {
-            get
-            {
-                return _exportToDB ??= new RelayCommand(DoExportToDBCommand);
-            }
-        }
-        public RelayCommand ImportFromDB
-        {
-            get
-            {
-                return _importFromDB ??= new RelayCommand(DoImportFromDBCommand);
-            }
-        }
         public RelayCommand ExportToExcel
         {
             get
@@ -136,14 +120,6 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
-        private void DoExportToDBCommand()
-        {
-            _settingsModel.ExportToDB();
-        }
-        private void DoImportFromDBCommand()
-        {
-            _settingsModel.ImportFromDB();
-        }
         private void DoExportToExcelCommand()
         {
             _settingsModel.ExportToExcel();

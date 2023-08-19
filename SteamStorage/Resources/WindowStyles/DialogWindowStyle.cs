@@ -6,12 +6,13 @@ namespace SteamStorage.Resources.WindowStyles
     {
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ((sender as FrameworkElement).TemplatedParent as Window).Close();
+            ((sender as FrameworkElement)?.TemplatedParent as Window)?.Close();
         }
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            ((sender as FrameworkElement).TemplatedParent as Window)
-                .WindowState = WindowState.Minimized;
+            Window? me = (sender as FrameworkElement)?.TemplatedParent as Window;
+            if (me is not null)
+                me.WindowState = WindowState.Minimized;
         }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SteamStorage.Windows"
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        MinHeight="768" MinWidth="1366"
+        MinHeight="720" MinWidth="1280"
         Title="Steam Storage" 
         Style="{DynamicResource MainWindowStyle}">
     

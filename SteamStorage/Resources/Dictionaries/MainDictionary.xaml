@@ -8,6 +8,7 @@
         <ResourceDictionary Source="\Resources\Styles\ContextMenuStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ExpanderStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\GroupBoxStyles.xaml"/>
+        <ResourceDictionary Source="\Resources\Styles\HyperlinkStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ListViewStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\PlotStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ProgressBarStyles.xaml"/>
