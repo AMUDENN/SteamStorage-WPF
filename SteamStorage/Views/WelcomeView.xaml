@@ -15,29 +15,90 @@
 
         <Grid>
 
-            <GroupBox Header="Приветствие" 
-                      Style="{DynamicResource GroupBoxStyle}" 
-                      FontSize="48" 
-                      Visibility="{Binding IsGreetingTextVisible, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}" 
-                      Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Vertical">
+            <Grid Grid.Column="1">
 
-                    <TextBlock Style="{DynamicResource CommonTextBlockStyle}" FontSize="26" Margin="15" VerticalAlignment="Top">
-                        Приветствую! Добро пожаловать в SteamStorage - программу учета инвестиций в Steam.
-                        <LineBreak/><LineBreak/>SteamStorage представляет собой инструмент, который поможет вам эффективно управлять вашими инвестициями в предметы на платформе Steam. Программа предназначена для того, чтобы вы могли удобно отслеживать и контролировать ваш портфель активов.
-                        <LineBreak/><LineBreak/>С помощью SteamStorage вы сможете легко записывать информацию о ваших покупках и продажах, а также отслеживать изменение стоимости ваших инвестиций в режиме реального времени. Благодаря простому и интуитивно понятному интерфейсу, вы сможете быстро добавлять новые записи, устанавливать финансовые цели и отслеживать свой прогресс.
-                        <LineBreak/><LineBreak/>SteamStorage обеспечивает безопасное хранение ваших данных, чтобы вы могли быть уверены в сохранности вашей информации. Вы всегда сможете получить доступ к вашим записям и анализировать свои инвестиции в любое время.
-                        <LineBreak/><LineBreak/>Не упускайте контроль над вашими инвестициями в Steam. Доверьтесь SteamStorage и дайте ему помочь вам достичь финансового успеха. Если у вас возникнут вопросы или потребуется помощь, наша команда всегда готова вам помочь.
-                        <LineBreak/><LineBreak/>Приятного использования SteamStorage, вашего надежного партнера в учете инвестиций в Steam!
-                        <LineBreak/><LineBreak/>Для начала работы выберите один из пунктов меню слева.<LineBreak/>
-                    </TextBlock>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
 
-                    <CheckBox Content="Больше не показывать это сообщение" IsChecked="{Binding IsDontShowAgainEnabled}" Style="{DynamicResource CheckBoxStyle}"/>
+                <TextBlock Text="Добро пожаловать!" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="0"/>
 
-                </StackPanel>
+                <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0" Grid.Row="1">
+                    Приветствуем вас в Steam Storage!
+                    <LineBreak/>
+                    Мы рады, что вы выбрали нашу программу. Вместе с вами мы создаём лучший инструмент для инвестиций в мире Steam.
+                    <LineBreak/>
+                    <LineBreak/>
+                    С уважением,
+                    Команда Steam Storage
+                </TextBlock>
 
-            </GroupBox>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="2"/>
+
+                <GroupBox Header="О программе" 
+                          Style="{DynamicResource GroupBoxStyle}" 
+                          Margin="0, 0, 5, 0" Grid.Row="3">
+
+                    <ScrollViewer Margin="10, 5">
+
+                        <TextBlock Style="{DynamicResource CommonTextBlockStyle}">
+                            SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
+                            <LineBreak/>Отслеживайте покупки, продажи и изменение стоимости активов. 
+                            <LineBreak/>Принимайте взвешенные решения и достигайте финансового успеха.
+                            <LineBreak/>(by AMUDENN)
+                        </TextBlock>
+
+                    </ScrollViewer>
+
+                </GroupBox>
+
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="4"/>
+
+                <GroupBox Header="Контакты" 
+                          Style="{DynamicResource GroupBoxStyle}" 
+                          Margin="5, 0, 0, 0" Grid.Row="5">
+
+                    <ScrollViewer Margin="10, 5">
+
+                        <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
+                            GitHub: 
+                            <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage" 
+                                       Style="{DynamicResource HyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
+                            <LineBreak/>
+                            TG: 
+                            <Hyperlink NavigateUri="https://t.me/amudenn" 
+                                       Style="{DynamicResource HyperlinkStyle}">@amudenn</Hyperlink>
+                            <LineBreak/>
+                            Gmail: 
+                            <Hyperlink NavigateUri="SteamStorage@gmail.com" 
+                                       Style="{DynamicResource HyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
+                        </TextBlock>
+
+                    </ScrollViewer>
+
+                </GroupBox>
+
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="6"/>
+
+                <CheckBox Content="Больше не показывать это сообщение" 
+                          IsChecked="{Binding IsDontShowAgainEnabled}" 
+                          Style="{DynamicResource CheckBoxStyle}" 
+                          VerticalAlignment="Top" Grid.Row="7"/>
+
+            </Grid>
 
         </Grid>
 

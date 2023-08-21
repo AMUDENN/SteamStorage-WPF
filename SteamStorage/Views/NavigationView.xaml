@@ -11,6 +11,7 @@
 
     <ListView x:Name="MainListView"
               ItemsSource="{Binding NavigationOptions}" 
+              SelectedItem="{Binding SelectedNavigationModel}"
               Style="{DynamicResource ListViewStyle}"
               SelectionMode="Single"
               Height="{Binding ElementName=MainUserControl, Path=ActualHeight}">

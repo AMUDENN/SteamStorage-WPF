@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace SteamStorage.ViewModels
@@ -38,11 +39,18 @@ namespace SteamStorage.ViewModels
                 DestinationVM = new SettingsVM()
             }
         };
+        private NavigationModel _selectedNavigationModel;
+
         private RelayCommand<object> _selectionChangedCommand;
         #endregion Fields
 
         #region Properties
         public List<NavigationModel> NavigationOptions => _navigationOptions;
+        public NavigationModel SelectedNavigationModel
+        {
+            get => _selectedNavigationModel;
+            set => SetProperty(ref _selectedNavigationModel, value);
+        }
         #endregion Properties
 
         #region Commands
@@ -56,9 +64,9 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public NavigationVM()
+        public NavigationVM(bool isFirstOpen = false)
         {
-            
+            if (isFirstOpen) ChangeVM(NavigationOptions.First());
         }
         #endregion Constructor
 
@@ -71,10 +79,15 @@ namespace SteamStorage.ViewModels
                     return;
                 if (selectionChanged.AddedItems[0] is NavigationModel navModel)
                 {
-                    var message = new NavigationChangedRequestedMessage(navModel);
-                    WeakReferenceMessenger.Default.Send(message);
+                    ChangeVM(navModel);
                 }
             }
+        }
+        private void ChangeVM(NavigationModel navModel)
+        {
+            SelectedNavigationModel = navModel;
+            var message = new NavigationChangedRequestedMessage(navModel);
+            WeakReferenceMessenger.Default.Send(message);
         }
         #endregion Methods
     }

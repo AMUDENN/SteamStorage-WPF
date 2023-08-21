@@ -9,7 +9,7 @@ namespace SteamStorage.ViewModels
     public class MainVM : ObservableObject
     {
         #region Fields
-        private ObservableObject _currentVM = new WelcomeVM();
+        private ObservableObject _currentVM;
         private bool _isMenuExpanded;
         #endregion Fields
 
@@ -32,8 +32,13 @@ namespace SteamStorage.ViewModels
         {
             IsMenuExpanded = Config.IsMenuExpanded;
             Singleton.GetObject<MainWindow>().Closing += (s, e) => Config.IsMenuExpanded = IsMenuExpanded;
-            NavigationVM = new NavigationVM();
+
+            bool isGreetingTextVisible = Config.IsGreetingTextVisible;
+
+            if (isGreetingTextVisible) CurrentVM = new WelcomeVM();
+
             WeakReferenceMessenger.Default.Register<NavigationChangedRequestedMessage>(this, NavigateTo);
+            NavigationVM = new NavigationVM(!isGreetingTextVisible);
         }
         #endregion Constructor
 

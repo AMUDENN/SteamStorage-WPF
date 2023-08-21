@@ -31,7 +31,7 @@ namespace SteamStorage.ViewModels
         public WelcomeVM()
         {
             IsGreetingTextVisible = Config.IsGreetingTextVisible;
-            IsDontShowAgainEnabled = false;
+            IsDontShowAgainEnabled = !IsGreetingTextVisible;
         }
         #endregion Constructor
 
