@@ -84,7 +84,6 @@ namespace SteamStorage.Resources.Controls
             if (!AllowSpace)
             {
                 tb.Text = text.Replace(" ", string.Empty);
-                tb.SelectionStart = MaxLength;
             }
             if (text.Length >= MaxLength)
             {

@@ -127,47 +127,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="UnderlineTransparentButtonStyle" BasedOn="{StaticResource BaseTransparentButtonStyle}" TargetType="{x:Type Button}">
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Rectangle x:Name="Rectangle" 
-                                   Width="{Binding Path=ActualWidth, ElementName=TextBox}" 
-                                   Height="1"
-                                   Fill="{DynamicResource Additional}" Opacity="0.5" 
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   Margin="-2, -10, -2, 0"
-                                   Grid.Row="2"/>
-                        <TextBlock x:Name="TextBox"
-                                   Text="{TemplateBinding Content}"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Grid.RowSpan="3" Grid.Row="0"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Opacity" TargetName="Rectangle" Value="0.9"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Opacity" TargetName="Rectangle" Value="1"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="SettingsButtonStyle" BasedOn="{StaticResource AccentAdditionalButtonStyle}" TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="24"/>
         <Style.Triggers>

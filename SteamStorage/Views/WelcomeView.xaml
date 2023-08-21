@@ -15,7 +15,11 @@
 
         <Grid>
 
-            <GroupBox Style="{DynamicResource GroupBoxStyle}" Visibility="{Binding IsGreetingTextVisible, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}" Header="Приветствие" FontSize="48" Margin="5">
+            <GroupBox Header="Приветствие" 
+                      Style="{DynamicResource GroupBoxStyle}" 
+                      FontSize="48" 
+                      Visibility="{Binding IsGreetingTextVisible, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}" 
+                      Margin="5">
 
                 <StackPanel Orientation="Vertical">
 

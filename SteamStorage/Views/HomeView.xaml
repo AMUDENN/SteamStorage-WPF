@@ -17,81 +17,119 @@
             Converter2="{StaticResource PercentConverter}"/>
     </UserControl.Resources>
 
-    <ScrollViewer Margin="30, 5, 3, 5">
+    <ScrollViewer Padding="30, 5, 3, 5">
 
         <Grid>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Остатки" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="0"/>
+            <Grid Grid.Column="1">
 
-            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*" MinHeight="8"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <TextBlock Text="Остатки" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="0"/>
 
-                <TextBlock Text="{Binding TotalRemainCount}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalRemainAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
-                <TextBlock Text="{Binding TotalRemainPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
-                           Foreground="{Binding TotalRemainPercent, Converter={StaticResource PercentForegroundConverter}}"
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
-                <TextBlock Text="{Binding TotalRemainCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="3"/>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="1"/>
 
-            </Grid>
+                <GroupBox Header="Общие сведения"
+                          Style="{DynamicResource GroupBoxStyle}"
+                          Grid.Row="2">
 
-            <Grid Height="300" Grid.Row="2">
+                    <Grid Margin="5">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                <GroupBox Header="Группы" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="0">
+                        <TextBlock Text="{Binding TotalRemainCount}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общее количество"
+                                   Grid.Column="0"/>
+                        <TextBlock Text="{Binding TotalRemainAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общая сумма покупки"
+                                   Grid.Column="1"/>
+                        <TextBlock Text="{Binding TotalRemainPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                   Foreground="{Binding TotalRemainPercent, Converter={StaticResource PercentForegroundConverter}}"
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общее изменение"
+                                   Grid.Column="2"/>
+                        <TextBlock Text="{Binding TotalRemainCurrentAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общая текущая сумма"
+                                   Grid.Column="3"/>
 
-                    <ListView ItemsSource="{Binding RemainGroupModels}"
-                      Style="{DynamicResource ListViewStyle}"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="5, 0">
+                    </Grid>
 
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                </GroupBox>
 
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Margin" Value="2"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                            <ContentPresenter x:Name="PART_ContentHost"/>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="3"/>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                <Grid Grid.Row="4">
 
-                                <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
 
-                                    <Grid Height="60" Margin="15, 5">
+                    <GroupBox Header="Группы" 
+                              Style="{DynamicResource GroupBoxStyle}" 
+                              Margin="0, 0, 5, 0"
+                              Grid.Column="0">
+
+                        <ListView ItemsSource="{Binding RemainGroupModels}"
+                                  Style="{DynamicResource ListViewStyle}"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                  Margin="5">    
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <ContentPresenter x:Name="PART_ContentHost"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="50" Margin="15, 5">
+                                        
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="1"/>
+                                        </Grid.RowDefinitions>
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -101,144 +139,175 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Text="{Binding Title}" 
+                                                   ToolTip="Название"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
                                                    TextAlignment="Left" 
-                                                   Grid.Column="0"/>
+                                                   Grid.Row="0" Grid.Column="0"/>
                                         <TextBlock Text="{Binding RemainsCount}" 
+                                                   ToolTip="Количество"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
-                                                   Grid.Column="1"/>
+                                                   Grid.Row="0" Grid.Column="1"/>
                                         <TextBlock Text="{Binding RemainsAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                                   ToolTip="Сумма"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
-                                                   Grid.Column="2"/>
+                                                   Grid.Row="0" Grid.Column="2"/>
                                         <TextBlock Text="{Binding RemainsPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                                   ToolTip="Изменение"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
                                                    Foreground="{Binding RemainsPercent, Converter={StaticResource PercentForegroundConverter}}"
-                                                   Grid.Column="3"/>
+                                                   Grid.Row="0" Grid.Column="3"/>
+
+                                        <Separator Style="{DynamicResource SmallSeparatorStyle}" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="0"/>
 
                                     </Grid>
 
-                                </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        </ListView>
 
-                    </ListView>
+                    </GroupBox>
 
-                </GroupBox>
+                    <GroupBox Header="Прибыльность" 
+                              Style="{DynamicResource GroupBoxStyle}" 
+                              Margin="5, 0, 0, 0"
+                              Grid.Column="1">
 
-                <GroupBox Header="Прибыльность" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
-                    
-                    <Grid Margin="5, 0">
+                        <Grid Margin="10, 0">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        
-                        <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Text="{Binding MostProfitabilityRemainGroup.Title}" 
+                            <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                <TextBlock Text="{Binding MostProfitabilityRemainGroup.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=": " 
+                                <TextBlock Text=": " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                <TextBlock Text="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource PercentForegroundConverter}}"/>
-                        </StackPanel>    
-                            
-                        <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                            <TextBlock Text="{Binding MostProfitabilityRemain.Title}" 
+                            <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                                <TextBlock Text="{Binding MostProfitabilityRemain.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=": " 
+                                <TextBlock Text=": " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                <TextBlock Text="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityRemain.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
-                            <TextBlock Text=" (" 
+                                <TextBlock Text=" (" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityRemain.CostPurchase}" 
+                                <TextBlock Text="{Binding MostProfitabilityRemain.CostPurchase}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=" → " 
+                                <TextBlock Text=" → " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityRemain.LastCost}" 
+                                <TextBlock Text="{Binding MostProfitabilityRemain.LastCost}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=")" 
+                                <TextBlock Text=")" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                        </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                </Grid>
+
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="5"/>
+
+                <TextBlock Text="Архив" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="7"/>
+
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="8"/>
+
+                <GroupBox Header="Общие сведения"
+                          Style="{DynamicResource GroupBoxStyle}"
+                          Grid.Row="9">
+
+                    <Grid Margin="5">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding TotalArchiveCount}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общее количество"
+                                   Grid.Column="0"/>
+                        <TextBlock Text="{Binding TotalArchiveAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общая сумма покупки"
+                                   Grid.Column="1"/>
+                        <TextBlock Text="{Binding TotalArchivePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                   Foreground="{Binding TotalArchivePercent, Converter={StaticResource PercentForegroundConverter}}"
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общее изменение"
+                                   Grid.Column="2"/>
+                        <TextBlock Text="{Binding TotalArchiveAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                   Style="{DynamicResource CommonCenterTextBlockStyle}" 
+                                   ToolTip="Общая сумма продажи"
+                                   Grid.Column="3"/>
 
                     </Grid>
-                    
+
                 </GroupBox>
 
-            </Grid>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="10"/>
 
-            <TextBlock Text="Архив" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
+                <Grid Grid.Row="11">
 
-            <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <GroupBox Header="Группы" 
+                              Style="{DynamicResource GroupBoxStyle}" 
+                              Margin="0, 0, 5, 0" Grid.Column="0">
 
-                <TextBlock Text="{Binding TotalArchiveCount}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="0"/>
-                <TextBlock Text="{Binding TotalArchiveAmountPurchase, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="1"/>
-                <TextBlock Text="{Binding TotalArchivePercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
-                           Foreground="{Binding TotalArchivePercent, Converter={StaticResource PercentForegroundConverter}}"
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="2"/>
-                <TextBlock Text="{Binding TotalArchiveAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           Style="{DynamicResource CommonTextBlockStyle}" Grid.Column="3"/>
+                        <ListView ItemsSource="{Binding ArchiveGroupModels}"
+                                  Style="{DynamicResource ListViewStyle}"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                  Padding="5">
 
-            </Grid>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-            <Grid Height="300" Grid.Row="5">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <ContentPresenter x:Name="PART_ContentHost"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
 
-                <GroupBox Header="Группы" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="0">
+                                    <Grid Height="50" Margin="15, 5">
 
-                    <ListView ItemsSource="{Binding ArchiveGroupModels}"
-                      Style="{DynamicResource ListViewStyle}"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="5, 0">
-
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Margin" Value="2"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                            <ContentPresenter x:Name="PART_ContentHost"/>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-
-                                <Border Style="{DynamicResource AccentAdditionalBorderStyle}">
-
-                                    <Grid Height="60" Margin="15, 5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="1"/>
+                                        </Grid.RowDefinitions>
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -248,82 +317,90 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Text="{Binding Title}" 
+                                                   ToolTip="Название"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
                                                    TextAlignment="Left" 
-                                                   Grid.Column="0"/>
+                                                   Grid.Row="0" Grid.Column="0"/>
                                         <TextBlock Text="{Binding ArchivesCount}" 
+                                                   ToolTip="Количество"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
-                                                   Grid.Column="1"/>
+                                                   Grid.Row="0" Grid.Column="1"/>
                                         <TextBlock Text="{Binding ArchivesAmount, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
+                                                   ToolTip="Сумма"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
-                                                   Grid.Column="2"/>
+                                                   Grid.Row="0" Grid.Column="2"/>
                                         <TextBlock Text="{Binding ArchivesPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                                   ToolTip="Изменение"
                                                    Style="{DynamicResource SmallTextBlockStyle}" 
                                                    Foreground="{Binding ArchivesPercent, Converter={StaticResource PercentForegroundConverter}}"
-                                                   Grid.Column="3"/>
+                                                   Grid.Row="0" Grid.Column="3"/>
+
+                                        <Separator Style="{DynamicResource SmallSeparatorStyle}" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="0"/>
 
                                     </Grid>
 
-                                </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        </ListView>
 
-                    </ListView>
+                    </GroupBox>
 
-                </GroupBox>
+                    <GroupBox Header="Прибыльность" 
+                              Style="{DynamicResource GroupBoxStyle}" 
+                              Margin="5, 0, 0, 0" Grid.Column="1">
 
-                <GroupBox Header="Прибыльность" Style="{DynamicResource GroupBoxStyle}" Margin="5, 0" Grid.Column="1">
+                        <Grid Margin="10, 0">
 
-                    <Grid Margin="5, 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                            <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
 
-                        <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
-
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Text="{Binding MostProfitabilityArchiveGroup.Title}" 
+                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                <TextBlock Text="{Binding MostProfitabilityArchiveGroup.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=": " 
+                                <TextBlock Text=": " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                <TextBlock Text="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource PercentForegroundConverter}}"/>
-                        </StackPanel>
+                            </StackPanel>
 
-                        <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+                            <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                            <TextBlock Text="{Binding MostProfitabilityArchive.Title}" 
+                            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                                <TextBlock Text="{Binding MostProfitabilityArchive.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=": " 
+                                <TextBlock Text=": " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
+                                <TextBlock Text="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityArchive.Percent, Converter={StaticResource PercentForegroundConverter}}"/>
-                            <TextBlock Text=" (" 
+                                <TextBlock Text=" (" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityArchive.CostPurchase}" 
+                                <TextBlock Text="{Binding MostProfitabilityArchive.CostPurchase}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=" → " 
+                                <TextBlock Text=" → " 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text="{Binding MostProfitabilityArchive.CostSold}" 
+                                <TextBlock Text="{Binding MostProfitabilityArchive.CostSold}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            <TextBlock Text=")" 
+                                <TextBlock Text=")" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                        </StackPanel>
+                            </StackPanel>
 
-                    </Grid>
+                        </Grid>
 
-                </GroupBox>
+                    </GroupBox>
+
+                </Grid>
 
             </Grid>
-        
+
         </Grid>
 
     </ScrollViewer>

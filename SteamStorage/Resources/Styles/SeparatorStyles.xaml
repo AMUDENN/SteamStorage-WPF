@@ -7,6 +7,7 @@
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource Additional}"/>
         <Setter Property="Height" Value="1"/>
         <Setter Property="Template">
@@ -18,7 +19,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SettingsSeparatorStyle" BasedOn="{StaticResource SeparatorStyle}" TargetType="{x:Type Separator}">
+    <Style x:Key="SmallSeparatorStyle" BasedOn="{StaticResource SeparatorStyle}" TargetType="{x:Type Separator}">
         <Setter Property="Opacity" Value="0.5"/>
     </Style>
 

@@ -13,7 +13,7 @@
         <converters:ColorConverter x:Key="ColorConverter"/>
     </UserControl.Resources>
 
-    <ScrollViewer Margin="30, 5, 3, 5">
+    <ScrollViewer Padding="30, 5, 3, 5">
 
         <Grid>
 
@@ -38,7 +38,7 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox Header="Внешний вид приложения" 
-                          Style="{DynamicResource SettingsGroupBoxStyle}" 
+                          Style="{DynamicResource GroupBoxStyle}" 
                           Grid.Row="1">
 
                     <Grid HorizontalAlignment="Stretch" Margin="1">
@@ -58,7 +58,7 @@
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Left" 
                                      Margin="1, 0" Padding="10, 5" Grid.Row="0"/>
-                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                        <Separator Style="{DynamicResource SmallSeparatorStyle}" 
                                    Margin="-5, 0" Grid.Row="1"/>
                         <RadioButton Content="Светлая тема" 
                                      IsChecked="{Binding IsLightTheme}" 
@@ -67,7 +67,7 @@
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Left"  
                                      Margin="1, 0" Padding="10, 5" Grid.Row="2"/>
-                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                        <Separator Style="{DynamicResource SmallSeparatorStyle}" 
                                    Margin="-5, 0" Grid.Row="3"/>
                         <RadioButton Content="Пользовательская тема" 
                                      IsChecked="{Binding IsCustomTheme}" 
@@ -81,12 +81,11 @@
 
                 </GroupBox>
 
-                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="2"/>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="2"/>
 
                 <GroupBox Header="Настройка цветов пользовательской темы" 
                           IsEnabled="{Binding IsCustomTheme}" 
-                          Style="{DynamicResource SettingsGroupBoxStyle}"
-                          Margin="7"
+                          Style="{DynamicResource GroupBoxStyle}"
                           Grid.Row="3">
 
                     <Grid Margin="5">
@@ -152,7 +151,7 @@
                                               Tag="{Binding PercentMinusColor, Converter={StaticResource ColorConverter}}"
                                               Grid.Row="2" Grid.Column="3"/>
 
-                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" Margin="-10, 0" Grid.Row="4" Grid.ColumnSpan="5" Grid.Column="0"/>
+                        <Separator Style="{DynamicResource SmallSeparatorStyle}" Margin="-10, 0" Grid.Row="4" Grid.ColumnSpan="5" Grid.Column="0"/>
 
                         <Button Content="Сохранить" 
                                 Command="{Binding SaveColorsCommand}"
@@ -168,10 +167,10 @@
 
                 </GroupBox>
 
-                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="4"/>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="4"/>
 
                 <GroupBox Header="Управление данными" 
-                          Style="{DynamicResource SettingsGroupBoxStyle}" 
+                          Style="{DynamicResource GroupBoxStyle}" 
                           Grid.Row="5">
 
                     <Grid HorizontalAlignment="Stretch" Margin="1">
@@ -190,7 +189,7 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
                                 Padding="10, 5" Grid.Row="0"/>
-                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                        <Separator Style="{DynamicResource SmallSeparatorStyle}" 
                                    Margin="-5, 0" Grid.Row="1"/>
                         <Button Content="Открыть логи"
                                 Command="{Binding OpenLogCommand}"
@@ -198,7 +197,7 @@
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
                                 Padding="10, 5" Grid.Row="2"/>
-                        <Separator Style="{DynamicResource SettingsSeparatorStyle}" 
+                        <Separator Style="{DynamicResource SmallSeparatorStyle}" 
                                    Margin="-5, 0" Grid.Row="3"/>
                         <Button Content="Очистить базу данных"
                                 Command="{Binding ClearDatabaseCommand}"
@@ -211,7 +210,7 @@
 
                 </GroupBox>
 
-                <Separator Style="{DynamicResource SeparatorStyle}" VerticalAlignment="Center" Grid.Row="6"/>
+                <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="6"/>
 
                 <Grid Grid.Row="7">
 
@@ -221,10 +220,10 @@
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Header="О программе" 
-                              Style="{DynamicResource SettingsGroupBoxStyle}" 
+                              Style="{DynamicResource GroupBoxStyle}" 
                               Margin="0, 0, 5, 0" Grid.Column="0">
 
-                        <ScrollViewer Margin="10, 5, 5, 5">
+                        <ScrollViewer Margin="10, 5">
 
                             <TextBlock Style="{DynamicResource CommonTextBlockStyle}">
                                 SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
@@ -238,10 +237,10 @@
                     </GroupBox>
 
                     <GroupBox Header="Контакты" 
-                              Style="{DynamicResource SettingsGroupBoxStyle}" 
+                              Style="{DynamicResource GroupBoxStyle}" 
                               Margin="5, 0, 0, 0" Grid.Column="1">
 
-                        <ScrollViewer Margin="10, 5, 5, 5">
+                        <ScrollViewer Margin="10, 5">
                             
                             <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
                                 GitHub: 
