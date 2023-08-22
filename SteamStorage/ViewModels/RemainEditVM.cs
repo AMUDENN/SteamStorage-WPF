@@ -4,7 +4,7 @@ using SteamStorage.Models;
 using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -30,7 +30,7 @@ namespace SteamStorage.ViewModels
         private double _costPurchase;
         private RemainGroupModel? _selectedRemainGroupModel;
 
-        private IEnumerable<RemainGroupModel> _groups;
+        private ObservableCollection<RemainGroupModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -85,7 +85,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public IEnumerable<RemainGroupModel> Groups
+        public ObservableCollection<RemainGroupModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -119,15 +119,15 @@ namespace SteamStorage.ViewModels
             CostPurchase = remainModel.CostPurchase;
             CountString = remainModel.Count.ToString();
             CostPurchaseString = remainModel.CostPurchase.ToString();
-            Groups = _context?.GetRemainGroupModels();
+            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
             SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
         public RemainEditVM(RemainGroupModel? remainGroupModel)
         {
-            _remainModel = new();
+            
             _selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = _context?.GetRemainGroupModels();
+            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
             SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor
@@ -135,7 +135,11 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (_selectedCommandType == CommandType.Add) _remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            if (_selectedCommandType == CommandType.Add)
+            {
+                _remainModel = new();
+                _remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+            }
             else _remainModel.EditRemain(Url, Count, CostPurchase, _remainModel.DatePurchase, SelectedRemainGroupModel);
             _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;

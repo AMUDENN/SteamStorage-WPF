@@ -10,6 +10,7 @@ namespace SteamStorage.Models
     public class ArchiveModel : ObservableObject
     {
         #region Fields
+        private ObservableCollection<ArchiveElementModel> _archiveElementModels;
         private ObservableCollection<ArchiveElementModel> _displayedArchives;
         private ObservableCollection<ArchiveGroupModel> _groups;
 
@@ -30,10 +31,23 @@ namespace SteamStorage.Models
         #endregion Fields
 
         #region Properties
+        private ObservableCollection<ArchiveElementModel> ArchiveElementModels
+        {
+            get => _archiveElementModels;
+            set
+            {
+                SetProperty(ref _archiveElementModels, value);
+                Filtering();
+            }
+        }
         public ObservableCollection<ArchiveElementModel> DisplayedArchives
         {
             get => _displayedArchives;
-            set => SetProperty(ref _displayedArchives, value);
+            set
+            {
+                SetProperty(ref _displayedArchives, value);
+                Summarize();
+            }
         }
         public ObservableCollection<ArchiveGroupModel> Groups
         {
@@ -138,6 +152,19 @@ namespace SteamStorage.Models
         public ArchiveModel()
         {
             GetArchiveGroups();
+            GetArchiveElements();
+            _context.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case "ArchiveElementModels":
+                        GetArchiveElements();
+                        break;
+                    case "ArchiveGroupModels":
+                        GetArchiveGroups();
+                        break;
+                }
+            };
         }
         #endregion Constructor
 
@@ -151,10 +178,7 @@ namespace SteamStorage.Models
         }
         public void AddGroup()
         {
-            var isAdded = UserMessage.AddArchiveGroup();
-            if (!isAdded) return;
-            _context?.UpdateArchiveGroupModels();
-            GetArchiveGroups();
+            _ = UserMessage.AddArchiveGroup();
         }
         public void EditGroup(ArchiveGroupModel model)
         {
@@ -163,10 +187,7 @@ namespace SteamStorage.Models
                 UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            var isEdit = UserMessage.EditArchiveGroup(model);
-            if (!isEdit) return;
-            _context?.UpdateArchiveGroupModels();
-            GetArchiveGroups();
+            _ = UserMessage.EditArchiveGroup(model);
         }
         public void DeleteGroup(ArchiveGroupModel model)
         {
@@ -179,10 +200,6 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroup();
             IsAllArchivesDisplayed = true;
-            _context?.UpdateArchiveGroupModels();
-            _context?.UpdateArchiveModels();
-            GetArchiveGroups();
-            Filtering();
         }
         public void DeleteWithSkinsGroup(ArchiveGroupModel model)
         {
@@ -195,39 +212,33 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroupWithSkins();
             IsAllArchivesDisplayed = true;
-            _context?.UpdateArchiveGroupModels();
-            _context?.UpdateArchiveModels();
-            GetArchiveGroups();
-            Filtering();
         }
         public void AddArchive()
         {
-            var isAdded = UserMessage.AddArchive(SelectedGroup);
-            if (!isAdded) return;
-            _context?.UpdateArchiveModels();
-            Filtering();
+            _ = UserMessage.AddArchive(SelectedGroup);
         }
         public void EditArchive(ArchiveElementModel model)
         {
-            var isEdit = UserMessage.EditArchive(model);
-            if (!isEdit) return;
-            _context?.UpdateArchiveModels();
-            Filtering();
+            _ = UserMessage.EditArchive(model);
         }
         public void DeleteArchive(ArchiveElementModel model)
         {
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteArchive();
-            _context?.UpdateArchiveModels();
-            Filtering();
         }
-        public void Filtering()
+        private void Filtering()
         {
             if (SelectedGroup is not null) IsAllArchivesDisplayed = false;
 
-            DisplayedArchives = new ObservableCollection<ArchiveElementModel>(_context?.GetArchiveModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
+            DisplayedArchives = new ObservableCollection<ArchiveElementModel>(ArchiveElementModels.Where(x => SelectedGroup is null || x.ArchiveGroup == SelectedGroup.ArchiveGroup).Where(x => x.Title.ToLower().Contains(Filter)));
 
+            Summarize();
+
+            Sorting();
+        }
+        private void Summarize()
+        {
             TotalCount = CalculationModel.GetArchiveTotalCount(DisplayedArchives);
 
             TotalAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(DisplayedArchives);
@@ -239,17 +250,19 @@ namespace SteamStorage.Models
             AverageCostSold = CalculationModel.GetArchiveAverageCostSold(DisplayedArchives);
 
             AveragePercent = CalculationModel.GetArchiveAveragePercent(DisplayedArchives);
-
-            Sorting();
         }
-        public void Sorting()
+        private void Sorting()
         {
             if (DisplayedArchives is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             DisplayedArchives = new ObservableCollection<ArchiveElementModel>(OrderTypes[SelectedOrderType] ? DisplayedArchives.OrderBy(OrderTitles[SelectedOrderTitle]) : DisplayedArchives.OrderByDescending(OrderTitles[SelectedOrderTitle]));
         }
-        public void GetArchiveGroups()
+        private void GetArchiveGroups()
         {
-            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.GetArchiveGroupModels());
+            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+        }
+        private void GetArchiveElements()
+        {
+            ArchiveElementModels = new ObservableCollection<ArchiveElementModel>(_context?.ArchiveElementModels);
         }
         public bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
         {

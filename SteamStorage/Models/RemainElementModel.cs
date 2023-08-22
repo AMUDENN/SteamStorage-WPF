@@ -98,6 +98,7 @@ namespace SteamStorage.Models
                 _remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
                 _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 _context?.SaveChanges();
+                _context?.UpdateRemainModels();
                 _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
@@ -114,8 +115,7 @@ namespace SteamStorage.Models
                 ArchiveElementModel archiveModel = new();
                 archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
                 if (count >= _remain.Count) _context?.RemoveRemain(_remain);
-                EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.GetRemainGroupModels().Where(x => x.RemainGroup == RemainGroup).First());
-                _context?.SaveChanges();
+                EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.RemainGroupModels.Where(x => x.RemainGroup == RemainGroup).First());
                 _logger?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
             }
             catch (Exception ex)
@@ -130,7 +130,6 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveRemain(_remain);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
@@ -145,7 +144,6 @@ namespace SteamStorage.Models
             try
             {
                 _context?.AddPriceDynamic(this);
-                _context?.SaveChanges();
                 UpdatePriceDynamics();
                 _logger?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
             }

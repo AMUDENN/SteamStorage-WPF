@@ -5,6 +5,7 @@ using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SteamStorage.ViewModels
 {
@@ -20,7 +21,7 @@ namespace SteamStorage.ViewModels
         private double _costSold;
         private ArchiveGroupModel? _selectedArchiveGroupModel;
 
-        private IEnumerable<ArchiveGroupModel> _groups;
+        private ObservableCollection<ArchiveGroupModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -66,7 +67,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public IEnumerable<ArchiveGroupModel> Groups
+        public ObservableCollection<ArchiveGroupModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -96,7 +97,7 @@ namespace SteamStorage.ViewModels
             this._remainModel = remainModel;
             Count = remainModel.Count;
             CountString = remainModel.Count.ToString();
-            Groups = _context?.GetArchiveGroupModels();
+            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
         }
         #endregion Constructor
 

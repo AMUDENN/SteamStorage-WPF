@@ -19,6 +19,8 @@ namespace SteamStorage.Models
         private string _accentAdditionalColor;
         private string _percentPlusColor;
         private string _percentMinusColor;
+
+        private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
         #region Properties
@@ -158,7 +160,9 @@ namespace SteamStorage.Models
         }
         public void ClearDatabase()
         {
-
+            var delete = UserMessage.Question("Вы уверены, что хотите очистить базу данных? \nВсе данные будут удалены без возможности восстановления!", 250, 450);
+            if (!delete) return;
+            _context?.ClearDatabase();
         }
         private void ChangeTheme()
         {

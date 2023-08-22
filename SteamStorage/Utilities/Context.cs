@@ -25,22 +25,22 @@ namespace SteamStorage.Utilities
         #region Properties
         public SteamStorageDbContext DBContext => _dbContext;
         public SteamStorageDbContext DBContextAdditional => _dbContextAdditional;
-        private IEnumerable<RemainElementModel> RemainElementModels
+        public IEnumerable<RemainElementModel> RemainElementModels
         {
             get => _remainElementModels.ToList();
             set => SetProperty(ref _remainElementModels, value);
         }
-        private IEnumerable<ArchiveElementModel> ArchiveElementModels
+        public IEnumerable<ArchiveElementModel> ArchiveElementModels
         {
             get => _archiveElementModels.ToList();
             set => SetProperty(ref _archiveElementModels, value);
         }
-        private IEnumerable<RemainGroupModel> RemainGroupModels
+        public IEnumerable<RemainGroupModel> RemainGroupModels
         {
             get => _remainGroupModels.ToList();
             set => SetProperty(ref _remainGroupModels, value);
         }
-        private IEnumerable<ArchiveGroupModel> ArchiveGroupModels
+        public IEnumerable<ArchiveGroupModel> ArchiveGroupModels
         {
             get => _archiveGroupModels.ToList();
             set => SetProperty(ref _archiveGroupModels, value);
@@ -51,10 +51,7 @@ namespace SteamStorage.Utilities
         public Context(Logger logger)
         {
             _logger = logger;
-            UpdateRemainModels();
-            UpdateArchiveModels();
-            UpdateRemainGroupModels();
-            UpdateArchiveGroupModels();
+            UpdateAll();
         }
         #endregion Constructor
 
@@ -67,8 +64,6 @@ namespace SteamStorage.Utilities
         {
             return ArchiveElementModels.Where(x => groupModel is null || x.ArchiveGroup == groupModel.ArchiveGroup).ToList();
         }
-        public List<RemainGroupModel> GetRemainGroupModels() => RemainGroupModels.ToList();
-        public List<ArchiveGroupModel> GetArchiveGroupModels() => ArchiveGroupModels.ToList();
         public void AddRemainGroup(RemainGroup remainGroup)
         {
             DBContext.RemainGroups.Add(remainGroup);
@@ -88,18 +83,28 @@ namespace SteamStorage.Utilities
         public void RemoveRemainGroup(RemainGroup remainGroup)
         {
             DBContext.RemainGroups.Remove(remainGroup);
+            SaveChanges();
+            UpdateRemainGroupModels();
+            UpdateRemainModels();
         }
         public void RemoveArchiveGroup(ArchiveGroup archiveGroup)
         {
             DBContext.ArchiveGroups.Remove(archiveGroup);
+            SaveChanges();
+            UpdateArchiveGroupModels();
+            UpdateArchiveModels();
         }
         public void RemoveRemain(Remain remain)
         {
             DBContext.Remains.Remove(remain);
+            SaveChanges();
+            UpdateRemainModels();
         }
         public void RemoveArchive(Archive archive)
         {
             DBContext.Archives.Remove(archive);
+            SaveChanges();
+            UpdateArchiveModels();
         }
         public Skin? GetSkin(string url)
         {
@@ -141,6 +146,7 @@ namespace SteamStorage.Utilities
                 };
                 DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
+                UpdateRemainModels();
                 _logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
@@ -171,6 +177,13 @@ namespace SteamStorage.Utilities
                 }
             }
         }
+        private void UpdateAll()
+        {
+            UpdateRemainModels();
+            UpdateArchiveModels();
+            UpdateRemainGroupModels();
+            UpdateArchiveGroupModels();
+        }
         public void UpdateRemainModels()
         {
             RemainElementModels = DBContext.Remains.Select(x => new RemainElementModel(x));
@@ -186,6 +199,26 @@ namespace SteamStorage.Utilities
         public void UpdateArchiveGroupModels()
         {
             ArchiveGroupModels = DBContext.ArchiveGroups.Select(x => new ArchiveGroupModel(x));
+        }
+        public void ClearDatabase()
+        {
+            try
+            {
+                DBContext.Archives.RemoveRange(DBContext.Archives);
+                DBContext.ArchiveGroups.RemoveRange(DBContext.ArchiveGroups);
+                DBContext.PriceDynamics.RemoveRange(DBContext.PriceDynamics);
+                DBContext.Remains.RemoveRange(DBContext.Remains);
+                DBContext.RemainGroups.RemoveRange(DBContext.RemainGroups);
+                DBContext.Skins.RemoveRange(DBContext.Skins);
+                SaveChanges();
+                UpdateAll();
+                _logger?.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
+            }
+            catch
+            {
+                _logger?.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
+                UndoChanges();
+            }
         }
         #endregion Methods
     }

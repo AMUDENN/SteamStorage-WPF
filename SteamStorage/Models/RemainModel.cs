@@ -12,6 +12,7 @@ namespace SteamStorage.Models
     public class RemainModel : ObservableObject
     {
         #region Fields
+        private ObservableCollection<RemainElementModel> _remainElementModels;
         private ObservableCollection<RemainElementModel> _displayedRemains;
         private ObservableCollection<RemainGroupModel> _groups;
 
@@ -36,6 +37,15 @@ namespace SteamStorage.Models
         #endregion Fields
 
         #region Properties
+        private ObservableCollection<RemainElementModel> RemainElementModels
+        {
+            get => _remainElementModels;
+            set 
+            {
+                SetProperty(ref _remainElementModels, value);
+                Filtering();
+            }
+        }
         public ObservableCollection<RemainElementModel> DisplayedRemains
         {
             get => _displayedRemains;
@@ -157,6 +167,19 @@ namespace SteamStorage.Models
         public RemainModel()
         {
             GetRemainGroups();
+            GetRemainElements();
+            _context.PropertyChanged += (s, e) =>
+            {
+                switch (e.PropertyName)
+                {
+                    case "RemainElementModels":
+                        GetRemainElements();
+                        break;
+                    case "RemainGroupModels":
+                        GetRemainGroups();
+                        break;
+                }
+            };
 
             _updateInfoWorker.DoWork += UpdateInfoWork;
             _updateInfoWorker.WorkerSupportsCancellation = false;
@@ -176,14 +199,11 @@ namespace SteamStorage.Models
         }
         public void UpdateGroup(RemainGroupModel model)
         {
-            _updateInfoWorker.RunWorkerAsync(_context?.GetRemainModels(model));
+            _updateInfoWorker.RunWorkerAsync(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup));
         }
         public void AddGroup()
         {
-            var isAdded = UserMessage.AddRemainGroup();
-            if (!isAdded) return;
-            _context?.UpdateRemainGroupModels();
-            GetRemainGroups();
+            _ = UserMessage.AddRemainGroup();
         }
         public void EditGroupCommand(RemainGroupModel model)
         {
@@ -192,10 +212,7 @@ namespace SteamStorage.Models
                 UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            var isEdit = UserMessage.EditRemainGroup(model);
-            if (!isEdit) return;
-            _context?.UpdateRemainGroupModels();
-            GetRemainGroups();
+            _ = UserMessage.EditRemainGroup(model);
         }
         public void DeleteGroup(RemainGroupModel model)
         {
@@ -208,10 +225,6 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroup();
             IsAllRemainsDisplayed = true;
-            _context?.UpdateRemainGroupModels();
-            _context?.UpdateRemainModels();
-            GetRemainGroups();
-            Filtering();
         }
         public void DeleteWithSkinsGroup(RemainGroupModel model)
         {
@@ -224,10 +237,6 @@ namespace SteamStorage.Models
             if (!delete) return;
             model.DeleteGroupWithSkins();
             IsAllRemainsDisplayed = true;
-            _context?.UpdateRemainGroupModels();
-            _context?.UpdateRemainModels();
-            GetRemainGroups();
-            Filtering();
         }
         public void UpdateRemain(RemainElementModel model)
         {
@@ -235,39 +244,27 @@ namespace SteamStorage.Models
         }
         public void AddRemain()
         {
-            var isAdded = UserMessage.AddRemain(SelectedGroup);
-            if (!isAdded) return;
-            _context?.UpdateRemainModels();
-            Filtering();
+            _ = UserMessage.AddRemain(SelectedGroup);
         }
         public void EditRemain(RemainElementModel model)
         {
-            var isEdit = UserMessage.EditRemain(model);
-            if (!isEdit) return;
-            _context?.UpdateRemainModels();
-            Filtering();
+            _ = UserMessage.EditRemain(model);
         }
         public void SellRemain(RemainElementModel model)
         {
-            var isSell = UserMessage.SellRemain(model);
-            if (!isSell) return;
-            _context?.UpdateRemainModels();
-            _context?.UpdateArchiveModels();
-            Filtering();
+            _ = UserMessage.SellRemain(model);
         }
         public void DeleteRemain(RemainElementModel model)
         {
             var delete = UserMessage.Question($"Вы уверены, что хотите удалить элемент: {model.Title}");
             if (!delete) return;
             model.DeleteRemain();
-            _context?.UpdateRemainModels();
-            Filtering();
         }
         public void Filtering()
         {
             if (SelectedGroup is not null) IsAllRemainsDisplayed = false;
 
-            DisplayedRemains = new ObservableCollection<RemainElementModel>(_context?.GetRemainModels(SelectedGroup).Where(x => x.Title.ToLower().Contains(Filter)));
+            DisplayedRemains = new ObservableCollection<RemainElementModel>(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup).Where(x => x.Title.ToLower().Contains(Filter)));
 
             Summarize();
 
@@ -292,9 +289,13 @@ namespace SteamStorage.Models
             if (DisplayedRemains is null || SelectedOrderType is null || SelectedOrderTitle is null) return;
             DisplayedRemains = new ObservableCollection<RemainElementModel>(OrderTypes[SelectedOrderType] ? DisplayedRemains.OrderBy(OrderTitles[SelectedOrderTitle]) : DisplayedRemains.OrderByDescending(OrderTitles[SelectedOrderTitle]));
         }
-        public void GetRemainGroups()
+        private void GetRemainGroups()
         {
-            Groups = new ObservableCollection<RemainGroupModel>(_context?.GetRemainGroupModels());
+            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
+        }
+        private void GetRemainElements()
+        {
+            RemainElementModels = new ObservableCollection<RemainElementModel>(_context?.RemainElementModels);
         }
         public bool IsDefaultGroup(RemainGroupModel remainGroupModel)
         {

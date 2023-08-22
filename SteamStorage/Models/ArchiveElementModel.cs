@@ -66,6 +66,7 @@ namespace SteamStorage.Models
                 _archive.DateSold = dateSold.ToString(Constants.DateTimeFormat);
                 _archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
                 _context?.SaveChanges();
+                _context?.UpdateArchiveModels();
                 _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
@@ -80,7 +81,6 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveArchive(_archive);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)

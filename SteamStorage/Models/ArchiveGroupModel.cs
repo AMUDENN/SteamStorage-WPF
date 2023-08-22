@@ -71,6 +71,7 @@ namespace SteamStorage.Models
             {
                 _archiveGroup.Title = title;
                 _context?.SaveChanges();
+                _context?.UpdateArchiveGroupModels();
                 _logger?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
             }
             catch (Exception ex)
@@ -85,7 +86,6 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveArchiveGroup(_archiveGroup);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }
             catch (Exception ex)
@@ -105,7 +105,6 @@ namespace SteamStorage.Models
                     item.DeleteArchive();
                 }
                 _context?.RemoveArchiveGroup(_archiveGroup);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
             }
             catch (Exception ex)

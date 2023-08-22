@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SteamStorage.Models;
 using SteamStorage.Utilities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -9,8 +9,8 @@ namespace SteamStorage.ViewModels
     public class HomeVM : ObservableObject
     {
         #region Fields
-        private List<ArchiveGroupModel>? _archiveGroupModels;
-        private List<RemainGroupModel>? _remainGroupModels;
+        private ObservableCollection<ArchiveGroupModel>? _archiveGroupModels;
+        private ObservableCollection<RemainGroupModel>? _remainGroupModels;
 
         private ArchiveGroupModel? _mostProfitabilityArchiveGroup;
         private RemainGroupModel? _mostProfitabilityRemainGroup;
@@ -31,12 +31,12 @@ namespace SteamStorage.ViewModels
         #endregion Fields
 
         #region Properties
-        public List<ArchiveGroupModel>? ArchiveGroupModels
+        public ObservableCollection<ArchiveGroupModel>? ArchiveGroupModels
         {
             get => _archiveGroupModels;
             set => SetProperty(ref _archiveGroupModels, value);
         }
-        public List<RemainGroupModel>? RemainGroupModels
+        public ObservableCollection<RemainGroupModel>? RemainGroupModels
         {
             get => _remainGroupModels;
             set => SetProperty(ref _remainGroupModels, value);
@@ -115,7 +115,7 @@ namespace SteamStorage.ViewModels
         private void UpdateInfo()
         {
             var archiveModels = _context?.GetArchiveModels(null);
-            ArchiveGroupModels = _context?.GetArchiveGroupModels();
+            ArchiveGroupModels = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
             MostProfitabilityArchiveGroup = ArchiveGroupModels?.MaxBy(x => x.ArchivesPercent);
             TotalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             TotalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
@@ -124,7 +124,7 @@ namespace SteamStorage.ViewModels
             MostProfitabilityArchive = CalculationModel.GetMostProfitabilityArchive(archiveModels);
 
             var remainModels = _context?.GetRemainModels(null);
-            RemainGroupModels = _context?.GetRemainGroupModels();
+            RemainGroupModels = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
             MostProfitabilityRemainGroup = RemainGroupModels?.MaxBy(x => x.RemainsPercent);
             TotalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
             TotalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);

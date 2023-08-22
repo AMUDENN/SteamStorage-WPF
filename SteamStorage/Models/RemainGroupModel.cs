@@ -71,6 +71,7 @@ namespace SteamStorage.Models
             {
                 _remainGroup.Title = title;
                 _context?.SaveChanges();
+                _context?.UpdateRemainGroupModels();
                 _logger?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
             }
             catch (Exception ex)
@@ -85,7 +86,6 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveRemainGroup(_remainGroup);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }
             catch (Exception ex)
@@ -105,7 +105,6 @@ namespace SteamStorage.Models
                     item.DeleteRemain();
                 }
                 _context?.RemoveRemainGroup(_remainGroup);
-                _context?.SaveChanges();
                 _logger?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
             }
             catch (Exception ex)

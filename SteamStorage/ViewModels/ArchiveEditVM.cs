@@ -4,7 +4,7 @@ using SteamStorage.Models;
 using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace SteamStorage.ViewModels
@@ -32,7 +32,7 @@ namespace SteamStorage.ViewModels
         private double _costSold;
         private ArchiveGroupModel? _selectedArchiveGroupModel;
 
-        private IEnumerable<ArchiveGroupModel> _groups;
+        private ObservableCollection<ArchiveGroupModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -101,7 +101,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public IEnumerable<ArchiveGroupModel> Groups
+        public ObservableCollection<ArchiveGroupModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -137,15 +137,14 @@ namespace SteamStorage.ViewModels
             CountString = archiveModel.Count.ToString();
             CostPurchaseString = archiveModel.CostPurchase.ToString();
             CostSoldString = archiveModel.CostSold.ToString();
-            Groups = _context?.GetArchiveGroupModels();
+            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
             SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
         {
-            _archiveModel = new();
             _selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = _context?.GetArchiveGroupModels();
+            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
         }
         #endregion Constructor
@@ -153,7 +152,11 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (_selectedCommandType == CommandType.Add) _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            if (_selectedCommandType == CommandType.Add)
+            {
+                _archiveModel = new();
+                _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+            }
             else _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, _archiveModel.DatePurchase, _archiveModel.DateSold, SelectedArchiveGroupModel);
             _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
