@@ -146,7 +146,6 @@ namespace SteamStorage.Utilities
                 };
                 DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                UpdateRemainModels();
                 _logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
@@ -205,10 +204,10 @@ namespace SteamStorage.Utilities
             try
             {
                 DBContext.Archives.RemoveRange(DBContext.Archives);
-                DBContext.ArchiveGroups.RemoveRange(DBContext.ArchiveGroups);
+                DBContext.ArchiveGroups.RemoveRange(DBContext.ArchiveGroups.Skip(1));
                 DBContext.PriceDynamics.RemoveRange(DBContext.PriceDynamics);
                 DBContext.Remains.RemoveRange(DBContext.Remains);
-                DBContext.RemainGroups.RemoveRange(DBContext.RemainGroups);
+                DBContext.RemainGroups.RemoveRange(DBContext.RemainGroups.Skip(1));
                 DBContext.Skins.RemoveRange(DBContext.Skins);
                 SaveChanges();
                 UpdateAll();

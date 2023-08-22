@@ -199,7 +199,7 @@ namespace SteamStorage.Models
         }
         public void UpdateGroup(RemainGroupModel model)
         {
-            _updateInfoWorker.RunWorkerAsync(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup));
+            _updateInfoWorker.RunWorkerAsync(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup).ToList());
         }
         public void AddGroup()
         {
@@ -297,11 +297,11 @@ namespace SteamStorage.Models
         {
             RemainElementModels = new ObservableCollection<RemainElementModel>(_context?.RemainElementModels);
         }
-        public bool IsDefaultGroup(RemainGroupModel remainGroupModel)
+        private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
         {
             return remainGroupModel.RemainGroup.Id == 1;
         }
-        public void UpdateRemainModelsCurrentCosts(IEnumerable<RemainElementModel> remainModels)
+        private void UpdateRemainModelsCurrentCosts(IEnumerable<RemainElementModel> remainModels)
         {
             int percentageIncrease = 100 / remainModels.Count();
             int i = 0;
@@ -311,7 +311,9 @@ namespace SteamStorage.Models
                 remainModel.UpdateCurrentCost();
 
                 //Работает, но это какая-то шляпа ¯\_(ツ)_/¯
-                DisplayedRemains = new ObservableCollection<RemainElementModel>(DisplayedRemains.Select(x => x.Remain == remainModel.Remain ? x = remainModel : x));
+                //DisplayedRemains = new ObservableCollection<RemainElementModel>(DisplayedRemains.Select(x => x.Remain == remainModel.Remain ? x = remainModel : x));
+
+                Filtering();
 
                 _updateInfoWorker.ReportProgress(percentageIncrease);
 
@@ -321,22 +323,21 @@ namespace SteamStorage.Models
                 Thread.Sleep(random.Next(1500, 2650));
             }
         }
-        public void UpdateInfoWork(object? sender, DoWorkEventArgs e)
+        private void UpdateInfoWork(object? sender, DoWorkEventArgs e)
         {
             IEnumerable<RemainElementModel> arg = (IEnumerable<RemainElementModel>)e.Argument;
             IsProgressBarVisible = true;
             ProgressBarValue = 0;
             UpdateRemainModelsCurrentCosts(arg);
         }
-        public void UpdateInfoProgress(object? sender, ProgressChangedEventArgs e)
+        private void UpdateInfoProgress(object? sender, ProgressChangedEventArgs e)
         {
             ProgressBarValue += e.ProgressPercentage;
         }
-        public void UpdateInfoComplete(object? sender, RunWorkerCompletedEventArgs e)
+        private void UpdateInfoComplete(object? sender, RunWorkerCompletedEventArgs e)
         {
             IsProgressBarVisible = false;
             _context?.UpdateRemainModels();
-            Filtering();
         }
         #endregion Methods
     }

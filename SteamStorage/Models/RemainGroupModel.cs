@@ -85,6 +85,11 @@ namespace SteamStorage.Models
         {
             try
             {
+                var remains = _context?.GetRemainModels(this);
+                foreach (var item in remains)
+                {
+                    item.EditRemain(null);
+                }
                 _context?.RemoveRemainGroup(_remainGroup);
                 _logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }

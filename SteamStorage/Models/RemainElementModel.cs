@@ -108,6 +108,22 @@ namespace SteamStorage.Models
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
+        public void EditRemain(RemainGroupModel? remainGroupModel)
+        {
+            try
+            {
+                _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
+                _context?.SaveChanges();
+                _context?.UpdateRemainModels();
+                _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось изменить элемент {Title}");
+            }
+        }
         public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
         {
             try

@@ -85,6 +85,11 @@ namespace SteamStorage.Models
         {
             try
             {
+                var archives = _context?.GetArchiveModels(this);
+                foreach (var item in archives)
+                {
+                    item.EditArchive(null);
+                }
                 _context?.RemoveArchiveGroup(_archiveGroup);
                 _logger?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
             }

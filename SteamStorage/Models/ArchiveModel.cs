@@ -264,7 +264,7 @@ namespace SteamStorage.Models
         {
             ArchiveElementModels = new ObservableCollection<ArchiveElementModel>(_context?.ArchiveElementModels);
         }
-        public bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
+        private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
         {
             return archiveGroupModel.ArchiveGroup.Id == 1;
         }

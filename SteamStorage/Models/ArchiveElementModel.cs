@@ -76,6 +76,22 @@ namespace SteamStorage.Models
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
+        public void EditArchive(ArchiveGroupModel? archiveGroupModel)
+        {
+            try
+            {
+                _archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
+                _context?.SaveChanges();
+                _context?.UpdateArchiveModels();
+                _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+            }
+            catch (Exception ex)
+            {
+                _context?.UndoChanges();
+                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                UserMessage.Error($"Не удалось изменить элемент {Title}");
+            }
+        }
         public void DeleteArchive()
         {
             try
