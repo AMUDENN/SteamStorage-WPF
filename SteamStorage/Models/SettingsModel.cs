@@ -2,6 +2,12 @@
 using SteamStorage.Utilities;
 using System.Diagnostics;
 using System.IO;
+using OfficeOpenXml;
+using System.Drawing;
+using OfficeOpenXml.Style;
+using System;
+using System.IO.Packaging;
+using System.Linq.Expressions;
 
 namespace SteamStorage.Models
 {
@@ -21,6 +27,7 @@ namespace SteamStorage.Models
         private string _percentMinusColor;
 
         private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Logger? _logger = Singleton.GetObject<Logger>();
         #endregion Fields
 
         #region Properties
@@ -130,7 +137,30 @@ namespace SteamStorage.Models
         #region Methods
         public void ExportToExcel()
         {
+            try
+            {
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage())
+                {
+                    var remainWorksheet = package.Workbook.Worksheets.Add("Остатки");
 
+                    var archiveWorksheet = package.Workbook.Worksheets.Add("Архив");
+
+                    byte[] data = package.GetAsByteArray();
+
+                    //Возможно стоит сделать SaveFileDialog -_-
+                    using FileStream fs = new($"{Constants.Exportpath}skins ({DateTime.Now.ToString(Constants.DateTimeFormatForExport)}).xlsx", FileMode.Create);
+                    package.SaveAs(fs);
+
+                }
+                _logger?.WriteMessage("Экспорт в эксель завершился успешно! Найти файл можно в папке Export.", this.GetType());
+                UserMessage.Information("Экспорт в эксель завершился успешно! Найти файл можно в папке Export.");
+            }
+            catch (Exception ex)
+            {
+                _logger?.WriteMessage($"Экспорт в эксель завершился с ошибкой! {ex.Message}", this.GetType());
+                UserMessage.Error("Экспорт в эксель завершился с ошибкой!");
+            }
         }
         public void SaveColors()
         {

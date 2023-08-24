@@ -203,7 +203,7 @@ namespace SteamStorage.Models
         }
         public void AddGroup()
         {
-            _ = UserMessage.AddRemainGroup();
+            UserMessage.AddRemainGroup();
         }
         public void EditGroupCommand(RemainGroupModel model)
         {
@@ -212,7 +212,7 @@ namespace SteamStorage.Models
                 UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            _ = UserMessage.EditRemainGroup(model);
+            UserMessage.EditRemainGroup(model);
         }
         public void DeleteGroup(RemainGroupModel model)
         {
@@ -244,15 +244,15 @@ namespace SteamStorage.Models
         }
         public void AddRemain()
         {
-            _ = UserMessage.AddRemain(SelectedGroup);
+            UserMessage.AddRemain(SelectedGroup);
         }
         public void EditRemain(RemainElementModel model)
         {
-            _ = UserMessage.EditRemain(model);
+            UserMessage.EditRemain(model);
         }
         public void SellRemain(RemainElementModel model)
         {
-            _ = UserMessage.SellRemain(model);
+            UserMessage.SellRemain(model);
         }
         public void DeleteRemain(RemainElementModel model)
         {

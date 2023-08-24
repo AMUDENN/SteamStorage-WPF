@@ -178,7 +178,7 @@ namespace SteamStorage.Models
         }
         public void AddGroup()
         {
-            _ = UserMessage.AddArchiveGroup();
+            UserMessage.AddArchiveGroup();
         }
         public void EditGroup(ArchiveGroupModel model)
         {
@@ -187,7 +187,7 @@ namespace SteamStorage.Models
                 UserMessage.Error("Эту группу изменить нельзя!");
                 return;
             }
-            _ = UserMessage.EditArchiveGroup(model);
+            UserMessage.EditArchiveGroup(model);
         }
         public void DeleteGroup(ArchiveGroupModel model)
         {
@@ -215,11 +215,11 @@ namespace SteamStorage.Models
         }
         public void AddArchive()
         {
-            _ = UserMessage.AddArchive(SelectedGroup);
+            UserMessage.AddArchive(SelectedGroup);
         }
         public void EditArchive(ArchiveElementModel model)
         {
-            _ = UserMessage.EditArchive(model);
+            UserMessage.EditArchive(model);
         }
         public void DeleteArchive(ArchiveElementModel model)
         {
