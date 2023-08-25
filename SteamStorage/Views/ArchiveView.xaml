@@ -370,7 +370,7 @@
                            Grid.Column="3"/>
 
                 <TextBlock Text="{Binding AverageCostSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
-                           ToolTip="Средняя сумма продажи"
+                           ToolTip="Средняя цена продажи"
                            Style="{DynamicResource SmallTitleTextBlockStyle}" 
                            Grid.Column="5" />
                 <TextBlock Text="{Binding TotalAmountSold, Converter={StaticResource DoubleRoundConverter}, ConverterParameter=2}" 
