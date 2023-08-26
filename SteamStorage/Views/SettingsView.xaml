@@ -244,16 +244,16 @@
                             
                             <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0">
                                 GitHub: 
-                                <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage" 
-                                           Style="{DynamicResource HyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
+                                <Hyperlink NavigateUri="https://github.com/AMUDENN/SteamStorage"
+                                           Style="{DynamicResource BrowserHyperlinkStyle}">https://github.com/AMUDENN/SteamStorage</Hyperlink>
                                 <LineBreak/>
                                 TG: 
-                                <Hyperlink NavigateUri="https://t.me/amudenn" 
-                                           Style="{DynamicResource HyperlinkStyle}">@amudenn</Hyperlink>
+                                <Hyperlink NavigateUri="https://t.me/amudenn"
+                                           Style="{DynamicResource BrowserHyperlinkStyle}">@amudenn</Hyperlink>
                                 <LineBreak/>
                                 Gmail: 
-                                <Hyperlink NavigateUri="SteamStorage@gmail.com" 
-                                           Style="{DynamicResource HyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
+                                <Hyperlink NavigateUri="mailto:SteamStorage@gmail.com"
+                                           Style="{DynamicResource BrowserHyperlinkStyle}">SteamStorage@gmail.com</Hyperlink>
                             </TextBlock>
                             
                         </ScrollViewer>
