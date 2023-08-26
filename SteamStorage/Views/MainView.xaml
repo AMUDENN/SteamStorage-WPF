@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="MenuGrid" Width="340" Margin="0, 24, 0, 0" Grid.Column="0">
+        <Grid x:Name="MenuGrid" Width="150" Margin="0, 24, 0, 0" Grid.Column="0">
 
             <Border Style="{DynamicResource AccentAdditionalBorderStyle}" 
                     CornerRadius="0, 20, 0, 0">
@@ -35,11 +35,11 @@
                         <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
 
-                    <Image x:Name="IconImage" Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0, 20, 160, 20" Grid.Row="1"/>
+                    <Image x:Name="IconImage" Style="{DynamicResource StorageImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20" Grid.Row="1"/>
 
-                    <TextBlock x:Name="TitleTextBlock" Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="3"/>
+                    <TextBlock x:Name="TitleTextBlock" Text="Steam Storage™" Style="{DynamicResource TitleTextBlockStyle}" FontSize="24" Grid.Row="3"/>
 
-                    <ContentControl x:Name="NavigationContentControl" Content="{Binding NavigationVM}" MaxHeight="380" Grid.Row="5"/>
+                    <ContentControl x:Name="NavigationContentControl" Content="{Binding NavigationVM}" MaxHeight="450" Grid.Row="5"/>
 
                     <CheckBox Style="{DynamicResource ImageCheckBoxStyle}"
                               IsChecked="{Binding IsMenuExpanded}"
@@ -48,7 +48,7 @@
                               Margin="-5, -20">
                         <Image Style="{DynamicResource HamburgerImage}"/>
                         <CheckBox.Triggers>
-                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                            <EventTrigger RoutedEvent="CheckBox.Checked">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -78,7 +78,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                            <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
