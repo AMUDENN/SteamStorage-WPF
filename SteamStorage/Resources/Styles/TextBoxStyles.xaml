@@ -7,6 +7,30 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 
+    <Storyboard x:Key="MakeLabel" AutoReverse="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="0.9" To="0.5" Duration="0:0:0.2"/>
+        <DoubleAnimation Storyboard.TargetProperty="FontSize" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="14" To="16" Duration="0:0:0.2"/>
+        <ThicknessAnimation Storyboard.TargetProperty="Margin" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="-5, 0, 0, 29" To="0" Duration="0:0:0.2"/>
+    </Storyboard>
+
+    <Storyboard x:Key="MakeSignature" AutoReverse="False">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="0.5" To="0.9" Duration="0:0:0.2"/>
+        <DoubleAnimation Storyboard.TargetProperty="FontSize" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="16" To="14" Duration="0:0:0.2"/>
+        <ThicknessAnimation Storyboard.TargetProperty="Margin" 
+             Storyboard.TargetName="PlaceholderLabel"
+             From="0" To="-5, 0, 0, 29" Duration="0:0:0.2"/>
+    </Storyboard>
+
     <Style x:Key="TextBoxStyle" BasedOn="{StaticResource BaseTextBoxStyle}" TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="Background" Value="{DynamicResource Accent}"/>
@@ -14,18 +38,25 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border x:Name="Border" BorderThickness="0, 0, 0, 1"
-                                BorderBrush="{TemplateBinding Foreground}"
-                                Background="{TemplateBinding Background}" 
-                                Padding="5, 0, 0, 0">
+                            BorderBrush="{TemplateBinding Foreground}"
+                            Background="{TemplateBinding Background}" 
+                            Padding="3, 0, 0, 6">
                         <Grid>
-                            <ScrollViewer x:Name="PART_ContentHost" Grid.Column="1"/>
-                            <Label x:Name="PlaceholderLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                       Visibility="Collapsed" Foreground="{DynamicResource Additional}" Opacity="0.5" FontSize="16" Grid.Column="1"/>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          VerticalAlignment="Bottom"/>
+                            <Label x:Name="PlaceholderLabel" Content="{TemplateBinding Tag}"
+                                   Foreground="{TemplateBinding Foreground}" Opacity="0.9" FontSize="14"
+                                   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-5, 0, 0, 29"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Text" Value="">
-                            <Setter Property="Visibility" TargetName="PlaceholderLabel" Value="Visible"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MakeLabel}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MakeSignature}"/>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
