@@ -7,8 +7,10 @@
         <Setter Property="Foreground" Value="{DynamicResource Additional}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
+        <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
