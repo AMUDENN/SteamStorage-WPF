@@ -13,6 +13,11 @@ namespace SteamStorage.Utilities
         #region Constructor
         public Logger(string logPath)
         {
+            if (!File.Exists(logPath))
+            {
+                Directory.CreateDirectory(logPath.Remove(logPath.LastIndexOf('/')));
+                File.Create(logPath).Close();
+            }
             _innerWriter = new StreamWriter(logPath, true, Encoding.UTF8, 8192);
         }
         #endregion Constructor

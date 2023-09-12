@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using OfficeOpenXml;
+using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace SteamStorage.Models
 
         private readonly Context? _context = Singleton.GetObject<Context>();
         private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
         #endregion Fields
 
         #region Properties
@@ -248,13 +250,14 @@ namespace SteamStorage.Models
 
                     byte[] data = package.GetAsByteArray();
 
-                    //Возможно стоит сделать SaveFileDialog -_-
-                    using FileStream fs = new($"{Constants.Exportpath}skins ({DateTime.Now.ToString(Constants.DateTimeFormatForExport)}).xlsx", FileMode.Create);
-                    package.SaveAs(fs);
-
+                    if (_windowDialogService?.SaveFileDialog("Excel file (.xlsx)|*.xlsx") ?? false)
+                    {
+                        using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
+                        package.SaveAs(fs);
+                    }
                 }
-                _logger?.WriteMessage("Экспорт в эксель завершился успешно! Найти файл можно в папке Export.", this.GetType());
-                UserMessage.Information("Экспорт в эксель завершился успешно! Найти файл можно в папке Export.");
+                _logger?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
+                UserMessage.Information("Экспорт в эксель завершился успешно!");
             }
             catch (Exception ex)
             {

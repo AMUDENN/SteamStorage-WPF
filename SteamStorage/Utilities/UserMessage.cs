@@ -6,7 +6,7 @@ namespace SteamStorage.Utilities
 {
     public static class UserMessage
     {
-        private static readonly WindowDialogService _windowDialogService = new();
+        private static readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
         public static bool Question(string question, double height = 200, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Подтверждение", new MessageBoxVM(question, MessageBoxVM.MessageImages.Question, MessageBoxVM.MessageButtons.OkCancel));
