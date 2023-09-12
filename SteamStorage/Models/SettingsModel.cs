@@ -139,6 +139,8 @@ namespace SteamStorage.Models
         {
             try
             {
+                if (!_windowDialogService?.SaveFileDialog("Excel file (.xlsx)|*.xlsx") ?? true) return;
+
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -250,11 +252,9 @@ namespace SteamStorage.Models
 
                     byte[] data = package.GetAsByteArray();
 
-                    if (_windowDialogService?.SaveFileDialog("Excel file (.xlsx)|*.xlsx") ?? false)
-                    {
-                        using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
-                        package.SaveAs(fs);
-                    }
+                    using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
+                    package.SaveAs(fs);
+
                 }
                 _logger?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
                 UserMessage.Information("Экспорт в эксель завершился успешно!");
