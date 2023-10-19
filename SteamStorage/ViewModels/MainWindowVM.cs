@@ -67,7 +67,6 @@ namespace SteamStorage.ViewModels
             Config.Height = mw.ActualHeight;
             Config.Top = mw.Top;
             Config.Left = mw.Left;
-            
         }
         private void DoStateChangedCommand()
         {

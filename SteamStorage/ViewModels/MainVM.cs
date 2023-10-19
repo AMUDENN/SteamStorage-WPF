@@ -25,6 +25,10 @@ namespace SteamStorage.ViewModels
             get => _isMenuExpanded;
             set => SetProperty(ref _isMenuExpanded, value);
         }
+        public string Version
+        {
+            get => Constants.Version;
+        }
         #endregion Properties
 
         #region Constructor

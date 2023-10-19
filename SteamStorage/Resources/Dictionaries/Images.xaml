@@ -6,14 +6,15 @@
         <ResourceDictionary Source="\Resources\Images\Vectors\DollarImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\EditImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\ErrorImage.xaml"/>
+        <ResourceDictionary Source="\Resources\Images\Vectors\FaviconImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\FilterRemoveImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\HamburgerImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\InformationImage.xaml"/>
+        <ResourceDictionary Source="\Resources\Images\Vectors\LogoImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\MagnifyingGlassImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\PricetagImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\QuestionImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\RecycleBinImage.xaml"/>
         <ResourceDictionary Source="\Resources\Images\Vectors\SettingsImage.xaml"/>
-        <ResourceDictionary Source="\Resources\Images\Vectors\StorageImage.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

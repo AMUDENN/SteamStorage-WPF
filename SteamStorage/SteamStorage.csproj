@@ -5,11 +5,11 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\Images\Bitmaps\Storage.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Images\Bitmaps\BlackIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\Bitmaps\Storage.ico" />
+    <Content Include="Resources\Images\Bitmaps\BlackIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
