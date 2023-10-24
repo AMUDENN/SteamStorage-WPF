@@ -8,7 +8,7 @@ namespace SteamStorage.Resources.Converters
 {
     public class DateTimeConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is null) return value;
             DateTime dt = (DateTime)value;

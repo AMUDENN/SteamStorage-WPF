@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace SteamStorage.Services
+namespace SteamStorage.Services.Dialog
 {
     public interface IWindowDialogService
     {

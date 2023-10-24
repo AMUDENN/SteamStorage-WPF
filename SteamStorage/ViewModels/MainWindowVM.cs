@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Services;
+using SteamStorage.Services.Config;
+using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace SteamStorage.ViewModels
         private RelayCommand _loadedCommand;
         private RelayCommand<KeyEventArgs> _keyDownCommand;
 
+        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
         #endregion Fields
 
@@ -72,28 +74,28 @@ namespace SteamStorage.ViewModels
             var mw = Application.Current.MainWindow;
 
             bool isMaximized = mw.WindowState == WindowState.Maximized;
-            Config.IsMaximized = isMaximized;
+            _configService.IsMaximized = isMaximized;
             if (isMaximized) return;
 
-            Config.Width = mw.ActualWidth;
-            Config.Height = mw.ActualHeight;
-            Config.Top = mw.Top;
-            Config.Left = mw.Left;
+            _configService.Width = mw.ActualWidth;
+            _configService.Height = mw.ActualHeight;
+            _configService.Top = mw.Top;
+            _configService.Left = mw.Left;
         }
         private void DoStateChangedCommand()
         {
             var mw = Application.Current.MainWindow;
             if (mw.WindowState == WindowState.Maximized) return;
-            Config.Width = mw.ActualWidth;
-            Config.Height = mw.ActualHeight;
-            Config.Top = mw.Top;
-            Config.Left = mw.Left;
+            _configService.Width = mw.ActualWidth;
+            _configService.Height = mw.ActualHeight;
+            _configService.Top = mw.Top;
+            _configService.Left = mw.Left;
         }
         private void DoLoadedCommand()
         {
             Themes.ThemesEnum currentTheme;
-            if (Config.CurrentTheme == "Light") currentTheme = Themes.ThemesEnum.Light;
-            else if (Config.CurrentTheme == "Dark") currentTheme = Themes.ThemesEnum.Dark;
+            if (_configService.CurrentTheme == "Light") currentTheme = Themes.ThemesEnum.Light;
+            else if (_configService.CurrentTheme == "Dark") currentTheme = Themes.ThemesEnum.Dark;
             else currentTheme = Themes.ThemesEnum.Custom;
             Themes.ChangeTheme(currentTheme);
         }

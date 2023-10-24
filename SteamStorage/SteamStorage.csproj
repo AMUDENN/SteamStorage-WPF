@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\Images\Bitmaps\BlackIcon.ico</ApplicationIcon>
+	<OutputType>WinExe</OutputType>
+	<TargetFramework>net7.0-windows</TargetFramework>
+	<Nullable>enable</Nullable>
+	<UseWPF>true</UseWPF>
+	<ApplicationIcon>Resources\Images\Bitmaps\BlackIcon.ico</ApplicationIcon>
+	<UICulture>ru-RU</UICulture>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>

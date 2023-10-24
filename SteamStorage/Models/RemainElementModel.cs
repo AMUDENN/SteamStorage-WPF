@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OxyPlot;
 using SteamStorage.Entities;
+using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SteamStorage.Models
         private double _percent;
         private List<DataPoint> _priceDynamicsPoints;
 
-        private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
         private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 

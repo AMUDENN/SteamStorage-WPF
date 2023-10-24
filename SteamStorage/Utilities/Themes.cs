@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using SteamStorage.Services.Config;
 
 namespace SteamStorage.Utilities
 {
     public static class Themes
     {
         public enum ThemesEnum { Light, Dark, Custom };
-        private static Dictionary<ThemesEnum, string> _themesPath = new Dictionary<ThemesEnum, string>()
+        private static readonly Dictionary<ThemesEnum, string> _themesPath = new()
         {
             { ThemesEnum.Light, @"Resources\Themes\LightTheme.xaml" },
             { ThemesEnum.Dark, @"Resources\Themes\DarkTheme.xaml" }
         };
+        private static readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         public static void ChangeTheme(ThemesEnum theme)
         {
-            Config.CurrentTheme = theme.ToString();
+            _configService.CurrentTheme = theme.ToString();
 
             if(theme == ThemesEnum.Custom)
             {
@@ -32,13 +34,13 @@ namespace SteamStorage.Utilities
         {
             var resources = Application.Current.Resources;
             var converter = new BrushConverter();
-            resources["Main"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.MainColor}");
-            resources["MainAdditional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.MainAdditionalColor}");
-            resources["Additional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AdditionalColor}");
-            resources["Accent"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AccentColor}");
-            resources["AccentAdditional"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.AccentAdditionalColor}");
-            resources["PercentPlus"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.PercentPlusColor}");
-            resources["PercentMinus"] = (SolidColorBrush)converter.ConvertFrom($"#{Config.PercentMinusColor}");
+            resources["Main"] = converter.ConvertFrom($"#{_configService.MainColor}") as SolidColorBrush;
+            resources["MainAdditional"] = converter.ConvertFrom($"#{_configService.MainAdditionalColor}") as SolidColorBrush;
+            resources["Additional"] = converter.ConvertFrom($"#{_configService.AdditionalColor}") as SolidColorBrush;
+            resources["Accent"] = converter.ConvertFrom($"#{_configService.AccentColor}") as SolidColorBrush;
+            resources["AccentAdditional"] = converter.ConvertFrom($"#{_configService.AccentAdditionalColor}") as SolidColorBrush;
+            resources["PercentPlus"] = converter.ConvertFrom($"#{_configService.PercentPlusColor}") as SolidColorBrush;
+            resources["PercentMinus"] = converter.ConvertFrom($"#{_configService.PercentMinusColor}") as SolidColorBrush;
         }
     }
 }

@@ -2,7 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using SteamStorage.Models;
-using SteamStorage.Services;
+using SteamStorage.Services.Config;
+using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
 using SteamStorage.Windows;
 
@@ -16,6 +17,7 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand _referenceInformationCommand;
 
+        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
         #endregion Fields
 
@@ -31,7 +33,7 @@ namespace SteamStorage.ViewModels
             get => _isMenuExpanded;
             set => SetProperty(ref _isMenuExpanded, value);
         }
-        public string Version
+        public string? Version
         {
             get => ProgramConstants.Version;
         }
@@ -50,10 +52,10 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public MainVM()
         {
-            IsMenuExpanded = Config.IsMenuExpanded;
-            Singleton.GetObject<MainWindow>().Closing += (s, e) => Config.IsMenuExpanded = IsMenuExpanded;
+            IsMenuExpanded = _configService.IsMenuExpanded;
+            Singleton.GetObject<MainWindow>().Closing += (s, e) => _configService.IsMenuExpanded = IsMenuExpanded;
 
-            bool isGreetingTextVisible = Config.IsGreetingTextVisible;
+            bool isGreetingTextVisible = _configService.IsGreetingTextVisible;
 
             if (isGreetingTextVisible) CurrentVM = new WelcomeVM();
 

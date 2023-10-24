@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SteamStorage.Parser.Models;
+using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace SteamStorage.Parser
         #region Fields
         private static readonly HttpClient _client = new();
         private static readonly List<string> _extraChars = new() { "amp;" };
-        private static readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private static readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
         #endregion Fields
 
         #region Methods

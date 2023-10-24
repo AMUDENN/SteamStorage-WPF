@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
 
-namespace SteamStorage.Services
+namespace SteamStorage.Services.Dialog
 {
     public class WindowDialogService : IWindowDialogService, IFileDialogService
     {

@@ -1,7 +1,7 @@
 ﻿using SteamStorage.Utilities;
 using System.Diagnostics;
 
-namespace SteamStorage.Services
+namespace SteamStorage.Services.ReferenceInformation
 {
     public class ReferenceInformationService : IReferenceInformationService
     {

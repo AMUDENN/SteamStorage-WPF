@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
-using SteamStorage.Services;
+using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.ObjectModel;

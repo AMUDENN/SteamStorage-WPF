@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
+using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 
@@ -15,7 +16,7 @@ namespace SteamStorage.Models
         private double _amountSold;
         private double _percent;
 
-        private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
         private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 

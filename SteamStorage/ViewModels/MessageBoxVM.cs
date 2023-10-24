@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Services;
+using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System.Collections.Generic;
 using System.Windows;

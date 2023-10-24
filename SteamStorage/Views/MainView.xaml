@@ -102,7 +102,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Style="{DynamicResource ImageButtonStyle}" Command="{Binding ReferenceInformationCommand}" VerticalAlignment="Bottom">
+                        <Button Style="{DynamicResource ImageButtonStyle}" Command="{Binding ReferenceInformationCommand}" ToolTip="Справка" VerticalAlignment="Bottom">
                             <Image Style="{DynamicResource QuestionImage}"/>
                         </Button>
                     </Grid>

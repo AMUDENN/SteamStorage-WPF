@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
 using SteamStorage.Models;
 using SteamStorage.Parser;
+using SteamStorage.Services.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace SteamStorage.Utilities
         private IEnumerable<RemainGroupModel> _remainGroupModels;
         private IEnumerable<ArchiveGroupModel> _archiveGroupModels;
 
-        private readonly Logger? _logger;
+        private readonly LoggerService? _logger;
         #endregion Fields
 
         #region Properties
@@ -48,7 +49,7 @@ namespace SteamStorage.Utilities
         #endregion Properties
 
         #region Constructor
-        public Context(Logger logger)
+        public Context(LoggerService? logger)
         {
             _logger = logger;
             UpdateAll();

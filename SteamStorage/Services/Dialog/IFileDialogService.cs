@@ -1,4 +1,4 @@
-﻿namespace SteamStorage.Services
+﻿namespace SteamStorage.Services.Dialog
 {
     public interface IFileDialogService
     {

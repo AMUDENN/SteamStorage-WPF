@@ -9,11 +9,11 @@ namespace SteamStorage.Resources.Converters
 {
     public class PercentForegroundConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is null) return value;
             double percent = (double)value;
-            SolidColorBrush solidColorBrush = Dictionaries.GetSolidColorBrush(percent < 0 ? "PercentMinus" : "PercentPlus");
+            SolidColorBrush? solidColorBrush = Dictionaries.GetSolidColorBrush(percent < 0 ? "PercentMinus" : "PercentPlus");
             if (parameter is not null && ((string)parameter) == "Color") return solidColorBrush.Color;
             return solidColorBrush;
         }

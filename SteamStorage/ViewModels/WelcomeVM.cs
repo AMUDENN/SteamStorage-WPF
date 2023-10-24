@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SteamStorage.Services.Config;
 using SteamStorage.Utilities;
 
 namespace SteamStorage.ViewModels
@@ -8,6 +9,8 @@ namespace SteamStorage.ViewModels
         #region Fields
         private bool _isGreetingTextVisible;
         private bool _isDontShowAgainEnabled;
+
+        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         #endregion Fields
 
         #region Properties
@@ -30,7 +33,7 @@ namespace SteamStorage.ViewModels
         #region Constructor
         public WelcomeVM()
         {
-            IsGreetingTextVisible = Config.IsGreetingTextVisible;
+            IsGreetingTextVisible = _configService.IsGreetingTextVisible;
             IsDontShowAgainEnabled = !IsGreetingTextVisible;
         }
         #endregion Constructor
@@ -38,7 +41,7 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void SaveGreetingTextVisible()
         {
-            Config.IsGreetingTextVisible = !IsDontShowAgainEnabled;
+            _configService.IsGreetingTextVisible = !IsDontShowAgainEnabled;
         }
         #endregion Methods
     }

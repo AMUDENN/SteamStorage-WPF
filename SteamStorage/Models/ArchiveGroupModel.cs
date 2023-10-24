@@ -1,4 +1,5 @@
 ﻿using SteamStorage.Entities;
+using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 
@@ -12,7 +13,7 @@ namespace SteamStorage.Models
         private double? _archivesAmount;
         private double? _archivesPercent;
 
-        private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
         private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 

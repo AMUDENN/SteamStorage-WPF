@@ -103,6 +103,7 @@
     </Style>
 
     <Style x:Key="ImageButtonStyle" BasedOn="{StaticResource BaseTransparentButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="24"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

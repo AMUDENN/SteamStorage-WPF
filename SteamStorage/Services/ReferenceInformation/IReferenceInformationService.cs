@@ -1,4 +1,4 @@
-﻿namespace SteamStorage.Services
+﻿namespace SteamStorage.Services.ReferenceInformation
 {
     public interface IReferenceInformationService
     {

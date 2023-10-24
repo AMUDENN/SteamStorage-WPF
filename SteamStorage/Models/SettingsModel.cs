@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using OfficeOpenXml;
-using SteamStorage.Services;
+using SteamStorage.Services.Config;
+using SteamStorage.Services.Dialog;
+using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,8 +28,9 @@ namespace SteamStorage.Models
         private string _percentMinusColor;
 
         private readonly Context? _context = Singleton.GetObject<Context>();
-        private readonly Logger? _logger = Singleton.GetObject<Logger>();
+        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         private readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
+        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
         #endregion Fields
 
         #region Properties
@@ -119,15 +122,15 @@ namespace SteamStorage.Models
         #region Constructor
         public SettingsModel()
         {
-            MainColor = Config.MainColor;
-            MainAdditionalColor = Config.MainAdditionalColor;
-            AdditionalColor = Config.AdditionalColor;
-            AccentColor = Config.AccentColor;
-            AccentAdditionalColor = Config.AccentAdditionalColor;
-            PercentPlusColor = Config.PercentPlusColor;
-            PercentMinusColor = Config.PercentMinusColor;
+            MainColor = _configService.MainColor;
+            MainAdditionalColor = _configService.MainAdditionalColor;
+            AdditionalColor = _configService.AdditionalColor;
+            AccentColor = _configService.AccentColor;
+            AccentAdditionalColor = _configService.AccentAdditionalColor;
+            PercentPlusColor = _configService.PercentPlusColor;
+            PercentMinusColor = _configService.PercentMinusColor;
 
-            var currentTheme = Config.CurrentTheme;
+            var currentTheme = _configService.CurrentTheme;
             IsLightTheme = currentTheme == "Light";
             IsDarkTheme = currentTheme == "Dark";
             IsCustomTheme = currentTheme == "Custom";
@@ -267,13 +270,13 @@ namespace SteamStorage.Models
         }
         public void SaveColors()
         {
-            Config.MainColor = MainColor;
-            Config.MainAdditionalColor = MainAdditionalColor;
-            Config.AdditionalColor = AdditionalColor;
-            Config.AccentColor = AccentColor;
-            Config.AccentAdditionalColor = AccentAdditionalColor;
-            Config.PercentPlusColor = PercentPlusColor;
-            Config.PercentMinusColor = PercentMinusColor;
+            _configService.MainColor = MainColor;
+            _configService.MainAdditionalColor = MainAdditionalColor;
+            _configService.AdditionalColor = AdditionalColor;
+            _configService.AccentColor = AccentColor;
+            _configService.AccentAdditionalColor = AccentAdditionalColor;
+            _configService.PercentPlusColor = PercentPlusColor;
+            _configService.PercentMinusColor = PercentMinusColor;
             Themes.SetCustomColors();
         }
         public void ResetColors()

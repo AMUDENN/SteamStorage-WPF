@@ -2,16 +2,16 @@
 using System.IO;
 using System.Text;
 
-namespace SteamStorage.Utilities
+namespace SteamStorage.Services.Logger
 {
-    public class Logger : IDisposable
+    public class LoggerService : ILoggerService
     {
         #region Fields
-        private StreamWriter _innerWriter;
+        private readonly StreamWriter _innerWriter;
         #endregion Fields
 
         #region Constructor
-        public Logger(string logPath)
+        public LoggerService(string logPath)
         {
             if (!File.Exists(logPath))
             {

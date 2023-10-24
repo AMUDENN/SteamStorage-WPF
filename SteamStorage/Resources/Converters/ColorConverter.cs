@@ -8,11 +8,11 @@ namespace SteamStorage.Resources.Converters
 {
     public class ColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                return (SolidColorBrush)new BrushConverter().ConvertFrom($"#{value}");
+                return new BrushConverter().ConvertFrom($"#{value}") as SolidColorBrush;
             }
             catch
             {

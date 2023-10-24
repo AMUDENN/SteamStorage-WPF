@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SteamStorage.Services;
+using SteamStorage.Services.Config;
+using SteamStorage.Services.Dialog;
+using SteamStorage.Services.Logger;
+using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
@@ -22,14 +25,15 @@ namespace SteamStorage
                 throw new Exception("something went wrong during initializing DI container. MainWindow is missing");
             window.DataContext = MainWindowVM;
 
-            window.Height = Config.Height;
-            window.Width = Config.Width;
-            window.Top = Config.Top;
-            window.Left = Config.Left;
+            ConfigService? configService = Singleton.GetObject<ConfigService>();
+            window.Height = configService.Height;
+            window.Width = configService.Width;
+            window.Top = configService.Top;
+            window.Left = configService.Left;
 
             window.Show();
 
-            if (Config.IsMaximized) window.WindowState = WindowState.Maximized;
+            if (configService.IsMaximized) window.WindowState = WindowState.Maximized;
 
             base.OnStartup(e);
         }
@@ -41,8 +45,10 @@ namespace SteamStorage
             services.AddSingleton<MainWindow>();
 
             services.AddSingleton<Context>();
-            services.AddSingleton<Logger>(new Logger(ProgramConstants.LogPath));
+            
+            services.AddSingleton<ConfigService>();
             services.AddSingleton<WindowDialogService>();
+            services.AddSingleton<LoggerService>(new LoggerService(ProgramConstants.LogPath));
             services.AddSingleton<ReferenceInformationService>();
 
             Container = services.BuildServiceProvider();

@@ -1,5 +1,5 @@
 ﻿using SteamStorage.Models;
-using SteamStorage.Services;
+using SteamStorage.Services.Dialog;
 using SteamStorage.ViewModels;
 
 namespace SteamStorage.Utilities
