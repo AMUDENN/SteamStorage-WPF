@@ -142,7 +142,7 @@ namespace SteamStorage.Utilities
                 {
                     IdRemainNavigation = remainModel.Remain,
                     CostUpdate = Price,
-                    DateUpdate = DateUpdate.ToString(Constants.DateTimeFormat)
+                    DateUpdate = DateUpdate.ToString(ProgramConstants.DateTimeFormat)
                 };
                 DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();

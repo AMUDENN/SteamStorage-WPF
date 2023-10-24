@@ -50,7 +50,7 @@ namespace SteamStorage.Models
         public RemainElementModel(Remain remain)
         {
             this._remain = remain;
-            _datePurchase = DateTime.ParseExact(remain.DatePurchase, Constants.DateTimeFormat, null);
+            _datePurchase = DateTime.ParseExact(remain.DatePurchase, ProgramConstants.DateTimeFormat, null);
             _amountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
         }
@@ -66,7 +66,7 @@ namespace SteamStorage.Models
         {
             _context?.DBContext.PriceDynamics.LoadAsync();
             _context?.DBContext.Skins.LoadAsync();
-            _priceDynamics = _remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, Constants.DateTimeFormat, null), x => x.CostUpdate);
+            _priceDynamics = _remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, ProgramConstants.DateTimeFormat, null), x => x.CostUpdate);
             _priceDynamics.Add(DatePurchase, CostPurchase);
             if (_priceDynamics.Count == 1) _priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
             _priceDynamics = _priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
@@ -95,7 +95,7 @@ namespace SteamStorage.Models
                 _remain.IdSkinNavigation = skin;
                 _remain.Count = count;
                 _remain.CostPurchase = costPurchase;
-                _remain.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
+                _remain.DatePurchase = datePurchase.ToString(ProgramConstants.DateTimeFormat);
                 _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 _context?.SaveChanges();
                 _context?.UpdateRemainModels();

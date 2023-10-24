@@ -41,8 +41,9 @@ namespace SteamStorage
             services.AddSingleton<MainWindow>();
 
             services.AddSingleton<Context>();
-            services.AddSingleton<Logger>(new Logger(Constants.Logpath));
+            services.AddSingleton<Logger>(new Logger(ProgramConstants.LogPath));
             services.AddSingleton<WindowDialogService>();
+            services.AddSingleton<ReferenceInformationService>();
 
             Container = services.BuildServiceProvider();
         }

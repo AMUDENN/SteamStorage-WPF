@@ -12,7 +12,7 @@ namespace SteamStorage.Resources.Converters
         {
             if (value is null) return value;
             DateTime dt = (DateTime)value;
-            return dt.ToString(Constants.DateFormat);
+            return dt.ToString(ProgramConstants.DateFormat);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

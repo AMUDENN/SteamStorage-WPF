@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ReferenceInformation\css\style.css" />
+    <None Remove="ReferenceInformation\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\Images\Bitmaps\BlackIcon.ico" />
   </ItemGroup>
 
@@ -23,6 +28,11 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Contrib.Wpf" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ReferenceInformation\css\style.css" />
+    <Resource Include="ReferenceInformation\index.html" />
   </ItemGroup>
 
 </Project>

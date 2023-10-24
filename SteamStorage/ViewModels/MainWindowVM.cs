@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SteamStorage.Services;
 using SteamStorage.Utilities;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SteamStorage.ViewModels
 {
@@ -13,6 +15,9 @@ namespace SteamStorage.ViewModels
         private RelayCommand _closingCommand;
         private RelayCommand _stateChangedCommand;
         private RelayCommand _loadedCommand;
+        private RelayCommand<KeyEventArgs> _keyDownCommand;
+
+        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
         #endregion Fields
 
         #region Properties
@@ -43,6 +48,13 @@ namespace SteamStorage.ViewModels
             get
             {
                 return _loadedCommand ??= new RelayCommand(DoLoadedCommand);
+            }
+        }
+        public RelayCommand<KeyEventArgs> KeyDownCommand
+        {
+            get
+            {
+                return _keyDownCommand ??= new RelayCommand<KeyEventArgs>(DoKeyDownCommand);
             }
         }
         #endregion Commands
@@ -84,6 +96,13 @@ namespace SteamStorage.ViewModels
             else if (Config.CurrentTheme == "Dark") currentTheme = Themes.ThemesEnum.Dark;
             else currentTheme = Themes.ThemesEnum.Custom;
             Themes.ChangeTheme(currentTheme);
+        }
+        private void DoKeyDownCommand(KeyEventArgs? e)
+        {
+            if (e?.Key == Key.F1)
+            {
+                _referenceInformationService?.OpenReferenceInformation();
+            }
         }
         #endregion Methods
     }

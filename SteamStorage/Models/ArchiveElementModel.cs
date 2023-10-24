@@ -37,8 +37,8 @@ namespace SteamStorage.Models
         public ArchiveElementModel(Archive archive)
         {
             this._archive = archive;
-            _datePurchase = DateTime.ParseExact(this._archive.DatePurchase, Constants.DateTimeFormat, null);
-            _dateSold = DateTime.ParseExact(this._archive.DateSold, Constants.DateTimeFormat, null);
+            _datePurchase = DateTime.ParseExact(this._archive.DatePurchase, ProgramConstants.DateTimeFormat, null);
+            _dateSold = DateTime.ParseExact(this._archive.DateSold, ProgramConstants.DateTimeFormat, null);
             _amountPurchase = archive.CostPurchase * archive.Count;
             _amountSold = archive.CostSold * archive.Count;
             _percent = (CostSold - CostPurchase) / CostPurchase * 100;
@@ -62,8 +62,8 @@ namespace SteamStorage.Models
                 _archive.Count = count;
                 _archive.CostPurchase = costPurchase;
                 _archive.CostSold = costSold;
-                _archive.DatePurchase = datePurchase.ToString(Constants.DateTimeFormat);
-                _archive.DateSold = dateSold.ToString(Constants.DateTimeFormat);
+                _archive.DatePurchase = datePurchase.ToString(ProgramConstants.DateTimeFormat);
+                _archive.DateSold = dateSold.ToString(ProgramConstants.DateTimeFormat);
                 _archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
                 _context?.SaveChanges();
                 _context?.UpdateArchiveModels();

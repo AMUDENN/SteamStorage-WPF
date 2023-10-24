@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using SteamStorage.Models;
+using SteamStorage.Services;
 using SteamStorage.Utilities;
 using SteamStorage.Windows;
 
@@ -11,6 +13,10 @@ namespace SteamStorage.ViewModels
         #region Fields
         private ObservableObject _currentVM;
         private bool _isMenuExpanded;
+
+        private RelayCommand _referenceInformationCommand;
+
+        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
         #endregion Fields
 
         #region Properties
@@ -27,9 +33,19 @@ namespace SteamStorage.ViewModels
         }
         public string Version
         {
-            get => Constants.Version;
+            get => ProgramConstants.Version;
         }
         #endregion Properties
+
+        #region Commands
+        public RelayCommand ReferenceInformationCommand
+        {
+            get
+            {
+                return _referenceInformationCommand ??= new RelayCommand(DoReferenceInformationCommand);
+            }
+        }
+        #endregion Commands
 
         #region Constructor
         public MainVM()
@@ -47,6 +63,10 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
+        private void DoReferenceInformationCommand()
+        {
+            _referenceInformationService?.OpenReferenceInformation();
+        }
         private void NavigateTo(object recipient, NavigationChangedRequestedMessage message)
         {
             if (message.Value is NavigationModel navModel)

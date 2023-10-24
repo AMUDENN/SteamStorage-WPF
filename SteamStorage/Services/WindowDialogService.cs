@@ -5,16 +5,6 @@ using SteamStorage.Windows;
 
 namespace SteamStorage.Services
 {
-    public interface IWindowDialogService
-    {
-        bool? ShowDialog(string title, ObservableObject dataContext);
-    }
-    public interface IFileDialogService
-    {
-        string FilePath { get; set; }
-        bool OpenFileDialog(string filter = "");
-        bool SaveFileDialog(string filter = "");
-    }
     public class WindowDialogService : IWindowDialogService, IFileDialogService
     {
         public static DialogWindow CurrentDialogWindow;
@@ -37,8 +27,10 @@ namespace SteamStorage.Services
         }
         public bool OpenFileDialog(string filter = "")
         {
-            OpenFileDialog openFileDialog = new();
-            openFileDialog.Filter = filter;
+            OpenFileDialog openFileDialog = new()
+            {
+                Filter = filter
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 FilePath = openFileDialog.FileName;
@@ -48,8 +40,10 @@ namespace SteamStorage.Services
         }
         public bool SaveFileDialog(string filter = "")
         {
-            SaveFileDialog saveFileDialog = new();
-            saveFileDialog.Filter = filter;
+            SaveFileDialog saveFileDialog = new()
+            {
+                Filter = filter
+            };
             if (saveFileDialog.ShowDialog() == true)
             {
                 FilePath = saveFileDialog.FileName;

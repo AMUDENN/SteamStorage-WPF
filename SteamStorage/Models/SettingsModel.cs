@@ -167,9 +167,9 @@ namespace SteamStorage.Models
                         remainWorksheet.Cells[i, 2].Value = item.Count;
                         remainWorksheet.Cells[i, 3].Value = item.CostPurchase;
                         remainWorksheet.Cells[i, 4].Value = item.AmountPurchase;
-                        remainWorksheet.Cells[i, 5].Value = item.DatePurchase.ToString(Constants.DateFormat);
+                        remainWorksheet.Cells[i, 5].Value = item.DatePurchase.ToString(ProgramConstants.DateFormat);
                         remainWorksheet.Cells[i, 6].Value = item.LastCost;
-                        remainWorksheet.Cells[i, 7].Value = item.DateLastUpdate.ToString(Constants.DateFormat);
+                        remainWorksheet.Cells[i, 7].Value = item.DateLastUpdate.ToString(ProgramConstants.DateFormat);
                         remainWorksheet.Cells[i, 8].Value = (item.Percent > 0 ? "+" : "") + Math.Round(item.Percent, 2);
                         remainWorksheet.Cells[i, 9].Value = item.Url;
                         i++;
@@ -221,10 +221,10 @@ namespace SteamStorage.Models
                         archiveWorksheet.Cells[j, 2].Value = item.Count;
                         archiveWorksheet.Cells[j, 3].Value = item.CostPurchase;
                         archiveWorksheet.Cells[j, 4].Value = item.AmountPurchase;
-                        archiveWorksheet.Cells[j, 5].Value = item.DatePurchase.ToString(Constants.DateFormat);
+                        archiveWorksheet.Cells[j, 5].Value = item.DatePurchase.ToString(ProgramConstants.DateFormat);
                         archiveWorksheet.Cells[j, 6].Value = item.CostSold;
                         archiveWorksheet.Cells[j, 7].Value = item.AmountSold;
-                        archiveWorksheet.Cells[j, 8].Value = item.DateSold.ToString(Constants.DateFormat);
+                        archiveWorksheet.Cells[j, 8].Value = item.DateSold.ToString(ProgramConstants.DateFormat);
                         archiveWorksheet.Cells[j, 9].Value = (item.Percent > 0 ? "+" : "") + Math.Round(item.Percent, 2);
                         archiveWorksheet.Cells[j, 10].Value = item.Url;
                         j++;
@@ -288,8 +288,8 @@ namespace SteamStorage.Models
         }
         public void OpenLog()
         {
-            if (File.Exists(Constants.Logpath))
-                Process.Start(@"notepad.exe", Constants.Logpath);
+            if (File.Exists(ProgramConstants.LogPath))
+                Process.Start(@"notepad.exe", ProgramConstants.LogPath);
         }
         public void ClearDatabase()
         {

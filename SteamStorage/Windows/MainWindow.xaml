@@ -9,16 +9,19 @@
         MinHeight="720" MinWidth="1280"
         Title="Steam Storage" 
         Style="{DynamicResource MainWindowStyle}">
-    
+
     <Behaviors:Interaction.Triggers>
         <Behaviors:EventTrigger EventName="Closing">
-            <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"/>
+            <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="False"/>
         </Behaviors:EventTrigger>
         <Behaviors:EventTrigger EventName="StateChanged">
-            <Behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" PassEventArgsToCommand="True"/>
+            <Behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" PassEventArgsToCommand="False"/>
         </Behaviors:EventTrigger>
         <Behaviors:EventTrigger EventName="Loaded">
-            <Behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" PassEventArgsToCommand="True"/>
+            <Behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" PassEventArgsToCommand="False"/>
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="KeyDown">
+            <Behaviors:InvokeCommandAction Command="{Binding KeyDownCommand}" PassEventArgsToCommand="True"/>
         </Behaviors:EventTrigger>
     </Behaviors:Interaction.Triggers>
 
