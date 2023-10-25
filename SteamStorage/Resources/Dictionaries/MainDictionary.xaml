@@ -6,6 +6,7 @@
         <ResourceDictionary Source="\Resources\Styles\CheckBoxStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ComboBoxStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ContextMenuStyles.xaml"/>
+        <ResourceDictionary Source="\Resources\Styles\DropShadowStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\ExpanderStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\GroupBoxStyles.xaml"/>
         <ResourceDictionary Source="\Resources\Styles\HyperlinkStyles.xaml"/>

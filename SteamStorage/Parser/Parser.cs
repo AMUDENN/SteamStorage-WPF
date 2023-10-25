@@ -13,7 +13,7 @@ namespace SteamStorage.Parser
         #region Fields
         private static readonly HttpClient _client = new();
         private static readonly List<string> _extraChars = new() { "amp;" };
-        private static readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
+        private static readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
         #endregion Fields
 
         #region Methods
@@ -59,11 +59,11 @@ namespace SteamStorage.Parser
         }
         private static void SuccessParsing()
         {
-            _logger?.WriteMessage("Успешно получена информация!", typeof(SteamParser));
+            _loggerService?.WriteMessage("Успешно получена информация!", typeof(SteamParser));
         }
         private static void FailParsing(string message)
         {
-            _logger?.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParser));
+            _loggerService?.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParser));
         }
         #endregion Methods
     }

@@ -41,7 +41,7 @@ namespace SteamStorage.ViewModels
         };
         private NavigationModel _selectedNavigationModel;
 
-        private RelayCommand<object> _selectionChangedCommand;
+        private RelayCommand<SelectionChangedEventArgs> _selectionChangedCommand;
         #endregion Fields
 
         #region Properties
@@ -54,11 +54,11 @@ namespace SteamStorage.ViewModels
         #endregion Properties
 
         #region Commands
-        public RelayCommand<object> SelectionChangedCommand
+        public RelayCommand<SelectionChangedEventArgs> SelectionChangedCommand
         {
             get
             {
-                return _selectionChangedCommand ??= new RelayCommand<object>(DoSelectionChangedCommand);
+                return _selectionChangedCommand ??= new RelayCommand<SelectionChangedEventArgs>(DoSelectionChangedCommand);
             }
         }
         #endregion Commands
@@ -71,16 +71,13 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
-        private void DoSelectionChangedCommand(object? data)
+        private void DoSelectionChangedCommand(SelectionChangedEventArgs? e)
         {
-            if (data is SelectionChangedEventArgs selectionChanged)
+            if (e?.AddedItems.Count == 0)
+                return;
+            if (e?.AddedItems[0] is NavigationModel navModel)
             {
-                if (selectionChanged.AddedItems.Count == 0)
-                    return;
-                if (selectionChanged.AddedItems[0] is NavigationModel navModel)
-                {
-                    ChangeVM(navModel);
-                }
+                ChangeVM(navModel);
             }
         }
         private void ChangeVM(NavigationModel navModel)

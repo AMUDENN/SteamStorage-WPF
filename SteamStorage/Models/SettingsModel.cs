@@ -30,7 +30,7 @@ namespace SteamStorage.Models
         private readonly Context? _context = Singleton.GetObject<Context>();
         private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
         private readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
-        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
+        private readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
         #endregion Fields
 
         #region Properties
@@ -259,12 +259,12 @@ namespace SteamStorage.Models
                     package.SaveAs(fs);
 
                 }
-                _logger?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
+                _loggerService?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
                 UserMessage.Information("Экспорт в эксель завершился успешно!");
             }
             catch (Exception ex)
             {
-                _logger?.WriteMessage($"Экспорт в эксель завершился с ошибкой! {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Экспорт в эксель завершился с ошибкой! {ex.Message}", this.GetType());
                 UserMessage.Error("Экспорт в эксель завершился с ошибкой!");
             }
         }

@@ -20,7 +20,7 @@ namespace SteamStorage.Utilities
         private IEnumerable<RemainGroupModel> _remainGroupModels;
         private IEnumerable<ArchiveGroupModel> _archiveGroupModels;
 
-        private readonly LoggerService? _logger;
+        private readonly LoggerService? _loggerService;
         #endregion Fields
 
         #region Properties
@@ -51,7 +51,7 @@ namespace SteamStorage.Utilities
         #region Constructor
         public Context(LoggerService? logger)
         {
-            _logger = logger;
+            _loggerService = logger;
             UpdateAll();
         }
         #endregion Constructor
@@ -123,12 +123,12 @@ namespace SteamStorage.Utilities
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
-                    _logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    _loggerService?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
                     return skin;
                 }
                 catch (Exception ex)
                 {
-                    _logger?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    _loggerService?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
                     UndoChanges();
                     return null;
                 }
@@ -147,11 +147,11 @@ namespace SteamStorage.Utilities
                 };
                 DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                _logger?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
+                _loggerService?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
             {
-                _logger?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
+                _loggerService?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
                 UndoChanges();
             }
         }
@@ -212,11 +212,11 @@ namespace SteamStorage.Utilities
                 DBContext.Skins.RemoveRange(DBContext.Skins);
                 SaveChanges();
                 UpdateAll();
-                _logger?.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
+                _loggerService?.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
             }
             catch
             {
-                _logger?.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
+                _loggerService?.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
                 UndoChanges();
             }
         }

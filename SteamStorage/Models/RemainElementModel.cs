@@ -24,7 +24,7 @@ namespace SteamStorage.Models
         private double _percent;
         private List<DataPoint> _priceDynamicsPoints;
 
-        private readonly LoggerService? _logger = Singleton.GetObject<LoggerService>();
+        private readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
         private readonly Context? _context = Singleton.GetObject<Context>();
         #endregion Fields
 
@@ -100,12 +100,12 @@ namespace SteamStorage.Models
                 _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 _context?.SaveChanges();
                 _context?.UpdateRemainModels();
-                _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -116,12 +116,12 @@ namespace SteamStorage.Models
                 _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
                 _context?.SaveChanges();
                 _context?.UpdateRemainModels();
-                _logger?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -133,12 +133,12 @@ namespace SteamStorage.Models
                 archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
                 if (count >= _remain.Count) _context?.RemoveRemain(_remain);
                 EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.RemainGroupModels.Where(x => x.RemainGroup == RemainGroup).First());
-                _logger?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось продать элемент {Title}");
             }
         }
@@ -147,12 +147,12 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveRemain(_remain);
-                _logger?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }
@@ -162,12 +162,12 @@ namespace SteamStorage.Models
             {
                 _context?.AddPriceDynamic(this);
                 UpdatePriceDynamics();
-                _logger?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
+                _loggerService?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _logger?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
                 UserMessage.Error($"Не удалось узнать текущую цену элемента {Title}");
             }
         }

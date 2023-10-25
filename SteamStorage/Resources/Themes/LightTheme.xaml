@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <SolidColorBrush x:Key="Main" Color="#395B64"/>
-    <SolidColorBrush x:Key="MainAdditional" Color="#A5C9CA"/>
+    <SolidColorBrush x:Key="Main" Color="#769FCD"/>
+    <SolidColorBrush x:Key="MainAdditional" Color="#B9D7EA"/>
     <SolidColorBrush x:Key="Additional" Color="#2C3333"/>
-    <SolidColorBrush x:Key="Accent" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="AccentAdditional" Color="#E7F6F2"/>
+    <SolidColorBrush x:Key="Accent" Color="#F7FBFC"/>
+    <SolidColorBrush x:Key="AccentAdditional" Color="#D6E6F2"/>
     <SolidColorBrush x:Key="PercentPlus" Color="#02B478"/>
     <SolidColorBrush x:Key="PercentMinus" Color="#FD4534"/>
 
