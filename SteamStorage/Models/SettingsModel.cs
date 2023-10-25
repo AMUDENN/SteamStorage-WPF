@@ -296,7 +296,7 @@ namespace SteamStorage.Models
         }
         public void ClearDatabase()
         {
-            var delete = UserMessage.Question("Вы уверены, что хотите очистить базу данных? \nВсе данные будут удалены без возможности восстановления!", 250, 450);
+            var delete = UserMessage.TextConfirmation("Вы уверены, что хотите очистить базу данных? \nВсе данные будут удалены без возможности восстановления!", "УДАЛИТЬ");
             if (!delete) return;
             _context?.ClearDatabase();
         }

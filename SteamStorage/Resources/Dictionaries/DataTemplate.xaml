@@ -18,6 +18,10 @@
         <view:MessageBoxView/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:TextConfirmationVM}">
+        <view:TextConfirmationView/>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:GroupOperationsVM}">
         <view:GroupOperationsView/>
     </DataTemplate>

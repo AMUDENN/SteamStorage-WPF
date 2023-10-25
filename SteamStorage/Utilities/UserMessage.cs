@@ -19,6 +19,10 @@ namespace SteamStorage.Utilities
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Ошибка", new MessageBoxVM(error, MessageBoxVM.MessageImages.Error, MessageBoxVM.MessageButtons.Ok));
         }
+        public static bool TextConfirmation(string text, string confirmationWord, double height = 350, double width = 500)
+        {
+            return (bool)_windowDialogService.ShowDialog(height, width, "Подтвердите действие", new TextConfirmationVM(text, confirmationWord));
+        }
         public static bool EditArchiveGroup(ArchiveGroupModel archiveGroupModel, double height = 200, double width = 400) 
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение группы \"{archiveGroupModel.Title}\"", new GroupOperationsVM(archiveGroupModel));
