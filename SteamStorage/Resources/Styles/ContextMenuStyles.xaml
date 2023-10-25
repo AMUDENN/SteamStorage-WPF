@@ -28,7 +28,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Width" Value="170"/>
-        <Setter Property="Effect" Value="{DynamicResource smallShadow}"/>
+        <Setter Property="Effect" Value="{DynamicResource SmallShadow}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">

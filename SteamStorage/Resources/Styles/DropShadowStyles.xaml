@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <DropShadowEffect x:Key="smallShadow" BlurRadius="3" ShadowDepth="3" Opacity="0.4"/>
+    <DropShadowEffect x:Key="SmallShadow" BlurRadius="3" ShadowDepth="3" Opacity="0.4"/>
 
 </ResourceDictionary>

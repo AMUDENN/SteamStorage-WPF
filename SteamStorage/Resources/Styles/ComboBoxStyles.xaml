@@ -66,8 +66,10 @@
                             <Grid Name="DropDown"
                               SnapsToDevicePixels="True"                
                               MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                <Border 
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                              Effect="{DynamicResource SmallShadow}"
+                              Margin="0, 0, 8, 8">
+                                <Border
                                 x:Name="DropDownBorder"
                                 CornerRadius="0, 0, 7, 7"
                                 Background="{DynamicResource AccentAdditional}"/>
