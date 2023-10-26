@@ -1,1 +1,107 @@
-﻿
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Andale Mono', monospace;
+}
+
+iframe {
+    border: none;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.wrapper {
+    height: 100%;
+    background-color: #0D1117;
+}
+
+.white-text {
+    color: #FFFFFF;
+}
+
+.frames {
+    flex-direction: column;
+    height: 100%;
+}
+
+.menu-iframe {
+    height: 90px;
+}
+
+.page-iframe {
+    height: 100%;
+    padding: 5px 5px 5px 0;
+}
+
+.nav-menu {
+    height: 100%;
+    width: 100%;
+}
+
+.main-menu-container {
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    background: #21262D;
+}
+
+.menu {
+    height: 100%;
+    width: 40%;
+    padding-left: 50px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu img {
+    height: 45%;
+    margin-right: 20px;
+}
+
+.menu a {
+    margin-right: 20px;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    width: 60%;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+}
+
+.title-text {
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.common-text {
+    font-size: 30px;
+}
+
+.common-text p {
+    margin-bottom: 30px;
+}
+
+
+body::-webkit-scrollbar {
+    width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #0D1117;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #6e7074;
+    border-radius: 20px;
+    border: 3px solid transparent;
+}
