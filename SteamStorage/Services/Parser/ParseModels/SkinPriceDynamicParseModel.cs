@@ -1,6 +1,6 @@
-﻿namespace SteamStorage.Parser.Models
+﻿namespace SteamStorage.Services.Parser.ParseModels
 {
-    public class SkinParseModel
+    public class SkinPriceDynamicParseModel
     {
         public bool success { get; set; }
         public string lowest_price { get; set; }

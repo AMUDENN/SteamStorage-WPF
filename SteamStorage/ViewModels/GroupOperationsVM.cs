@@ -13,12 +13,17 @@ namespace SteamStorage.ViewModels
         {
             Archive, Remain
         }
+        private enum CommandType
+        {
+            Add, Edit
+        }
         #endregion Enums
 
         #region Fields
         private ArchiveGroupModel? _archiveGroupModel;
         private RemainGroupModel? _remainGroupModel;
         private GroupTypes _groupType;
+        private CommandType _commandType;
 
         private string _title;
 
@@ -58,24 +63,24 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-
         public GroupOperationsVM(ArchiveGroupModel archiveGroupModel)
         {
-            this._archiveGroupModel = archiveGroupModel;
-            this._groupType = GroupTypes.Archive;
+            _archiveGroupModel = archiveGroupModel;
+            _groupType = GroupTypes.Archive;
+            _commandType = CommandType.Edit;
             Title = archiveGroupModel.Title;
         }
         public GroupOperationsVM(RemainGroupModel remainGroupModel)
         {
-            this._remainGroupModel = remainGroupModel;
-            this._groupType = GroupTypes.Remain;
+            _remainGroupModel = remainGroupModel;
+            _groupType = GroupTypes.Remain;
+            _commandType = CommandType.Edit;
             Title = remainGroupModel.Title;
         }
         public GroupOperationsVM(GroupTypes groupType)
         {
-            if (groupType == GroupTypes.Archive) _archiveGroupModel = new();
-            else if (groupType == GroupTypes.Remain) _remainGroupModel = new();
-            this._groupType = groupType;
+            _commandType = CommandType.Add;
+            _groupType = groupType;
             Title = string.Empty;
         }
         #endregion Constructor
@@ -83,8 +88,16 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (_groupType == GroupTypes.Archive) _archiveGroupModel?.EditGroup(Title);
-            else if (_groupType == GroupTypes.Remain) _remainGroupModel?.EditGroup(Title);
+            if (_commandType == CommandType.Add)
+            {
+                if (_groupType == GroupTypes.Archive) _archiveGroupModel = new(Title);
+                else if (_groupType == GroupTypes.Remain) _remainGroupModel = new(Title);
+            }
+            else
+            {
+                if (_groupType == GroupTypes.Archive) _archiveGroupModel?.EditGroup(Title);
+                else if (_groupType == GroupTypes.Remain) _remainGroupModel?.EditGroup(Title);
+            }
             _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }

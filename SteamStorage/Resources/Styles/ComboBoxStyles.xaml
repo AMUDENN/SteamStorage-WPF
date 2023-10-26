@@ -68,7 +68,7 @@
                               MinWidth="{TemplateBinding ActualWidth}"
                               MaxHeight="{TemplateBinding MaxDropDownHeight}"
                               Effect="{DynamicResource SmallShadow}"
-                              Margin="0, 0, 8, 8">
+                              Margin="3">
                                 <Border
                                 x:Name="DropDownBorder"
                                 CornerRadius="0, 0, 7, 7"

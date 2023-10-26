@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SteamStorage.Entities;
 using SteamStorage.Models;
-using SteamStorage.Parser;
 using SteamStorage.Services.Logger;
+using SteamStorage.Services.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,8 @@ namespace SteamStorage.Utilities
         private IEnumerable<RemainGroupModel> _remainGroupModels;
         private IEnumerable<ArchiveGroupModel> _archiveGroupModels;
 
-        private readonly LoggerService? _loggerService;
+        private readonly LoggerService _loggerService;
+        private readonly SteamParseService _steamParseService;
         #endregion Fields
 
         #region Properties
@@ -49,9 +50,10 @@ namespace SteamStorage.Utilities
         #endregion Properties
 
         #region Constructor
-        public Context(LoggerService? logger)
+        public Context(LoggerService logger, SteamParseService steamParseService)
         {
             _loggerService = logger;
+            _steamParseService = steamParseService;
             UpdateAll();
         }
         #endregion Constructor
@@ -68,44 +70,56 @@ namespace SteamStorage.Utilities
         public void AddRemainGroup(RemainGroup remainGroup)
         {
             DBContext.RemainGroups.Add(remainGroup);
+            SaveChanges();
+            UpdateRemainGroupModels();
         }
         public void AddArchiveGroup(ArchiveGroup archiveGroup)
         {
             DBContext.ArchiveGroups.Add(archiveGroup);
+            SaveChanges(); 
+            UpdateArchiveGroupModels();
         }
         public void AddRemain(Remain remain)
         {
             DBContext.Remains.Add(remain);
+            SaveChanges();
+            UpdateRemainGroupModels();
+            UpdateRemainModels();
         }
         public void AddArchive(Archive archive)
         {
             DBContext.Archives.Add(archive);
+            SaveChanges();
+            UpdateArchiveGroupModels();
+            UpdateArchiveModels();
         }
         public void RemoveRemainGroup(RemainGroup remainGroup)
         {
             DBContext.RemainGroups.Remove(remainGroup);
             SaveChanges();
-            UpdateRemainGroupModels();
             UpdateRemainModels();
+            UpdateRemainGroupModels();
         }
         public void RemoveArchiveGroup(ArchiveGroup archiveGroup)
         {
             DBContext.ArchiveGroups.Remove(archiveGroup);
             SaveChanges();
-            UpdateArchiveGroupModels();
             UpdateArchiveModels();
+            UpdateArchiveGroupModels();
         }
         public void RemoveRemain(Remain remain)
         {
             DBContext.Remains.Remove(remain);
             SaveChanges();
             UpdateRemainModels();
+            UpdateRemainGroupModels();
         }
         public void RemoveArchive(Archive archive)
         {
             DBContext.Archives.Remove(archive);
             SaveChanges();
             UpdateArchiveModels();
+            UpdateArchiveGroupModels();
         }
         public Skin? GetSkin(string url)
         {
@@ -119,16 +133,16 @@ namespace SteamStorage.Utilities
                     Skin skin = new()
                     {
                         Url = url,
-                        Title = SteamParser.GetSkinTitle(url)
+                        Title = _steamParseService.GetSkinTitle(url)
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
-                    _loggerService?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    _loggerService.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
                     return skin;
                 }
                 catch (Exception ex)
                 {
-                    _loggerService?.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    _loggerService.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
                     UndoChanges();
                     return null;
                 }
@@ -138,7 +152,7 @@ namespace SteamStorage.Utilities
         {
             try
             {
-                var (DateUpdate, Price) = SteamParser.GetCurrentSkinInfo(remainModel.Url);
+                var (DateUpdate, Price) = _steamParseService.GetCurrentSkinInfo(remainModel.Url);
                 PriceDynamic priceDynamic = new()
                 {
                     IdRemainNavigation = remainModel.Remain,
@@ -147,11 +161,11 @@ namespace SteamStorage.Utilities
                 };
                 DBContextAdditional.PriceDynamics.Add(priceDynamic);
                 SaveChanges();
-                _loggerService?.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
+                _loggerService.WriteMessage($"Добавление новой записи успешно!", typeof(PriceDynamic));
             }
             catch (Exception ex)
             {
-                _loggerService?.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
+                _loggerService.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
                 UndoChanges();
             }
         }
@@ -212,11 +226,11 @@ namespace SteamStorage.Utilities
                 DBContext.Skins.RemoveRange(DBContext.Skins);
                 SaveChanges();
                 UpdateAll();
-                _loggerService?.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
+                _loggerService.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
             }
             catch
             {
-                _loggerService?.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
+                _loggerService.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
                 UndoChanges();
             }
         }

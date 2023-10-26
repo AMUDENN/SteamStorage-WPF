@@ -49,11 +49,12 @@ namespace SteamStorage.Models
         #region Constructor
         public ArchiveGroupModel(ArchiveGroup archiveGroup)
         {
-            this._archiveGroup = archiveGroup;
+            _archiveGroup = archiveGroup;
         }
-        public ArchiveGroupModel()
+        public ArchiveGroupModel(string title)
         {
             _archiveGroup = new();
+            EditGroup(title);
             _context?.AddArchiveGroup(_archiveGroup);
         }
         #endregion Constructor

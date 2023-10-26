@@ -137,11 +137,9 @@ namespace SteamStorage.ViewModels
         {
             if (_selectedCommandType == CommandType.Add)
             {
-                _remainModel = new();
-                _remainModel.EditRemain(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
+                _remainModel = new(Url, Count, CostPurchase, DateTime.Now, SelectedRemainGroupModel);
             }
             else _remainModel.EditRemain(Url, Count, CostPurchase, _remainModel.DatePurchase, SelectedRemainGroupModel);
-            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -159,7 +157,6 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

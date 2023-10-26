@@ -49,11 +49,12 @@ namespace SteamStorage.Models
         #region Constructor
         public RemainGroupModel(RemainGroup remainGroup)
         {
-            this._remainGroup = remainGroup;
+            _remainGroup = remainGroup;
         }
-        public RemainGroupModel()
+        public RemainGroupModel(string title)
         {
             _remainGroup = new();
+            EditGroup(title);
             _context?.AddRemainGroup(_remainGroup);
         }
         #endregion Constructor

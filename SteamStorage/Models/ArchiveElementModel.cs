@@ -37,17 +37,18 @@ namespace SteamStorage.Models
         #region Constructor
         public ArchiveElementModel(Archive archive)
         {
-            this._archive = archive;
-            _datePurchase = DateTime.ParseExact(this._archive.DatePurchase, ProgramConstants.DateTimeFormat, null);
-            _dateSold = DateTime.ParseExact(this._archive.DateSold, ProgramConstants.DateTimeFormat, null);
+            _archive = archive;
+            _datePurchase = DateTime.ParseExact(_archive.DatePurchase, ProgramConstants.DateTimeFormat, null);
+            _dateSold = DateTime.ParseExact(_archive.DateSold, ProgramConstants.DateTimeFormat, null);
             _amountPurchase = archive.CostPurchase * archive.Count;
             _amountSold = archive.CostSold * archive.Count;
             _percent = (CostSold - CostPurchase) / CostPurchase * 100;
             _context?.DBContext.Skins.LoadAsync();
         }
-        public ArchiveElementModel()
+        public ArchiveElementModel(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
         {
             _archive = new();
+            EditArchive(url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
             _context?.AddArchive(_archive);
         }
         #endregion Constructor

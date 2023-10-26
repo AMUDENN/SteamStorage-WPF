@@ -50,14 +50,15 @@ namespace SteamStorage.Models
         #region Constructor
         public RemainElementModel(Remain remain)
         {
-            this._remain = remain;
+            _remain = remain;
             _datePurchase = DateTime.ParseExact(remain.DatePurchase, ProgramConstants.DateTimeFormat, null);
             _amountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
         }
-        public RemainElementModel()
+        public RemainElementModel(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupModel? remainGroupModel)
         {
             _remain = new();
+            EditRemain(url, count, costPurchase, datePurchase, remainGroupModel);
             _context?.AddRemain(_remain);
         }
         #endregion Constructor
@@ -129,8 +130,7 @@ namespace SteamStorage.Models
         {
             try
             {
-                ArchiveElementModel archiveModel = new();
-                archiveModel.EditArchive(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
+                ArchiveElementModel archiveModel = new(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
                 if (count >= _remain.Count) _context?.RemoveRemain(_remain);
                 EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.RemainGroupModels.Where(x => x.RemainGroup == RemainGroup).First());
                 _loggerService?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());

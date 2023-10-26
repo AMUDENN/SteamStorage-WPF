@@ -15,6 +15,7 @@
         <converters:CombiningConverter x:Key="DoublePercentConverter"
             Converter1="{StaticResource DoubleRoundConverter}"
             Converter2="{StaticResource PercentConverter}"/>
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
     </UserControl.Resources>
 
     <ScrollViewer Padding="30, 5, 3, 5">
@@ -194,9 +195,9 @@
                                        Foreground="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource PercentForegroundConverter}}"/>
                             </StackPanel>
 
-                            <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+                            <TextBlock Visibility="{Binding MostProfitabilityRemain, Converter={StaticResource NullVisibilityConverter}}" Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <StackPanel Visibility="{Binding MostProfitabilityRemain, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
                                 <TextBlock Text="{Binding MostProfitabilityRemain.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 
@@ -372,9 +373,9 @@
                                        Foreground="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource PercentForegroundConverter}}"/>
                             </StackPanel>
 
-                            <TextBlock Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
+                            <TextBlock Visibility="{Binding MostProfitabilityArchive, Converter={StaticResource NullVisibilityConverter}}" Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <StackPanel Visibility="{Binding MostProfitabilityArchive, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
                                 <TextBlock Text="{Binding MostProfitabilityArchive.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 

@@ -6,8 +6,12 @@
         <Setter Property="HasDropShadow" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToolTip">
-                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Style="{DynamicResource AccentAdditionalBorderStyle}" 
+                            Width="{TemplateBinding Width}" 
+                            Height="{TemplateBinding Height}"
+                            Effect="{DynamicResource SmallShadow}"
+                            Margin="3">
                         <ContentPresenter Margin="12, 4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>

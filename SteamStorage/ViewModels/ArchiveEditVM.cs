@@ -20,7 +20,7 @@ namespace SteamStorage.ViewModels
 
         #region Fields
         private ArchiveElementModel _archiveModel;
-        private CommandType _selectedCommandType;
+        private CommandType _commandType;
 
         private string _url;
         private string _countString = string.Empty;
@@ -129,7 +129,7 @@ namespace SteamStorage.ViewModels
         public ArchiveEditVM(ArchiveElementModel archiveModel)
         {
             this._archiveModel = archiveModel;
-            _selectedCommandType = CommandType.Edit;
+            _commandType = CommandType.Edit;
             Url = archiveModel.Url;
             Count = archiveModel.Count;
             CostPurchase = archiveModel.CostPurchase;
@@ -142,7 +142,7 @@ namespace SteamStorage.ViewModels
         }
         public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
         {
-            _selectedCommandType = CommandType.Add;
+            _commandType = CommandType.Add;
             Url = string.Empty;
             Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
@@ -152,13 +152,11 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
-            if (_selectedCommandType == CommandType.Add)
+            if (_commandType == CommandType.Add)
             {
-                _archiveModel = new();
-                _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
+                _archiveModel = new(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
             }
             else _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, _archiveModel.DatePurchase, _archiveModel.DateSold, SelectedArchiveGroupModel);
-            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
@@ -177,7 +175,6 @@ namespace SteamStorage.ViewModels
         }
         private void DoCancelCommand()
         {
-            _context?.UndoChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = false;
         }
         #endregion Methods

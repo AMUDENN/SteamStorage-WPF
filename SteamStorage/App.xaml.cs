@@ -2,6 +2,7 @@
 using SteamStorage.Services.Config;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Services.Logger;
+using SteamStorage.Services.Parser;
 using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
@@ -49,6 +50,7 @@ namespace SteamStorage
             services.AddSingleton<ConfigService>();
             services.AddSingleton<WindowDialogService>();
             services.AddSingleton<LoggerService>(new LoggerService(ProgramConstants.LogPath));
+            services.AddSingleton<SteamParseService>();
             services.AddSingleton<ReferenceInformationService>();
 
             Container = services.BuildServiceProvider();

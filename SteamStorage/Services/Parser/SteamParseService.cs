@@ -1,29 +1,35 @@
 ﻿using Newtonsoft.Json;
-using SteamStorage.Parser.Models;
 using SteamStorage.Services.Logger;
-using SteamStorage.Utilities;
+using SteamStorage.Services.Parser.ParseModels;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace SteamStorage.Parser
+namespace SteamStorage.Services.Parser
 {
-    public static class SteamParser
+    public class SteamParseService : ISteamParseService
     {
         #region Fields
-        private static readonly HttpClient _client = new();
-        private static readonly List<string> _extraChars = new() { "amp;" };
-        private static readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
+        private readonly HttpClient _client = new();
+        private readonly List<string> _extraChars = new() { "amp;" };
+        private readonly LoggerService _loggerService;
         #endregion Fields
 
+        #region Constructor
+        public SteamParseService(LoggerService logger)
+        {
+            _loggerService = logger;
+        }
+        #endregion Constructor
+
         #region Methods
-        public static (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
+        public (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
         {
             string result = _client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
-            SkinParseModel skinParse = JsonConvert.DeserializeObject<SkinParseModel>(result);
+            SkinPriceDynamicParseModel? skinParse = JsonConvert.DeserializeObject<SkinPriceDynamicParseModel>(result);
             try
             {
-                var final = (DateTime.Now, Convert.ToDouble(skinParse.lowest_price[..^4]));
+                var final = (DateTime.Now, Convert.ToDouble(skinParse?.lowest_price[..^4]));
                 SuccessParsing();
                 return final;
             }
@@ -33,7 +39,7 @@ namespace SteamStorage.Parser
                 return (DateTime.Now, -1);
             }
         }
-        public static string GetSkinTitle(string url)
+        public string GetSkinTitle(string url)
         {
             try
             {
@@ -49,7 +55,7 @@ namespace SteamStorage.Parser
                 return string.Empty;
             }
         }
-        private static string DeleteExtraChar(string title)
+        private string DeleteExtraChar(string title)
         {
             foreach (string str in _extraChars)
             {
@@ -57,13 +63,13 @@ namespace SteamStorage.Parser
             }
             return title;
         }
-        private static void SuccessParsing()
+        private void SuccessParsing()
         {
-            _loggerService?.WriteMessage("Успешно получена информация!", typeof(SteamParser));
+            _loggerService.WriteMessage("Успешно получена информация!", typeof(SteamParseService));
         }
-        private static void FailParsing(string message)
+        private void FailParsing(string message)
         {
-            _loggerService?.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParser));
+            _loggerService.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParseService));
         }
         #endregion Methods
     }
