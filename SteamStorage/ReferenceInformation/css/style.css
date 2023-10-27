@@ -27,17 +27,13 @@ iframe {
     height: 100%;
 }
 
-.menu-iframe {
-    height: 90px;
-}
-
 .page-iframe {
     height: 100%;
-    padding: 5px 5px 5px 0;
+    padding: 5px;
 }
 
 .nav-menu {
-    height: 100%;
+    height: 90px;
     width: 100%;
 }
 
@@ -51,6 +47,8 @@ iframe {
 .menu {
     height: 100%;
     width: 40%;
+    min-width: 700px;
+    max-width: 1000px;
     padding-left: 50px;
     justify-content: space-around;
     align-items: center;
@@ -62,6 +60,7 @@ iframe {
 }
 
 .menu a {
+    padding: 15px;
     margin-right: 20px;
     font-size: 24px;
     text-decoration: none;
@@ -69,6 +68,12 @@ iframe {
 
 .menu a:hover {
     text-decoration: underline;
+}
+
+.menu a.active {
+    border-bottom: 1px solid #7371FF;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #0D1117;
 }
 
 .main-content {

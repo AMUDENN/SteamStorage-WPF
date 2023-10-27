@@ -11,10 +11,20 @@
 <body>
     <div class="wrapper">
         <div class="frames flex-container">
-            <iframe class="menu-iframe" name="menu" src="frames/menu.html" scrolling="no"></iframe>
+            <nav class="nav-menu">
+                <div class="main-menu-container flex-container">
+                    <div class="menu flex-container">
+                        <img src="images/Logo.svg" />
+                        <a class="white-text" href="frames/main.html" target="page">Главная</a>
+                        <a class="white-text" href="frames/about-program.html" target="page">О программе</a>
+                        <a class="white-text" href="frames/user-guide.html" target="page">Руководство</a>
+                    </div>
+                </div>
+            </nav>
             <iframe class="page-iframe" name="page" src="frames/main.html"></iframe>
         </div>
     </div>
+    <script src="js/menu.js"></script>
 </body>
 
 </html>
