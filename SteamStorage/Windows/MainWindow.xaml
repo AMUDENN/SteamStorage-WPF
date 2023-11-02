@@ -7,7 +7,7 @@
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         MinHeight="720" MinWidth="1280"
-        Title="Steam Storage" 
+        Title="{Binding Title, Mode=OneWay}" 
         Style="{DynamicResource MainWindowStyle}">
 
     <Behaviors:Interaction.Triggers>

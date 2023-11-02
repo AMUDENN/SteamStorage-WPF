@@ -23,6 +23,10 @@ namespace SteamStorage.ViewModels
         #endregion Fields
 
         #region Properties
+        public string? Title
+        {
+            get => ProgramConstants.Title;
+        }
         public ObservableObject CurrentVM
         {
             get => _currentVM;

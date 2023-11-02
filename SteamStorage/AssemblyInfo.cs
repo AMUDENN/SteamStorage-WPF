@@ -3,11 +3,11 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("SteamStorage")]
+[assembly: AssemblyTitle("Steam Storage")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SteamStorage")]
+[assembly: AssemblyProduct("Steam Storage")]
 [assembly: AssemblyCopyright("Copyright © 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

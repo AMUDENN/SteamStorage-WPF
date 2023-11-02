@@ -27,7 +27,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Border x:Name="PART_Container" Padding="{TemplateBinding Padding}">
-                        <Border x:Name="PART_Border" Style="{DynamicResource DialogWindowBorderStyle}">
+                        <Border x:Name="PART_Border" 
+                                Effect="{DynamicResource SmallShadow}"  
+                                Style="{DynamicResource DialogWindowBorderStyle}"
+                                Margin="3">
                             <Grid x:Name="PART_Content">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="36"/>

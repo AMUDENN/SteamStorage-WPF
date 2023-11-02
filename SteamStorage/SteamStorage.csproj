@@ -8,6 +8,7 @@
 	<ApplicationIcon>Resources\Images\Bitmaps\BlackIcon.ico</ApplicationIcon>
 	<UICulture>ru-RU</UICulture>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<AssemblyName>Steam Storage</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
