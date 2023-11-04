@@ -25,20 +25,46 @@ body.dark {
     --var-accent-additional: #21262D;
 }
 
+.wrapper {
+    height: 100%;
+}
+
+.main-content {
+    width: 60%;
+    max-width: 1600px;
+    min-width: 950px;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+}
+
+.colored-text {
+    color: var(--var-additional);
+}
+
+.title-text {
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.common-text {
+    font-size: 30px;
+}
+
+.small-text {
+    font-size: 24px;
+}
+
+.little-text {
+    font-size: 18px;
+}
+
 iframe {
     border: none;
 }
 
 .flex-container {
     display: flex;
-}
-
-.wrapper {
-    height: 100%;
-}
-
-.colored-text {
-    color: var(--var-additional);
 }
 
 .frames {
@@ -66,7 +92,6 @@ iframe {
     flex-direction: row;
     justify-content: center;
     background: var(--var-accent-additional);
-    font-size: 24px;
 }
 
 .left-menu-container,
@@ -93,7 +118,7 @@ iframe {
     align-items: center;
 }
 
-svg {
+.menu svg {
     height: 45%;
     margin-right: 20px;
     fill: var(--var-additional);
@@ -111,7 +136,7 @@ svg {
 
 .menu a.active {
     border-bottom: 2px solid var(--var-main);
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 7px 7px 0px 0px;
     background-color: var(--var-accent);
 }
 
@@ -127,41 +152,21 @@ svg {
     margin-right: 20px;
 }
 
-select {
+.theme-container select {
     border: none;
     border-bottom: 1px solid var(--var-additional);
-    font-size: 24px;
     color: var(--var-additional);
     background-color: transparent;
 }
 
-option {
+.theme-container option {
     background-color: var(--var-accent-additional);
 }
 
-.main-content {
-    width: 60%;
-    max-width: 1600px;
-    min-width: 950px;
-    padding-top: 50px;
-    padding-bottom: 30px;
-    margin: 0 auto;
+
+:root {
+    --border-radius: 7px;
 }
-
-.title-text {
-    font-size: 40px;
-    margin-bottom: 40px;
-}
-
-.common-text {
-    font-size: 30px;
-}
-
-.common-text p {
-    margin-bottom: 30px;
-}
-
-
 
 body::-webkit-scrollbar {
     width: 10px;

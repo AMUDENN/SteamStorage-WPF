@@ -1,0 +1,48 @@
+.guide {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.guide-navigation {
+    width: 27%;
+    height: 100%;
+}
+
+.guide-navigation a {
+    align-self: center;
+    color: var(--var-additional);
+    word-wrap: break-word;
+}
+
+.guide-navigation a:hover {
+    color: var(--var-main);
+}
+
+.first-level-ul li{
+    margin-bottom: 5px;
+    color: var(--var-additional);
+}   
+
+.second-level-ul li {
+    margin-left: 5px;
+    margin-bottom: 3px;
+}
+
+.guide-text {
+    width: 73%;
+}
+
+.guide-text h1 {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.guide-text h3 {
+    text-indent: 10px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.guide-text p {
+    margin-bottom: 5px;
+}

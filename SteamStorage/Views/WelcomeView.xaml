@@ -37,13 +37,13 @@
                 <TextBlock Text="Добро пожаловать!" Style="{DynamicResource TitleTextBlockStyle}" Grid.Row="0"/>
 
                 <TextBlock Style="{DynamicResource CommonTextBlockStyle}" Margin="10, 0" Grid.Row="1">
-                    Приветствуем вас в Steam Storage!
+                    Приветствуем вас в SteamStorage!
                     <LineBreak/>
                     Мы рады, что вы выбрали нашу программу. Вместе с вами мы создаём лучший инструмент для инвестиций в мире Steam.
                     <LineBreak/>
                     <LineBreak/>
                     С уважением,
-                    Команда Steam Storage
+                    Команда SteamStorage
                 </TextBlock>
 
                 <Separator Style="{DynamicResource SeparatorStyle}" Grid.Row="2"/>
