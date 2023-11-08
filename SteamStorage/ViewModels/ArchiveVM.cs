@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -39,7 +40,7 @@ namespace SteamStorage.ViewModels
             get => _archiveModel.SelectedOrderType;
             set => _archiveModel.SelectedOrderType = value;
         }
-        public ObservableCollection<ArchiveGroupModel> Groups => _archiveModel.Groups;
+        public ObservableCollection<ArchiveGroupElementModel> Groups => _archiveModel.Groups;
         public ObservableCollection<ArchiveElementModel> DisplayedArchives => _archiveModel.DisplayedArchives;
         public long TotalCount => _archiveModel.TotalCount;
         public double AverageCostPurchase => _archiveModel.AverageCostPurchase;
@@ -47,7 +48,7 @@ namespace SteamStorage.ViewModels
         public double AverageCostSold => _archiveModel.AverageCostSold;
         public double TotalAmountSold => _archiveModel.TotalAmountSold;
         public double AveragePercent => _archiveModel.AveragePercent;
-        public ArchiveGroupModel? SelectedGroup
+        public ArchiveGroupElementModel? SelectedGroup
         {
             get => _archiveModel.SelectedGroup;
             set => _archiveModel.SelectedGroup = value;
@@ -150,15 +151,15 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditGroupCommand(object? data)
         {
-            _archiveModel.EditGroup((ArchiveGroupModel)data);
+            _archiveModel.EditGroup((ArchiveGroupElementModel)data);
         }
         private void DoDeleteGroupCommand(object? data)
         {
-            _archiveModel.DeleteGroup((ArchiveGroupModel)data);
+            _archiveModel.DeleteGroup((ArchiveGroupElementModel)data);
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-            _archiveModel.DeleteWithSkinsGroup((ArchiveGroupModel)data);
+            _archiveModel.DeleteWithSkinsGroup((ArchiveGroupElementModel)data);
         }
         private void DoAddArchiveCommand()
         {

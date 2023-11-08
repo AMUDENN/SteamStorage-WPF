@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SteamStorage.Models.EntityModels;
 
 namespace SteamStorage.Models
 {

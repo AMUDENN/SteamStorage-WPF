@@ -1,4 +1,4 @@
-﻿using SteamStorage.Models;
+﻿using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.ViewModels;
 
@@ -23,7 +23,7 @@ namespace SteamStorage.Utilities
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Подтвердите действие", new TextConfirmationVM(text, confirmationWord));
         }
-        public static bool EditArchiveGroup(ArchiveGroupModel archiveGroupModel, double height = 200, double width = 400) 
+        public static bool EditArchiveGroup(ArchiveGroupElementModel archiveGroupModel, double height = 200, double width = 400) 
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение группы \"{archiveGroupModel.Title}\"", new GroupOperationsVM(archiveGroupModel));
         }
@@ -31,7 +31,7 @@ namespace SteamStorage.Utilities
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Archive));
         }
-        public static bool EditRemainGroup(RemainGroupModel remainGroupModel, double height = 200, double width = 400)
+        public static bool EditRemainGroup(RemainGroupElementModel remainGroupModel, double height = 200, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение группы \"{remainGroupModel.Title}\"", new GroupOperationsVM(remainGroupModel));
         }
@@ -39,23 +39,23 @@ namespace SteamStorage.Utilities
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Remain));
         }
-        public static bool EditArchive(ArchiveElementModel archiveModel, double height = 350, double width = 550)
+        public static bool EditArchive(ArchiveElementModel archiveModel, double height = 400, double width = 550)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение элемента \"{archiveModel.Title}\"", new ArchiveEditVM(archiveModel));
         }
-        public static bool AddArchive(ArchiveGroupModel? archiveGroupModel, double height = 350, double width = 550)
+        public static bool AddArchive(ArchiveGroupElementModel? archiveGroupModel, double height = 350, double width = 550)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Добавление элемента", new ArchiveEditVM(archiveGroupModel));
         }
-        public static bool EditRemain(RemainElementModel remainModel, double height = 350, double width = 550)
+        public static bool EditRemain(RemainElementModel remainModel, double height = 400, double width = 550)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение элемента \"{remainModel.Title}\"", new RemainEditVM(remainModel));
         }
-        public static bool AddRemain(RemainGroupModel? remainGroupModel, double height = 350, double width = 550)
+        public static bool AddRemain(RemainGroupElementModel? remainGroupModel, double height = 350, double width = 550)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Добавление элемента", new RemainEditVM(remainGroupModel));
         }
-        public static bool SellRemain(RemainElementModel remainModel, double height = 250, double width = 450) 
+        public static bool SellRemain(RemainElementModel remainModel, double height = 300, double width = 450) 
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Продажа элемента \"{remainModel.Title}\"", new RemainSellVM(remainModel));
         }

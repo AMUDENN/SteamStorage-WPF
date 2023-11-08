@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Utilities;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace SteamStorage.ViewModels
     public class HomeVM : ObservableObject
     {
         #region Fields
-        private ObservableCollection<ArchiveGroupModel>? _archiveGroupModels;
-        private ObservableCollection<RemainGroupModel>? _remainGroupModels;
+        private ObservableCollection<ArchiveGroupElementModel>? _archiveGroupModels;
+        private ObservableCollection<RemainGroupElementModel>? _remainGroupModels;
 
-        private ArchiveGroupModel? _mostProfitabilityArchiveGroup;
-        private RemainGroupModel? _mostProfitabilityRemainGroup;
+        private ArchiveGroupElementModel? _mostProfitabilityArchiveGroup;
+        private RemainGroupElementModel? _mostProfitabilityRemainGroup;
 
         private long _totalArchiveCount;
         private double _totalArchiveAmountPurchase;
@@ -31,22 +32,22 @@ namespace SteamStorage.ViewModels
         #endregion Fields
 
         #region Properties
-        public ObservableCollection<ArchiveGroupModel>? ArchiveGroupModels
+        public ObservableCollection<ArchiveGroupElementModel>? ArchiveGroupModels
         {
             get => _archiveGroupModels;
             set => SetProperty(ref _archiveGroupModels, value);
         }
-        public ObservableCollection<RemainGroupModel>? RemainGroupModels
+        public ObservableCollection<RemainGroupElementModel>? RemainGroupModels
         {
             get => _remainGroupModels;
             set => SetProperty(ref _remainGroupModels, value);
         }
-        public ArchiveGroupModel? MostProfitabilityArchiveGroup
+        public ArchiveGroupElementModel? MostProfitabilityArchiveGroup
         {
             get => _mostProfitabilityArchiveGroup;
             set => SetProperty(ref _mostProfitabilityArchiveGroup, value);
         }
-        public RemainGroupModel? MostProfitabilityRemainGroup
+        public RemainGroupElementModel? MostProfitabilityRemainGroup
         {
             get => _mostProfitabilityRemainGroup;
             set => SetProperty(ref _mostProfitabilityRemainGroup, value);
@@ -115,7 +116,7 @@ namespace SteamStorage.ViewModels
         private void UpdateInfo()
         {
             var archiveModels = _context?.GetArchiveModels(null);
-            ArchiveGroupModels = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+            ArchiveGroupModels = new ObservableCollection<ArchiveGroupElementModel>(_context?.ArchiveGroupModels);
             MostProfitabilityArchiveGroup = ArchiveGroupModels?.MaxBy(x => x.ArchivesPercent);
             TotalArchiveCount = CalculationModel.GetArchiveTotalCount(archiveModels);
             TotalArchiveAmountPurchase = CalculationModel.GetArchiveTotalAmountPurchase(archiveModels);
@@ -124,7 +125,7 @@ namespace SteamStorage.ViewModels
             MostProfitabilityArchive = CalculationModel.GetMostProfitabilityArchive(archiveModels);
 
             var remainModels = _context?.GetRemainModels(null);
-            RemainGroupModels = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
+            RemainGroupModels = new ObservableCollection<RemainGroupElementModel>(_context?.RemainGroupModels);
             MostProfitabilityRemainGroup = RemainGroupModels?.MaxBy(x => x.RemainsPercent);
             TotalRemainCount = CalculationModel.GetRemainTotalCount(remainModels);
             TotalRemainAmountPurchase = CalculationModel.GetRemainTotalAmountPurchase(remainModels);

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace SteamStorage.Models
         #region Fields
         private ObservableCollection<RemainElementModel> _remainElementModels;
         private ObservableCollection<RemainElementModel> _displayedRemains;
-        private ObservableCollection<RemainGroupModel> _groups;
+        private ObservableCollection<RemainGroupElementModel> _groups;
 
         private string _filter = string.Empty;
-        private RemainGroupModel? _selectedGroup;
+        private RemainGroupElementModel? _selectedGroup;
         private string? _selectedOrderTitle;
         private string? _selectedOrderType;
         private bool _isAllRemainsDisplayed;
@@ -55,7 +56,7 @@ namespace SteamStorage.Models
                 Summarize();
             }
         }
-        public ObservableCollection<RemainGroupModel> Groups
+        public ObservableCollection<RemainGroupElementModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -69,7 +70,7 @@ namespace SteamStorage.Models
                 Filtering();
             }
         }
-        public RemainGroupModel? SelectedGroup
+        public RemainGroupElementModel? SelectedGroup
         {
             get => _selectedGroup;
             set
@@ -197,7 +198,7 @@ namespace SteamStorage.Models
             SelectedOrderType = null;
             IsAllRemainsDisplayed = true;
         }
-        public void UpdateGroup(RemainGroupModel model)
+        public void UpdateGroup(RemainGroupElementModel model)
         {
             _updateInfoWorker.RunWorkerAsync(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup).ToList());
         }
@@ -205,7 +206,7 @@ namespace SteamStorage.Models
         {
             UserMessage.AddRemainGroup();
         }
-        public void EditGroupCommand(RemainGroupModel model)
+        public void EditGroupCommand(RemainGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -214,7 +215,7 @@ namespace SteamStorage.Models
             }
             UserMessage.EditRemainGroup(model);
         }
-        public void DeleteGroup(RemainGroupModel model)
+        public void DeleteGroup(RemainGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -226,7 +227,7 @@ namespace SteamStorage.Models
             model.DeleteGroup();
             IsAllRemainsDisplayed = true;
         }
-        public void DeleteWithSkinsGroup(RemainGroupModel model)
+        public void DeleteWithSkinsGroup(RemainGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -291,13 +292,13 @@ namespace SteamStorage.Models
         }
         private void GetRemainGroups()
         {
-            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
+            Groups = new ObservableCollection<RemainGroupElementModel>(_context?.RemainGroupModels);
         }
         private void GetRemainElements()
         {
             RemainElementModels = new ObservableCollection<RemainElementModel>(_context?.RemainElementModels);
         }
-        private bool IsDefaultGroup(RemainGroupModel remainGroupModel)
+        private bool IsDefaultGroup(RemainGroupElementModel remainGroupModel)
         {
             return remainGroupModel.RemainGroup.Id == 1;
         }

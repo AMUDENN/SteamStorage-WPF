@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 
@@ -20,8 +20,8 @@ namespace SteamStorage.ViewModels
         #endregion Enums
 
         #region Fields
-        private ArchiveGroupModel? _archiveGroupModel;
-        private RemainGroupModel? _remainGroupModel;
+        private ArchiveGroupElementModel? _archiveGroupModel;
+        private RemainGroupElementModel? _remainGroupModel;
         private GroupTypes _groupType;
         private CommandType _commandType;
 
@@ -63,14 +63,14 @@ namespace SteamStorage.ViewModels
         #endregion Commands
 
         #region Constructor
-        public GroupOperationsVM(ArchiveGroupModel archiveGroupModel)
+        public GroupOperationsVM(ArchiveGroupElementModel archiveGroupModel)
         {
             _archiveGroupModel = archiveGroupModel;
             _groupType = GroupTypes.Archive;
             _commandType = CommandType.Edit;
             Title = archiveGroupModel.Title;
         }
-        public GroupOperationsVM(RemainGroupModel remainGroupModel)
+        public GroupOperationsVM(RemainGroupElementModel remainGroupModel)
         {
             _remainGroupModel = remainGroupModel;
             _groupType = GroupTypes.Remain;

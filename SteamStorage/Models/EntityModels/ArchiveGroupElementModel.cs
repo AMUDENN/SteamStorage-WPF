@@ -3,9 +3,9 @@ using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 
-namespace SteamStorage.Models
+namespace SteamStorage.Models.EntityModels
 {
-    public class ArchiveGroupModel
+    public class ArchiveGroupElementModel
     {
         #region Fields
         private ArchiveGroup _archiveGroup;
@@ -47,11 +47,11 @@ namespace SteamStorage.Models
         #endregion Properties
 
         #region Constructor
-        public ArchiveGroupModel(ArchiveGroup archiveGroup)
+        public ArchiveGroupElementModel(ArchiveGroup archiveGroup)
         {
             _archiveGroup = archiveGroup;
         }
-        public ArchiveGroupModel(string title)
+        public ArchiveGroupElementModel(string title)
         {
             _archiveGroup = new();
             EditGroup(title);
@@ -71,15 +71,13 @@ namespace SteamStorage.Models
         {
             try
             {
-                _archiveGroup.Title = title;
-                _context?.SaveChanges();
-                _context?.UpdateArchiveGroupModels();
-                _loggerService?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
+                _context?.EditArchiveGroup(_archiveGroup, title);
+                _loggerService?.WriteMessage($"Группа {Title} успешно изменёна!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить группу {Title}");
             }
         }
@@ -93,12 +91,12 @@ namespace SteamStorage.Models
                     item.EditArchive(null);
                 }
                 _context?.RemoveArchiveGroup(_archiveGroup);
-                _loggerService?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
+                _loggerService?.WriteMessage($"Группа {Title} успешно удалена!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }
@@ -112,12 +110,12 @@ namespace SteamStorage.Models
                     item.DeleteArchive();
                 }
                 _context?.RemoveArchiveGroup(_archiveGroup);
-                _loggerService?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
+                _loggerService?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }

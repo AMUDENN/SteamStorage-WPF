@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System;
@@ -28,9 +28,9 @@ namespace SteamStorage.ViewModels
 
         private long _count;
         private double _costPurchase;
-        private RemainGroupModel? _selectedRemainGroupModel;
+        private RemainGroupElementModel? _selectedRemainGroupModel;
 
-        private ObservableCollection<RemainGroupModel> _groups;
+        private ObservableCollection<RemainGroupElementModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -76,7 +76,7 @@ namespace SteamStorage.ViewModels
             get => _costPurchase;
             set => SetProperty(ref _costPurchase, value);
         }
-        public RemainGroupModel? SelectedRemainGroupModel
+        public RemainGroupElementModel? SelectedRemainGroupModel
         {
             get => _selectedRemainGroupModel;
             set
@@ -85,7 +85,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public ObservableCollection<RemainGroupModel> Groups
+        public ObservableCollection<RemainGroupElementModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -119,15 +119,15 @@ namespace SteamStorage.ViewModels
             CostPurchase = remainModel.CostPurchase;
             CountString = remainModel.Count.ToString();
             CostPurchaseString = remainModel.CostPurchase.ToString();
-            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
+            Groups = new ObservableCollection<RemainGroupElementModel>(_context?.RemainGroupModels);
             SelectedRemainGroupModel = Groups.Where(x => x.RemainGroup == remainModel.RemainGroup).First();
         }
-        public RemainEditVM(RemainGroupModel? remainGroupModel)
+        public RemainEditVM(RemainGroupElementModel? remainGroupModel)
         {
             
             _selectedCommandType = CommandType.Add;
             Url = string.Empty;
-            Groups = new ObservableCollection<RemainGroupModel>(_context?.RemainGroupModels);
+            Groups = new ObservableCollection<RemainGroupElementModel>(_context?.RemainGroupModels);
             SelectedRemainGroupModel = remainGroupModel is null ? Groups.First() : Groups.Where(x => x.RemainGroup == remainGroupModel.RemainGroup).First();
         }
         #endregion Constructor

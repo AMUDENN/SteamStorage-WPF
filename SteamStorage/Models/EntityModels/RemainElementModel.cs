@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SteamStorage.Models
+namespace SteamStorage.Models.EntityModels
 {
     public class RemainElementModel
     {
@@ -55,7 +55,7 @@ namespace SteamStorage.Models
             _amountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
         }
-        public RemainElementModel(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupModel? remainGroupModel)
+        public RemainElementModel(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
         {
             _remain = new();
             EditRemain(url, count, costPurchase, datePurchase, remainGroupModel);
@@ -88,57 +88,47 @@ namespace SteamStorage.Models
                 i++;
             }
         }
-        public void EditRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupModel? remainGroupModel)
+        public void EditRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
         {
             try
             {
-                var skin = _context?.GetSkin(url);
-                if (skin is null) throw new Exception("Ссылка на скин неверна!");
-                _remain.IdSkinNavigation = skin;
-                _remain.Count = count;
-                _remain.CostPurchase = costPurchase;
-                _remain.DatePurchase = datePurchase.ToString(ProgramConstants.DateTimeFormat);
-                _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
-                _context?.SaveChanges();
-                _context?.UpdateRemainModels();
-                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _context?.EditRemain(_remain, url, count, costPurchase, datePurchase, remainGroupModel);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
-        public void EditRemain(RemainGroupModel? remainGroupModel)
+        public void EditRemain(RemainGroupElementModel? remainGroupModel)
         {
             try
             {
-                _remain.IdGroup = remainGroupModel is null ? 1 : remainGroupModel.RemainGroup.Id;
-                _context?.SaveChanges();
-                _context?.UpdateRemainModels();
-                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _context?.EditRemain(_remain, remainGroupModel);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
-        public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        public void SellRemain(long count, double costSold, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
         {
             try
             {
                 ArchiveElementModel archiveModel = new(Url, count, CostPurchase, costSold, DatePurchase, dateSold, archiveGroupModel);
                 if (count >= _remain.Count) _context?.RemoveRemain(_remain);
                 EditRemain(Url, Count - count, CostPurchase, DatePurchase, _context?.RemainGroupModels.Where(x => x.RemainGroup == RemainGroup).First());
-                _loggerService?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно продан в количестве {count} штук по цене {costSold}!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось продать элемент {Title}");
             }
         }
@@ -147,12 +137,12 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveRemain(_remain);
-                _loggerService?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно удалён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }
@@ -162,12 +152,12 @@ namespace SteamStorage.Models
             {
                 _context?.AddPriceDynamic(this);
                 UpdatePriceDynamics();
-                _loggerService?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", this.GetType());
+                _loggerService?.WriteMessage($"Текущая цена элемента {Title} успешно добавлена!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось узнать текущую цену элемента {Title}");
             }
         }

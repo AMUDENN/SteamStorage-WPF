@@ -3,9 +3,9 @@ using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 
-namespace SteamStorage.Models
+namespace SteamStorage.Models.EntityModels
 {
-    public class RemainGroupModel
+    public class RemainGroupElementModel
     {
         #region Fields
         private RemainGroup _remainGroup;
@@ -47,11 +47,11 @@ namespace SteamStorage.Models
         #endregion Properties
 
         #region Constructor
-        public RemainGroupModel(RemainGroup remainGroup)
+        public RemainGroupElementModel(RemainGroup remainGroup)
         {
             _remainGroup = remainGroup;
         }
-        public RemainGroupModel(string title)
+        public RemainGroupElementModel(string title)
         {
             _remainGroup = new();
             EditGroup(title);
@@ -71,15 +71,14 @@ namespace SteamStorage.Models
         {
             try
             {
-                _remainGroup.Title = title;
-                _context?.SaveChanges();
+                _context?.EditRemainGroup(_remainGroup, title);
                 _context?.UpdateRemainGroupModels();
-                _loggerService?.WriteMessage($"Группа {Title} успешно изменёна!", this.GetType());
+                _loggerService?.WriteMessage($"Группа {Title} успешно изменёна!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить группу {Title}");
             }
         }
@@ -93,12 +92,12 @@ namespace SteamStorage.Models
                     item.EditRemain(null);
                 }
                 _context?.RemoveRemainGroup(_remainGroup);
-                _loggerService?.WriteMessage($"Группа {Title} успешно удалена!", this.GetType());
+                _loggerService?.WriteMessage($"Группа {Title} успешно удалена!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }
@@ -112,12 +111,12 @@ namespace SteamStorage.Models
                     item.DeleteRemain();
                 }
                 _context?.RemoveRemainGroup(_remainGroup);
-                _loggerService?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", this.GetType());
+                _loggerService?.WriteMessage($"Группа {Title} успешно удалена вместе со скинами!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }

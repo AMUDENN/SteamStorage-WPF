@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System;
@@ -30,9 +30,9 @@ namespace SteamStorage.ViewModels
         private long _count;
         private double _costPurchase;
         private double _costSold;
-        private ArchiveGroupModel? _selectedArchiveGroupModel;
+        private ArchiveGroupElementModel? _selectedArchiveGroupModel;
 
-        private ObservableCollection<ArchiveGroupModel> _groups;
+        private ObservableCollection<ArchiveGroupElementModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -92,7 +92,7 @@ namespace SteamStorage.ViewModels
             get => _costSold;
             set => SetProperty(ref _costSold, value);
         }
-        public ArchiveGroupModel? SelectedArchiveGroupModel
+        public ArchiveGroupElementModel? SelectedArchiveGroupModel
         {
             get => _selectedArchiveGroupModel;
             set
@@ -101,7 +101,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public ObservableCollection<ArchiveGroupModel> Groups
+        public ObservableCollection<ArchiveGroupElementModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -137,14 +137,14 @@ namespace SteamStorage.ViewModels
             CountString = archiveModel.Count.ToString();
             CostPurchaseString = archiveModel.CostPurchase.ToString();
             CostSoldString = archiveModel.CostSold.ToString();
-            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+            Groups = new ObservableCollection<ArchiveGroupElementModel>(_context?.ArchiveGroupModels);
             SelectedArchiveGroupModel = Groups.Where(x => x.ArchiveGroup == archiveModel.ArchiveGroup).First();
         }
-        public ArchiveEditVM(ArchiveGroupModel? archiveGroupModel)
+        public ArchiveEditVM(ArchiveGroupElementModel? archiveGroupModel)
         {
             _commandType = CommandType.Add;
             Url = string.Empty;
-            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+            Groups = new ObservableCollection<ArchiveGroupElementModel>(_context?.ArchiveGroupModels);
             SelectedArchiveGroupModel = archiveGroupModel is null ? Groups.First() : Groups.Where(x => x.ArchiveGroup == archiveGroupModel.ArchiveGroup).First();
         }
         #endregion Constructor

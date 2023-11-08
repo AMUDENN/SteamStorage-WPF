@@ -19,7 +19,7 @@ namespace SteamStorage.Utilities
         {
             _configService.CurrentTheme = theme.ToString();
 
-            if(theme == ThemesEnum.Custom)
+            if (theme == ThemesEnum.Custom)
             {
                 SetCustomColors();
                 return;

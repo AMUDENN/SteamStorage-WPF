@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using OfficeOpenXml;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Config;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Services.Logger;
@@ -257,7 +258,6 @@ namespace SteamStorage.Models
 
                     using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
                     package.SaveAs(fs);
-
                 }
                 _loggerService?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
                 UserMessage.Information("Экспорт в эксель завершился успешно!");

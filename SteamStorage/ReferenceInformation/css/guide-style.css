@@ -1,11 +1,17 @@
 .guide {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: end;
+}
+
+.guide-section {
+    width: 100%;
 }
 
 .guide-navigation {
     width: 27%;
+    max-width: 300px;
     height: 100%;
+    position: fixed;
 }
 
 .guide-navigation a {
@@ -24,12 +30,12 @@
 }   
 
 .second-level-ul li {
-    margin-left: 5px;
+    margin-left: 7px;
     margin-bottom: 3px;
 }
 
 .guide-text {
-    width: 73%;
+    width: 70%;
 }
 
 .guide-text h1 {

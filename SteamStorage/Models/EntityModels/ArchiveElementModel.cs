@@ -4,7 +4,7 @@ using SteamStorage.Services.Logger;
 using SteamStorage.Utilities;
 using System;
 
-namespace SteamStorage.Models
+namespace SteamStorage.Models.EntityModels
 {
     public class ArchiveElementModel
     {
@@ -45,7 +45,7 @@ namespace SteamStorage.Models
             _percent = (CostSold - CostPurchase) / CostPurchase * 100;
             _context?.DBContext.Skins.LoadAsync();
         }
-        public ArchiveElementModel(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        public ArchiveElementModel(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
         {
             _archive = new();
             EditArchive(url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
@@ -54,43 +54,31 @@ namespace SteamStorage.Models
         #endregion Constructor
 
         #region Methods
-        public void EditArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupModel? archiveGroupModel)
+        public void EditArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
         {
             try
             {
-                var skin = _context?.GetSkin(url);
-                if (skin is null) throw new Exception("Ссылка на скин неверна!");
-                _archive.IdSkinNavigation = skin;
-                _archive.Count = count;
-                _archive.CostPurchase = costPurchase;
-                _archive.CostSold = costSold;
-                _archive.DatePurchase = datePurchase.ToString(ProgramConstants.DateTimeFormat);
-                _archive.DateSold = dateSold.ToString(ProgramConstants.DateTimeFormat);
-                _archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
-                _context?.SaveChanges();
-                _context?.UpdateArchiveModels();
-                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _context?.EditArchive(_archive, url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
-        public void EditArchive(ArchiveGroupModel? archiveGroupModel)
+        public void EditArchive(ArchiveGroupElementModel? archiveGroupModel)
         {
             try
             {
-                _archive.IdGroup = archiveGroupModel is null ? 1 : archiveGroupModel.ArchiveGroup.Id;
-                _context?.SaveChanges();
-                _context?.UpdateArchiveModels();
-                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", this.GetType());
+                _context?.EditArchive(_archive, archiveGroupModel);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно изменён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -99,12 +87,12 @@ namespace SteamStorage.Models
             try
             {
                 _context?.RemoveArchive(_archive);
-                _loggerService?.WriteMessage($"Элемент {Title} успешно удалён!", this.GetType());
+                _loggerService?.WriteMessage($"Элемент {Title} успешно удалён!", GetType());
             }
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", GetType());
                 UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }

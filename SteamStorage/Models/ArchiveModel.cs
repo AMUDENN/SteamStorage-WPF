@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace SteamStorage.Models
         #region Fields
         private ObservableCollection<ArchiveElementModel> _archiveElementModels;
         private ObservableCollection<ArchiveElementModel> _displayedArchives;
-        private ObservableCollection<ArchiveGroupModel> _groups;
+        private ObservableCollection<ArchiveGroupElementModel> _groups;
 
         private string _filter = string.Empty;
-        private ArchiveGroupModel? _selectedGroup;
+        private ArchiveGroupElementModel? _selectedGroup;
         private string? _selectedOrderTitle;
         private string? _selectedOrderType;
         private bool _isAllArchivesDisplayed;
@@ -49,7 +50,7 @@ namespace SteamStorage.Models
                 Summarize();
             }
         }
-        public ObservableCollection<ArchiveGroupModel> Groups
+        public ObservableCollection<ArchiveGroupElementModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -63,7 +64,7 @@ namespace SteamStorage.Models
                 Filtering();
             }
         }
-        public ArchiveGroupModel? SelectedGroup
+        public ArchiveGroupElementModel? SelectedGroup
         {
             get => _selectedGroup;
             set
@@ -180,7 +181,7 @@ namespace SteamStorage.Models
         {
             UserMessage.AddArchiveGroup();
         }
-        public void EditGroup(ArchiveGroupModel model)
+        public void EditGroup(ArchiveGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -189,7 +190,7 @@ namespace SteamStorage.Models
             }
             UserMessage.EditArchiveGroup(model);
         }
-        public void DeleteGroup(ArchiveGroupModel model)
+        public void DeleteGroup(ArchiveGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -201,7 +202,7 @@ namespace SteamStorage.Models
             model.DeleteGroup();
             IsAllArchivesDisplayed = true;
         }
-        public void DeleteWithSkinsGroup(ArchiveGroupModel model)
+        public void DeleteWithSkinsGroup(ArchiveGroupElementModel model)
         {
             if (IsDefaultGroup(model))
             {
@@ -258,13 +259,13 @@ namespace SteamStorage.Models
         }
         private void GetArchiveGroups()
         {
-            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+            Groups = new ObservableCollection<ArchiveGroupElementModel>(_context?.ArchiveGroupModels);
         }
         private void GetArchiveElements()
         {
             ArchiveElementModels = new ObservableCollection<ArchiveElementModel>(_context?.ArchiveElementModels);
         }
-        private bool IsDefaultGroup(ArchiveGroupModel archiveGroupModel)
+        private bool IsDefaultGroup(ArchiveGroupElementModel archiveGroupModel)
         {
             return archiveGroupModel.ArchiveGroup.Id == 1;
         }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -43,7 +44,7 @@ namespace SteamStorage.ViewModels
             get => _remainModel.SelectedOrderType;
             set => _remainModel.SelectedOrderType = value;
         }
-        public ObservableCollection<RemainGroupModel> Groups => _remainModel.Groups;
+        public ObservableCollection<RemainGroupElementModel> Groups => _remainModel.Groups;
         public ObservableCollection<RemainElementModel> DisplayedRemains => _remainModel.DisplayedRemains;
         public long TotalCount => _remainModel.TotalCount;
         public double AverageCostPurchase => _remainModel.AverageCostPurchase;
@@ -51,7 +52,7 @@ namespace SteamStorage.ViewModels
         public double AverageCurrentCost => _remainModel.AverageCurrentCost;
         public double AveragePercent => _remainModel.AveragePercent;
         public double TotalCurrentAmount => _remainModel.TotalCurrentAmount;
-        public RemainGroupModel? SelectedGroup
+        public RemainGroupElementModel? SelectedGroup
         {
             get => _remainModel.SelectedGroup;
             set => _remainModel.SelectedGroup = value;
@@ -188,7 +189,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-            _remainModel.UpdateGroup((RemainGroupModel)data);
+            _remainModel.UpdateGroup((RemainGroupElementModel)data);
         }
         private bool CanExecuteUpdateGroupCommand(object? data)
         {
@@ -200,15 +201,15 @@ namespace SteamStorage.ViewModels
         }
         private void DoEditGroupCommand(object? data)
         {
-            _remainModel.EditGroupCommand((RemainGroupModel)data);
+            _remainModel.EditGroupCommand((RemainGroupElementModel)data);
         }
         private void DoDeleteGroupCommand(object? data)
         {
-            _remainModel.DeleteGroup((RemainGroupModel)data);
+            _remainModel.DeleteGroup((RemainGroupElementModel)data);
         }
         private void DoDeleteWithSkinsGroupCommand(object? data)
         {
-            _remainModel.DeleteWithSkinsGroup((RemainGroupModel)data);
+            _remainModel.DeleteWithSkinsGroup((RemainGroupElementModel)data);
         }
         private void DoUpdateRemainCommand(object? data)
         {

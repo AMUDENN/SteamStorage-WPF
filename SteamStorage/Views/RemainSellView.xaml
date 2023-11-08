@@ -11,8 +11,8 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="70" MaxHeight="85"/>
+            <RowDefinition Height="*" MinHeight="85"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SteamStorage.Models;
+using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System;
@@ -19,9 +19,9 @@ namespace SteamStorage.ViewModels
 
         private long _count;
         private double _costSold;
-        private ArchiveGroupModel? _selectedArchiveGroupModel;
+        private ArchiveGroupElementModel? _selectedArchiveGroupModel;
 
-        private ObservableCollection<ArchiveGroupModel> _groups;
+        private ObservableCollection<ArchiveGroupElementModel> _groups;
 
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
@@ -58,7 +58,7 @@ namespace SteamStorage.ViewModels
             get => _costSold;
             set => SetProperty(ref _costSold, value);
         }
-        public ArchiveGroupModel? SelectedArchiveGroupModel
+        public ArchiveGroupElementModel? SelectedArchiveGroupModel
         {
             get => _selectedArchiveGroupModel;
             set
@@ -67,7 +67,7 @@ namespace SteamStorage.ViewModels
                 SaveCommand.NotifyCanExecuteChanged();
             }
         }
-        public ObservableCollection<ArchiveGroupModel> Groups
+        public ObservableCollection<ArchiveGroupElementModel> Groups
         {
             get => _groups;
             set => SetProperty(ref _groups, value);
@@ -97,7 +97,7 @@ namespace SteamStorage.ViewModels
             this._remainModel = remainModel;
             Count = remainModel.Count;
             CountString = remainModel.Count.ToString();
-            Groups = new ObservableCollection<ArchiveGroupModel>(_context?.ArchiveGroupModels);
+            Groups = new ObservableCollection<ArchiveGroupElementModel>(_context?.ArchiveGroupModels);
         }
         #endregion Constructor
 
@@ -105,7 +105,6 @@ namespace SteamStorage.ViewModels
         private void DoSaveCommand()
         {
             _remainModel.SellRemain(Count, CostSold, DateTime.Now, SelectedArchiveGroupModel);
-            _context?.SaveChanges();
             WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
