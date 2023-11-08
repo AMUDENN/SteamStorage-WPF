@@ -189,7 +189,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoUpdateGroupCommand(object? data)
         {
-            _remainModel.UpdateGroup((RemainGroupElementModel)data);
+            _remainModel.UpdateGroup(data as RemainGroupElementModel);
         }
         private bool CanExecuteUpdateGroupCommand(object? data)
         {

@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Services.Config;
 using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
+using static SteamStorage.Utilities.Themes;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -97,11 +99,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoLoadedCommand()
         {
-            Themes.ThemesEnum currentTheme;
-            if (_configService.CurrentTheme == "Light") currentTheme = Themes.ThemesEnum.Light;
-            else if (_configService.CurrentTheme == "Dark") currentTheme = Themes.ThemesEnum.Dark;
-            else currentTheme = Themes.ThemesEnum.Custom;
-            Themes.ChangeTheme(currentTheme);
+            ChangeTheme((ThemesEnum)Enum.Parse(typeof(ThemesEnum), _configService.CurrentTheme, true));
         }
         private void DoKeyDownCommand(KeyEventArgs? e)
         {

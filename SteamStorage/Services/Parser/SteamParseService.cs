@@ -25,10 +25,10 @@ namespace SteamStorage.Services.Parser
         #region Methods
         public (DateTime DateUpdate, double Price) GetCurrentSkinInfo(string url)
         {
-            string result = _client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
-            SkinPriceDynamicParseModel? skinParse = JsonConvert.DeserializeObject<SkinPriceDynamicParseModel>(result);
             try
             {
+                string result = _client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
+                SkinPriceDynamicParseModel? skinParse = JsonConvert.DeserializeObject<SkinPriceDynamicParseModel>(result);
                 var final = (DateTime.Now, Convert.ToDouble(skinParse?.lowest_price[..^4]));
                 SuccessParsing();
                 return final;

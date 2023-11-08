@@ -33,7 +33,7 @@
                                 Margin="3">
                             <Grid x:Name="PART_Content">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" MinHeight="36"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft" WindowChrome.IsHitTestVisibleInChrome="True">

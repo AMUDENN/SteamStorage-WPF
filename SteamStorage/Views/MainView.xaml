@@ -40,8 +40,8 @@
                     <CheckBox Style="{DynamicResource ImageCheckBoxStyle}"
                               IsChecked="{Binding IsMenuExpanded}"
                               Height="45" Width="45"
-                              HorizontalAlignment="Right" VerticalAlignment="Top" 
-                              Margin="-5, -20">
+                              HorizontalAlignment="Center" VerticalAlignment="Top" 
+                              Margin="0, -20">
                         <Image Style="{DynamicResource HamburgerImage}"/>
                         <CheckBox.Triggers>
                             <EventTrigger RoutedEvent="CheckBox.Checked">

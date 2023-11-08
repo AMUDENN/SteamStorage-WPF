@@ -91,6 +91,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderTitle, value);
+                SelectedOrderType ??= OrderTypes.First().Key;
                 Sorting();
             }
         }
@@ -105,6 +106,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderType, value);
+                SelectedOrderTitle ??= OrderTitles.First().Key;
                 Sorting();
             }
         }

@@ -41,7 +41,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isDarkTheme, value);
-                ChangeTheme();
+                Themes.ChangeTheme(Themes.ThemesEnum.Dark);
             }
         }
         public bool IsLightTheme
@@ -50,7 +50,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isLightTheme, value);
-                ChangeTheme();
+                Themes.ChangeTheme(Themes.ThemesEnum.Light);
             }
         }
         public bool IsCustomTheme
@@ -59,7 +59,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isCustomTheme, value);
-                ChangeTheme();
+                Themes.ChangeTheme(Themes.ThemesEnum.Custom);
             }
         }
         public string MainColor
@@ -299,12 +299,6 @@ namespace SteamStorage.Models
             var delete = UserMessage.TextConfirmation("Вы уверены, что хотите очистить базу данных? \nВсе данные будут удалены без возможности восстановления!", "УДАЛИТЬ");
             if (!delete) return;
             _context?.ClearDatabase();
-        }
-        private void ChangeTheme()
-        {
-            if (IsLightTheme) Themes.ChangeTheme(Themes.ThemesEnum.Light);
-            if (IsDarkTheme) Themes.ChangeTheme(Themes.ThemesEnum.Dark);
-            if (IsCustomTheme) Themes.ChangeTheme(Themes.ThemesEnum.Custom);
         }
         #endregion Methods
     }

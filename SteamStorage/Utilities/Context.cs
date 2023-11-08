@@ -184,10 +184,12 @@ namespace SteamStorage.Utilities
             {
                 try
                 {
+                    string title = _steamParseService.GetSkinTitle(url);
+                    if (title == string.Empty) throw new Exception("Невозможно получить название скина");
                     Skin skin = new()
                     {
                         Url = url,
-                        Title = _steamParseService.GetSkinTitle(url)
+                        Title = title
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
@@ -207,6 +209,7 @@ namespace SteamStorage.Utilities
             try
             {
                 var (DateUpdate, Price) = _steamParseService.GetCurrentSkinInfo(remainModel.Url);
+                if (Price == -1) throw new Exception("Невозможно получить цену");   
                 PriceDynamic priceDynamic = new()
                 {
                     IdRemainNavigation = remainModel.Remain,

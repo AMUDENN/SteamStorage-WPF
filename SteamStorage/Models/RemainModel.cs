@@ -95,6 +95,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderTitle, value);
+                SelectedOrderType ??= OrderTypes.First().Key;
                 Sorting();
             }
         }
@@ -109,6 +110,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderType, value);
+                SelectedOrderTitle ??= OrderTitles.First().Key;
                 Sorting();
             }
         }
@@ -198,9 +200,11 @@ namespace SteamStorage.Models
             SelectedOrderType = null;
             IsAllRemainsDisplayed = true;
         }
-        public void UpdateGroup(RemainGroupElementModel model)
+        public void UpdateGroup(RemainGroupElementModel? model)
         {
-            _updateInfoWorker.RunWorkerAsync(RemainElementModels.Where(x => SelectedGroup is null || x.RemainGroup == SelectedGroup.RemainGroup).ToList());
+            var remainElementModels = RemainElementModels.Where(x => model is null || x.RemainGroup == model.RemainGroup).ToList();
+            if (remainElementModels.Any())
+                _updateInfoWorker.RunWorkerAsync(remainElementModels);
         }
         public void AddGroup()
         {
