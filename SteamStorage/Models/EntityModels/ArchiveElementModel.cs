@@ -16,8 +16,8 @@ namespace SteamStorage.Models.EntityModels
         private double _amountSold;
         private double _percent;
 
-        private readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly LoggerService? _loggerService = Singleton.GetService<LoggerService>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties

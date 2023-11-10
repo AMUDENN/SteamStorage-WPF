@@ -34,7 +34,7 @@ namespace SteamStorage.Models
         private int _progressBarValue;
 
         private readonly BackgroundWorker _updateInfoWorker = new();
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties
@@ -95,7 +95,6 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderTitle, value);
-                SelectedOrderType ??= OrderTypes.First().Key;
                 Sorting();
             }
         }
@@ -110,7 +109,6 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderType, value);
-                SelectedOrderTitle ??= OrderTitles.First().Key;
                 Sorting();
             }
         }

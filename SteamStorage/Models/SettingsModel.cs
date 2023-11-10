@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using static SteamStorage.Utilities.Themes;
 
 namespace SteamStorage.Models
 {
@@ -28,10 +29,10 @@ namespace SteamStorage.Models
         private string _percentPlusColor;
         private string _percentMinusColor;
 
-        private readonly Context? _context = Singleton.GetObject<Context>();
-        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
-        private readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
-        private readonly LoggerService? _loggerService = Singleton.GetObject<LoggerService>();
+        private readonly Context? _context = Singleton.GetService<Context>();
+        private readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
+        private readonly WindowDialogService? _windowDialogService = Singleton.GetService<WindowDialogService>();
+        private readonly LoggerService? _loggerService = Singleton.GetService<LoggerService>();
         #endregion Fields
 
         #region Properties
@@ -41,7 +42,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isDarkTheme, value);
-                Themes.ChangeTheme(Themes.ThemesEnum.Dark);
+                ChangeTheme();
             }
         }
         public bool IsLightTheme
@@ -50,7 +51,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isLightTheme, value);
-                Themes.ChangeTheme(Themes.ThemesEnum.Light);
+                ChangeTheme();
             }
         }
         public bool IsCustomTheme
@@ -59,7 +60,7 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _isCustomTheme, value);
-                Themes.ChangeTheme(Themes.ThemesEnum.Custom);
+                ChangeTheme();
             }
         }
         public string MainColor
@@ -132,9 +133,9 @@ namespace SteamStorage.Models
             PercentMinusColor = _configService.PercentMinusColor;
 
             var currentTheme = _configService.CurrentTheme;
-            IsLightTheme = currentTheme == "Light";
-            IsDarkTheme = currentTheme == "Dark";
-            IsCustomTheme = currentTheme == "Custom";
+            IsLightTheme = currentTheme == ThemesEnum.Light;
+            IsDarkTheme = currentTheme == ThemesEnum.Dark;
+            IsCustomTheme = currentTheme == ThemesEnum.Custom;
         }
         #endregion Constructor
 
@@ -299,6 +300,12 @@ namespace SteamStorage.Models
             var delete = UserMessage.TextConfirmation("Вы уверены, что хотите очистить базу данных? \nВсе данные будут удалены без возможности восстановления!", "УДАЛИТЬ");
             if (!delete) return;
             _context?.ClearDatabase();
+        }
+        private void ChangeTheme()
+        {
+            if (IsLightTheme) Themes.ChangeTheme(Themes.ThemesEnum.Light);
+            if (IsDarkTheme) Themes.ChangeTheme(Themes.ThemesEnum.Dark);
+            if (IsCustomTheme) Themes.ChangeTheme(Themes.ThemesEnum.Custom);
         }
         #endregion Methods
     }

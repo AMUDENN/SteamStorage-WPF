@@ -19,14 +19,14 @@ namespace SteamStorage
         {
             InitContainer();
 
-            MainWindowVM? MainWindowVM = Singleton.GetObject<MainWindowVM>();
+            MainWindowVM? MainWindowVM = Singleton.GetService<MainWindowVM>();
 
-            var window = Singleton.GetObject<MainWindow>();
+            var window = Singleton.GetService<MainWindow>();
             if (window is null)
                 throw new Exception("something went wrong during initializing DI container. MainWindow is missing");
             window.DataContext = MainWindowVM;
 
-            ConfigService? configService = Singleton.GetObject<ConfigService>();
+            ConfigService? configService = Singleton.GetService<ConfigService>();
             window.Height = configService.Height;
             window.Width = configService.Width;
             window.Top = configService.Top;

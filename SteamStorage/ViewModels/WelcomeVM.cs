@@ -10,7 +10,7 @@ namespace SteamStorage.ViewModels
         private bool _isGreetingTextVisible;
         private bool _isDontShowAgainEnabled;
 
-        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
+        private readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
         #endregion Fields
 
         #region Properties

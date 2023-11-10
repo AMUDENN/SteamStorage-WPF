@@ -6,7 +6,7 @@ namespace SteamStorage.Utilities
 {
     public static class UserMessage
     {
-        private static readonly WindowDialogService? _windowDialogService = Singleton.GetObject<WindowDialogService>();
+        private static readonly WindowDialogService? _windowDialogService = Singleton.GetService<WindowDialogService>();
         public static bool Question(string question, double height = 200, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Подтверждение", new MessageBoxVM(question, MessageBoxVM.MessageImages.Question, MessageBoxVM.MessageButtons.OkCancel));
@@ -23,19 +23,19 @@ namespace SteamStorage.Utilities
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Подтвердите действие", new TextConfirmationVM(text, confirmationWord));
         }
-        public static bool EditArchiveGroup(ArchiveGroupElementModel archiveGroupModel, double height = 200, double width = 400) 
+        public static bool EditArchiveGroup(ArchiveGroupElementModel archiveGroupModel, double height = 250, double width = 400) 
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение группы \"{archiveGroupModel.Title}\"", new GroupOperationsVM(archiveGroupModel));
         }
-        public static bool AddArchiveGroup(double height = 200, double width = 400)
+        public static bool AddArchiveGroup(double height = 250, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Archive));
         }
-        public static bool EditRemainGroup(RemainGroupElementModel remainGroupModel, double height = 200, double width = 400)
+        public static bool EditRemainGroup(RemainGroupElementModel remainGroupModel, double height = 250, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, $"Изменение группы \"{remainGroupModel.Title}\"", new GroupOperationsVM(remainGroupModel));
         }
-        public static bool AddRemainGroup(double height = 200, double width = 400)
+        public static bool AddRemainGroup(double height = 250, double width = 400)
         {
             return (bool)_windowDialogService.ShowDialog(height, width, "Добавление новой группы", new GroupOperationsVM(GroupOperationsVM.GroupTypes.Remain));
         }

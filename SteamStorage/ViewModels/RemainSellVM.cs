@@ -4,7 +4,6 @@ using SteamStorage.Models.EntityModels;
 using SteamStorage.Services.Dialog;
 using SteamStorage.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace SteamStorage.ViewModels
@@ -26,7 +25,7 @@ namespace SteamStorage.ViewModels
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
 
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties
@@ -113,7 +112,7 @@ namespace SteamStorage.ViewModels
             {
                 Count = Convert.ToInt64(CountString);
                 CostSold = Convert.ToDouble(CostSoldString);
-                return true;
+                return Count != 0 && CostSold != 0;
             }
             catch
             {

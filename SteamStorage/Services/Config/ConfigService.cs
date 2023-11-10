@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using static SteamStorage.Utilities.Themes;
 
 namespace SteamStorage.Services.Config
 {
@@ -10,9 +11,9 @@ namespace SteamStorage.Services.Config
         #endregion Fields
 
         #region Properties
-        public string CurrentTheme
+        public ThemesEnum CurrentTheme
         {
-            get => GetProperty<string>(nameof(CurrentTheme));
+            get => GetEnumProperty<ThemesEnum>(nameof(CurrentTheme));
             set => SetProperty(nameof(CurrentTheme), value);
         }
         public double Width
@@ -92,7 +93,10 @@ namespace SteamStorage.Services.Config
         {
             return (T)Convert.ChangeType(_config.AppSettings.Settings[propertyName].Value, typeof(T));
         }
-
+        public T GetEnumProperty<T>(string propertyName) where T : Enum
+        {
+            return (T)Enum.Parse(typeof(T), _config.AppSettings.Settings[propertyName].Value, true);
+        }
         public void SetProperty(string propertyName, object value)
         {
             _config.AppSettings.Settings[propertyName].Value = value.ToString();

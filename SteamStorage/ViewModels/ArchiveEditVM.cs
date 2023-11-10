@@ -37,7 +37,7 @@ namespace SteamStorage.ViewModels
         private RelayCommand _saveCommand;
         private RelayCommand _cancelCommand;
 
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties
@@ -152,12 +152,12 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoSaveCommand()
         {
+            WindowDialogService.CurrentDialogWindow.DialogResult = true;
             if (_commandType == CommandType.Add)
             {
                 _archiveModel = new(Url, Count, CostPurchase, CostSold, DateTime.Now, DateTime.Now, SelectedArchiveGroupModel);
             }
             else _archiveModel.EditArchive(Url, Count, CostPurchase, CostSold, _archiveModel.DatePurchase, _archiveModel.DateSold, SelectedArchiveGroupModel);
-            WindowDialogService.CurrentDialogWindow.DialogResult = true;
         }
         private bool CanExecuteSaveCommand()
         {
@@ -166,7 +166,7 @@ namespace SteamStorage.ViewModels
                 Count = Convert.ToInt64(CountString);
                 CostPurchase = Convert.ToDouble(CostPurchaseString);
                 CostSold = Convert.ToDouble(CostSoldString);
-                return Url.Length >= 30;
+                return Url.Length >= 30 && Count != 0 && CostPurchase != 0 && CostSold != 0;
             }
             catch
             {

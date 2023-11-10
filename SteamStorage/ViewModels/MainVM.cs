@@ -17,8 +17,8 @@ namespace SteamStorage.ViewModels
 
         private RelayCommand _referenceInformationCommand;
 
-        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
-        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
+        private readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
+        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetService<ReferenceInformationService>();
         #endregion Fields
 
         #region Properties
@@ -53,7 +53,7 @@ namespace SteamStorage.ViewModels
         public MainVM()
         {
             IsMenuExpanded = _configService.IsMenuExpanded;
-            Singleton.GetObject<MainWindow>().Closing += (s, e) => _configService.IsMenuExpanded = IsMenuExpanded;
+            Singleton.GetService<MainWindow>().Closing += (s, e) => _configService.IsMenuExpanded = IsMenuExpanded;
 
             bool isGreetingTextVisible = _configService.IsGreetingTextVisible;
 

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SteamStorage.Services.Config;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
-using SteamStorage.Services.Config;
 
 namespace SteamStorage.Utilities
 {
@@ -14,10 +14,10 @@ namespace SteamStorage.Utilities
             { ThemesEnum.Light, @"Resources\Themes\LightTheme.xaml" },
             { ThemesEnum.Dark, @"Resources\Themes\DarkTheme.xaml" }
         };
-        private static readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
+        private static readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
         public static void ChangeTheme(ThemesEnum theme)
         {
-            _configService.CurrentTheme = theme.ToString();
+            _configService.CurrentTheme = theme;
 
             if (theme == ThemesEnum.Custom)
             {

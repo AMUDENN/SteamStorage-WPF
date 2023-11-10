@@ -3,10 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Services.Config;
 using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
-using static SteamStorage.Utilities.Themes;
-using System;
 using System.Windows;
 using System.Windows.Input;
+using static SteamStorage.Utilities.Themes;
 
 namespace SteamStorage.ViewModels
 {
@@ -20,8 +19,8 @@ namespace SteamStorage.ViewModels
         private RelayCommand _loadedCommand;
         private RelayCommand<KeyEventArgs> _keyDownCommand;
 
-        private readonly ConfigService? _configService = Singleton.GetObject<ConfigService>();
-        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetObject<ReferenceInformationService>();
+        private readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
+        private readonly ReferenceInformationService? _referenceInformationService = Singleton.GetService<ReferenceInformationService>();
         #endregion Fields
 
         #region Properties
@@ -99,7 +98,7 @@ namespace SteamStorage.ViewModels
         }
         private void DoLoadedCommand()
         {
-            ChangeTheme((ThemesEnum)Enum.Parse(typeof(ThemesEnum), _configService.CurrentTheme, true));
+            ChangeTheme(_configService.CurrentTheme);
         }
         private void DoKeyDownCommand(KeyEventArgs? e)
         {

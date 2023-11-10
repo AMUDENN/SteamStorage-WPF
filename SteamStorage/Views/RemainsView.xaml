@@ -107,18 +107,16 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                            <Border x:Name="Border" Style="{DynamicResource AccentAdditionalBorderStyle}" CornerRadius="7, 0, 0, 7">
+                                            <Border x:Name="Border" Style="{DynamicResource AccentAdditionalBorderStyle}">
                                                 <ContentPresenter x:Name="PART_ContentHost" Margin="20, 0"/>
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="FontWeight" Value="DemiBold"/>
                                                     <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
-                                                    <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
                                                 </Trigger>
                                                 <Trigger Property="IsSelected" Value="True">
                                                     <Setter Property="Style" TargetName="Border" Value="{DynamicResource MainAdditionalBorderStyle}"/>
-                                                    <Setter Property="CornerRadius" TargetName="Border" Value="7"/>
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -129,7 +127,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid Height="50">
+                                <Grid Height="Auto" MinHeight="50">
                                     <TextBlock Text="{Binding Title}" Style="{DynamicResource SmallTitleTextBlockStyle}"/>
                                 </Grid>
                             </DataTemplate>
@@ -141,6 +139,7 @@
 
                 <ProgressBar Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BoolToVisibilityConverter}}" 
                              Value="{Binding ProgressBarValue}"
+                             ToolTip="{Binding ProgressBarToolTip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{DynamicResource ProgressBarStyle}"
                              VerticalAlignment="Bottom" DockPanel.Dock="Bottom"
                              Margin="0, 17" Height="46"/>

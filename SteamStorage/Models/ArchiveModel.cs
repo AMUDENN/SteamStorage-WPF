@@ -28,7 +28,7 @@ namespace SteamStorage.Models
         private double _totalAmountSold;
         private double _averagePercent;
 
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties
@@ -91,7 +91,6 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderTitle, value);
-                SelectedOrderType ??= OrderTypes.First().Key;
                 Sorting();
             }
         }
@@ -106,7 +105,6 @@ namespace SteamStorage.Models
             set
             {
                 SetProperty(ref _selectedOrderType, value);
-                SelectedOrderTitle ??= OrderTitles.First().Key;
                 Sorting();
             }
         }

@@ -28,7 +28,7 @@ namespace SteamStorage.ViewModels
         private double _totalRemainCurrentAmount;
         private RemainElementModel? _mostProfitabilityRemain;
 
-        private readonly Context? _context = Singleton.GetObject<Context>();
+        private readonly Context? _context = Singleton.GetService<Context>();
         #endregion Fields
 
         #region Properties
