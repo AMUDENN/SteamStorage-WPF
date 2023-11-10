@@ -185,7 +185,7 @@
 
                             <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <WrapPanel Orientation="Horizontal" Grid.Row="1">
                                 <TextBlock Text="{Binding MostProfitabilityRemainGroup.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 
@@ -193,11 +193,11 @@
                                 <TextBlock Text="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityRemainGroup.RemainsPercent, Converter={StaticResource PercentForegroundConverter}}"/>
-                            </StackPanel>
+                            </WrapPanel>
 
                             <TextBlock Visibility="{Binding MostProfitabilityRemain, Converter={StaticResource NullVisibilityConverter}}" Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
 
-                            <StackPanel Visibility="{Binding MostProfitabilityRemain, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
+                            <WrapPanel Visibility="{Binding MostProfitabilityRemain, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
                                 <TextBlock Text="{Binding MostProfitabilityRemain.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 
@@ -215,7 +215,7 @@
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=")" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            </StackPanel>
+                            </WrapPanel>
 
                         </Grid>
 
@@ -363,7 +363,7 @@
 
                             <TextBlock Text="Самая прибыльная группа: " Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="0"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <WrapPanel Orientation="Horizontal" Grid.Row="1">
                                 <TextBlock Text="{Binding MostProfitabilityArchiveGroup.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 
@@ -371,11 +371,11 @@
                                 <TextBlock Text="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource DoublePercentConverter}, ConverterParameter=2}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"
                                        Foreground="{Binding MostProfitabilityArchiveGroup.ArchivesPercent, Converter={StaticResource PercentForegroundConverter}}"/>
-                            </StackPanel>
+                            </WrapPanel>
 
                             <TextBlock Visibility="{Binding MostProfitabilityArchive, Converter={StaticResource NullVisibilityConverter}}" Text="Самая прибыльная позиция:" Style="{DynamicResource CommonTextBlockStyle}" Grid.Row="2"/>
 
-                            <StackPanel Visibility="{Binding MostProfitabilityArchive, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
+                            <WrapPanel Visibility="{Binding MostProfitabilityArchive, Converter={StaticResource NullVisibilityConverter}}" Orientation="Horizontal" Grid.Row="3">
                                 <TextBlock Text="{Binding MostProfitabilityArchive.Title}" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=": " 
@@ -393,7 +393,7 @@
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
                                 <TextBlock Text=")" 
                                        Style="{DynamicResource CommonTextBlockStyle}"/>
-                            </StackPanel>
+                            </WrapPanel>
 
                         </Grid>
 

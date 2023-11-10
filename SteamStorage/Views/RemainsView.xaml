@@ -139,10 +139,17 @@
 
                 <ProgressBar Visibility="{Binding IsProgressBarVisible, Converter={StaticResource BoolToVisibilityConverter}}" 
                              Value="{Binding ProgressBarValue}"
-                             ToolTip="{Binding ProgressBarToolTip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{DynamicResource ProgressBarStyle}"
                              VerticalAlignment="Bottom" DockPanel.Dock="Bottom"
-                             Margin="0, 17" Height="46"/>
+                             Margin="0, 17" Height="46">
+                    <ProgressBar.ToolTip>
+                        <WrapPanel Orientation="Horizontal">
+                            <TextBlock Text="Выполнено: "/>
+                            <TextBlock Text="{Binding ProgressBarValue, Mode=OneWay}"/>
+                            <TextBlock Text="%"/>
+                        </WrapPanel>
+                    </ProgressBar.ToolTip>
+                </ProgressBar>
 
             </DockPanel>
 

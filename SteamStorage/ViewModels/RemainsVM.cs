@@ -72,10 +72,6 @@ namespace SteamStorage.ViewModels
             get => _remainModel.ProgressBarValue;
             set => _remainModel.ProgressBarValue = value;
         }
-        public string ProgressBarToolTip
-        {
-            get => $"Выполнено {ProgressBarValue}%";
-        }
         public BackgroundWorker UpdateInfoWorker => _remainModel.UpdateInfoWorker;
         #endregion Properties
 
@@ -165,14 +161,12 @@ namespace SteamStorage.ViewModels
             _remainModel.PropertyChanged += (s, e) =>
             {
                 OnPropertyChanged(e.PropertyName);
-                if (e.PropertyName == nameof(ProgressBarValue)) OnPropertyChanged(nameof(ProgressBarToolTip));
                 try
                 {
                     RemoveFilterCommand.NotifyCanExecuteChanged();
                     UpdateGroupCommand.NotifyCanExecuteChanged();
                 }
                 catch { } //Надо тут тоже что-то передалать
-
             };
             IsAllRemainsDisplayed = true;
         }
