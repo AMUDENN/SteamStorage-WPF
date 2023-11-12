@@ -216,7 +216,7 @@
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="14*"/>
-                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="8*"/>
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Header="О программе" 

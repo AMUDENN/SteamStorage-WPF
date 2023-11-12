@@ -24,27 +24,54 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border x:Name="PART_Container" Padding="{TemplateBinding Padding}">
-                        <Border x:Name="PART_Border" Style="{DynamicResource MainWindowBorderStyle}">
+                    <Border x:Name="PART_Container" 
+                            Padding="{TemplateBinding Padding}">
+                        <Border x:Name="PART_Border">
                             <Grid x:Name="PART_Content">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="36"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft" WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Button x:Name="CloseButton" Content="r" Margin="6,0,2,0" Style="{DynamicResource MainWindowCloseButtonStyle}"/>
-                                    <Button x:Name="MaxRestoreButton" Content="1" Margin="2,0,2,0" Style="{DynamicResource MainWindowMaxRestoreButtonStyle}"/>
-                                    <Button x:Name="MinimizeButton" Content="0" Margin="2,0,2,0" Style="{DynamicResource MainWindowMinimizeButtonStyle}"/>
-                                </StackPanel>
-                                <TextBlock Text="{TemplateBinding Title}" Style="{DynamicResource MainWindowTitleTextBlockStyle}"/>
-                                <Image Style="{DynamicResource FaviconImage}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="25" Margin="10,4,4,4"/>
-                                <ContentPresenter Grid.Row="1"/>
+                                <Border Name="mask" 
+                                        Style="{DynamicResource MainWindowBorderStyle}"/>
+                                <Grid>
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=mask}"/>
+                                    </Grid.OpacityMask>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="36"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel HorizontalAlignment="Right" 
+                                                VerticalAlignment="Stretch" 
+                                                Orientation="Horizontal" 
+                                                FlowDirection="RightToLeft" 
+                                                WindowChrome.IsHitTestVisibleInChrome="True">
+                                        <Button x:Name="CloseButton" 
+                                                Content="r" 
+                                                Margin="6,0,2,0" 
+                                                Style="{DynamicResource MainWindowCloseButtonStyle}"/>
+                                        <Button x:Name="MaxRestoreButton" 
+                                                Content="1" 
+                                                Margin="2,0,2,0" 
+                                                Style="{DynamicResource MainWindowMaxRestoreButtonStyle}"/>
+                                        <Button x:Name="MinimizeButton" 
+                                                Content="0" 
+                                                Margin="2,0,2,0" 
+                                                Style="{DynamicResource MainWindowMinimizeButtonStyle}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{TemplateBinding Title}" 
+                                               Style="{DynamicResource MainWindowTitleTextBlockStyle}"/>
+                                    <Image Style="{DynamicResource FaviconImage}" 
+                                           HorizontalAlignment="Left" 
+                                           VerticalAlignment="Center" 
+                                           Width="25" Height="25" 
+                                           Margin="10,4,4,4"/>
+                                    <ContentPresenter Grid.Row="1"/>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Padding" Value="7"/>
+                            <Setter Property="CornerRadius" TargetName="mask" Value="0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -56,6 +83,7 @@
         <Setter Property="Background" Value="{DynamicResource Accent}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="7"/>
     </Style>
     
     <Style x:Key="MainWindowTitleTextBlockStyle" TargetType="{x:Type TextBlock}">
