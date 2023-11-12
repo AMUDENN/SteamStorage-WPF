@@ -13,7 +13,6 @@
         <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
         <converters:PercentConverter x:Key="PercentConverter"/>
         <converters:PercentForegroundConverter x:Key="PercentForegroundConverter"/>
-        <converters:PlotValueConverter x:Key="PlotValueConverter"/>
         <converters:CombiningConverter x:Key="DoublePercentConverter"
             Converter1="{StaticResource DoubleRoundConverter}"
             Converter2="{StaticResource PercentConverter}"/>

@@ -13,8 +13,8 @@ namespace SteamStorage.Resources.Converters
             double number = (double)value;
             string command = (string)parameter;
             double result = 0;
-            if (command == "*") result = number * 1.2;
-            if (command == "/") result = number / 1.2;
+            if (command == "Max") result = number < 10 ? number < 1 ? 1 : number + 1 : number * 1.1;
+            if (command == "Min") result = number < 10 ? number < 1 ? 0 : number - 1 : number / 1.1;
             return result;
         }
 

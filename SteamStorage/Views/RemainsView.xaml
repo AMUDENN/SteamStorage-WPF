@@ -332,7 +332,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <oxy:Plot Style="{DynamicResource PlotStyle}"
-                                          Margin="5"
+                                          Margin="3"
                                           Padding="3"
                                           Grid.Column="0">
                                         <oxy:Plot.Series>
@@ -342,11 +342,11 @@
                                         </oxy:Plot.Series>
                                         <oxy:Plot.Axes>
                                             <oxy:CategoryAxis IsAxisVisible="False" 
-                                                              Minimum="0" 
+                                                              Minimum="0"
                                                               Maximum="{Binding PriceDynamics.Count}" />
                                             <oxy:LinearAxis IsAxisVisible="False"
-                                                            Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=/}" 
-                                                            Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=*}" />
+                                                            Minimum="{Binding MinPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=Min}" 
+                                                            Maximum="{Binding MaxPrice, Converter={StaticResource PlotValueConverter}, ConverterParameter=Max}" />
                                         </oxy:Plot.Axes>
                                     </oxy:Plot>
 

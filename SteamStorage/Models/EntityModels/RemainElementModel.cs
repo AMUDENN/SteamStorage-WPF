@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Services.Logger;
@@ -9,7 +10,7 @@ using System.Linq;
 
 namespace SteamStorage.Models.EntityModels
 {
-    public class RemainElementModel
+    public class RemainElementModel : ObservableObject
     {
         #region Fields
         private Remain _remain;
@@ -29,30 +30,70 @@ namespace SteamStorage.Models.EntityModels
         #endregion Fields
 
         #region Properties
+        public Remain Remain => _remain;
         public RemainGroup RemainGroup => _remain.IdGroupNavigation;
         public string Url => _remain.IdSkinNavigation.Url;
         public string Title => _remain.IdSkinNavigation.Title;
-        public Remain Remain => _remain;
-        public DateTime DatePurchase => _datePurchase;
         public long Count => _remain.Count;
         public double CostPurchase => _remain.CostPurchase;
-        public double AmountPurchase => _amountPurchase;
-        public Dictionary<DateTime, double> PriceDynamics => _priceDynamics;
-        public double MinPrice => _minPrice;
-        public double MaxPrice => _maxPrice;
-        public DateTime DateLastUpdate => _dateLastUpdate;
-        public double LastCost => _lastCost;
-        public double CurrentAmount => _currentAmount;
-        public double Percent => _percent;
-        public List<DataPoint> PriceDynamicsPoints => _priceDynamicsPoints;
+        public DateTime DatePurchase
+        {
+            get => _datePurchase;
+            set => SetProperty(ref _datePurchase, value);
+        }
+        public double AmountPurchase
+        {
+            get => _amountPurchase;
+            set => SetProperty(ref _amountPurchase, value);
+        }
+        public Dictionary<DateTime, double> PriceDynamics
+        {
+            get => _priceDynamics;
+            set => SetProperty(ref _priceDynamics, value);
+        }
+        public double MinPrice
+        {
+            get => _minPrice;
+            set => SetProperty(ref _minPrice, value);
+        }
+        public double MaxPrice
+        {
+            get => _maxPrice;
+            set => SetProperty(ref _maxPrice, value);
+        }
+        public DateTime DateLastUpdate
+        {
+            get => _dateLastUpdate;
+            set => SetProperty(ref _dateLastUpdate, value);
+        }
+        public double LastCost
+        {
+            get => _lastCost;
+            set => SetProperty(ref _lastCost, value);
+        }
+        public double CurrentAmount
+        {
+            get => _currentAmount;
+            set => SetProperty(ref _currentAmount, value);
+        }
+        public double Percent
+        {
+            get => _percent;
+            set => SetProperty(ref _percent, value);
+        }
+        public List<DataPoint> PriceDynamicsPoints
+        {
+            get => _priceDynamicsPoints;
+            set => SetProperty(ref _priceDynamicsPoints, value);
+        }
         #endregion Properties
 
         #region Constructor
         public RemainElementModel(Remain remain)
         {
             _remain = remain;
-            _datePurchase = DateTime.ParseExact(remain.DatePurchase, ProgramConstants.DateTimeFormat, null);
-            _amountPurchase = remain.CostPurchase * remain.Count;
+            DatePurchase = DateTime.ParseExact(remain.DatePurchase, ProgramConstants.DateTimeFormat, null);
+            AmountPurchase = remain.CostPurchase * remain.Count;
             UpdatePriceDynamics();
         }
         public RemainElementModel(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
@@ -71,22 +112,23 @@ namespace SteamStorage.Models.EntityModels
             _priceDynamics = _remain.PriceDynamics.ToDictionary(x => DateTime.ParseExact(x.DateUpdate, ProgramConstants.DateTimeFormat, null), x => x.CostUpdate);
             _priceDynamics.Add(DatePurchase, CostPurchase);
             if (_priceDynamics.Count == 1) _priceDynamics.Add(DatePurchase.AddMilliseconds(1), CostPurchase);
-            _priceDynamics = _priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
+            PriceDynamics = _priceDynamics.OrderBy(x => x.Key.Ticks).ToDictionary(x => x.Key, x => x.Value);
 
-            _minPrice = _priceDynamics.Values.Min();
-            _maxPrice = _priceDynamics.Values.Max();
-            _dateLastUpdate = _priceDynamics.Last().Key;
-            _lastCost = _priceDynamics.Last().Value;
-            _currentAmount = _lastCost * Count;
-            _percent = (_lastCost - CostPurchase) / CostPurchase * 100;
+            MinPrice = PriceDynamics.Min(x => x.Value);
+            MaxPrice = PriceDynamics.Max(x => x.Value);
+            DateLastUpdate = PriceDynamics.Last().Key;
+            LastCost = PriceDynamics.Last().Value;
+            CurrentAmount = _lastCost * Count;
+            Percent = (LastCost - CostPurchase) / CostPurchase * 100;
 
             int i = 0;
             _priceDynamicsPoints = new();
-            foreach (var item in _priceDynamics)
+            foreach (var item in PriceDynamics)
             {
                 _priceDynamicsPoints.Add(new(i, item.Value));
                 i++;
             }
+            OnPropertyChanged(nameof(PriceDynamicsPoints));
         }
         public void EditRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
         {

@@ -313,14 +313,10 @@ namespace SteamStorage.Models
             {
                 remainModel.UpdateCurrentCost();
 
-                //Работает, но это какая-то шляпа ¯\_(ツ)_/¯
-                //DisplayedRemains = new ObservableCollection<RemainElementModel>(DisplayedRemains.Select(x => x.Remain == remainModel.Remain ? x = remainModel : x));
-
                 Filtering();
 
                 _updateInfoWorker.ReportProgress(percentageIncrease);
 
-                //Вот это тоже не очень :(
                 i++;
                 if (i % 15 == 0) Thread.Sleep(random.Next(23000, 30000));
                 Thread.Sleep(random.Next(1500, 2650));
