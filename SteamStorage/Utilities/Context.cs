@@ -198,7 +198,7 @@ namespace SteamStorage.Utilities
                 }
                 catch (Exception ex)
                 {
-                    _loggerService.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" не удалось! {ex.Message}");
+                    _loggerService.WriteMessage(ex, $"Добавление нового элемента по ссылке \"{url}\" не удалось!");
                     UndoChanges();
                     return null;
                 }
