@@ -41,6 +41,23 @@ namespace SteamStorage.Services.Logger
             _innerWriter.WriteLine($"[{DateTime.Now}]: ({sender.Name}) {message}");
             _innerWriter.Flush();
         }
+        public void WriteMessage(Exception exception)
+        {
+            _innerWriter.WriteLine($"[{DateTime.Now}]: Message: {exception.Message} " +
+                                   $"\n\tSource: {exception.Source}" +
+                                   $"\n\tStackTrace: {exception.StackTrace}" +
+                                   $"\n\tTargetSite: {exception.TargetSite}");
+            _innerWriter.Flush();
+        }
+        public void WriteMessage(Exception exception, string message)
+        {
+            _innerWriter.WriteLine($"[{DateTime.Now}]: {message}" +
+                                   $"\n\tMessage: {exception.Message} " +
+                                   $"\n\tSource: {exception.Source}" +
+                                   $"\n\tStackTrace: {exception.StackTrace}" +
+                                   $"\n\tTargetSite: {exception.TargetSite}");
+            _innerWriter.Flush();
+        }
         #endregion Methods
     }
 }

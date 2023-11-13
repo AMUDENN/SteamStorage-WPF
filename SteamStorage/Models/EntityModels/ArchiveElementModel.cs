@@ -69,13 +69,27 @@ namespace SteamStorage.Models.EntityModels
         }
         public ArchiveElementModel(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
         {
-            _archive = new();
-            EditArchive(url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
-            _context?.AddArchive(_archive);
+            AddArchive(url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
         }
         #endregion Constructor
 
         #region Methods
+        private void AddArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
+        {
+            try
+            {
+                _archive = new();
+                _context?.EditArchive(_archive, url, count, costPurchase, costSold, datePurchase, dateSold, archiveGroupModel);
+                _context?.AddArchive(_archive);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно добавлен!", GetType());
+            }
+            catch (Exception ex)
+            {
+                _context?.UndoChanges();
+                _loggerService?.WriteMessage(ex, "Добавление нового элемента не удалось");
+                UserMessage.Error("Добавление нового элемента не удалось");
+            }
+        }
         public void EditArchive(string url, long count, double costPurchase, double costSold, DateTime datePurchase, DateTime dateSold, ArchiveGroupElementModel? archiveGroupModel)
         {
             try
@@ -86,7 +100,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось изменить элемент {Title}");
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -100,7 +114,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось изменить элемент {Title}");
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -114,7 +128,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось удалить элемент {Title}");
                 UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }

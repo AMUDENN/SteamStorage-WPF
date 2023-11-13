@@ -53,13 +53,27 @@ namespace SteamStorage.Models.EntityModels
         }
         public ArchiveGroupElementModel(string title)
         {
-            _archiveGroup = new();
-            EditGroup(title);
-            _context?.AddArchiveGroup(_archiveGroup);
+            AddGroup(title);
         }
         #endregion Constructor
 
         #region Methods
+        private void AddGroup(string title)
+        {
+            try
+            {
+                _archiveGroup = new();
+                _context?.EditArchiveGroup(_archiveGroup, title);
+                _context?.AddArchiveGroup(_archiveGroup);
+                _loggerService?.WriteMessage($"Группа {Title} успешно добавлена!", GetType());
+            }
+            catch (Exception ex)
+            {
+                _context?.UndoChanges();
+                _loggerService?.WriteMessage(ex, "Добавление новой группы не удалось");
+                UserMessage.Error("Добавление новой группы не удалось");
+            }
+        }
         private void UpdateArchives()
         {
             var archiveModels = _context?.GetArchiveModels(this);
@@ -77,7 +91,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить группу {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось изменить группу {Title}");
                 UserMessage.Error($"Не удалось изменить группу {Title}");
             }
         }
@@ -96,7 +110,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось удалить группу {Title}");
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }
@@ -115,7 +129,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить группу {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось удалить группу {Title}");
                 UserMessage.Error($"Не удалось удалить группу {Title}");
             }
         }

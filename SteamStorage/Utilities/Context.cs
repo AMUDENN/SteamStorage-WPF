@@ -185,7 +185,7 @@ namespace SteamStorage.Utilities
                 try
                 {
                     string title = _steamParseService.GetSkinTitle(url);
-                    if (title == string.Empty) throw new Exception("Невозможно получить название скина");
+                    if (title == string.Empty) return null;
                     Skin skin = new()
                     {
                         Url = url,
@@ -193,7 +193,7 @@ namespace SteamStorage.Utilities
                     };
                     DBContext.Skins.Add(skin);
                     SaveChanges();
-                    _loggerService.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!");
+                    _loggerService.WriteMessage($"Добавление нового элемента по ссылке \"{url}\" удалось!", GetType());
                     return skin;
                 }
                 catch (Exception ex)
@@ -222,7 +222,7 @@ namespace SteamStorage.Utilities
             }
             catch (Exception ex)
             {
-                _loggerService.WriteMessage($"Добавление новой записи неудачно! {ex.Message}", typeof(PriceDynamic));
+                _loggerService.WriteMessage(ex, $"Добавление новой записи неудачно!");
                 UndoChanges();
             }
         }
@@ -285,9 +285,9 @@ namespace SteamStorage.Utilities
                 UpdateAll();
                 _loggerService.WriteMessage("Очистка базы данных прошла успешно!", typeof(Context));
             }
-            catch
+            catch (Exception ex)
             {
-                _loggerService.WriteMessage("Очистка базы данных прошла неудачно! ", typeof(Context));
+                _loggerService.WriteMessage(ex, "Очистка базы данных прошла неудачно!");
                 UndoChanges();
             }
         }

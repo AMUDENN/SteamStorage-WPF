@@ -1,4 +1,5 @@
 ﻿using SteamStorage.Services.Config;
+using SteamStorage.Services.Logger;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace SteamStorage.Utilities
             { ThemesEnum.Dark, @"Resources\Themes\DarkTheme.xaml" }
         };
         private static readonly ConfigService? _configService = Singleton.GetService<ConfigService>();
+        private static readonly LoggerService? _loggerService = Singleton.GetService<LoggerService>();
         public static void ChangeTheme(ThemesEnum theme)
         {
             _configService.CurrentTheme = theme;
@@ -32,15 +34,22 @@ namespace SteamStorage.Utilities
         }
         public static void SetCustomColors()
         {
-            var resources = Application.Current.Resources;
-            var converter = new BrushConverter();
-            resources["Main"] = converter.ConvertFrom($"#{_configService.MainColor}") as SolidColorBrush;
-            resources["MainAdditional"] = converter.ConvertFrom($"#{_configService.MainAdditionalColor}") as SolidColorBrush;
-            resources["Additional"] = converter.ConvertFrom($"#{_configService.AdditionalColor}") as SolidColorBrush;
-            resources["Accent"] = converter.ConvertFrom($"#{_configService.AccentColor}") as SolidColorBrush;
-            resources["AccentAdditional"] = converter.ConvertFrom($"#{_configService.AccentAdditionalColor}") as SolidColorBrush;
-            resources["PercentPlus"] = converter.ConvertFrom($"#{_configService.PercentPlusColor}") as SolidColorBrush;
-            resources["PercentMinus"] = converter.ConvertFrom($"#{_configService.PercentMinusColor}") as SolidColorBrush;
+            try
+            {
+                var resources = Application.Current.Resources;
+                var converter = new BrushConverter();
+                resources["Main"] = converter.ConvertFrom($"#{_configService.MainColor}") as SolidColorBrush;
+                resources["MainAdditional"] = converter.ConvertFrom($"#{_configService.MainAdditionalColor}") as SolidColorBrush;
+                resources["Additional"] = converter.ConvertFrom($"#{_configService.AdditionalColor}") as SolidColorBrush;
+                resources["Accent"] = converter.ConvertFrom($"#{_configService.AccentColor}") as SolidColorBrush;
+                resources["AccentAdditional"] = converter.ConvertFrom($"#{_configService.AccentAdditionalColor}") as SolidColorBrush;
+                resources["PercentPlus"] = converter.ConvertFrom($"#{_configService.PercentPlusColor}") as SolidColorBrush;
+                resources["PercentMinus"] = converter.ConvertFrom($"#{_configService.PercentMinusColor}") as SolidColorBrush;
+            }
+            catch (Exception ex)
+            {
+                _loggerService?.WriteMessage(ex, "Установка пользовательских цветов прошла неудачно!");
+            }
         }
     }
 }

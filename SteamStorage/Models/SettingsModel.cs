@@ -260,12 +260,12 @@ namespace SteamStorage.Models
                     using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
                     package.SaveAs(fs);
                 }
-                _loggerService?.WriteMessage("Экспорт в эксель завершился успешно!", this.GetType());
+                _loggerService?.WriteMessage("Экспорт в эксель завершился успешно!", GetType());
                 UserMessage.Information("Экспорт в эксель завершился успешно!");
             }
             catch (Exception ex)
             {
-                _loggerService?.WriteMessage($"Экспорт в эксель завершился с ошибкой! {ex.Message}", this.GetType());
+                _loggerService?.WriteMessage(ex, $"Экспорт в эксель завершился с ошибкой!");
                 UserMessage.Error("Экспорт в эксель завершился с ошибкой!");
             }
         }

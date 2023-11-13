@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using OxyPlot;
 using SteamStorage.Entities;
 using SteamStorage.Services.Logger;
@@ -98,13 +99,27 @@ namespace SteamStorage.Models.EntityModels
         }
         public RemainElementModel(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
         {
-            _remain = new();
-            EditRemain(url, count, costPurchase, datePurchase, remainGroupModel);
-            _context?.AddRemain(_remain);
+            AddRemain(url, count, costPurchase, datePurchase, remainGroupModel);
         }
         #endregion Constructor
 
         #region Methods
+        private void AddRemain(string url, long count, double costPurchase, DateTime datePurchase, RemainGroupElementModel? remainGroupModel)
+        {
+            try
+            {
+                _remain = new();
+                _context?.EditRemain(_remain, url, count, costPurchase, datePurchase, remainGroupModel);
+                _context?.AddRemain(_remain);
+                _loggerService?.WriteMessage($"Элемент {Title} успешно добавлен!", GetType());
+            }
+            catch (Exception ex)
+            {
+                _context?.UndoChanges();
+                _loggerService?.WriteMessage(ex, "Добавление нового элемента не удалось");
+                UserMessage.Error("Добавление нового элемента не удалось");
+            }
+        }
         private void UpdatePriceDynamics()
         {
             _context?.DBContext.PriceDynamics.LoadAsync();
@@ -140,7 +155,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось изменить элемент {Title}");
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -154,7 +169,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось изменить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось изменить элемент {Title}");
                 UserMessage.Error($"Не удалось изменить элемент {Title}");
             }
         }
@@ -170,7 +185,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось продать элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось продать элемент {Title}");
                 UserMessage.Error($"Не удалось продать элемент {Title}");
             }
         }
@@ -184,7 +199,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось удалить элемент {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось удалить элемент {Title}");
                 UserMessage.Error($"Не удалось удалить элемент {Title}");
             }
         }
@@ -199,7 +214,7 @@ namespace SteamStorage.Models.EntityModels
             catch (Exception ex)
             {
                 _context?.UndoChanges();
-                _loggerService?.WriteMessage($"Не удалось узнать текущую цену элемента {Title}. Ошибка: {ex.Message}", GetType());
+                _loggerService?.WriteMessage(ex, $"Не удалось узнать текущую цену элемента {Title}");
                 UserMessage.Error($"Не удалось узнать текущую цену элемента {Title}");
             }
         }

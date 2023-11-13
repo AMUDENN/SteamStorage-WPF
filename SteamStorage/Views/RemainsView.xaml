@@ -338,7 +338,7 @@
                                         <oxy:Plot.Series>
                                             <oxy:LineSeries ItemsSource="{Binding PriceDynamicsPoints}" 
                                                             Color="{Binding Percent, Converter={StaticResource PercentForegroundConverter}, ConverterParameter=Color}"
-                                                            StrokeThickness="1.5"/>
+                                                            StrokeThickness="2"/>
                                         </oxy:Plot.Series>
                                         <oxy:Plot.Axes>
                                             <oxy:CategoryAxis IsAxisVisible="False" 

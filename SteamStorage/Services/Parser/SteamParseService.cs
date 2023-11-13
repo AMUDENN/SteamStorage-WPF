@@ -35,7 +35,7 @@ namespace SteamStorage.Services.Parser
             }
             catch (Exception ex)
             {
-                FailParsing(ex.Message);
+                FailParsing(ex);
                 return (DateTime.Now, -1);
             }
         }
@@ -51,7 +51,7 @@ namespace SteamStorage.Services.Parser
             }
             catch (Exception ex)
             {
-                FailParsing(ex.Message);
+                FailParsing(ex);
                 return string.Empty;
             }
         }
@@ -67,9 +67,9 @@ namespace SteamStorage.Services.Parser
         {
             _loggerService.WriteMessage("Успешно получена информация!", typeof(SteamParseService));
         }
-        private void FailParsing(string message)
+        private void FailParsing(Exception exception)
         {
-            _loggerService.WriteMessage($"Произошла ошибка при получении информации: {message}!", typeof(SteamParseService));
+            _loggerService.WriteMessage(exception, $"Произошла ошибка при получении информации!");
         }
         #endregion Methods
     }
