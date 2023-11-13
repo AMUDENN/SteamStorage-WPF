@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Windows.Media;
 using static SteamStorage.Utilities.Themes;
 
 namespace SteamStorage.Services.Config
@@ -41,39 +42,39 @@ namespace SteamStorage.Services.Config
             get => GetProperty<bool>(nameof(IsMaximized));
             set => SetProperty(nameof(IsMaximized), value);
         }
-        public string MainColor
+        public SolidColorBrush MainColor
         {
-            get => GetProperty<string>(nameof(MainColor));
+            get => GetSolidColorBrush(nameof(MainColor));
             set => SetProperty(nameof(MainColor), value);
         }
-        public string MainAdditionalColor
+        public SolidColorBrush MainAdditionalColor
         {
-            get => GetProperty<string>(nameof(MainAdditionalColor));
+            get => GetSolidColorBrush(nameof(MainAdditionalColor));
             set => SetProperty(nameof(MainAdditionalColor), value);
         }
-        public string AdditionalColor
+        public SolidColorBrush AdditionalColor
         {
-            get => GetProperty<string>(nameof(AdditionalColor));
+            get => GetSolidColorBrush(nameof(AdditionalColor));
             set => SetProperty(nameof(AdditionalColor), value);
         }
-        public string AccentColor
+        public SolidColorBrush AccentColor
         {
-            get => GetProperty<string>(nameof(AccentColor));
+            get => GetSolidColorBrush(nameof(AccentColor));
             set => SetProperty(nameof(AccentColor), value);
         }
-        public string AccentAdditionalColor
+        public SolidColorBrush AccentAdditionalColor
         {
-            get => GetProperty<string>(nameof(AccentAdditionalColor));
+            get => GetSolidColorBrush(nameof(AccentAdditionalColor));
             set => SetProperty(nameof(AccentAdditionalColor), value);
         }
-        public string PercentPlusColor
+        public SolidColorBrush PercentPlusColor
         {
-            get => GetProperty<string>(nameof(PercentPlusColor));
+            get => GetSolidColorBrush(nameof(PercentPlusColor));
             set => SetProperty(nameof(PercentPlusColor), value);
         }
-        public string PercentMinusColor
+        public SolidColorBrush PercentMinusColor
         {
-            get => GetProperty<string>(nameof(PercentMinusColor));
+            get => GetSolidColorBrush(nameof(PercentMinusColor));
             set => SetProperty(nameof(PercentMinusColor), value);
         }
         public bool IsGreetingTextVisible
@@ -96,6 +97,11 @@ namespace SteamStorage.Services.Config
         public T GetEnumProperty<T>(string propertyName) where T : Enum
         {
             return (T)Enum.Parse(typeof(T), _config.AppSettings.Settings[propertyName].Value, true);
+        }
+        public SolidColorBrush GetSolidColorBrush(string propertyName)
+        {
+            var converter = new BrushConverter();
+            return converter.ConvertFrom(_config.AppSettings.Settings[propertyName].Value) as SolidColorBrush;
         }
         public void SetProperty(string propertyName, object value)
         {

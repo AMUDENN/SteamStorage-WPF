@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Media;
 using static SteamStorage.Utilities.Themes;
 
 namespace SteamStorage.Models
@@ -124,13 +125,13 @@ namespace SteamStorage.Models
         #region Constructor
         public SettingsModel()
         {
-            MainColor = _configService.MainColor;
-            MainAdditionalColor = _configService.MainAdditionalColor;
-            AdditionalColor = _configService.AdditionalColor;
-            AccentColor = _configService.AccentColor;
-            AccentAdditionalColor = _configService.AccentAdditionalColor;
-            PercentPlusColor = _configService.PercentPlusColor;
-            PercentMinusColor = _configService.PercentMinusColor;
+            MainColor = GetStringColor(_configService.MainColor) ?? DefaultMainColor;
+            MainAdditionalColor = GetStringColor(_configService.MainAdditionalColor) ?? DefaultMainAdditionalColor;
+            AdditionalColor = GetStringColor(_configService.AdditionalColor) ?? DefaultAdditionalColor;
+            AccentColor = GetStringColor(_configService.AccentColor) ?? DefaultAccentColor;
+            AccentAdditionalColor = GetStringColor(_configService.AccentAdditionalColor) ?? DefaultAccentAdditionalColor;
+            PercentPlusColor = GetStringColor(_configService.PercentPlusColor) ?? DefaultPercentPlusColor;
+            PercentMinusColor = GetStringColor(_configService.PercentMinusColor) ?? DefaultPercentMinusColor;
 
             var currentTheme = _configService.CurrentTheme;
             IsLightTheme = currentTheme == ThemesEnum.Light;
@@ -140,6 +141,11 @@ namespace SteamStorage.Models
         #endregion Constructor
 
         #region Methods
+        private string? GetStringColor(SolidColorBrush? solidColorBrush)
+        {
+            if (solidColorBrush is null) return null;
+            return solidColorBrush.ToString()[3..];
+        }
         public void ExportToExcel()
         {
             try
@@ -271,24 +277,24 @@ namespace SteamStorage.Models
         }
         public void SaveColors()
         {
-            _configService.MainColor = MainColor;
-            _configService.MainAdditionalColor = MainAdditionalColor;
-            _configService.AdditionalColor = AdditionalColor;
-            _configService.AccentColor = AccentColor;
-            _configService.AccentAdditionalColor = AccentAdditionalColor;
-            _configService.PercentPlusColor = PercentPlusColor;
-            _configService.PercentMinusColor = PercentMinusColor;
-            Themes.SetCustomColors();
+            _configService.MainColor = GetSolidColorBrush(MainColor) ?? _configService.MainColor;
+            _configService.MainAdditionalColor = GetSolidColorBrush(MainAdditionalColor) ?? _configService.MainAdditionalColor;
+            _configService.AdditionalColor = GetSolidColorBrush(AdditionalColor) ?? _configService.AdditionalColor;
+            _configService.AccentColor = GetSolidColorBrush(AccentColor) ?? _configService.AccentColor;
+            _configService.AccentAdditionalColor = GetSolidColorBrush(AccentAdditionalColor) ?? _configService.AccentAdditionalColor;
+            _configService.PercentPlusColor = GetSolidColorBrush(PercentPlusColor) ?? _configService.PercentPlusColor;
+            _configService.PercentMinusColor = GetSolidColorBrush(PercentMinusColor) ?? _configService.PercentMinusColor;
+            SetCustomColors();
         }
         public void ResetColors()
         {
-            MainColor = "7371FF";
-            MainAdditionalColor = "00AD71";
-            AdditionalColor = "FFFFFF";
-            AccentColor = "0D1117";
-            AccentAdditionalColor = "21262D";
-            PercentPlusColor = "02B478";
-            PercentMinusColor = "FD4534";
+            MainColor = DefaultMainColor;
+            MainAdditionalColor = DefaultMainAdditionalColor;
+            AdditionalColor = DefaultAdditionalColor;
+            AccentColor = DefaultAccentColor;
+            AccentAdditionalColor = DefaultAccentAdditionalColor;
+            PercentPlusColor = DefaultPercentPlusColor;
+            PercentMinusColor = DefaultPercentMinusColor;
         }
         public void OpenLog()
         {
@@ -303,9 +309,9 @@ namespace SteamStorage.Models
         }
         private void ChangeTheme()
         {
-            if (IsLightTheme) Themes.ChangeTheme(Themes.ThemesEnum.Light);
-            if (IsDarkTheme) Themes.ChangeTheme(Themes.ThemesEnum.Dark);
-            if (IsCustomTheme) Themes.ChangeTheme(Themes.ThemesEnum.Custom);
+            if (IsLightTheme) Themes.ChangeTheme(ThemesEnum.Light);
+            if (IsDarkTheme) Themes.ChangeTheme(ThemesEnum.Dark);
+            if (IsCustomTheme) Themes.ChangeTheme(ThemesEnum.Custom);
         }
         #endregion Methods
     }
