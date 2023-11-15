@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SteamStorage.Services.Config;
 using SteamStorage.Services.ReferenceInformation;
 using SteamStorage.Utilities;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using static SteamStorage.Utilities.Themes;
@@ -14,7 +15,7 @@ namespace SteamStorage.ViewModels
         #region Fields
         private ObservableObject _currentVM;
 
-        private RelayCommand _closingCommand;
+        private RelayCommand<CancelEventArgs> _closingCommand;
         private RelayCommand _stateChangedCommand;
         private RelayCommand _loadedCommand;
         private RelayCommand<KeyEventArgs> _keyDownCommand;
@@ -36,11 +37,11 @@ namespace SteamStorage.ViewModels
         #endregion Properties
 
         #region Commands
-        public RelayCommand ClosingCommand
+        public RelayCommand<CancelEventArgs> ClosingCommand
         {
             get
             {
-                return _closingCommand ??= new RelayCommand(DoClosingCommand);
+                return _closingCommand ??= new RelayCommand<CancelEventArgs>(DoClosingCommand);
             }
         }
         public RelayCommand StateChangedCommand
@@ -74,8 +75,12 @@ namespace SteamStorage.ViewModels
         #endregion Constructor
 
         #region Methods
-        private void DoClosingCommand()
+        private void DoClosingCommand(CancelEventArgs? e)
         {
+            bool close = UserMessage.Question("Вы уверены, что вы хотите закрыть программу?");
+            if (e is null) return;
+            if (!close) e.Cancel = true;
+
             var mw = Application.Current.MainWindow;
 
             bool isMaximized = mw.WindowState == WindowState.Maximized;

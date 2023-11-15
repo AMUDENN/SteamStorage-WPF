@@ -11,7 +11,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <ScrollViewer Margin="30, 5, 3, 5">
+    <ScrollViewer Margin="30, 5, 3, 20">
 
         <Grid>
 

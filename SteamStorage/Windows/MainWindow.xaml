@@ -12,7 +12,7 @@
 
     <Behaviors:Interaction.Triggers>
         <Behaviors:EventTrigger EventName="Closing">
-            <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="False"/>
+            <Behaviors:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True"/>
         </Behaviors:EventTrigger>
         <Behaviors:EventTrigger EventName="StateChanged">
             <Behaviors:InvokeCommandAction Command="{Binding StateChangedCommand}" PassEventArgsToCommand="False"/>

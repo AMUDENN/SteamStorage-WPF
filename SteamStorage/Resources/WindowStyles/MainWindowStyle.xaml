@@ -61,7 +61,7 @@
                                     <Image Style="{DynamicResource FaviconImage}" 
                                            HorizontalAlignment="Left" 
                                            VerticalAlignment="Center" 
-                                           Width="25" Height="25" 
+                                           Width="24" Height="24" 
                                            Margin="10,4,4,4"/>
                                     <ContentPresenter Grid.Row="1"/>
                                 </Grid>
