@@ -5,14 +5,14 @@
 	<TargetFramework>net7.0-windows</TargetFramework>
 	<Nullable>enable</Nullable>
 	<UseWPF>true</UseWPF>
-	<ApplicationIcon>Resources\Images\Bitmaps\BlackIcon.ico</ApplicationIcon>
+	<ApplicationIcon>Resources\Images\Bitmaps\BlackIcon24.ico</ApplicationIcon>
 	<UICulture>ru-RU</UICulture>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<AssemblyName>Steam Storage</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Images\Bitmaps\BlackIcon.ico" />
+    <Content Include="Resources\Images\Bitmaps\BlackIcon24.ico" />
   </ItemGroup>
 
   <ItemGroup>

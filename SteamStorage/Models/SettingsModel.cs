@@ -266,13 +266,13 @@ namespace SteamStorage.Models
                     using FileStream fs = new(_windowDialogService.FilePath, FileMode.Create);
                     package.SaveAs(fs);
                 }
-                _loggerService?.WriteMessage("Экспорт в эксель завершился успешно!", GetType());
-                UserMessage.Information("Экспорт в эксель завершился успешно!");
+                _loggerService?.WriteMessage("Экспорт в Excel завершился успешно!", GetType());
+                UserMessage.Information("Экспорт в Excel завершился успешно!");
             }
             catch (Exception ex)
             {
-                _loggerService?.WriteMessage(ex, $"Экспорт в эксель завершился с ошибкой!");
-                UserMessage.Error("Экспорт в эксель завершился с ошибкой!");
+                _loggerService?.WriteMessage(ex, $"Экспорт в Excel завершился с ошибкой!");
+                UserMessage.Error("Экспорт в Excel завершился с ошибкой!");
             }
         }
         public void SaveColors()

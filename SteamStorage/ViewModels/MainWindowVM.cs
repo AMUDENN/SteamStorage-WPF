@@ -77,7 +77,7 @@ namespace SteamStorage.ViewModels
         #region Methods
         private void DoClosingCommand(CancelEventArgs? e)
         {
-            bool close = UserMessage.Question("Вы уверены, что вы хотите закрыть программу?");
+            bool close = UserMessage.Question("Вы уверены, что хотите закрыть программу?");
             if (e is null) return;
             if (!close) e.Cancel = true;
 

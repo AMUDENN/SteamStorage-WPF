@@ -8,8 +8,8 @@
 }
 
 .guide-navigation {
-    width: 27%;
-    max-width: 300px;
+    width: 26%;
+    max-width: 292px;
     height: 100%;
     position: fixed;
 }
@@ -18,6 +18,7 @@
     align-self: center;
     color: var(--var-additional);
     word-wrap: break-word;
+    text-decoration: none;
 }
 
 .guide-navigation a:hover {
@@ -27,15 +28,18 @@
 .first-level-ul li{
     margin-bottom: 5px;
     color: var(--var-additional);
+    font-size: var(--small-text);
 }   
 
 .second-level-ul li {
     margin-left: 7px;
     margin-bottom: 3px;
+    font-size: var(--little-text);
 }
 
 .guide-text {
-    width: 70%;
+    width: 69%;
+    font-size: var(--little-text);
 }
 
 .guide-text h1 {
@@ -49,6 +53,25 @@
     margin-bottom: 15px;
 }
 
+.guide-text div {
+    margin-bottom: 15px;
+}
+
 .guide-text p {
     margin-bottom: 5px;
+    text-indent: 10px;
+}
+
+table, th, td {
+    border: 1px solid var(--var-additional);
+    font-size: var(--table-text);
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+th, td {
+    padding: 0 5px 5px 5px;
 }

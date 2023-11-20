@@ -42,23 +42,6 @@ body.dark {
     color: var(--var-additional);
 }
 
-.title-text {
-    font-size: 40px;
-    margin-bottom: 40px;
-}
-
-.common-text {
-    font-size: 28px;
-}
-
-.small-text {
-    font-size: 24px;
-}
-
-.little-text {
-    font-size: 18px;
-}
-
 iframe {
     border: none;
 }
@@ -92,12 +75,25 @@ iframe {
     flex-direction: row;
     justify-content: center;
     background: var(--var-accent-additional);
+    font-size: var(--small-text);
 }
 
 .left-menu-container,
 .right-menu-container {
     height: 100%;
     width: 30%;
+}
+
+.left-menu-container {
+    flex-direction: row;
+    justify-content: end;
+}
+
+.left-menu-container p {
+    align-self: center;
+    margin-right: 50px;
+    font-weight: 500;
+    font-size: var(--common-text);
 }
 
 .right-menu-container {
@@ -157,6 +153,7 @@ iframe {
     border-bottom: 1px solid var(--var-additional);
     color: var(--var-additional);
     background-color: transparent;
+    font-size: var(--small-text);
 }
 
 .theme-container option {
@@ -166,6 +163,11 @@ iframe {
 
 :root {
     --border-radius: 7px;
+
+    --common-text: 28px;
+    --small-text: 24px;
+    --little-text: 18px;
+    --table-text: 16px;
 }
 
 body::-webkit-scrollbar {

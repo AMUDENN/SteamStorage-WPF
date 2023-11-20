@@ -21,6 +21,7 @@
     height: 40%;
     padding: 5px 0 5px 0;
     flex-direction: row;
+    font-size: var(--common-text);
 }
 
 .contact-name svg {
@@ -37,6 +38,7 @@
     width: 100%;
     height: 60%;
     flex-direction: row;
+    font-size: var(--small-text);
 }
 
 .contact-link a {
