@@ -224,6 +224,7 @@ namespace SteamStorage.Utilities
             {
                 _loggerService.WriteMessage(ex, $"Добавление новой записи неудачно!");
                 UndoChanges();
+                throw;
             }
         }
         public void SaveChanges()

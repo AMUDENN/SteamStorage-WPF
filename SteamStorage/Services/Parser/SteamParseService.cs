@@ -27,7 +27,10 @@ namespace SteamStorage.Services.Parser
         {
             try
             {
-                string result = _client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name={url[(url.LastIndexOf('/') + 1)..]}&appid=730&currency=5").Result;
+                string gameIdstr = url[..url.LastIndexOf('/')];
+                string result = _client.GetStringAsync($"https://steamcommunity.com/market/priceoverview/?market_hash_name=" +
+                    $"{url[(url.LastIndexOf('/') + 1)..]}&appid={gameIdstr[(gameIdstr.LastIndexOf('/') + 1)..]}&currency=5").Result;
+
                 SkinPriceDynamicParseModel? skinParse = JsonConvert.DeserializeObject<SkinPriceDynamicParseModel>(result);
                 var final = (DateTime.Now, Convert.ToDouble(skinParse?.lowest_price[..^4]));
                 SuccessParsing();
@@ -43,6 +46,7 @@ namespace SteamStorage.Services.Parser
         {
             try
             {
+                if (url.Contains("?filter=")) url = url[..url.LastIndexOf("?filter")];
                 string result = _client.GetStringAsync(url).Result;
                 string slice = result[result.IndexOf(url)..];
                 string final = DeleteExtraChar(slice[(url.Length + 2)..slice.IndexOf("</a>")]);
