@@ -9,6 +9,7 @@
              d:DesignHeight="900" d:DesignWidth="1600">
 
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:DateTimeConverter x:Key="DateTimeConverter"/>
         <converters:DoubleRoundConverter x:Key="DoubleRoundConverter"/>
         <converters:PercentConverter x:Key="PercentConverter"/>
@@ -336,6 +337,8 @@
                 </ItemsControl.ItemTemplate>
 
             </ListView>
+
+            <TextBlock Text="Записи не найдены" Style="{DynamicResource CommonCenterTextBlockStyle}" Visibility="{Binding IsDisplayedArchivesNull, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" Margin="0, 30, 0, 0" VerticalAlignment="Top" Grid.Row="2"/>
 
             <Grid Grid.Row="3" Margin="23, 5">
 

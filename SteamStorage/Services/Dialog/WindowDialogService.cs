@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Win32;
+using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
 
@@ -11,18 +12,24 @@ namespace SteamStorage.Services.Dialog
         public string FilePath { get; set; }
         public bool? ShowDialog(string title, ObservableObject dataContext)
         {
-            DialogWindow dialogWindow = new();
+            DialogWindow dialogWindow = new()
+            {
+                Owner = Singleton.GetService<MainWindow>(),
+                DataContext = new DialogWindowVM(title, dataContext)
+            };
             CurrentDialogWindow = dialogWindow;
-            dialogWindow.DataContext = new DialogWindowVM(title, dataContext);
             return dialogWindow.ShowDialog();
         }
         public bool? ShowDialog(double height, double width, string title, ObservableObject dataContext)
         {
-            DialogWindow dialogWindow = new();
+            DialogWindow dialogWindow = new()
+            {
+                Owner = Singleton.GetService<MainWindow>(),
+                DataContext = new DialogWindowVM(title, dataContext),
+                Height = height,
+                Width = width
+            };
             CurrentDialogWindow = dialogWindow;
-            dialogWindow.DataContext = new DialogWindowVM(title, dataContext);
-            dialogWindow.Height = height;
-            dialogWindow.Width = width;
             return dialogWindow.ShowDialog();
         }
         public bool OpenFileDialog(string filter = "")

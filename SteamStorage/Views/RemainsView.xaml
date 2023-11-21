@@ -406,6 +406,8 @@
 
             </ListView>
 
+            <TextBlock Text="Записи не найдены" Style="{DynamicResource CommonCenterTextBlockStyle}" Visibility="{Binding IsDisplayedRemainsNull, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" Margin="0, 30, 0, 0" VerticalAlignment="Top" Grid.Row="2"/>
+
             <Grid Grid.Row="3" Margin="23, 5">
 
                 <Grid.ColumnDefinitions>

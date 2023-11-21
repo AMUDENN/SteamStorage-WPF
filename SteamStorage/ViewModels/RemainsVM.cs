@@ -5,6 +5,7 @@ using SteamStorage.Models.EntityModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -45,7 +46,15 @@ namespace SteamStorage.ViewModels
             set => _remainModel.SelectedOrderType = value;
         }
         public ObservableCollection<RemainGroupElementModel> Groups => _remainModel.Groups;
-        public ObservableCollection<RemainElementModel> DisplayedRemains => _remainModel.DisplayedRemains;
+        public ObservableCollection<RemainElementModel> DisplayedRemains
+        {
+            get
+            {
+                OnPropertyChanged(nameof(IsDisplayedRemainsNull));
+                return _remainModel.DisplayedRemains;
+            }
+        }
+        public bool IsDisplayedRemainsNull => !_remainModel.DisplayedRemains.Any();
         public long TotalCount => _remainModel.TotalCount;
         public double AverageCostPurchase => _remainModel.AverageCostPurchase;
         public double TotalAmountPurchase => _remainModel.TotalAmountPurchase;

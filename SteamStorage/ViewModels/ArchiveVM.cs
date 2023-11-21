@@ -4,6 +4,7 @@ using SteamStorage.Models;
 using SteamStorage.Models.EntityModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SteamStorage.ViewModels
 {
@@ -41,7 +42,15 @@ namespace SteamStorage.ViewModels
             set => _archiveModel.SelectedOrderType = value;
         }
         public ObservableCollection<ArchiveGroupElementModel> Groups => _archiveModel.Groups;
-        public ObservableCollection<ArchiveElementModel> DisplayedArchives => _archiveModel.DisplayedArchives;
+        public ObservableCollection<ArchiveElementModel> DisplayedArchives
+        {
+            get
+            {
+                OnPropertyChanged(nameof(IsDisplayedArchivesNull));
+                return _archiveModel.DisplayedArchives;
+            }
+        }
+        public bool IsDisplayedArchivesNull => !_archiveModel.DisplayedArchives.Any();
         public long TotalCount => _archiveModel.TotalCount;
         public double AverageCostPurchase => _archiveModel.AverageCostPurchase;
         public double TotalAmountPurchase => _archiveModel.TotalAmountPurchase;
