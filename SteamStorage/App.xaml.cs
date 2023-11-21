@@ -4,6 +4,7 @@ using SteamStorage.Services.Dialog;
 using SteamStorage.Services.Logger;
 using SteamStorage.Services.Parser;
 using SteamStorage.Services.ReferenceInformation;
+using SteamStorage.Services.ToolTip;
 using SteamStorage.Utilities;
 using SteamStorage.ViewModels;
 using SteamStorage.Windows;
@@ -35,6 +36,8 @@ namespace SteamStorage
             window.Show();
 
             if (configService.IsMaximized) window.WindowState = WindowState.Maximized;
+
+            ToolTipServiceHelper.SetToolTipInitialShowDelay(300);
 
             base.OnStartup(e);
         }

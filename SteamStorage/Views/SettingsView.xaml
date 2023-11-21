@@ -183,7 +183,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Button Content="Экспортировать в .xlsx" 
+                        <Button Content="Экспортировать в Excel" 
                                 Command="{Binding ExportToExcel}"
                                 Style="{DynamicResource SettingsButtonStyle}"
                                 HorizontalAlignment="Stretch"
@@ -229,7 +229,6 @@
                                 SteamStorage - удобная программа для учета инвестиций в предметы на платформе Steam. 
                                 <LineBreak/>Отслеживайте покупки, продажи и изменение стоимости активов. 
                                 <LineBreak/>Принимайте взвешенные решения и достигайте финансового успеха.
-                                <LineBreak/>(by AMUDENN)
                             </TextBlock>
 
                         </ScrollViewer>
