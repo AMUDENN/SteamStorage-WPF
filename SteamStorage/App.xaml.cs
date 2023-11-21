@@ -10,6 +10,7 @@ using SteamStorage.ViewModels;
 using SteamStorage.Windows;
 using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace SteamStorage
 {
@@ -49,7 +50,7 @@ namespace SteamStorage
             services.AddSingleton<MainWindow>();
 
             services.AddSingleton<Context>();
-            
+
             services.AddSingleton<ConfigService>();
             services.AddSingleton<WindowDialogService>();
             services.AddSingleton<LoggerService>(new LoggerService(ProgramConstants.LogPath));
@@ -57,6 +58,11 @@ namespace SteamStorage
             services.AddSingleton<ReferenceInformationService>();
 
             Container = services.BuildServiceProvider();
+        }
+        private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            Singleton.GetService<LoggerService>().WriteMessage(e.Exception, "Необработанное программное исключение");
+            e.Handled = true;
         }
     }
 }
